@@ -1,0 +1,74 @@
+{
+  "version": "2026-11-02-v14",
+  "topic_id": 94,
+  "code": "SEG",
+  "content": "## Estudo aprofundado — análise de riscos e NIST CSF 2.0\n### Comece pelo problema, não pela sigla\nA clínica possui RIS e PACS. Se um ransomware bloquear imagens, o impacto principal pode ser indisponibilidade de exames e atraso assistencial; se houver exfiltração, surgem também riscos de confidencialidade e privacidade. **Ativo** é o que tem valor (serviço, dados, infraestrutura); **ameaça** é potencial causador de dano; **vulnerabilidade** é a fraqueza explorável; **evento** é a ocorrência; **consequência/impacto** é o efeito sobre objetivos. Um **controle** modifica o risco, mas não é garantia absoluta de proteção.\n\n### Um cenário resolvido\n1. **Contextualizar:** defina serviço crítico, tolerância à parada, regras aplicáveis e quem decide o risco.\n2. **Identificar:** ativo=PACS e imagens; ameaça=ransomware; vulnerabilidades=contas compartilhadas e backup sem segregação.\n3. **Analisar:** estime probabilidade e impacto com critérios documentados. “Risco alto” sem escala ou contexto é palpite.\n4. **Tratar:** MFA e menor privilégio reduzem oportunidade; detecção de comportamento anômalo reduz tempo de descoberta; backup isolado e recuperação testada reduzem consequência e tempo de parada.\n5. **Verificar:** rode teste de restauração, examine permissões e registre evidências. Backup sem ensaio não prova recuperação.\n6. **Reavaliar:** após controles, permanece **risco residual**; responsável competente deve decidir sua aceitação ou novo tratamento.\n\n### NIST CSF 2.0 em decisões práticas\n**Governar (GV):** políticas, papéis, expectativas de terceiros, estratégia, apetite a risco e supervisão. **Identificar (ID):** inventário, dependências e avaliação de riscos. **Proteger (PR):** IAM, conscientização, configuração e segurança de dados. **Detectar (DE):** monitoramento e identificação de eventos adversos. **Responder (RS):** análise, contenção, comunicação e mitigação. **Recuperar (RC):** restaurar operações e comunicar progresso. Essas seis funções operam de maneira integrada e não são fases obrigatórias em sequência rígida.\n\n**Questão típica de banca:** fornecedor mantém acesso VPN permanente e sem revisão. A definição de responsabilidades e de uma política de terceiros pertence principalmente a **Governar**; executar revisão de contas é controle de **Proteger**. Perguntas podem permitir relações entre funções, mas o texto do enunciado determina a mais apropriada.\n\n### Indicadores que significam alguma coisa\n“100% dos servidores têm backup” mede cobertura, não recuperabilidade. Indicadores mais úteis: porcentagem de restaurações testadas com sucesso; tempo real de recuperação comparado ao **RTO**; perda máxima de dados observada comparada ao **RPO**; contas privilegiadas revisadas; prazo de revogação do acesso de terceiros. **RTO** é objetivo de tempo de recuperação; **RPO** é objetivo de ponto de recuperação (perda tolerável de dados medida em tempo). Não confunda RTO com retenção de backups.\n\n### Teste sua compreensão\nDescreva um risco de disponibilidade e outro de confidencialidade; indique ativo, ameaça, vulnerabilidade, impacto, controle preventivo, detectivo e corretivo; depois associe cada atividade a uma função do CSF. Explique por que “instalar antivírus” não substitui governança e por que duas cópias de backup no mesmo armário não garantem resiliência a incêndio.\n\nFonte primária para consulta: NIST CSF 2.0 — https://www.nist.gov/cyberframework. Conteúdo autoral, sem alegação de ser questão oficial.",
+  "questions": [
+    {
+      "question": "Qual atividade está mais diretamente relacionada à função Governar (GV) do NIST CSF 2.0?",
+      "choices": [
+        "Criar a estratégia de riscos e atribuir responsabilidade por fornecedores",
+        "Executar o antivírus em uma estação",
+        "Restaurar um backup após incidente",
+        "Investigar logs de detecção"
+      ],
+      "correct_index": 0,
+      "explanation": "Governar estabelece estratégia, política, papéis, supervisão e gestão de terceiros. Outras atividades remetem principalmente a Proteger, Recuperar e Detectar."
+    },
+    {
+      "question": "Uma equipe comprova que fez cópias de segurança, mas nunca testou restauração. O que é correto afirmar?",
+      "choices": [
+        "A recuperação está garantida",
+        "O RTO será zero",
+        "A existência de cópias não demonstra recuperabilidade",
+        "A empresa necessariamente cumpre todo o CSF"
+      ],
+      "correct_index": 2,
+      "explanation": "Cópia sem validação não demonstra consistência, integridade, tempo de restauração ou capacidade de retorno."
+    },
+    {
+      "question": "Qual descrição diferencia adequadamente RTO de RPO?",
+      "choices": [
+        "RTO é tempo de recuperação desejado; RPO é perda de dados tolerável medida no tempo",
+        "RTO e RPO são sinônimos de retenção",
+        "RTO mede frequência de antivírus e RPO mede vulnerabilidades",
+        "RPO é sempre superior ao RTO"
+      ],
+      "correct_index": 0,
+      "explanation": "RTO mede objetivo de tempo até recuperação do serviço; RPO indica o ponto de recuperação aceitável em relação à ocorrência."
+    },
+    {
+      "question": "Em gestão de riscos, o que representa risco residual?",
+      "choices": [
+        "Risco antes de qualquer controle",
+        "Risco remanescente após considerar tratamentos e controles",
+        "Risco que pode ser sempre eliminado",
+        "Somente risco de incêndio"
+      ],
+      "correct_index": 1,
+      "explanation": "Mesmo após mitigação, pode haver risco residual sujeito à avaliação e aceitação conforme governança."
+    },
+    {
+      "question": "Um alerta SIEM é acionado e a equipe isola um host comprometido. Como classificar melhor as duas ações?",
+      "choices": [
+        "Governar e Identificar",
+        "Recuperar e Governar",
+        "Detectar e Responder",
+        "Proteger e Recuperar"
+      ],
+      "correct_index": 2,
+      "explanation": "A sinalização do evento é principalmente Detectar; contenção do host é Responder."
+    },
+    {
+      "question": "Uma norma interna define revisões trimestrais de contas de fornecedores, e a TI revoga contas expiradas. Qual comparação é mais adequada?",
+      "choices": [
+        "Política é governança; execução da revisão é atividade de proteção",
+        "Ambas são apenas restauração",
+        "Política substitui execução",
+        "A execução elimina a necessidade de papéis"
+      ],
+      "correct_index": 0,
+      "explanation": "A política atribui expectativas e responsabilidades, enquanto a remoção efetiva de privilégios trata controles de acesso."
+    }
+  ]
+}
