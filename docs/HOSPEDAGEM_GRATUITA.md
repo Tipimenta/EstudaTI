@@ -43,7 +43,29 @@ O banco existente no computador **não se transfere automaticamente**. Manter in
 
 Não abrir o login na internet sem HTTPS, segredo robusto, limitação de tentativas, cookies Secure/HttpOnly/SameSite e testes. Não anunciar a plataforma como pronta até validar salvamento real de respostas/discursivas após redeploy.
 
-**Estado em 02/11/2026:** Vercel publicada, API/Banco ainda pendentes. Railway/volumes pagos **não serão usados**.
+**Estado em 02/11/2026:** Vercel publicada, Neon Free criado e conexão PostgreSQL testada, Render **Free** criado com nome `estudati-api`. O contêiner está `live`, mas a API **ainda não está integrada ao Neon** até que as variáveis privadas sejam configuradas. Railway/volumes pagos **não serão usados**.
+
+### Render Free — serviço confirmado
+
+- Painel privado: https://dashboard.render.com/web/srv-dbk807dg1s2s739ivq70
+- Endereço da API: https://estudati-api.onrender.com
+- Plano: `free`; região: Virginia; Git: `Tipimenta/EstudaTI`, branch `master`; Dockerfile `api/Dockerfile`; contexto `api`.
+- AutoDeploy: `no` temporariamente para evitar implantações com banco sem configuração.
+- Variáveis não sensíveis já definidas: `COOKIE_SECURE=true`, `ENABLE_MONITOR=false`, `APP_TIMEZONE=America/Sao_Paulo`, `DATABASE_PATH=/data/estudati.sqlite3`.
+- Variáveis privadas necessárias em Render → Environment: `DATABASE_URL` (copiar no painel Neon → Connect, com SSL e usuário correto), `APP_PASSWORD` (senha pessoal de 12+ caracteres) e `APP_SECRET` (segredo aleatório de 32+ caracteres). **Não colar nenhum segredo no GitHub, no chat ou no frontend.**
+- Depois de configurar, deixar a implantação terminar e comprovar `/api/me` retorna 401 sem autenticação; testar login, aulas e progresso no PostgreSQL real antes de ligar o proxy Vercel.
+- **O backend rodando não significa login funcional.** Sem `APP_PASSWORD` e `APP_SECRET` a própria aplicação bloqueia o login com erro 503, intencionalmente.
+
+### Neon confirmado
+
+- Project ID: `dark-fog-38647170`.
+- Branch: `production` (`br-orange-star-b67atro8`).
+- Banco padrão: `neondb`; região `sa-east-1`; plano `free_v3`.
+- Em 02/11, PostgreSQL 18 e conexão autenticada foram confirmados; **as tabelas do EstudaTI não foram deliberadamente criadas no banco real**, apenas no PostgreSQL isolado dos testes CI.
+
+### Conexão da Vercel
+
+Depois que Render+Neon estiverem funcionais, configurar `web/vercel.json` com regra de proxy `/api/:path*` **antes** da regra SPA: destino `https://estudati-api.onrender.com/api/:path*`. Esta configuração não foi aplicada para evitar expor um site com autenticação inoperante.
 
 ## Futuros upgrades
 
