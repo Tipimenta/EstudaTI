@@ -1,0 +1,20 @@
+{
+  "questions": [
+    {
+      "subject_code": "BD",
+      "question": "Em uma consulta SQL, qual cláusula é usada para filtrar linhas antes do agrupamento?",
+      "option_a": "HAVING",
+      "option_b": "GROUP BY",
+      "option_c": "WHERE",
+      "option_d": "ORDER BY",
+      "correct": "C",
+      "explanation": "WHERE filtra linhas antes de GROUP BY; HAVING normalmente filtra grupos já formados.",
+      "origin": "autoral",
+      "board": "",
+      "exam": "",
+      "year": "",
+      "source_url": "",
+      "license_note": "Questão demonstrativa autoral."
+    }
+  ]
+}

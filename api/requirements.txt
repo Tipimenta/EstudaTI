@@ -1,0 +1,6 @@
+fastapi>=0.115,<1
+uvicorn[standard]>=0.34,<1
+requests>=2.32,<3
+tzdata>=2025.1
+pypdf>=5.0,<7
+python-multipart>=0.0.12,<1

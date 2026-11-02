@@ -1,0 +1,1217 @@
+[
+  {
+    "code": "RED",
+    "title": "[Aprofundamento] OSI, TCP/IP e encapsulamento",
+    "objective": "Explicar fluxo de ponta a ponta, camadas, unidades de dados e identificar a camada de uma falha.",
+    "content": "# Objetivo e contexto\nExplicar fluxo de ponta a ponta, camadas, unidades de dados e identificar a camada de uma falha.\n\n## Aula detalhada — entenda o mecanismo\nO **OSI** é um modelo de referência em sete camadas: física, enlace, rede, transporte, sessão, apresentação e aplicação. O modelo **TCP/IP** costuma ser ensinado em quatro camadas: acesso à rede, internet, transporte e aplicação; alguns livros o apresentam em cinco, separando física e enlace. Isso é uma simplificação de arquitetura, não uma tabela de equivalências perfeitas.\n\nAo transmitir uma requisição HTTP, a aplicação produz dados; o transporte (TCP, por exemplo) entrega um fluxo de bytes com controle de sequência e retransmissão; o IP identifica endereços e encaminha datagramas entre redes; o enlace entrega quadros no segmento local. No destino, ocorre o desencapsulamento. **Segmento TCP, datagrama IP e quadro Ethernet** não são sinônimos: cada unidade carrega cabeçalhos específicos.\n\n**Switch Ethernet** decide encaminhamento com base em endereços MAC (camada de enlace); **roteador IP** escolhe próximo salto com base em destinos IP e tabela de rotas. Um equipamento moderno pode executar funções de mais de uma camada, portanto evite afirmar que todo switch é exclusivamente camada 2. Endereço IP é lógico e mantém significado entre enlaces; MAC é usado para alcançar o próximo nó no enlace Ethernet.\n\n## Exemplo resolvido passo a passo\n1. O usuário abre `https://intranet.exemplo/`. O navegador resolve o nome via DNS e estabelece conectividade para o IP resultante.\n2. Numa conexão TCP, o handshake estabelece estado de comunicação; se houver TLS, ocorre negociação criptográfica em seguida.\n3. O pedido HTTP segue no fluxo TCP. IP cuida do roteamento e Ethernet do próximo salto. Em cada roteador, o quadro de enlace é trocado; endereços IP de origem/destino do pacote normalmente permanecem os mesmos, desconsiderando NAT.\n4. Se `ping` ao gateway funciona, mas o site pelo nome falha, investigue resolução DNS e HTTP/TLS antes de concluir que a placa de rede está quebrada. Um `ping` não garante que o servidor web responderá.\n\n## Erros clássicos nas bancas\n**Pegadinha 1:** “TCP corresponde ao nível de rede” está errado; TCP é transporte. **Pegadinha 2:** a camada de sessão do OSI não é necessariamente implementada por um protocolo isolado da pilha TCP/IP. **Pegadinha 3:** DNS é protocolo de aplicação e pode utilizar UDP ou TCP, conforme a operação e a implementação. **Pegadinha 4:** nem todo pacote IP contém TCP; UDP e ICMP são outros casos.\n\n## Pratique sem consultar\nDesenhe em quatro linhas o caminho “HTTP → TCP → IP → Ethernet”. Em qual camada uma tabela de roteamento atua? Em qual um endereço MAC é utilizado? Explique por que um quadro muda ao atravessar um roteador. Compare as camadas do OSI sem memorizar correspondências rígidas.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nRFC Editor — especificação TCP (RFC 9293): https://www.rfc-editor.org/rfc/rfc9293.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Em uma rede Ethernet/IP, qual informação um roteador usa principalmente para escolher o próximo salto?",
+        "choices": [
+          "Endereço IP de destino e tabela de rotas",
+          "Endereço MAC de origem do computador final",
+          "Número da porta HTTP exclusivamente",
+          "Nome do usuário autenticado"
+        ],
+        "correct_index": 0,
+        "explanation": "Roteadores encaminham segundo prefixos de destino e rotas; MAC serve para entrega no enlace, porta TCP não substitui roteamento."
+      },
+      {
+        "stem": "Qual associação entre unidade de dados e camada está correta?",
+        "choices": [
+          "Quadro — enlace; datagrama IP — rede",
+          "Quadro — transporte; datagrama IP — aplicação",
+          "Segmento TCP — física; quadro — sessão",
+          "Datagrama IP — apresentação; quadro — rede"
+        ],
+        "correct_index": 0,
+        "explanation": "Na terminologia habitual, enlaces transmitem quadros, IP fornece datagramas e TCP utiliza segmentos."
+      }
+    ],
+    "cards": [
+      [
+        "Quais informações são trocadas por um roteador Ethernet durante o encaminhamento IP?",
+        "O quadro do enlace é refeito para o próximo salto; o datagrama IP continua sendo encaminhado (com ajustes como TTL)."
+      ],
+      [
+        "Como diferenciar switch L2 e roteador?",
+        "Switch L2 encaminha quadros por MAC; roteador encaminha datagramas por prefixos IP e tabela de rotas."
+      ]
+    ],
+    "source_url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+    "source_label": "RFC Editor — especificação TCP (RFC 9293)",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "RED",
+    "title": "[Aprofundamento] Subnetting IPv4, CIDR e VLSM",
+    "objective": "Calcular rede, broadcast e hosts utilizáveis sem depender de calculadora.",
+    "content": "# Objetivo e contexto\nCalcular rede, broadcast e hosts utilizáveis sem depender de calculadora.\n\n## Aula detalhada — entenda o mecanismo\nIPv4 possui 32 bits; um prefixo **/n** significa que os primeiros n bits identificam a rede. O restante, 32−n bits, identifica endereços dentro do bloco. Uma máscara /26 equivale a `255.255.255.192`: são 26 bits 1 seguidos por seis bits 0. O tamanho do bloco é **2^(32−n)**. Em redes IPv4 convencionais com endereço de rede e broadcast, os endereços de hosts utilizáveis são **2^(32−n) − 2**; exceções importantes: enlaces /31 ponto a ponto e /32 host.\n\nPara descobrir a rede, aplique AND binário entre o IP e a máscara. O broadcast preenche com 1 os bits de host. Para calcular rapidamente em um octeto de máscara, use o incremento `256 − valor_da_máscara` (no octeto onde o prefixo se divide). Uma /27 tem incremento 32; redes terminam em .0, .32, .64, .96 etc. Em **VLSM** você distribui prefixos de tamanhos diferentes, geralmente começando pela maior necessidade de endereços. CIDR abandona classes rígidas e representa prefixos contíguos.\n\n## Exemplo resolvido passo a passo\nDado `192.168.30.150/27`: máscara `255.255.255.224`, incremento 256−224=32. O octeto 150 cai no intervalo 128–159.\n- Endereço de rede: **192.168.30.128**.\n- Broadcast: **192.168.30.159**.\n- Primeiro host convencional: **192.168.30.129**. Último host convencional: **192.168.30.158**.\n- Total do bloco: 32 endereços; hosts convencionais: 30.\n\nVLSM: uma organização precisa de LANs com 50 e 12 hosts. Para 50 hosts, /26 comporta 62; para 12, /28 comporta 14. Reserve blocos não sobrepostos e confira alinhamento. Para prova, primeiro identifique a quantidade de bits de host necessária, depois calcule incremento e limites.\n\n## Erros clássicos nas bancas\n**Pegadinha 1:** /27 não tem 27 hosts, mas prefixo de 27 bits. **Pegadinha 2:** broadcast não é o gateway obrigatoriamente; gateway é endereço configurado na rede. **Pegadinha 3:** máscara e host não dependem da classe histórica do IP se o prefixo é explicitamente informado. **Pegadinha 4:** não subtraia dois hosts de /31 nas hipóteses de enlaces ponto a ponto previstas no RFC 3021.\n\n## Pratique sem consultar\nResolva `10.10.4.77/28`: escreva máscara, rede, broadcast, primeiro e último host, total de endereços e utilizáveis. Depois prove o resultado convertendo o último octeto do IP e da máscara para binário. Tente ainda dividir uma /24 em quatro /26 sem sobreposição.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nRFC 4632 — CIDR e agregação de rotas: https://www.rfc-editor.org/rfc/rfc4632.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual é a rede de 192.168.30.150/27?",
+        "choices": [
+          "192.168.30.128",
+          "192.168.30.144",
+          "192.168.30.150",
+          "192.168.30.160"
+        ],
+        "correct_index": 0,
+        "explanation": "/27 tem blocos de 32; 150 está entre 128 e 159, logo a rede começa em 128."
+      },
+      {
+        "stem": "Quantos hosts convencionais utilizáveis existem em uma sub-rede IPv4 /28?",
+        "choices": [
+          "14",
+          "16",
+          "30",
+          "12"
+        ],
+        "correct_index": 0,
+        "explanation": "/28 contém 2^4 = 16 endereços; descontados rede e broadcast, restam 14 em LAN convencional."
+      }
+    ],
+    "cards": [
+      [
+        "Como calcular o incremento no octeto onde a máscara IPv4 muda?",
+        "Incremento = 256 menos o valor do octeto da máscara; localize o bloco que contém o IP."
+      ],
+      [
+        "Rede e broadcast de 192.168.30.150/27?",
+        "Rede .128 e broadcast .159; a faixa convencional de hosts vai de .129 a .158."
+      ]
+    ],
+    "source_url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+    "source_label": "RFC 4632 — CIDR e agregação de rotas",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "RED",
+    "title": "[Aprofundamento] DNS, DHCP, TCP/UDP e diagnóstico",
+    "objective": "Identificar falhas de serviço por sintomas e selecionar comandos de diagnóstico.",
+    "content": "# Objetivo e contexto\nIdentificar falhas de serviço por sintomas e selecionar comandos de diagnóstico.\n\n## Aula detalhada — entenda o mecanismo\n**DNS** traduz nomes para registros e não é um mecanismo de autenticação por si só. Registro A aponta para IPv4, AAAA para IPv6, CNAME cria alias e MX auxilia entrega de e-mail. A resolução pode envolver caches locais, recursão e servidores autoritativos. **DHCP** atribui parâmetros de rede: IP, máscara, gateway, DNS e tempo de concessão; no IPv4, a sequência DORA é Discover, Offer, Request, Acknowledge.\n\n**TCP** é orientado à conexão e oferece fluxo ordenado e confiável à aplicação; usa sequenciamento, ACKs, controle de fluxo e congestionamento. **UDP** é orientado a datagramas, sem garantia de entrega ou ordenação. Isso não significa que qualquer aplicação UDP seja “não confiável”: ela pode implementar seus próprios mecanismos de confiabilidade. A porta identifica processo/serviço dentro do contexto do protocolo, não substitui endereço IP.\n\nFerramentas: `ipconfig /all` e `Get-NetIPConfiguration` (Windows), `ip addr`, `ip route` (Linux), `nslookup` ou `dig` (DNS), `ping` (ICMP, quando permitido), `tracert`/`traceroute`, `Test-NetConnection host -Port 443` e `ss -lntup` para sockets. Use diagnóstico não invasivo e respeite autorização de rede.\n\n## Exemplo resolvido passo a passo\nUm computador recebe `169.254.x.x`, não acessa aplicações de rede e o `ipconfig /all` não mostra concessão válida. Hipótese inicial: falha de DHCP; confirme conectividade física, VLAN, relay DHCP e escopo.\n\nOutro computador resolve `portal.exemplo` para o IP esperado, consegue conectar à porta 443, mas o navegador acusa erro de certificado. A cadeia evoluiu de DNS → TCP → TLS: agora investigue hostname do certificado, validade, confiança da CA, data/hora e configuração TLS. Não culpe automaticamente o DNS por qualquer falha no navegador.\n\nSe o nome falha mas um IP funciona, compare DNS configurado, caches, resolução e registros. Em redes corporativas, consultas de nomes internos e públicos podem seguir resolvedores distintos.\n\n## Erros clássicos nas bancas\n**Pegadinha:** `ping` indisponível não demonstra automaticamente que um servidor está fora do ar; ICMP pode ser bloqueado. `nslookup` identifica DNS, mas não valida disponibilidade HTTP. TCP e UDP reutilizam números de porta em espaços distintos. DNS frequentemente usa UDP/53, porém pode usar TCP/53; DNS sobre TLS e HTTPS são alternativas com outras portas. DHCPv4 não funciona por “IP fixo obrigatório” do cliente antes de receber concessão.\n\n## Pratique sem consultar\nMonte um roteiro com cinco testes para o cenário “a rede funciona por IP, mas não pelo nome”. Para cada teste, diga o que um resultado positivo ou negativo significa. Em seguida, explique o que muda no diagnóstico se a conexão TCP à porta 443 funciona, mas a página não abre.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nRFC Editor — especificação TCP (RFC 9293): https://www.rfc-editor.org/rfc/rfc9293.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual registro DNS está associado diretamente a um endereço IPv6?",
+        "choices": [
+          "AAAA",
+          "A",
+          "MX",
+          "PTR como nome canônico necessariamente"
+        ],
+        "correct_index": 0,
+        "explanation": "AAAA mapeia nome para IPv6; A é IPv4, MX aponta servidores de e-mail, PTR é usado em resolução reversa."
+      },
+      {
+        "stem": "Qual teste avalia especificamente a abertura da porta TCP 443 em Windows PowerShell?",
+        "choices": [
+          "Test-NetConnection servidor -Port 443",
+          "ipconfig /flushdns",
+          "ping servidor -t como garantia",
+          "Get-Date exclusivamente"
+        ],
+        "correct_index": 0,
+        "explanation": "Test-NetConnection com -Port testa conectividade TCP ao destino; ping ICMP não testa a porta."
+      }
+    ],
+    "cards": [
+      [
+        "Qual é a sequência DHCPv4 DORA?",
+        "Discover → Offer → Request → Acknowledge."
+      ],
+      [
+        "Por que ping bem-sucedido não garante que um site HTTPS funcionará?",
+        "ICMP testa uma forma de conectividade, mas não comprova TCP/443, TLS nem funcionamento HTTP."
+      ]
+    ],
+    "source_url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+    "source_label": "RFC Editor — especificação TCP (RFC 9293)",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "SEG",
+    "title": "[Aprofundamento] Risco, controles e NIST CSF 2.0",
+    "objective": "Distinguir ativo, ameaça, vulnerabilidade, risco, tratamento e função do NIST CSF.",
+    "content": "# Objetivo e contexto\nDistinguir ativo, ameaça, vulnerabilidade, risco, tratamento e função do NIST CSF.\n\n## Aula detalhada — entenda o mecanismo\nSegurança da informação não se resume ao trio **confidencialidade, integridade e disponibilidade** (CID). Autenticidade, responsabilização e capacidade de recuperação importam conforme o contexto. O risco pode ser descrito pela possibilidade de um evento afetar objetivos, considerando probabilidade e impacto, conforme metodologia adotada. Um **ativo** é algo que tem valor; uma **ameaça** é fonte potencial de dano; uma **vulnerabilidade** é fraqueza explorável; um **controle** altera o risco. Evite confundir impacto com probabilidade.\n\nO **NIST CSF 2.0** apresenta seis funções contínuas: Governar (Govern), Identificar, Proteger, Detectar, Responder e Recuperar. Não são fases obrigatoriamente sequenciais. Governar inclui contexto, estratégia, papéis, políticas, risco na cadeia de suprimentos e supervisão. Identificar envolve ativos e riscos. Proteger inclui gestão de identidade, treinamento e proteção de dados. Detectar monitora eventos; Responder contém incidentes; Recuperar restaura serviços e comunica progresso. O CSF descreve resultados desejados, não prescreve uma tecnologia específica.\n\nUm controle pode ser preventivo (MFA), detectivo (alerta de log) ou corretivo (reestabelecimento de serviço). Essas classificações são funções analíticas e um mesmo mecanismo pode desempenhar mais de um papel. Não confunda “tem firewall” com “governança e segurança estão completas”.\n\n## Exemplo resolvido passo a passo\nClínica com PACS local e backup na mesma sala: ativo = imagens médicas e serviços; ameaça = incêndio/ransomware; vulnerabilidade = cópia única ou sem isolamento adequado; impactos = indisponibilidade do atendimento e perda de dados.\n\nPasso 1: identificar processos críticos, requisitos de recuperação e responsáveis. Passo 2: mapear cópias, privilégios, dependências e fornecedores. Passo 3: definir tratamento: cópia segregada, testes de restauração e controle de acesso. Passo 4: registrar evidências e acompanhar efetividade.\n\nA prova pode perguntar onde se enquadra uma política formal de gestão de fornecedores: principalmente **Governar**, não apenas Proteger. Um alerta em SIEM se associa a Detectar; um procedimento de contenção e erradicação, a Responder; retorno controlado do PACS, a Recuperar.\n\n## Erros clássicos nas bancas\n**Armadilha:** “NIST CSF obriga ferramenta X” é falso: é orientado a resultados. **Armadilha:** “governança = inventário de TI” simplifica e confunde Governar com Identificar. **Armadilha:** backups existentes não provam recuperabilidade sem ensaio de restauração. **Armadilha:** risco residual não precisa ser zero; deve ser decidido conforme apetite e critérios organizacionais.\n\n## Pratique sem consultar\nConstrua uma matriz com três riscos de uma clínica: perda de acesso ao RIS, vazamento de imagens e interrupção de energia. Para cada risco, indique ativo, ameaça, vulnerabilidade, impacto, responsável, controle preventivo, detecção e teste da resposta. Depois aponte a função principal do NIST CSF de cada controle.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nNIST Cybersecurity Framework 2.0: https://www.nist.gov/cyberframework\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual das funções foi adicionada com destaque no NIST CSF 2.0 para coordenar estratégia, política e supervisão?",
+        "choices": [
+          "Governar (Govern)",
+          "Detectar (Detect)",
+          "Recuperar (Recover)",
+          "Proteger (Protect)"
+        ],
+        "correct_index": 0,
+        "explanation": "A função Govern estabelece e monitora a estratégia de gestão de risco cibernético."
+      },
+      {
+        "stem": "Um backup que existe, mas nunca teve restauração testada, prova qual afirmação?",
+        "choices": [
+          "Existe cópia, mas a recuperabilidade ainda não foi demonstrada",
+          "É suficiente para RTO zero",
+          "Substitui o plano de continuidade",
+          "Elimina o risco de ransomware"
+        ],
+        "correct_index": 0,
+        "explanation": "Sem teste de restauração não há evidência suficiente de que dados e serviços podem ser recuperados no tempo necessário."
+      }
+    ],
+    "cards": [
+      [
+        "Quais são as seis funções do NIST CSF 2.0?",
+        "Govern, Identify, Protect, Detect, Respond, Recover."
+      ],
+      [
+        "Diferença entre ameaça e vulnerabilidade?",
+        "Ameaça é fonte potencial de evento danoso; vulnerabilidade é fragilidade que pode ser explorada."
+      ]
+    ],
+    "source_url": "https://www.nist.gov/cyberframework",
+    "source_label": "NIST Cybersecurity Framework 2.0",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "SEG",
+    "title": "[Aprofundamento] Criptografia, TLS, hashes e IAM",
+    "objective": "Relacionar propriedades criptográficas e controles de identidade sem confundir conceitos.",
+    "content": "# Objetivo e contexto\nRelacionar propriedades criptográficas e controles de identidade sem confundir conceitos.\n\n## Aula detalhada — entenda o mecanismo\n**Criptografia simétrica** utiliza a mesma chave secreta para cifrar e decifrar (ex.: AES); costuma ser eficiente para dados em volume. **Assimétrica** utiliza pares de chaves pública/privada (ex.: RSA e criptografia de curvas elípticas, conforme esquema), com aplicações como assinatura, troca/encapsulamento de chaves e estabelecimento de confiança. O uso concreto depende do algoritmo, modo e protocolo; não presuma que “qualquer cifra assimétrica cifra um arquivo inteiro”.\n\n**Hash criptográfico** produz resumo de tamanho definido, usado para integridade, assinaturas e outros protocolos. Hash não é reversível como cifra; senhas devem usar funções de derivação adequadas com salt e parâmetros custosos, e não apenas SHA-256 direto. Uma **assinatura digital** normalmente assina hash/representação com chave privada e é verificada com chave pública, sustentando integridade e autenticidade da origem conforme o esquema. Cifra por si só não dá garantia equivalente de assinatura.\n\n**TLS** autentica endpoints conforme certificados e configurações e protege confidencialidade e integridade do canal. Cadeias de certificação precisam ser validadas; HTTPS não significa que o próprio site seja honesto. Em IAM, diferencie autenticação (identidade), autorização (permissão) e auditoria (registro). MFA exige fatores de categorias distintas, como senha (conhecimento) + chave de segurança física (posse); duas senhas não constituem MFA.\n\n## Exemplo resolvido passo a passo\nConsidere uma aplicação de exames que permite acesso externo: 1) gere conexão HTTPS com certificado para nome de domínio correto; 2) exija identidade individual e MFA em perfis privilegiados; 3) atribua permissões por função e necessidade; 4) registre acesso a dados sensíveis; 5) proteja dados em repouso com gestão apropriada de chaves.\n\nSe um arquivo sofre alteração, um hash previamente registrado pode indicar diferença, mas isoladamente não comprova quem publicou o hash. Se for necessário comprovar procedência, acrescente mecanismo de assinatura/autenticação. Se o navegador mostra certificado inválido, não “resolva” permanentemente desativando validação TLS. A prova pode oferecer “criptografia assimétrica sempre é mais rápida que AES” como alternativa falsa.\n\n## Erros clássicos nas bancas\n**Pegadinha:** criptografia não elimina necessidade de controle de acesso. **Pegadinha:** hash não é compressão recuperável. **Pegadinha:** MFA não é “digitar a mesma senha duas vezes”. **Pegadinha:** sessão HTTPS válida não impede phishing. **Pegadinha:** chave pública não deve ser confundida com segredo: é destinada à distribuição, enquanto a privada exige proteção.\n\n## Pratique sem consultar\nExplique como armazenaria senhas de usuários, como protegeria o tráfego entre navegador e API e como auditá-lo sem expor credenciais. Para cada decisão, declare qual propriedade de segurança está sendo atendida. Diferencie um token assinado de um token criptografado.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nNIST — Diretrizes de Identidade Digital: https://pages.nist.gov/800-63-4/\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Para armazenar senhas de usuários em um serviço web, qual é a opção adequada?",
+        "choices": [
+          "Função de derivação de senha com salt e parâmetros de custo",
+          "Criptografia reversível com chave fixa no código",
+          "SHA-256 simples sem salt como escolha ideal",
+          "Codificação Base64"
+        ],
+        "correct_index": 0,
+        "explanation": "Funções específicas como Argon2id, scrypt ou PBKDF2 conforme requisitos são desenhadas para dificultar ataques offline; Base64 não é proteção."
+      },
+      {
+        "stem": "Qual cenário representa autenticação multifator com categorias diferentes?",
+        "choices": [
+          "Senha e chave de segurança física",
+          "Senha e pergunta secreta",
+          "Duas senhas distintas",
+          "PIN e outra informação memorizada"
+        ],
+        "correct_index": 0,
+        "explanation": "MFA combina fatores de categorias diferentes; apenas vários conhecimentos não constituem múltiplos fatores."
+      }
+    ],
+    "cards": [
+      [
+        "Hash e criptografia têm o mesmo objetivo?",
+        "Não: hash é resumo unidirecional para verificação, enquanto cifra busca confidencialidade com decriptação autorizada."
+      ],
+      [
+        "Qual é a diferença entre autenticação e autorização?",
+        "Autenticação comprova identidade; autorização determina os recursos e ações permitidos."
+      ]
+    ],
+    "source_url": "https://pages.nist.gov/800-63-4/",
+    "source_label": "NIST — Diretrizes de Identidade Digital",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "SEG",
+    "title": "[Aprofundamento] Incidentes, continuidade, RTO/RPO e recuperação",
+    "objective": "Planejar respostas defensivas e distinguir metas de tempo e perda aceitável.",
+    "content": "# Objetivo e contexto\nPlanejar respostas defensivas e distinguir metas de tempo e perda aceitável.\n\n## Aula detalhada — entenda o mecanismo\n**Evento** é ocorrência observada; **incidente de segurança** envolve comprometimento real ou potencial que requer processo de resposta. A resposta pode incluir preparação, identificação/análise, contenção, erradicação, recuperação e lições aprendidas. O encadeamento exato depende do referencial; nenhuma etapa dispensa gestão de evidências e comunicação.\n\n**RTO** (Recovery Time Objective) é o tempo-alvo de restauração de uma atividade ou serviço. **RPO** (Recovery Point Objective) é o ponto máximo de perda de dados tolerável medido em tempo. Se backup acontece a cada 24h, a perda potencial desde o último backup pode chegar perto de 24h; isso não demonstra RPO de uma hora. **Backup**, **replicação**, **alta disponibilidade** e **plano de continuidade** não são sinônimos: replicação também pode replicar corrupção, e alta disponibilidade não garante cópia histórica segura.\n\nEstratégia prática defensiva: classificar criticidade, manter inventário, segmentar acessos, ter cópias segregadas e imutáveis quando viável, testar recuperação em ambiente controlado, definir comunicação e exercícios. Logs devem ser preservados com cuidado e acesso restrito; não reinstale imediatamente uma máquina comprometida sem avaliar preservação de evidências e orientação dos responsáveis.\n\n## Exemplo resolvido passo a passo\nUma clínica recebe alertas de criptografia indevida em um servidor. Primeiro, acione o plano de resposta, valide os indícios e contenha propagação conforme procedimento autorizado; preserve registros e envolva responsáveis. Não religue serviços suspeitos sem análise. Em paralelo, decida com os gestores quais atendimentos podem continuar degradados.\n\nSistema A: a organização admite no máximo 2h sem funcionar (RTO=2h) e perder no máximo 15min de atualizações (RPO=15min). Um backup noturno não cumpre automaticamente esse RPO. A solução técnica deve corresponder às metas e passar por testes documentados.\n\nNo pós-incidente, identifique causa, gaps de detecção e prevenção, atualize runbooks e registre testes. A questão de prova pode trocar “RTO” por “perda de dados aceitável”, uma confusão frequente.\n\n## Erros clássicos nas bancas\n**Pegadinha 1:** RTO = tempo de recuperação, não intervalo de backup. **Pegadinha 2:** RPO se refere à antiguidade tolerável dos dados recuperados. **Pegadinha 3:** replicação contínua sem versionamento pode perpetuar alterações maliciosas. **Pegadinha 4:** estabilidade de rede não substitui plano de comunicação com a direção e áreas de negócio.\n\n## Pratique sem consultar\nDefina RTO e RPO para PACS e RIS, justificando pelas necessidades de atendimento. Desenhe uma política que combina cópia local, cópia fora do local e teste periódico de restauração. Liste três indicadores de que o teste foi bem-sucedido (integridade, tempo, possibilidade de uso real).\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nNIST Cybersecurity Framework 2.0: https://www.nist.gov/cyberframework\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Em continuidade de negócio, RPO de 30 minutos indica principalmente:",
+        "choices": [
+          "Limite-alvo de perda temporal de dados",
+          "Tempo máximo para recolocar servidores em produção",
+          "Intervalo fixo entre auditorias",
+          "Tempo máximo de bloqueio de usuário"
+        ],
+        "correct_index": 0,
+        "explanation": "RPO quantifica a janela de dados que a organização tolera perder no retorno a um ponto anterior."
+      },
+      {
+        "stem": "Uma replicação que propaga todas as alterações substitui necessariamente backup com histórico?",
+        "choices": [
+          "Não, pois pode reproduzir corrupção e exclusões",
+          "Sim, porque cópias replicadas nunca são alteradas",
+          "Sim, porque RTO e RPO são idênticos",
+          "Sim, porque replicação dispensa testes"
+        ],
+        "correct_index": 0,
+        "explanation": "Replicação não substitui retenção de versões, segregação e testes de restauração."
+      }
+    ],
+    "cards": [
+      [
+        "RTO e RPO: qual a diferença?",
+        "RTO = prazo-alvo para recuperar o serviço. RPO = quanto de dados, medido em tempo, pode ser perdido."
+      ],
+      [
+        "Por que alta disponibilidade não é igual a backup?",
+        "HA tenta manter serviço ativo após falhas; backup retém cópias recuperáveis, idealmente com histórico e segregação."
+      ]
+    ],
+    "source_url": "https://www.nist.gov/cyberframework",
+    "source_label": "NIST Cybersecurity Framework 2.0",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "SO",
+    "title": "[Aprofundamento] Active Directory, DNS e políticas de acesso",
+    "objective": "Diagnosticar domínio Windows distinguindo identidade, resolução de nomes e políticas.",
+    "content": "# Objetivo e contexto\nDiagnosticar domínio Windows distinguindo identidade, resolução de nomes e políticas.\n\n## Aula detalhada — entenda o mecanismo\n**Active Directory Domain Services (AD DS)** mantém identidade e objetos do domínio, com autenticação e autorização distribuídas. **Controladores de domínio** hospedam serviços de diretório; replicação mantém alterações entre DCs. **DNS** é fundamental para a localização de serviços AD: registros SRV ajudam clientes a encontrar controladores de domínio. Kerberos usa tickets para autenticação e depende de sincronização de tempo apropriada. LDAP é protocolo de acesso ao diretório e não é sinônimo de “criptografia do domínio”.\n\n**GPO** aplica configurações a usuários/computadores, respeitando escopo e precedência, filtragem de segurança, herança e processamento. Uma política linkada à OU errada pode não atingir computadores desejados. **Grupos de segurança** apoiam autorização; aplicar mínimo privilégio evita conceder acesso administrativo permanente para solucionar tarefas simples. Para troubleshooting, confira DNS correto, registros SRV, horário, conectividade e eventos de autenticação, antes de recriar objetos do domínio.\n\nComandos úteis: `whoami /groups`, `gpresult /r`, `gpupdate /force`, `nltest /dsgetdc:dominio.exemplo`, `nslookup -type=SRV _ldap._tcp.dc._msdcs.dominio.exemplo`. O comportamento exato depende da versão e da configuração do ambiente.\n\n## Exemplo resolvido passo a passo\nUsuário abre sessão em máquina de domínio mas não recebe mapeamento de impressora configurado por GPO. 1) Veja se a máquina e o usuário pertencem à OU/escopo esperado. 2) Execute `gpresult /r` para identificar políticas aplicadas e negadas. 3) Confira segurança, WMI e herança. 4) Analise log de GroupPolicy e conectividade para compartilhamento. 5) Corrija escopo ou recurso e valide em usuário piloto.\n\nSe uma estação está apontando DNS apenas para um resolvedor público, pode navegar na internet e ainda assim falhar para encontrar serviços do domínio. O diagnóstico correto começa por resolver a zona interna e registros de localização de serviço.\n\n## Erros clássicos nas bancas\n**Pegadinha:** autenticação não equivale a autorização; conseguir login não dá acesso a qualquer pasta. **Pegadinha:** GPO não funciona apenas com “reiniciar sempre”; alguns ajustes são processados por atualização de política e outros exigem reinicialização ou novo logon. **Pegadinha:** permissões NTFS e permissões do compartilhamento podem restringir acesso em conjunto.\n\n## Pratique sem consultar\nDescreva por que um cliente de domínio necessita de DNS interno adequado, e não somente de DNS público. Trace como localizaria falhas em GPO e explique, com um exemplo, o que muda entre um grupo com permissão de leitura e um grupo administrador do domínio.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nMicrosoft Learn — Windows Server: https://learn.microsoft.com/en-us/windows-server/\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual tipo de registro DNS auxilia clientes a localizar serviços do Active Directory?",
+        "choices": [
+          "SRV",
+          "MX",
+          "CAA exclusivamente",
+          "TXT de SPF necessariamente"
+        ],
+        "correct_index": 0,
+        "explanation": "AD utiliza registros SRV para anunciar serviços como LDAP/Kerberos e localizar controladores de domínio."
+      },
+      {
+        "stem": "Qual comando do Windows mostra informações de GPO aplicadas ao usuário/computador?",
+        "choices": [
+          "gpresult /r",
+          "format c:",
+          "netsh winsock reset exclusivamente",
+          "shutdown /r"
+        ],
+        "correct_index": 0,
+        "explanation": "gpresult apresenta o resultado do processamento de políticas de grupo."
+      }
+    ],
+    "cards": [
+      [
+        "Por que DNS interno é essencial ao AD DS?",
+        "Clientes localizam serviços e controladores de domínio por registros DNS, incluindo SRV."
+      ],
+      [
+        "Qual diferença entre autenticar e autorizar um usuário no domínio?",
+        "Autenticação verifica identidade; autorização controla recursos e permissões disponíveis."
+      ]
+    ],
+    "source_url": "https://learn.microsoft.com/en-us/windows-server/",
+    "source_label": "Microsoft Learn — Windows Server",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "SO",
+    "title": "[Aprofundamento] Linux: processos, permissões, systemd e rede",
+    "objective": "Investigar serviços Linux sem depender de tentativas cegas de reinicialização.",
+    "content": "# Objetivo e contexto\nInvestigar serviços Linux sem depender de tentativas cegas de reinicialização.\n\n## Aula detalhada — entenda o mecanismo\nNo Linux, processos possuem PID, dono e estado. `ps`, `top` e `journalctl` ajudam a investigar execução e logs. `systemd` gerencia unidades como serviços, alvos e temporizadores em distribuições que o utilizam; `systemctl status nginx`, `systemctl restart nginx` e `journalctl -u nginx` cumprem papéis distintos: estado, ação e registros. Reiniciar antes de ler logs pode apagar pistas importantes dependendo da aplicação.\n\nPermissões clássicas **rwx** correspondem a leitura, escrita e execução; usuários, grupo e outros recebem permissões separadas. `chmod 640 arquivo` configura `rw- r-- ---`; diretorias exigem permissão de execução para travessia. O root pode executar operações privilegiadas e deve ser protegido por mínimo privilégio. `sudo` delega execução privilegiada conforme política. `chown` altera proprietário; ACLs e atributos adicionais podem afetar acesso.\n\nRede: `ip addr`, `ip route`, `ss -lntp`, `resolvectl status` (quando disponível) e `dig` ajudam a separar problemas de interface, rota, escuta e resolução. Arquivos de configuração variam entre distribuições; não memorize `/etc/network/interfaces` como único mecanismo universal.\n\n## Exemplo resolvido passo a passo\nUm serviço web responde “connection refused” no próprio servidor. 1) `systemctl status` revela se está ativo; 2) `ss -lntp` mostra se alguém escuta na porta esperada; 3) `journalctl -u` permite identificar falha de inicialização; 4) examine configuração de bind, firewall local e dependências; 5) aplique alteração controlada e valide.\n\nSe a aplicação escuta em `127.0.0.1:8080`, ela não está automaticamente acessível pelo IP de rede do servidor. Uma solução é disponibilizar proxy reverso e controles de acesso apropriados. Segurança implica evitar expor serviços administrativos desnecessariamente.\n\n## Erros clássicos nas bancas\n**Pegadinha:** `chmod 777` não é solução aceitável por padrão e amplia risco. **Pegadinha:** `systemctl enable` configura inicialização automática e não garante que o serviço esteja rodando agora; `start` inicia. **Pegadinha:** processo ativo não demonstra que aplicação responde corretamente; cheque saúde funcional. **Pegadinha:** `kill -9` é último recurso, pois impede encerramento ordenado.\n\n## Pratique sem consultar\nImagine que um daemon está ativo, mas a API responde 502 via Nginx. Liste quais verificações faria em upstream, porta, logs e rede. Calcule as permissões de `chmod 750` e diga quem pode executar arquivos ou atravessar diretórios. Explique o que `systemctl is-enabled` mede.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nsystemd — manual de systemctl: https://www.freedesktop.org/software/systemd/man/latest/systemctl.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "O que significa chmod 640 em um arquivo comum?",
+        "choices": [
+          "Proprietário lê/escreve; grupo lê; outros não têm permissão",
+          "Todos podem executar",
+          "Proprietário só executa; grupo escreve",
+          "Grupo e outros têm leitura e escrita"
+        ],
+        "correct_index": 0,
+        "explanation": "6 = rw-, 4 = r--, 0 = --- na representação octal."
+      },
+      {
+        "stem": "Qual comando mostra registros de um serviço gerenciado por systemd?",
+        "choices": [
+          "journalctl -u nome.service",
+          "chmod 777 nome.service",
+          "ip link set up",
+          "mkdir nome.service"
+        ],
+        "correct_index": 0,
+        "explanation": "journalctl filtra os logs coletados pelo journal para a unidade selecionada."
+      }
+    ],
+    "cards": [
+      [
+        "Diferença entre systemctl enable e start?",
+        "enable configura o serviço para iniciar automaticamente conforme unidades; start o inicia agora."
+      ],
+      [
+        "O que representa chmod 750?",
+        "Dono: rwx (7); grupo: r-x (5); outros: --- (0)."
+      ]
+    ],
+    "source_url": "https://www.freedesktop.org/software/systemd/man/latest/systemctl.html",
+    "source_label": "systemd — manual de systemctl",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "SO",
+    "title": "[Aprofundamento] Virtualização, contêineres, RAID e backups",
+    "objective": "Comparar hipervisores, imagens de contêiner, persistência e redundância.",
+    "content": "# Objetivo e contexto\nComparar hipervisores, imagens de contêiner, persistência e redundância.\n\n## Aula detalhada — entenda o mecanismo\n**Virtualização por hipervisor** fornece máquinas virtuais com SO convidado e hardware virtualizado. **Contêineres** compartilham o kernel do host, isolando processos e recursos por mecanismos como namespaces e cgroups; não são VMs completas. Imagens são modelos imutáveis por camadas, enquanto contêineres são instâncias executáveis. **Volumes** persistem dados além do ciclo de vida do contêiner; escrever arquivos apenas na camada gravável pode causar perda ao recriar instâncias.\n\nRAID trata disponibilidade/performance de armazenamento, **não substitui backup**. RAID 1 espelha dados, RAID 5 usa paridade distribuída e suporta falha de um disco (com condições e riscos no rebuild). RAID 0 não é tolerante a falhas. Uma exclusão acidental ou ransomware pode se propagar para todos os discos de um RAID. **Snapshots** são pontos no tempo, mas políticas de proteção e consistência determinam seu valor; snapshots da mesma máquina não devem ser chamados de cópia externa segura.\n\nEm Docker Compose, serviços, redes, volumes e variáveis de ambiente formam a orquestração local. **Build** cria imagens; `up -d --build` constrói/inicia; `down` remove contêineres e redes do projeto; `down -v` também remove volumes declarados e pode destruir dados. Nunca execute comandos destrutivos sem backup comprovado.\n\n## Exemplo resolvido passo a passo\nUm projeto tem `web` (React/Nginx) e `api` (FastAPI) com banco SQLite em volume nomeado. A versão do código muda, mas o SQLite precisa permanecer. Procedimento: 1) backup verificável do banco; 2) versionar arquivos de aplicação; 3) atualizar imagens; 4) subir serviços com `docker compose up -d --build`; 5) validar login, registros e histórico. Não use `docker compose down -v` como “limpeza” durante atualização.\n\nSe dois discos de um RAID 5 comum falham, o arranjo pode perder capacidade de reconstrução. Já um RAID 1 de dois discos tolera a falha de um deles. Em ambos, backups externos são necessários contra perda lógica e desastres.\n\n## Erros clássicos nas bancas\n**Pegadinha:** “RAID 5 tem duas paridades” confunde RAID 5 com RAID 6. **Pegadinha:** “imagem Docker = contêiner” é falso. **Pegadinha:** contêiner no Linux compartilha kernel do host, embora possa executar aplicações com userland distinto. **Pegadinha:** `down -v` remove volumes associados e é perigoso para produção.\n\n## Pratique sem consultar\nFaça um quadro comparando VM e contêiner (kernel, isolamento, atualização, custo operacional) e outro comparando RAID 0/1/5/6. Justifique por que uma clínica com RAID precisa de backups testados. Simule, por escrito, uma atualização que preserve um volume PostgreSQL.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nDocker Docs — volumes persistentes: https://docs.docker.com/storage/volumes/\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual comando deve ser evitado ao atualizar um projeto Docker quando se deseja preservar volumes nomeados?",
+        "choices": [
+          "docker compose down -v",
+          "docker compose ps",
+          "docker compose logs",
+          "docker compose up -d --build"
+        ],
+        "correct_index": 0,
+        "explanation": "down -v remove volumes, incluindo armazenamento persistente usado por bancos."
+      },
+      {
+        "stem": "Qual afirmativa sobre RAID 5 tradicional está correta?",
+        "choices": [
+          "Em condições normais, suporta falha de um disco",
+          "Substitui backup contra exclusão acidental",
+          "Tolera falha de qualquer quantidade de discos",
+          "Não utiliza paridade"
+        ],
+        "correct_index": 0,
+        "explanation": "RAID 5 distribui paridade e normalmente tolera falha de um disco; não evita perda lógica nem desastres."
+      }
+    ],
+    "cards": [
+      [
+        "Qual diferença estrutural principal entre VM e contêiner no mesmo host Linux?",
+        "VM executa SO convidado com kernel próprio; contêiner compartilha kernel do host e isola processos."
+      ],
+      [
+        "Por que RAID não substitui backup?",
+        "RAID melhora disponibilidade diante de falhas de disco, mas não protege suficientemente contra exclusão, corrupção, ransomware e desastre."
+      ]
+    ],
+    "source_url": "https://docs.docker.com/storage/volumes/",
+    "source_label": "Docker Docs — volumes persistentes",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "POR",
+    "title": "[Aprofundamento] Interpretação, inferência e pressuposição",
+    "objective": "Distinguir informação literal, inferência válida e extrapolação sem suporte textual.",
+    "content": "# Objetivo e contexto\nDistinguir informação literal, inferência válida e extrapolação sem suporte textual.\n\n## Aula detalhada — entenda o mecanismo\nEm provas, **compreender** é recuperar informações do enunciado ou do texto; **interpretar** envolve relações, propósito, implícitos e efeitos. Resposta correta deve ter apoio verificável em elementos do texto, não em opiniões externas. O tema é assunto amplo; a **tese** é posição central defendida pelo autor; argumentos sustentam a tese; exemplos ilustram sem necessariamente constituir a conclusão.\n\n**Inferência** exige uma conclusão compatível com os dados. Dizer “todos” quando texto afirma “alguns” extrapola; trocar possibilidade por certeza também é erro. **Pressuposto** é informação tomada como dada por certas construções linguísticas: “Joana voltou a estudar” pressupõe que estudava antes. **Subentendido** depende mais de contexto/intenção e pode ser menos estável. Sinais de posicionamento: conectivos adversativos (mas, porém), modalizadores (talvez, certamente), quantificadores (parte, sempre, nenhum) e recursos retóricos.\n\nA banca pode pedir “segundo o texto”, “infere-se”, “não se pode concluir” ou “opinião do autor”. Cada comando muda o critério. Quando a questão diz EXCETO, destaque a negação antes de analisar opções. Elimine alternativas por contradição direta, generalização abusiva ou inversão de causa e consequência.\n\n## Exemplo resolvido passo a passo\nTexto-base: “Em parte das unidades, a adoção de backups diários reduziu incidentes prolongados. Ainda assim, alguns serviços permaneceram indisponíveis por falhas de configuração.”\n\nConclusão literal: houve adoção de backups diários em parte das unidades e alguns serviços continuaram indisponíveis. Inferência plausível: backup, isoladamente, não elimina todos os tipos de indisponibilidade. Extrapolação indevida: “todas as unidades implantaram backup e zeraram o tempo de parada”.\n\nSe alternativa usar “a adoção de backups causou diretamente cada indisponibilidade”, há inversão/atribuição causal sem base. Procure palavras como somente, inevitavelmente, sempre, jamais, maioria; compare cada uma com os qualificadores do texto.\n\n## Erros clássicos nas bancas\n**Pegadinha:** conhecimento de mundo não deve substituir o que o texto efetivamente diz. **Pegadinha:** “apesar de” pressupõe contraste, não causa direta. **Pegadinha:** uma conclusão pode ser verdadeira fora do texto e ainda ser inadequada à pergunta “de acordo com o texto”. **Pegadinha:** sinônimos mudam intensidade: “possível” não equivale a “certo”.\n\n## Pratique sem consultar\nLeia um parágrafo de notícia científica e marque: tema, tese (se houver), um fato explícito, uma inferência segura e uma afirmação que não pode ser concluída. Justifique a rejeição pelo trecho exato que falta. Repita com uma questão de banca Vunesp ou FGV.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nAcademia Brasileira de Letras — VOLP: https://www.academia.org.br/nossa-lingua/busca-no-vocabulario\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "No trecho “Algumas equipes reduziram falhas após treinamento”, qual conclusão é logicamente sustentada?",
+        "choices": [
+          "Ao menos parte das equipes apresentou redução após treinamento",
+          "Todas as equipes eliminaram falhas",
+          "O treinamento foi a única causa possível",
+          "Nenhuma equipe manteve falhas"
+        ],
+        "correct_index": 0,
+        "explanation": "O quantificador algumas permite afirmar uma parte; não autoriza generalização para todas ou causalidade exclusiva."
+      },
+      {
+        "stem": "Em “Marina voltou a revisar o conteúdo”, qual pressuposição é natural?",
+        "choices": [
+          "Marina já revisava antes",
+          "Marina jamais estudou",
+          "Marina desistiu de estudar",
+          "Marina revisou somente uma vez"
+        ],
+        "correct_index": 0,
+        "explanation": "O verbo voltar a sugere ocorrência anterior da mesma atividade."
+      }
+    ],
+    "cards": [
+      [
+        "Como reconhecer extrapolação em interpretação?",
+        "Busque informação não autorizada pelo texto: universalização, certeza indevida ou causalidade inventada."
+      ],
+      [
+        "Tema e tese são iguais?",
+        "Tema é assunto amplo; tese é posição/proposição central defendida pelo autor."
+      ]
+    ],
+    "source_url": "https://www.academia.org.br/nossa-lingua/busca-no-vocabulario",
+    "source_label": "Academia Brasileira de Letras — VOLP",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "POR",
+    "title": "[Aprofundamento] Concordância, regência, crase e pontuação",
+    "objective": "Resolver decisões gramaticais por sintaxe, e não por intuição de pausa.",
+    "content": "# Objetivo e contexto\nResolver decisões gramaticais por sintaxe, e não por intuição de pausa.\n\n## Aula detalhada — entenda o mecanismo\n**Concordância verbal** liga flexão do verbo ao núcleo do sujeito em estruturas usuais: “os servidores chegaram”. Sujeito posposto não muda essa regra: “chegaram os servidores”. Com verbo **haver** impessoal no sentido de existir, a forma fica no singular: “havia problemas”. Já **existir** concorda com o sujeito: “existiam problemas”. O verbo **fazer** indicando tempo transcorrido também costuma permanecer singular (“faz dois anos”).\n\n**Regência** descreve complementos exigidos por nomes e verbos. “Assistir ao filme” (ver) tradicionalmente pede preposição a na norma cobrada em concursos; “preferir X a Y”, sem “mais” nessa construção formal; “obedecer às normas”. **Crase** indica fusão da preposição a com artigo feminino a(s) ou demonstrativos específicos. Teste: troque substantivo feminino por masculino: “à regra” ↔ “ao regulamento”. Não há crase automática antes de verbo (“a partir”) nem diante de palavra feminina sem preposição a regida.\n\n**Pontuação** marca relações sintáticas e discursivas. Vírgula não separa sujeito de verbo por mero comprimento: “A equipe responsável pelo processo realizou a auditoria.” Isolam-se, por exemplo, vocativos e adjuntos deslocados conforme regras e efeito de leitura. Oração explicativa entre vírgulas acrescenta informação sobre termo já identificado; oração restritiva sem vírgulas limita referente.\n\n## Exemplo resolvido passo a passo\nAnalise “Os analistas, que receberam treinamento, foram aprovados”: com vírgulas, a oração relativa é explicativa; a leitura sugere que todo o grupo referido recebeu treinamento. Em “Os analistas que receberam treinamento foram aprovados”, sem vírgulas, a relativa restringe o grupo aprovado. A diferença altera significado, não somente ritmo.\n\n“Foi encaminhado **à** equipe de segurança” exige preposição a (“encaminhar a”) + artigo a (“a equipe”). Já “começou **a** executar” não exige artigo antes de verbo; por isso não há crase. “Houve três falhas” é impessoal; “Existiram três falhas” concorda. Faça análise do núcleo do sujeito, regência e artigo antes de marcar alternativas.\n\n## Erros clássicos nas bancas\n**Pegadinha:** crase não é “acento em toda palavra feminina”. **Pegadinha:** adjunto adverbial pode ter regras e usos distintos conforme extensão e posição; evite receitas absolutas. **Pegadinha:** vírgula entre sujeito e predicado geralmente é incorreta. **Pegadinha:** a mudança de uma vírgula em oração adjetiva pode alterar a extensão do conjunto referido.\n\n## Pratique sem consultar\nComplete e justifique: “_____ muitos erros no sistema” (haver); “_____ muitos erros no sistema” (existir). Reescreva frases com crase e sem crase usando substantivo masculino para teste. Explique diferença entre “os técnicos que foram chamados” e “os técnicos, que foram chamados”.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nAcademia Brasileira de Letras — VOLP: https://www.academia.org.br/nossa-lingua/busca-no-vocabulario\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Assinale a frase adequada à norma-padrão para o verbo haver no sentido de existir.",
+        "choices": [
+          "Havia três incidentes registrados",
+          "Haviam três incidentes registrados",
+          "Houveram três incidentes registrados",
+          "Haviam existido três incidentes sem sujeito"
+        ],
+        "correct_index": 0,
+        "explanation": "Haver impessoal em sentido existencial permanece no singular: havia, houve, haverá."
+      },
+      {
+        "stem": "Qual redação apresenta corretamente o uso de crase?",
+        "choices": [
+          "O relatório foi enviado à diretoria",
+          "Começou à trabalhar cedo",
+          "Voltamos à revisar o sistema",
+          "O curso é destinado à todos os candidatos"
+        ],
+        "correct_index": 0,
+        "explanation": "Enviar a + a diretoria produz à; antes de verbo e do indefinido todos nas formas apresentadas não há artigo feminino."
+      }
+    ],
+    "cards": [
+      [
+        "Por que “havia problemas” fica no singular?",
+        "Haver com sentido de existir é impessoal, sem sujeito gramatical e mantém 3ª pessoa do singular."
+      ],
+      [
+        "Como testar crase diante de substantivo feminino?",
+        "Verifique a preposição exigida e a presença do artigo; substituir por masculino e obter “ao” pode ajudar."
+      ]
+    ],
+    "source_url": "https://www.academia.org.br/nossa-lingua/busca-no-vocabulario",
+    "source_label": "Academia Brasileira de Letras — VOLP",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "POR",
+    "title": "[Aprofundamento] Coesão, coerência e reescrita de períodos",
+    "objective": "Avaliar se reescritas preservam sentido e relações lógicas.",
+    "content": "# Objetivo e contexto\nAvaliar se reescritas preservam sentido e relações lógicas.\n\n## Aula detalhada — entenda o mecanismo\n**Coesão** envolve conexões linguísticas explícitas (pronomes, elipses, conjunções, substituições); **coerência** é compatibilidade global de sentidos e progressão das ideias. Um texto pode usar muitos conectivos e ainda ser incoerente. Relações comuns: causa (porque, uma vez que), consequência (de modo que), contraste (porém, entretanto), concessão (embora, ainda que), condição (se, caso), finalidade (para que). Cada conectivo possui sintaxe própria; trocar apenas a palavra pode exigir mudança verbal.\n\nPronomes anafóricos retomam antecedentes; pronomes catafóricos antecipam informação. Uma reescrita deve preservar referência e escopo: “Maria informou a Ana que **ela** passou” é ambíguo; especificar antecedente pode melhorar clareza, mas também pode acrescentar informação não existente. A banca cobra equivalência semântica: transformação de voz, pontuação, negação, intensidade e causa precisam ser conferidas.\n\n**Embora** introduz concessão; **porque** frequentemente indica causa ou explicação; **portanto** introduz conclusão. Ex.: “Apesar de os testes terem passado, o risco permanece” não equivale a “Como os testes passaram, o risco permanece”. Diferencie inclusive “nem todos” de “nenhum”: são quantificadores diferentes e não podem ser substituídos sem alterar significado.\n\n## Exemplo resolvido passo a passo\nOriginal: “A atualização foi aprovada, embora existissem falhas menores.” Reescrita fiel: “Apesar de existirem falhas menores, a atualização foi aprovada.” As duas mantêm concessão. Reescrita infiel: “A atualização foi aprovada porque existiam falhas menores”; substitui contraste por causa, alterando a lógica.\n\nOriginal: “Nem todos os candidatos compareceram.” Equivale a “Pelo menos um candidato não compareceu” (pressupondo universo não vazio e leitura usual); não equivale a “Nenhum compareceu”.\n\nEm questão de banca, sublinhe operadores, sujeitos, tempos e advérbios antes e depois; refaça a relação lógica em português simples.\n\n## Erros clássicos nas bancas\n**Pegadinha:** causa e finalidade não são intercambiáveis. **Pegadinha:** substituir “alguns” por “muitos” aumenta comprometimento quantitativo. **Pegadinha:** a ordem de orações pode mudar foco discursivo, mesmo quando proposições permanecem próximas; atente à pergunta “sem alteração de sentido”.\n\n## Pratique sem consultar\nCrie três pares de frases: um com equivalência por concessão, outro alterando causa para consequência e outro com troca de antecedente pronominal. Explique qual relação é preservada e qual muda. Revise apenas as estruturas que você errou, não todo o capítulo.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nAcademia Brasileira de Letras — VOLP: https://www.academia.org.br/nossa-lingua/busca-no-vocabulario\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "A troca de “embora” por “porque” em um período geralmente altera qual relação?",
+        "choices": [
+          "Concessão para causa/explicação",
+          "Concessão para concessão sem mudanças",
+          "Tempo para lugar",
+          "Comparação para enumeração necessariamente"
+        ],
+        "correct_index": 0,
+        "explanation": "Embora expressa concessão; porque frequentemente introduz causa ou explicação, então a troca pode alterar sentido."
+      },
+      {
+        "stem": "Qual expressão é equivalente à negação de “Todos os computadores estão atualizados”?",
+        "choices": [
+          "Pelo menos um computador não está atualizado",
+          "Nenhum computador está atualizado",
+          "Todos os computadores estão desatualizados",
+          "Pelo menos um está atualizado"
+        ],
+        "correct_index": 0,
+        "explanation": "Negar uma afirmação universal produz a existência de um contraexemplo."
+      }
+    ],
+    "cards": [
+      [
+        "Diferença entre coesão e coerência?",
+        "Coesão reúne mecanismos linguísticos de ligação; coerência é compatibilidade e progressão do sentido."
+      ],
+      [
+        "Qual a relação típica introduzida por “embora”?",
+        "Concessão: admite um fato sem invalidar o evento principal."
+      ]
+    ],
+    "source_url": "https://www.academia.org.br/nossa-lingua/busca-no-vocabulario",
+    "source_label": "Academia Brasileira de Letras — VOLP",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "GOV",
+    "title": "[Aprofundamento] ITIL: incidente, problema, mudança e serviço",
+    "objective": "Classificar casos e organizar fluxo de atendimento e melhoria contínua.",
+    "content": "# Objetivo e contexto\nClassificar casos e organizar fluxo de atendimento e melhoria contínua.\n\n## Aula detalhada — entenda o mecanismo\n**Gestão de incidentes** busca restaurar o serviço normal o mais rapidamente possível, limitando o impacto. **Gestão de problemas** identifica e gerencia causas e riscos subjacentes de um ou vários incidentes; pode resultar em workaround e erro conhecido. **Habilitação de mudanças (change enablement)** avalia riscos e coordena alterações para elevar o sucesso, sem exigir um ritual burocrático idêntico para toda mudança. **Service request** trata pedidos usuais e predefinidos, como acesso ou fornecimento de equipamento.\n\nSLAs expressam compromissos de nível de serviço, como disponibilidade e prazo; OLAs descrevem acordos operacionais internos; contratos com fornecedores podem empregar compromissos de suporte. Indicadores úteis: incidentes por criticidade, tempo de restauração, recorrência, mudanças malsucedidas, satisfação e incidentes reabertos. **SLA não é o mesmo que tempo médio de resolução.** O tempo pode depender da prioridade e horário de operação.\n\nA perspectiva de valor do serviço considera cliente, usuário, resultados, custos e riscos. ITIL 4 descreve práticas e princípios orientadores, mas a instituição pode adaptar processos à sua maturidade. Uma requisição de acesso não vira automaticamente incidente apenas porque foi registrada em service desk.\n\n## Exemplo resolvido passo a passo\nExemplo: setor relata que o PACS ficou indisponível. É incidente; o suporte restabelece temporariamente. Uma investigação identifica saturação recorrente de armazenamento: é problema. Uma alteração programada de configuração, com teste e plano de retorno, passa por mudança. Novo usuário solicita acesso ao RIS: pedido de serviço.\n\nVocê implementa triagem: gravidade definida por impacto e urgência, registro de horário, responsável, comunicação de status e escalonamento. Após restaurar, registra causa provável e decide se investigação de problema será aberta. A prova pode dizer que gestão de problema “tem como objetivo principal restaurar rapidamente”; isso descreve sobretudo incidente.\n\n## Erros clássicos nas bancas\n**Pegadinha:** incidente e problema podem coexistir; não são mutuamente excludentes. **Pegadinha:** priorização exige impacto e urgência, não apenas “ordem de chegada” em todos os casos. **Pegadinha:** change enablement não se limita a aprovar compras; trata controle de mudanças em produtos e serviços. **Pegadinha:** número de tickets fechados não mede isoladamente qualidade do atendimento.\n\n## Pratique sem consultar\nClassifique cinco ocorrências de TI entre incidente, problema, mudança e solicitação: senha resetada, aplicativo indisponível, causa recorrente de crash, atualização planejada e pedido de monitor. Crie uma matriz de prioridade com impacto x urgência e explique quando informar gestores.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nPeopleCert — ITIL (referência oficial do framework): https://www.peoplecert.org/frameworks/itil-framework\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual prática de gestão de serviços visa restaurar operação normal com rapidez após interrupção?",
+        "choices": [
+          "Gestão de incidentes",
+          "Gestão de problemas exclusivamente",
+          "Gestão de portfólio",
+          "Gestão de orçamento"
+        ],
+        "correct_index": 0,
+        "explanation": "Incidentes se concentram em restauração do serviço; problemas investigam causas subjacentes."
+      },
+      {
+        "stem": "Uma investigação da causa recorrente de falhas em um banco de dados é principalmente:",
+        "choices": [
+          "Gestão de problemas",
+          "Solicitação padrão de serviço",
+          "Gestão de capacidade humana exclusivamente",
+          "Provisionamento de conta"
+        ],
+        "correct_index": 0,
+        "explanation": "Gestão de problemas investiga causas e reduz probabilidade/impacto de incidentes repetidos."
+      }
+    ],
+    "cards": [
+      [
+        "Objetivo principal da gestão de incidentes?",
+        "Restabelecer o serviço com rapidez e minimizar impacto."
+      ],
+      [
+        "Como diferenciar incidente e problema na ITIL?",
+        "Incidente é interrupção ou redução da qualidade; problema é causa, ou causa potencial, de um ou mais incidentes."
+      ]
+    ],
+    "source_url": "https://www.peoplecert.org/frameworks/itil-framework",
+    "source_label": "PeopleCert — ITIL (referência oficial do framework)",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "GOV",
+    "title": "[Aprofundamento] Governança x gestão, COBIT e PDTI",
+    "objective": "Separar definição de direção, execução de controles e planejamento de TI.",
+    "content": "# Objetivo e contexto\nSeparar definição de direção, execução de controles e planejamento de TI.\n\n## Aula detalhada — entenda o mecanismo\n**Governança** avalia necessidades, define direção e acompanha resultados/prestação de contas. **Gestão** planeja, constrói, executa e monitora atividades para alcançar diretrizes. No COBIT, domínios de governança incluem **EDM** (Evaluate, Direct and Monitor) e domínios de gestão incluem **APO, BAI, DSS e MEA**. Não é necessário decorar siglas isoladas: associe cada domínio à sua responsabilidade.\n\nUm **PDTI** (Plano Diretor de Tecnologia da Informação) traduz necessidades institucionais em objetivos, iniciativas, prioridades, recursos, riscos e métricas para período definido. Sua elaboração envolve diagnóstico, alinhamento estratégico, planejamento, aprovação e acompanhamento. Um inventário de equipamentos é insumo, não substitui PDTI. O comitê/autoridade de governança decide prioridades e tolerância a riscos; a equipe de TI estrutura execução e acompanhamento.\n\n**Indicadores** devem refletir resultados: disponibilidade crítica, tempo de restauração, custo total por serviço, satisfação do usuário, conformidade, entregas e risco residual. Métricas de volume sem contexto (“número de tickets”) não necessariamente indicam valor. Em concursos públicos, conecte PDTI a planejamento de contratações e transformação digital sem presumir que todo ente siga norma federal idêntica.\n\n## Exemplo resolvido passo a passo\nUma prefeitura precisa escolher entre renovar 100 computadores e modernizar conectividade das UBS. A governança define prioridades ligadas à missão e critérios como impacto no cidadão, risco e custo. A gestão levanta requisitos, estimativas e viabilidade, elabora iniciativas com responsáveis e cronograma.\n\nPDTI exemplo: objetivo = aumentar disponibilidade dos sistemas críticos de 97% para 99,5% em 12 meses; iniciativa = monitoramento e redundância de links; responsável = coordenador de infraestrutura; indicador = disponibilidade medida; risco = orçamento insuficiente; revisão = trimestral. Isso é mais auditável do que “melhorar a internet” sem meta.\n\n## Erros clássicos nas bancas\n**Pegadinha:** COBIT é governança e gestão, não ferramenta de antivírus. **Pegadinha:** indicadores não precisam ter objetivo universal fixo; devem ser associados ao contexto. **Pegadinha:** planejar TI não é sinônimo de terceirizar TI. **Pegadinha:** governança avalia e direciona, gestão entrega e opera — funções complementares.\n\n## Pratique sem consultar\nElabore um mini-PDTI com duas prioridades, indicadores mensuráveis, riscos, responsáveis e metas. Identifique quem decide a prioridade institucional e quem executa os projetos. Classifique uma atividade de revisão de desempenho como governança/gestão segundo o contexto.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nISACA — COBIT: https://www.isaca.org/resources/cobit\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "No COBIT, qual domínio está associado à governança, avaliando, direcionando e monitorando?",
+        "choices": [
+          "EDM",
+          "DSS",
+          "BAI",
+          "APO"
+        ],
+        "correct_index": 0,
+        "explanation": "EDM significa Evaluate, Direct and Monitor e trata do sistema de governança; demais domínios são de gestão."
+      },
+      {
+        "stem": "Qual exemplo caracteriza objetivo de PDTI bem formulado?",
+        "choices": [
+          "Aumentar disponibilidade de sistema crítico para meta mensurável com prazo",
+          "Comprar computadores sem definir necessidade",
+          "Anotar os modelos de mouse atuais apenas",
+          "Criar lista de sugestões sem responsáveis"
+        ],
+        "correct_index": 0,
+        "explanation": "Um objetivo gerenciável associa resultado, indicador, prazo e responsabilidade."
+      }
+    ],
+    "cards": [
+      [
+        "Qual a distinção resumida entre governança e gestão de TI?",
+        "Governança avalia, direciona e monitora; gestão planeja, executa e acompanha a entrega."
+      ],
+      [
+        "O que um PDTI deve relacionar?",
+        "Necessidades institucionais, prioridades, iniciativas, recursos, indicadores, riscos e responsabilidades."
+      ]
+    ],
+    "source_url": "https://www.isaca.org/resources/cobit",
+    "source_label": "ISACA — COBIT",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "GOV",
+    "title": "[Aprofundamento] Ágil, Scrum, Kanban e métricas de entrega",
+    "objective": "Entender processos ágeis sem confundir métodos, papéis e indicadores.",
+    "content": "# Objetivo e contexto\nEntender processos ágeis sem confundir métodos, papéis e indicadores.\n\n## Aula detalhada — entenda o mecanismo\n**Scrum** é um framework leve para lidar com problemas complexos, com papéis de responsabilidade (Product Owner, Scrum Master e Developers), eventos (Sprint, Sprint Planning, Daily Scrum, Sprint Review, Retrospective) e artefatos (Product Backlog, Sprint Backlog, Increment). O objetivo da Sprint orienta decisões. A Daily Scrum é reunião dos Developers para inspecionar progresso em direção à meta; não é reunião de prestação de contas ao gerente.\n\n**Kanban** enfatiza visualização do fluxo, limites de trabalho em progresso (WIP), gestão de fluxo, políticas explícitas e melhoria. Uma fila com 30 tarefas “em andamento” pode ocultar gargalos; limitar WIP reduz multitarefa e revela bloqueios. **Lead time** mede tempo decorrido entre solicitação e entrega (conforme definição do fluxo); **cycle time** mede do início do trabalho até conclusão. **Throughput** representa itens concluídos por unidade de tempo. São métricas de processo, não avaliação simplista de produtividade individual.\n\nUm time pode combinar práticas, mas não atribua ao Scrum oficialmente papéis inexistentes como “gerente de projeto obrigatório”. Kanban não exige Sprints. Priorize valor, feedback e entrega verificável, respeitando controles de mudanças, LGPD e disponibilidade em ambientes públicos.\n\n## Exemplo resolvido passo a passo\nEquipe entrega sistema de agendamento para unidade de saúde. Backlog inclui autenticação, agenda, confirmações e relatórios. PO define valor e ordena necessidades; Developers escolhem como construir; Scrum Master auxilia efetividade do Scrum. A cada Sprint, há Increment potencialmente utilizável atendendo à Definition of Done.\n\nSe equipe leva oito dias da solicitação até a entrega, mas só quatro dias efetivamente em trabalho ativo conforme definição adotada, lead time é oito e cycle time quatro. Quadro Kanban revela aprovação do jurídico como gargalo; criar tarefas adicionais sem resolver aprovação aumenta WIP e não necessariamente entrega.\n\n## Erros clássicos nas bancas\n**Pegadinha:** Daily Scrum não é “reunião diária do chefe”. **Pegadinha:** velocidade em pontos de história não compara qualidade de equipes diferentes. **Pegadinha:** Scrum não é sinônimo de “sem documentação” e Agile não dispensa controles. **Pegadinha:** lead time e cycle time são distintos conforme início da contagem.\n\n## Pratique sem consultar\nEsboce quadro Kanban com A Fazer, Em Execução, Em Revisão e Concluído, definindo WIP de duas tarefas por coluna operacional. Em um ciclo fictício, calcule lead e cycle time e explique como um bloqueio em revisão afeta ambos. Liste eventos do Scrum e seu objetivo.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nScrum Guide — versão oficial disponível: https://scrumguides.org/scrum-guide.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual prática está diretamente associada a Kanban?",
+        "choices": [
+          "Limitar trabalho em progresso (WIP)",
+          "Exigir Sprints de duração fixa",
+          "Criar cargo obrigatório de gerente Scrum",
+          "Eliminar visualização do fluxo"
+        ],
+        "correct_index": 0,
+        "explanation": "Limites de WIP ajudam a gerenciar fluxo e exposição de gargalos; Kanban não requer Sprints."
+      },
+      {
+        "stem": "Em Scrum, qual evento é dedicado à inspeção e adaptação da forma de trabalho da equipe?",
+        "choices": [
+          "Sprint Retrospective",
+          "Sprint Review exclusivamente",
+          "Sprint Planning exclusivamente",
+          "Product Backlog Refinement como evento formal obrigatório"
+        ],
+        "correct_index": 0,
+        "explanation": "Retrospective inspeciona como a última Sprint ocorreu e planeja melhorias na efetividade."
+      }
+    ],
+    "cards": [
+      [
+        "Para que servem limites de WIP no Kanban?",
+        "Restringem atividades simultâneas, ajudam a identificar gargalos e favorecem fluxo."
+      ],
+      [
+        "Diferença típica entre lead time e cycle time?",
+        "Lead time inclui espera desde a entrada definida da demanda até entrega; cycle time considera início efetivo do trabalho até conclusão."
+      ]
+    ],
+    "source_url": "https://scrumguides.org/scrum-guide.html",
+    "source_label": "Scrum Guide — versão oficial disponível",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "BD",
+    "title": "[Aprofundamento] Modelagem relacional, chaves e normalização",
+    "objective": "Modelar tabelas minimizando redundância e preservando integridade.",
+    "content": "# Objetivo e contexto\nModelar tabelas minimizando redundância e preservando integridade.\n\n## Aula detalhada — entenda o mecanismo\n**Modelagem conceitual** descreve entidades, atributos e relacionamentos; o modelo lógico relacional representa tabelas, colunas e chaves. **Chave primária (PK)** identifica linhas e não admite nulos em bancos relacionais usuais. **Chave estrangeira (FK)** impõe referência a chave candidata/única da tabela alvo, permitindo valor nulo se coluna for anulável. Cardinalidades ajudam a decidir onde colocar FK ou tabela associativa: N:N exige geralmente relação de associação.\n\nNormalização: **1FN** elimina grupos repetitivos e busca valores atômicos conforme domínio; **2FN** elimina dependências parciais de chave candidata composta; **3FN** evita dependências transitivas de atributos não-chave em relação à chave. Não trate normalização como proibição universal de duplicação: decisões de desnormalização podem ser justificadas por desempenho, exigindo controle de consistência.\n\nUma tabela `Pedidos(id_pedido, id_cliente, nome_cliente, valor)` repete o nome do cliente. Separar `Clientes(id_cliente, nome)` e `Pedidos(id_pedido, id_cliente FK, valor)` reduz anomalias de atualização. Constraints `NOT NULL`, `UNIQUE`, `CHECK` e FK fazem parte da camada de integridade, complementando validações da aplicação.\n\n## Exemplo resolvido passo a passo\nSistema de consultas médicas precisa modelar pacientes, agendamentos e profissionais. Proposta: `paciente(id PK,nome)`, `profissional(id PK,nome)`, `agendamento(id PK,paciente_id FK,profissional_id FK,data_hora,status)`. Cada agendamento aponta para um paciente e um profissional, mas cada um pode estar relacionado a vários agendamentos.\n\nDefina regras: `status` com valores permitidos via CHECK; `data_hora` NOT NULL; índice/constraint para impedir conflitos conforme agenda e requisito real. Atenção: `UNIQUE(profissional_id,data_hora)` evita dois agendamentos iguais para mesmo profissional naquele instante, mas não soluciona sobreposição de intervalos de duração diferente. A regra depende do domínio.\n\n## Erros clássicos nas bancas\n**Pegadinha:** PK e FK podem ser a mesma coluna em relacionamento 1:1, mas não é obrigatório. **Pegadinha:** normalização não significa criar uma tabela para cada palavra. **Pegadinha:** 2FN só adiciona exigências após 1FN e é especialmente relevante com chaves compostas. **Pegadinha:** `NULL` não é o mesmo que zero ou string vazia.\n\n## Pratique sem consultar\nModele matrícula de estudantes em disciplinas (relacionamento N:N). Descreva a tabela associativa e sua chave. Em seguida, identifique anomalia de atualização em uma tabela que repete endereço de fornecedor em todas as compras.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nDocumentação PostgreSQL: https://www.postgresql.org/docs/current/tutorial-sql.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Em relacionamento muitos-para-muitos entre alunos e disciplinas, qual implementação relacional usual é adequada?",
+        "choices": [
+          "Tabela de associação com FKs para ambas as entidades",
+          "Uma única coluna contendo lista CSV de IDs",
+          "Descartar a chave de aluno",
+          "Duplicar todos os registros de alunos na tabela disciplina"
+        ],
+        "correct_index": 0,
+        "explanation": "A tabela associativa representa cada par e preserva referências por chaves estrangeiras."
+      },
+      {
+        "stem": "Qual restrição impede valores duplicados em determinada coluna ou combinação no SQL?",
+        "choices": [
+          "UNIQUE",
+          "CHECK sem expressão",
+          "DEFAULT",
+          "ORDER BY"
+        ],
+        "correct_index": 0,
+        "explanation": "UNIQUE aplica restrição de unicidade; comportamentos com NULL dependem do SGBD e definição."
+      }
+    ],
+    "cards": [
+      [
+        "Para que serve chave estrangeira?",
+        "Restringe referências a linhas válidas de outra relação (ou da mesma tabela), conforme a constraint."
+      ],
+      [
+        "Qual problema normalização busca reduzir?",
+        "Redundância desnecessária e anomalias de inserção, atualização e exclusão."
+      ]
+    ],
+    "source_url": "https://www.postgresql.org/docs/current/tutorial-sql.html",
+    "source_label": "Documentação PostgreSQL",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "BD",
+    "title": "[Aprofundamento] SELECT, JOIN, GROUP BY e HAVING",
+    "objective": "Ler consultas SQL com agregação e distinguir filtragem de linhas de grupos.",
+    "content": "# Objetivo e contexto\nLer consultas SQL com agregação e distinguir filtragem de linhas de grupos.\n\n## Aula detalhada — entenda o mecanismo\nA ordem lógica simplificada de uma consulta SQL é `FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT/OFFSET` (o mecanismo físico pode otimizar). **INNER JOIN** seleciona combinações que satisfazem condição; **LEFT JOIN** preserva linhas à esquerda, preenchendo campos da direita com NULL quando não há correspondência. **WHERE** filtra linhas antes da agregação; **HAVING** filtra grupos após agregação.\n\n`COUNT(*)` conta linhas; `COUNT(coluna)` conta valores não nulos da expressão. **GROUP BY** reúne linhas por chaves; colunas selecionadas sem agregação normalmente precisam participar do agrupamento, ressalvadas regras do SGBD sobre dependência funcional. `ORDER BY` define ordenação explícita; sem ele, ordem de retorno não é garantida. `LIMIT` e detalhes de paginação variam por dialeto; em SQL de concurso, observe padrão solicitado.\n\n`NULL` significa ausência/desconhecimento de valor e usa lógica de três valores. `coluna = NULL` não é forma correta de testar nulidade em SQL comum; use `IS NULL` / `IS NOT NULL`. Para filtrar data ou texto, esteja atento à collation, fuso horário, comparação e índices.\n\n## Exemplo resolvido passo a passo\nTabelas: `clientes(id,nome)` e `pedidos(id,cliente_id,total)`. Requisito: mostrar inclusive clientes sem pedidos, mas apenas clientes com soma de pedidos superior a 500 (essa condição elimina os sem pedidos, naturalmente).\n```sql\nSELECT c.id, c.nome, COALESCE(SUM(p.total),0) AS total\nFROM clientes c\nLEFT JOIN pedidos p ON p.cliente_id = c.id\nGROUP BY c.id, c.nome\nHAVING COALESCE(SUM(p.total),0) > 500\nORDER BY total DESC;\n```\nSe a necessidade real for mostrar **todos os clientes**, remova o HAVING. Se quiser filtrar pedidos de 2026 sem eliminar clientes, coloque o critério de data cuidadosamente no `ON` do LEFT JOIN; pô-lo no WHERE pode descartar linhas com NULL do lado direito.\n\n## Erros clássicos nas bancas\n**Pegadinha:** filtro de `WHERE p.total > 500` não equivale a `HAVING SUM(p.total) > 500`. **Pegadinha:** LEFT JOIN seguido de `WHERE tabela_direita.coluna = valor` pode eliminar linhas sem par e se comportar como inner join para aquele filtro. **Pegadinha:** `COUNT(*)` sobre LEFT JOIN conta a linha preservada mesmo sem pedido; `COUNT(p.id)` dá zero nesse caso.\n\n## Pratique sem consultar\nCrie consulta que liste a quantidade de pedidos por cliente, incluindo clientes sem pedidos. Justifique por que usa LEFT JOIN e `COUNT(p.id)`. Depois altere para mostrar somente clientes com pelo menos três pedidos, usando HAVING.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nDocumentação PostgreSQL: https://www.postgresql.org/docs/current/tutorial-sql.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual cláusula SQL filtra grupos após uma agregação GROUP BY?",
+        "choices": [
+          "HAVING",
+          "WHERE",
+          "ORDER BY",
+          "FROM"
+        ],
+        "correct_index": 0,
+        "explanation": "HAVING atua sobre grupos/valores agregados; WHERE filtra linhas antes do agrupamento."
+      },
+      {
+        "stem": "Para incluir clientes sem pedidos em uma consulta com clientes à esquerda, qual operação JOIN costuma ser adequada?",
+        "choices": [
+          "LEFT JOIN",
+          "INNER JOIN obrigatório",
+          "CROSS JOIN sem condição",
+          "FULL JOIN sem necessidade de condição"
+        ],
+        "correct_index": 0,
+        "explanation": "LEFT JOIN preserva linhas da tabela à esquerda e produz NULLs na direita quando não há correspondência."
+      }
+    ],
+    "cards": [
+      [
+        "Diferença entre WHERE e HAVING?",
+        "WHERE filtra linhas antes do agrupamento; HAVING filtra grupos depois da agregação."
+      ],
+      [
+        "COUNT(*) e COUNT(campo) retornam sempre o mesmo valor?",
+        "Não. COUNT(*) conta linhas; COUNT(campo) ignora valores NULL dessa expressão."
+      ]
+    ],
+    "source_url": "https://www.postgresql.org/docs/current/tutorial-sql.html",
+    "source_label": "Documentação PostgreSQL",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "BD",
+    "title": "[Aprofundamento] ACID, isolamento, concorrência e índices",
+    "objective": "Relacionar garantias transacionais a anomalias e custo de consulta.",
+    "content": "# Objetivo e contexto\nRelacionar garantias transacionais a anomalias e custo de consulta.\n\n## Aula detalhada — entenda o mecanismo\nPropriedades **ACID**: Atomicidade (transação inteira confirma ou desfaz), Consistência (mantém invariantes definidas, quando transações são corretas), Isolamento (controla efeitos de concorrência conforme nível escolhido) e Durabilidade (commit confirmado sobrevive a falhas conforme garantias do sistema). Não confunda “consistência” com “todos os dados de todos os sistemas são iguais imediatamente”.\n\nNíveis de isolamento usuais no SQL: Read Uncommitted, Read Committed, Repeatable Read e Serializable; o comportamento concreto varia por SGBD. Anomalias: leitura suja (ler alteração não confirmada), leitura não repetível (mesma linha muda entre leituras na transação) e fantasma (conjunto de linhas que atende ao predicado muda). MVCC disponibiliza versões para lidar com concorrência de leitores/escritores, mas não elimina toda necessidade de raciocinar sobre conflitos.\n\nÍndices (frequentemente B-tree) aceleram padrões de acesso seletivos e ordenação, mas consomem armazenamento e custo de escrita. Um índice em coluna pouco seletiva ou consulta que retorna a maior parte das linhas pode não ajudar. `EXPLAIN` mostra plano de execução estimado; em PostgreSQL, `EXPLAIN ANALYZE` executa consulta para obter métricas reais, portanto use cuidado com comandos que alteram dados.\n\n## Exemplo resolvido passo a passo\nTransferência bancária: debitar R$100 de A e creditar R$100 em B precisa ser atômico. Em SQL: `BEGIN; UPDATE contas SET saldo=saldo-100 WHERE id=1; UPDATE contas SET saldo=saldo+100 WHERE id=2; COMMIT;` — na prática, a aplicação deve ainda validar saldos, resultados de UPDATE e tratamento de erro, usando rollback quando necessário.\n\nDois operadores tentam reservar a mesma sala ao mesmo tempo. Apenas fazer `SELECT` de disponibilidade e depois `INSERT` sem restrições/controle pode gerar corrida. Uma UNIQUE adequada para instantes exatos, controle transacional e/ou lock podem fazer parte da solução; intervalos sobrepostos exigem regra mais rica.\n\nPara consulta que filtra `WHERE paciente_id=? ORDER BY criado_em DESC`, índice composto `(paciente_id, criado_em)` pode ser candidato. Avalie distribuição, cardinalidade, plano e escrita.\n\n## Erros clássicos nas bancas\n**Pegadinha:** índice não garante que consulta será rápida sempre. **Pegadinha:** commit não corrige regra de negócio mal implementada. **Pegadinha:** serializable não equivale a executar todas as transações literalmente em uma única fila; garante resultado compatível com execução serial em sentido técnico. **Pegadinha:** índices exigem manutenção nas modificações.\n\n## Pratique sem consultar\nExplique qual anomalia ocorre quando T1 lê dado alterado por T2 antes de T2 confirmar. Compare dois índices para consulta por paciente e data e diga qual seria um bom candidato. Monte caso em que dado existente não pode ser sobrescrito sem verificar versão ou lock.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nPostgreSQL — isolamento transacional: https://www.postgresql.org/docs/current/transaction-iso.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual propriedade ACID assegura comportamento tudo-ou-nada de uma transação?",
+        "choices": [
+          "Atomicidade",
+          "Durabilidade",
+          "Isolamento",
+          "Consistência de aplicação exclusivamente"
+        ],
+        "correct_index": 0,
+        "explanation": "Atomicidade exige que efeitos da transação sejam confirmados juntos ou desfeitos."
+      },
+      {
+        "stem": "Qual afirmação sobre índices B-tree é geralmente correta?",
+        "choices": [
+          "Podem acelerar buscas seletivas, com custo adicional de escrita",
+          "Sempre tornam qualquer consulta mais rápida",
+          "Substituem chave estrangeira por padrão",
+          "Eliminam necessidade de otimização de consultas"
+        ],
+        "correct_index": 0,
+        "explanation": "Índices acrescentam estruturas mantidas nas escritas e auxiliam certos acessos; não são aceleradores universais."
+      }
+    ],
+    "cards": [
+      [
+        "O que significa Durabilidade no ACID?",
+        "Após commit, alterações confirmadas devem resistir a falhas segundo garantias do SGBD."
+      ],
+      [
+        "Qual é a diferença entre dirty read e non-repeatable read?",
+        "Dirty read vê alteração não confirmada; non-repeatable read vê valor diferente em leituras da mesma linha numa transação."
+      ]
+    ],
+    "source_url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "source_label": "PostgreSQL — isolamento transacional",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "ENG",
+    "title": "[Aprofundamento] Requisitos, histórias de usuário e modelagem",
+    "objective": "Distinguir requisitos e transformar necessidade de negócio em critérios verificáveis.",
+    "content": "# Objetivo e contexto\nDistinguir requisitos e transformar necessidade de negócio em critérios verificáveis.\n\n## Aula detalhada — entenda o mecanismo\n**Requisitos funcionais** expressam comportamentos e capacidades do sistema: “o usuário deve reagendar consulta”. **Não funcionais** descrevem qualidades e restrições verificáveis: disponibilidade, desempenho, segurança, acessibilidade, conformidade, usabilidade. “Sistema rápido” é vago; “95% das consultas respondem em menos de 2 s sob carga definida” é mensurável. **Regra de negócio** impõe política de domínio: “não permitir duas reservas simultâneas do mesmo profissional”.\n\nTécnicas de levantamento incluem entrevistas, oficinas, observação de trabalho, análise documental, protótipos e modelagem. **História de usuário** (“Como [papel], quero [capacidade], para [benefício]”) facilita conversas, mas não substitui critérios de aceitação. **Casos de uso** detalham interações e fluxos alternativos. Diagramas UML são ferramentas de comunicação e exigem escolher representação apropriada: atividade para fluxo, sequência para mensagens, classes para estrutura.\n\nA **rastreabilidade** conecta necessidade → requisito → decisão → implementação → teste. Quando um requisito muda, esse vínculo permite analisar impacto e regressão. Critérios de aceitação devem prever casos de sucesso, erros, autorização e dados de borda. Separar validação (estamos construindo o produto certo?) e verificação (produto atende especificação?) evita confusões clássicas.\n\n## Exemplo resolvido passo a passo\nRequisito bruto: “preciso melhorar o agendamento”. Detalhe com usuários: médicos, recepcionistas e pacientes. História: “Como recepcionista, quero visualizar horários disponíveis para evitar marcação duplicada”.\n\nCritérios: (1) não exibir slot reservado como livre; (2) conflito de duas tentativas simultâneas resulta em uma confirmação e uma rejeição; (3) acesso limitado ao perfil autorizado; (4) resposta dentro do tempo-alvo medido.\n\nModelo de entidades inclui `agenda`, `slot`, `reserva`; no teste de integração, valide concorrência e persistência. Regra “um slot ativo tem no máximo uma reserva confirmada” deve ser garantida também no banco/transação, não apenas na tela.\n\n## Erros clássicos nas bancas\n**Pegadinha:** não funcional pode ser testável e fundamental; não significa “opcional”. **Pegadinha:** mockup não garante requisitos capturados. **Pegadinha:** usuário dizer “quero um botão” não substitui entender o problema de negócio. **Pegadinha:** caso de uso não precisa ser necessariamente interface gráfica.\n\n## Pratique sem consultar\nTransforme “o sistema deve ser seguro” em três requisitos verificáveis (autorização, log, sessão). Crie história de usuário com três critérios testáveis e um cenário de corrida. Associe cada requisito a um teste correspondente.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nISO/IEC/IEEE 29148 — engenharia de requisitos (visão de referência): https://www.iso.org/standard/72089.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual é um exemplo bem especificado de requisito não funcional?",
+        "choices": [
+          "95% das requisições devem responder em até 2 segundos na carga definida",
+          "O usuário poderá alterar sua senha",
+          "O sistema permitirá criar agendamentos",
+          "A recepção poderá cadastrar pacientes"
+        ],
+        "correct_index": 0,
+        "explanation": "Tempo de resposta mensurável com condições de carga caracteriza requisito de qualidade/performance."
+      },
+      {
+        "stem": "Qual artefato liga requisitos a testes e auxilia análise de impacto de mudanças?",
+        "choices": [
+          "Matriz de rastreabilidade",
+          "Tabela de usuários sem vínculo",
+          "Somente arquivo de cores CSS",
+          "Log de acesso sem relação com requisito"
+        ],
+        "correct_index": 0,
+        "explanation": "Rastreabilidade conecta origem, implementação e validação dos requisitos."
+      }
+    ],
+    "cards": [
+      [
+        "Diferença entre requisito funcional e não funcional?",
+        "Funcional define comportamento; não funcional define qualidades, restrições e condições de operação."
+      ],
+      [
+        "O que diferencia critérios de aceitação de uma história genérica?",
+        "Eles expressam condições observáveis e testáveis para considerar a funcionalidade concluída."
+      ]
+    ],
+    "source_url": "https://www.iso.org/standard/72089.html",
+    "source_label": "ISO/IEC/IEEE 29148 — engenharia de requisitos (visão de referência)",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "ENG",
+    "title": "[Aprofundamento] REST, HTTP, APIs e autenticação web",
+    "objective": "Interpretar métodos, códigos, idempotência e controles de uma API.",
+    "content": "# Objetivo e contexto\nInterpretar métodos, códigos, idempotência e controles de uma API.\n\n## Aula detalhada — entenda o mecanismo\n**HTTP** organiza requisições e respostas por métodos, URI, cabeçalhos, corpo e status. **GET** é seguro no sentido semântico (não deveria solicitar alteração de estado); GET, PUT e DELETE são definidos como idempotentes pela semântica HTTP, embora o servidor possa registrar logs e outras consequências indiretas. **POST** não é idempotente por padrão; **PATCH** não é necessariamente idempotente. A idempotência significa que repetir requisições equivalentes produz o mesmo efeito pretendido no estado do servidor, não respostas de bytes idênticos.\n\n**Status**: 200 sucesso com representação, 201 recurso criado, 204 sucesso sem conteúdo, 400 requisição inválida, 401 não autenticado/credenciais inadequadas, 403 acesso proibido, 404 recurso ausente, 409 conflito de estado, 429 limite de requisições, 500 erro interno. 401 e 403 são muito cobrados em provas.\n\nUma API precisa tratar autenticação, autorização por objeto, validação de entrada, limites de requisição e logs sem vazar dados. **Cookie HttpOnly** dificulta leitura do cookie via JS da página; **Secure** exige envio em conexões seguras; **SameSite** auxilia mitigação de certos cenários de CSRF, mas não substitui análise completa. Um JWT assinado não é necessariamente criptografado. O frontend nunca deve ser o único guardião de permissões.\n\n## Exemplo resolvido passo a passo\nRecurso `questoes/42`: `GET /questoes/42` lê sem alteração pretendida; `PATCH /questoes/42` ajusta parte do registro; `DELETE /questoes/42` solicita remoção. Uma chamada `POST /simulados` pode criar nova tentativa e responder `201 Created`.\n\nSe um usuário autenticado tenta ver tentativas de outro usuário e não tem permissão, resposta adequada frequentemente é `403` (ou `404` para não revelar existência, por escolha de segurança). Se não está autenticado, `401` exige autenticação. Repita um `PUT` com mesmo estado: efeito pretendido não deve criar modificações adicionais diferentes. Observe ETag/If-Match para evitar sobrescrita concorrente quando requerido.\n\n## Erros clássicos nas bancas\n**Pegadinha:** “DELETE não é idempotente porque segunda resposta pode ser 404” é conceitualmente incorreto: as respostas podem diferir sem violar idempotência. **Pegadinha:** 401 não significa simplesmente “sem permissão” para usuário já identificado; 403 é mais representativo. **Pegadinha:** REST não significa usar JSON obrigatoriamente; é um estilo arquitetural.\n\n## Pratique sem consultar\nDesenhe quatro endpoints de uma plataforma de simulados, com método, código de sucesso e situação de erro. Explique como impedir usuário de acessar histórico de terceiros e por que o servidor precisa validar permissão mesmo quando o botão está escondido no frontend.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nRFC 9110 — semântica HTTP: https://www.rfc-editor.org/rfc/rfc9110.html\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual método HTTP é geralmente seguro e idempotente segundo a semântica HTTP?",
+        "choices": [
+          "GET",
+          "POST",
+          "PATCH necessariamente",
+          "CONNECT"
+        ],
+        "correct_index": 0,
+        "explanation": "GET não deve solicitar mudança no estado da aplicação e é definido como seguro/idempotente."
+      },
+      {
+        "stem": "Um usuário autenticado tenta acessar recurso para o qual não tem autorização. Qual status é normalmente adequado?",
+        "choices": [
+          "403 Forbidden",
+          "201 Created",
+          "304 Not Modified",
+          "100 Continue"
+        ],
+        "correct_index": 0,
+        "explanation": "403 expressa recusa de autorização; 401 se relaciona a autenticação, conforme contexto."
+      }
+    ],
+    "cards": [
+      [
+        "O que significa idempotência de um método HTTP?",
+        "Repetições equivalentes produzem o mesmo efeito pretendido no estado; a resposta não precisa ser idêntica."
+      ],
+      [
+        "401 e 403: qual a diferença frequente?",
+        "401 sinaliza falta/invalidade de autenticação; 403 indica que servidor recusa ação mesmo conhecendo a identidade."
+      ]
+    ],
+    "source_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "source_label": "RFC 9110 — semântica HTTP",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "ENG",
+    "title": "[Aprofundamento] Testes, Git, CI/CD e qualidade",
+    "objective": "Criar estratégia de testes e pipeline sem confundir cobertura com correção.",
+    "content": "# Objetivo e contexto\nCriar estratégia de testes e pipeline sem confundir cobertura com correção.\n\n## Aula detalhada — entenda o mecanismo\n**Teste unitário** exercita unidade pequena com isolamento controlado; **integração** verifica componentes colaborando (API + banco), **sistema** valida conjunto completo e **aceitação** observa critérios do usuário/negócio. Pirâmide de testes sugere muitos testes rápidos e determinísticos, com menos testes caros de ponta a ponta; não é regra fixa de porcentagens. **Regressão** detecta se alterações quebraram comportamentos antes corretos.\n\n**Git** registra commits e branches; o commit captura uma versão do repositório e não substitui backup do banco em produção. Merge integra históricos; rebase reaplica commits e pode reescrever histórico, exigindo cuidado com branches compartilhadas. Pull request viabiliza revisão. **CI** executa build, testes e validações em integração frequente. **CD** pode significar entrega contínua (artefato pronto para publicação) ou implantação contínua (publicação automatizada), conforme contexto.\n\nA segurança do pipeline exige controle de segredos, dependências, permissões mínimas e revisão de atualizações. Métricas: tempo de build, testes instáveis, cobertura e defeitos em produção. Cobertura 100% significa execução das linhas/ramificações medidas, **não prova ausência de bugs**. Testes devem conter casos de erro, fronteiras, concorrência e autorização, não apenas “caminho feliz”.\n\n## Exemplo resolvido passo a passo\nEm EstudaTI, teste unitário valida cálculo de subnetting; integração valida `/api/quiz/submit` escrevendo e lendo SQLite; ponta a ponta simula usuário abrindo aula e respondendo questão no navegador. Pipeline executa: formatação/lint → verificação de tipos TS → testes Python → build React → análise de dependências → imagem Docker.\n\nUma mudança adiciona progresso em aulas: migração cria tabela com `CREATE TABLE IF NOT EXISTS`, não apaga históricos; teste cria banco antigo, inicia nova versão e verifica se tentativas permanecem. Essa é regressão de dados. Para publicação, use versão anterior disponível e backup testado.\n\n## Erros clássicos nas bancas\n**Pegadinha:** teste de integração não é necessariamente teste de ponta a ponta. **Pegadinha:** “pipeline verde” indica verificações escolhidas passaram, não auditoria completa de segurança. **Pegadinha:** Git não armazena dados de SQLite que nunca foram adicionados ao repositório. **Pegadinha:** `git rebase` de branch pública pode causar conflitos de histórico.\n\n## Pratique sem consultar\nEscreva uma estratégia de quatro testes para o cadastro de usuário: unidade, integração, autorização e navegador. Defina caso de limite de senha, erro de banco e tentativa de acesso sem cookie. Em seguida, liste etapas de CI que impediriam a entrega com build React quebrado.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\npytest — documentação de testes: https://docs.pytest.org/en/stable/\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual teste costuma validar a interação entre API e banco de dados real de teste?",
+        "choices": [
+          "Teste de integração",
+          "Somente teste unitário totalmente isolado",
+          "Teste visual de cor",
+          "Teste ortográfico de comentário"
+        ],
+        "correct_index": 0,
+        "explanation": "Integração observa interação entre componentes e contratos reais."
+      },
+      {
+        "stem": "O que uma cobertura de testes de 100% garante?",
+        "choices": [
+          "Somente que a métrica de cobertura adotada foi atingida",
+          "Ausência de todos os bugs possíveis",
+          "Ausência de vulnerabilidades de negócio",
+          "Que o software satisfaz todas as necessidades"
+        ],
+        "correct_index": 0,
+        "explanation": "Cobertura mede execução de artefatos de código, não qualidade suficiente ou ausência de defeitos."
+      }
+    ],
+    "cards": [
+      [
+        "O que diferencia CI de implantação contínua?",
+        "CI valida integração frequente; implantação contínua automatiza publicação após etapas de verificação."
+      ],
+      [
+        "Por que testes de migração são importantes em atualizações?",
+        "Verificam que esquema novo funciona sem destruir registros ou alterar comportamentos existentes."
+      ]
+    ],
+    "source_url": "https://docs.pytest.org/en/stable/",
+    "source_label": "pytest — documentação de testes",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "LOG",
+    "title": "[Aprofundamento] Proposições, implicação e equivalências",
+    "objective": "Resolver tabelas-verdade e distinguir contrapositiva, recíproca e negação.",
+    "content": "# Objetivo e contexto\nResolver tabelas-verdade e distinguir contrapositiva, recíproca e negação.\n\n## Aula detalhada — entenda o mecanismo\nUma **proposição** é enunciado declarativo ao qual se atribui verdadeiro ou falso sob interpretação definida; perguntas e ordens não são proposições simples. Operadores: conjunção `P ∧ Q` só é verdadeira se ambos verdadeiros; disjunção inclusiva `P ∨ Q` só é falsa se ambos falsos; implicação material `P → Q` só é falsa quando P verdadeira e Q falsa; bicondicional `P ↔ Q` é verdadeiro quando valores coincidem; negação inverte valor.\n\nA implicação `P → Q` é equivalente a `¬P ∨ Q` e à **contrapositiva** `¬Q → ¬P`. Já a recíproca `Q → P` não é equivalente em geral. Leis de De Morgan: `¬(P ∧ Q) ≡ ¬P ∨ ¬Q` e `¬(P ∨ Q) ≡ ¬P ∧ ¬Q`. Negar uma implicação produz `P ∧ ¬Q`, não uma nova implicação invertida.\n\nEm provas com linguagem natural, a palavra “se” introduz condição suficiente no sentido de `P → Q`; “somente se” costuma expressar necessidade: “P somente se Q” também se formaliza como `P → Q`. Cuidado com quantificadores implícitos e contexto para não aplicar uma fórmula a frase ambígua.\n\n## Exemplo resolvido passo a passo\nEnunciado: “Se o servidor está atualizado (P), então a correção está instalada (Q)”. Teste P=V e Q=F: a implicação é F. Para P=F e Q=F: a implicação material é V, mesmo que pareça contraintuitivo fora da lógica formal.\n\nContrapositiva: “Se a correção não está instalada (¬Q), então o servidor não está atualizado (¬P)”, com mesma tabela-verdade. Recíproca “Se a correção está instalada então o servidor está atualizado” não é dedução válida a partir da original. Negação da implicação: “Servidor atualizado E correção não instalada”, único cenário que falsifica a regra.\n\n## Erros clássicos nas bancas\n**Pegadinha:** implicação não significa causalidade. **Pegadinha:** “ou” em lógica proposicional normalmente é inclusivo salvo especificação. **Pegadinha:** contrária/inversa/recíproca não são automaticamente equivalentes. **Pegadinha:** a negação de “P e Q” troca o conectivo por “ou” e nega ambos.\n\n## Pratique sem consultar\nConstrua tabela-verdade de `(P → Q) ↔ (¬Q → ¬P)` para quatro combinações. Negue `P ∨ Q` usando De Morgan. Formalize e negue: “Se estudo, então passo na prova” sem confundir com a recíproca.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nOpenStax — Matemática: https://openstax.org/subjects/math\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual é a negação lógica de P → Q?",
+        "choices": [
+          "P ∧ ¬Q",
+          "¬P → ¬Q",
+          "Q → P",
+          "¬P ∨ Q"
+        ],
+        "correct_index": 0,
+        "explanation": "Implicação é falsa exatamente quando antecedente é verdadeiro e consequente falso; sua negação expressa essa situação."
+      },
+      {
+        "stem": "Qual expressão é equivalente a P → Q?",
+        "choices": [
+          "¬Q → ¬P",
+          "Q → P",
+          "P ∧ Q",
+          "¬P ∧ ¬Q"
+        ],
+        "correct_index": 0,
+        "explanation": "Contrapositiva é equivalente à implicação original; recíproca não é em geral."
+      }
+    ],
+    "cards": [
+      [
+        "Quando a implicação P→Q é falsa?",
+        "Apenas quando P é verdadeira e Q é falsa."
+      ],
+      [
+        "Qual a contrapositiva de P→Q?",
+        "¬Q→¬P; é logicamente equivalente à proposição original."
+      ]
+    ],
+    "source_url": "https://openstax.org/subjects/math",
+    "source_label": "OpenStax — Matemática",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "LOG",
+    "title": "[Aprofundamento] Conjuntos, probabilidade e combinatória",
+    "objective": "Evitar dupla contagem e distinguir eventos independentes de excludentes.",
+    "content": "# Objetivo e contexto\nEvitar dupla contagem e distinguir eventos independentes de excludentes.\n\n## Aula detalhada — entenda o mecanismo\nPara conjuntos finitos, **inclusão-exclusão** de dois conjuntos: `|A∪B|=|A|+|B|−|A∩B|`. A interseção reúne elementos comuns; união reúne elementos de pelo menos um. Se “nenhum dos dois” for pedido, subtraia a união do total do universo.\n\nEm experimento equiprovável, `P(A)=casos favoráveis/total de casos`. Complementar: `P(não A)=1−P(A)`. Eventos **independentes** satisfazem `P(A∩B)=P(A)P(B)`. Eventos **mutuamente exclusivos** não ocorrem juntos; se ambos têm probabilidade positiva, não são independentes. Probabilidade condicional `P(A|B)=P(A∩B)/P(B)` se P(B)>0.\n\nCombinatória: permutação de n distintos é `n!`. **Arranjo** considera ordem de escolha, `A(n,k)=n!/(n−k)!`; **combinação** ignora ordem, `C(n,k)=n!/(k!(n−k)!)`. Para grupos de pessoas sem cargos, combinação; para presidente e secretário com posições distintas, arranjo. Sempre defina primeiro se seleção permite repetição e se ordem importa.\n\n## Exemplo resolvido passo a passo\nEm 50 candidatos, 28 estudam Linux, 21 estudam redes e 9 estudam ambos. União = 28+21−9 = **40**; nenhum = 50−40 = **10**. Se você somar 28+21, contará os nove duas vezes.\n\nEscolher comissão de 3 entre 6 sem cargos: `C(6,3)=6!/(3!3!)=20`. Se quiser presidente e secretário entre 6 pessoas distintas, `6×5=30` arranjos.\n\nDois lançamentos independentes de moeda justa: `P(duas caras)=1/2×1/2=1/4`. Já “cara no mesmo lançamento” e “coroa no mesmo lançamento” são mutuamente exclusivos, mas não independentes.\n\n## Erros clássicos nas bancas\n**Pegadinha:** a expressão “ao menos um” frequentemente sugere complemento. **Pegadinha:** “ambos” é interseção, e não soma. **Pegadinha:** a fórmula da combinação pressupõe escolha sem repetição. **Pegadinha:** independência não é sinônimo de incompatibilidade.\n\n## Pratique sem consultar\nResolva: turma de 80 pessoas; 45 estudam redes, 35 segurança, 20 ambos. Quantos estudam pelo menos um? Quantos nenhum? Depois calcule número de comissões de dois entre sete pessoas, e número de pares com funções de líder e suplente.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nOpenStax — Matemática: https://openstax.org/subjects/math\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Se |A|=28, |B|=21 e |A∩B|=9, quanto vale |A∪B|?",
+        "choices": [
+          "40",
+          "58",
+          "49",
+          "19"
+        ],
+        "correct_index": 0,
+        "explanation": "Pela inclusão-exclusão: 28+21−9=40; nove pessoas estavam contadas duas vezes."
+      },
+      {
+        "stem": "Quantos grupos distintos de 3 pessoas podemos formar entre 6, sem considerar ordem?",
+        "choices": [
+          "20",
+          "120",
+          "30",
+          "18"
+        ],
+        "correct_index": 0,
+        "explanation": "C(6,3) = 6!/(3!3!) = 20; a ordem não cria grupo novo."
+      }
+    ],
+    "cards": [
+      [
+        "O que diferencia eventos independentes de eventos mutuamente exclusivos?",
+        "Independentes não alteram probabilidades condicionais entre si; exclusivos não ocorrem juntos."
+      ],
+      [
+        "Quando usar combinação em vez de arranjo?",
+        "Quando selecionar itens sem considerar a ordem e sem repetição, nas fórmulas usuais."
+      ]
+    ],
+    "source_url": "https://openstax.org/subjects/math",
+    "source_label": "OpenStax — Matemática",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "LOG",
+    "title": "[Aprofundamento] Equações, progressões e análise de problemas",
+    "objective": "Traduzir enunciados em expressões sem aplicar fórmulas fora de contexto.",
+    "content": "# Objetivo e contexto\nTraduzir enunciados em expressões sem aplicar fórmulas fora de contexto.\n\n## Aula detalhada — entenda o mecanismo\n**Equação** é igualdade envolvendo incógnitas; a solução precisa satisfazer condições originais. Em equações de 1º grau, isole incógnita com operações equivalentes. Em 2º grau, `ax²+bx+c=0` com a≠0; discriminante `Δ=b²−4ac`, soluções reais quando Δ≥0. Não divida por expressão que pode ser zero sem analisar casos.\n\n**PA** tem diferença constante: `a_n=a_1+(n−1)r`; soma `S_n=n(a_1+a_n)/2`. **PG** tem razão constante `q` (quando definida): `a_n=a_1 q^(n−1)`; soma de PG finita com q≠1: `S_n=a_1(q^n−1)/(q−1)`. Bancas podem misturar crescimento linear e exponencial; identifique padrão pela diferença e razão entre termos.\n\n**Regra de três** exige proporcionalidade demonstrável. Mais técnicos nem sempre implicam tempo inversamente proporcional se há dependências, gargalos ou divisão não linear do trabalho. Em questão idealizada, supondo trabalho fixo e produtividade igual, pessoas × tempo pode ser constante. Leia hipóteses, unidades e arredondamentos antes do cálculo.\n\n## Exemplo resolvido passo a passo\nPA: um curso tem 5 questões no dia 1 e acrescenta 3 por dia. No 8º dia, `a_8 = 5 + 7×3 = 26`. Total nos oito dias: `S_8 = 8×(5+26)/2 = 124`.\n\nPG: número de backups processados dobra a cada etapa a partir de 2: 2,4,8,16... O 6º termo é `2×2^5 = 64`. Se a prova cobrar total até a 6ª etapa, soma = `2(2^6−1)=126`.\n\nEquação: orçamento de R$ 1.200 inclui 3 licenças iguais mais taxa de R$ 150. `3x+150=1200`; logo `x=350`. Verifique: 3×350+150=1.200. Traduzir o problema é tão importante quanto calcular.\n\n## Erros clássicos nas bancas\n**Pegadinha:** PA não se identifica apenas por termos crescentes; precisa diferença constante. **Pegadinha:** `n−1` no termo geral evita erro de uma posição. **Pegadinha:** taxa fixa em orçamento não deve ser multiplicada pela quantidade de itens. **Pegadinha:** não arredonde resultados intermediários sem justificativa.\n\n## Pratique sem consultar\nConstrua uma PA com primeiro termo 7 e razão 4; encontre 12º termo e soma de 12 termos. Construa uma PG com primeiro termo 3 e razão 2; calcule 5º termo. Escreva uma equação simples para “três parcelas iguais e uma taxa de R$ 20 somam R$ 170”.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nOpenStax — Matemática: https://openstax.org/subjects/math\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Em uma PA com a1=5 e razão r=3, qual é o 8º termo?",
+        "choices": [
+          "26",
+          "24",
+          "29",
+          "21"
+        ],
+        "correct_index": 0,
+        "explanation": "O termo geral usa n−1 intervalos: 5+(8−1)×3=26."
+      },
+      {
+        "stem": "Em uma PG com a1=2 e razão q=2, qual é o 6º termo?",
+        "choices": [
+          "64",
+          "32",
+          "128",
+          "12"
+        ],
+        "correct_index": 0,
+        "explanation": "a6 = 2×2^5 = 64; o expoente é n−1."
+      }
+    ],
+    "cards": [
+      [
+        "Qual é a fórmula do termo geral da PA?",
+        "a_n = a_1 + (n−1)r."
+      ],
+      [
+        "Como distinguir crescimento típico de PA e PG?",
+        "PA tem diferença constante; PG tem razão constante entre termos consecutivos."
+      ]
+    ],
+    "source_url": "https://openstax.org/subjects/math",
+    "source_label": "OpenStax — Matemática",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "LEG",
+    "title": "[Aprofundamento] LGPD: princípios, bases legais e agentes",
+    "objective": "Distinguir tratamento, papéis e hipóteses legais sem simplificar consentimento.",
+    "content": "# Objetivo e contexto\nDistinguir tratamento, papéis e hipóteses legais sem simplificar consentimento.\n\n## Aula detalhada — entenda o mecanismo\nA **LGPD (Lei 13.709/2018)** disciplina tratamento de dados pessoais inclusive digitais por agentes públicos e privados, com exceções e regras próprias. **Dado pessoal** identifica ou torna identificável pessoa natural; **dado sensível** inclui dados sobre saúde, entre outras categorias legais; **tratamento** inclui coleta, acesso, armazenamento, compartilhamento e exclusão. Informação anonimizada, se realmente não identificável com meios razoáveis, segue enquadramento próprio; pseudonimização não é sinônimo de anonimização irreversível.\n\nPrincípios do art. 6º incluem finalidade, adequação, necessidade, livre acesso, qualidade, transparência, segurança, prevenção, não discriminação e responsabilização/prestação de contas. **Controlador** toma decisões sobre tratamento; **operador** realiza em nome do controlador; **encarregado** atua como canal de comunicação nos termos legais e regulamentares. A classificação depende das decisões e relações reais, não apenas do nome no contrato.\n\n**Consentimento** é uma entre várias bases legais, e dados sensíveis possuem hipóteses do art. 11. Não suponha que toda operação em clínica depende de consentimento: proteção da vida, tutela da saúde nas condições legais e obrigações legais podem ser relevantes, devendo avaliar cenário concreto. Direitos dos titulares e deveres de segurança precisam ser interpretados junto de limitações e regras para o poder público.\n\n## Exemplo resolvido passo a passo\nUma clínica registra identificação e imagens para realizar exame. Identifique quais dados são pessoais e quais são sensíveis; mapeie finalidade, necessidade, prazos legais, acessos e compartilhamentos. Determine papel de clínica e fornecedor PACS conforme quem decide finalidades/meios essenciais e quem processa por instruções, em vez de usar rótulos genéricos.\n\nUm funcionário envia laudo para destinatário errado: pode ocorrer incidente de segurança com dados pessoais; contenha exposição, avalie risco, registre fatos, preserve evidências e siga regras de comunicação à ANPD e titulares aplicáveis ao caso. Não informe automaticamente que “qualquer erro deve ser comunicado em 24 horas”: procedimentos e prazos dependem de normas vigentes e enquadramento.\n\n## Erros clássicos nas bancas\n**Pegadinha:** GDPR e LGPD não são leis idênticas. **Pegadinha:** consentimento não é a única base. **Pegadinha:** dado de saúde é categoria sensível. **Pegadinha:** operador não é necessariamente empresa de TI; papel é funcional no tratamento. **Pegadinha:** “ter firewall” não prova cumprimento de todos os princípios da LGPD.\n\n## Pratique sem consultar\nFaça um inventário hipotético de dados do agendamento, separando dados comuns e sensíveis. Para cada tratamento, defina propósito, base legal a estudar, minimização, quem acessa, prazo e risco. Liste dois direitos dos titulares e confira redação vigente na fonte oficial.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nPlanalto — texto atualizado da LGPD: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Na LGPD, informação individual sobre diagnóstico de saúde é classificada em regra como:",
+        "choices": [
+          "Dado pessoal sensível",
+          "Dado não pessoal por padrão",
+          "Dado público sem restrições",
+          "Dado anônimo independentemente do contexto"
+        ],
+        "correct_index": 0,
+        "explanation": "Dados referentes à saúde são sensíveis; o tratamento exige enquadramento jurídico e proteção apropriados."
+      },
+      {
+        "stem": "Qual afirmação sobre consentimento na LGPD está correta?",
+        "choices": [
+          "É uma das bases legais, não a única",
+          "É obrigatório em todo tratamento de dados pessoais",
+          "Substitui deveres de segurança e finalidade",
+          "Elimina necessidade de informação ao titular em qualquer caso"
+        ],
+        "correct_index": 0,
+        "explanation": "A LGPD contempla várias bases legais conforme dados e finalidade; consentimento não é universal."
+      }
+    ],
+    "cards": [
+      [
+        "Controlador e operador: como diferenciar?",
+        "Controlador decide sobre tratamento; operador trata dados em nome do controlador, conforme a relação concreta."
+      ],
+      [
+        "Por que dados de saúde exigem atenção especial na LGPD?",
+        "São dados pessoais sensíveis, sujeitos a hipóteses e salvaguardas próprias."
+      ]
+    ],
+    "source_url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+    "source_label": "Planalto — texto atualizado da LGPD",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "LEG",
+    "title": "[Aprofundamento] Lei 14.133/2021: ETP, TR e contratos de TI",
+    "objective": "Compreender sequência de planejamento e fiscalização em contratações públicas.",
+    "content": "# Objetivo e contexto\nCompreender sequência de planejamento e fiscalização em contratações públicas.\n\n## Aula detalhada — entenda o mecanismo\nA **Lei 14.133/2021** estabelece normas gerais de licitações e contratos administrativos; regras locais e regulamentares complementam procedimentos. O **Estudo Técnico Preliminar (ETP)** investiga necessidade e solução mais adequada, avaliando viabilidade técnica/econômica; o **Termo de Referência (TR)** especifica objeto e condições de contratação de bens/serviços, conforme aplicação. O art. 18 trata da fase preparatória; a definição de TR no art. 6º, XXIII, inclui objeto, fundamentação, requisitos, execução, gestão, critérios de medição/pagamento e outros parâmetros.\n\nPlanejamento de compra de TI começa **pelo problema público**, não pela marca desejada. Descreva necessidades, alternativas tecnológicas, quantidades, custos de ciclo de vida, requisitos de segurança e interoperabilidade, critérios de aceite e riscos. A contratação deve observar impessoalidade, isonomia, planejamento e legislação. Gestão e fiscalização de contratos são atividades distintas de elaboração do edital, embora interfaces existam.\n\nEm questões, não trate ETP e TR como sinônimos: ETP ajuda a justificar solução; TR detalha objeto e como contratar/medir. Há hipóteses e regulamentações específicas quanto à obrigatoriedade e conteúdo, portanto sempre consulte texto vigente, órgão e edital. Um profissional de TI pode contribuir tecnicamente, sem substituir atribuições jurídicas e administrativas das unidades competentes.\n\n## Exemplo resolvido passo a passo\nPrefeitura precisa contratar backup externo. ETP: qual problema? Risco de perda de dados e tempo de recuperação inadequado. Quais alternativas? Serviço gerenciado, solução própria, híbrida; compare custo total, localização e proteção de dados, retenção, recuperação, rede, dependência de fornecedor e requisitos.\n\nTR: descreva volume de dados, criptografia, retenção, controle de acesso, localização, testes de recuperação, métricas, critérios de aceite, suporte, penalidades conforme jurídico e pagamentos. A fiscalização acompanha SLA, evidências de backup e restaurações aprovadas.\n\nSe proposta de fornecedor promete “backup ilimitado”, sem delimitar volume, tráfego e recuperação, o objeto e os critérios de recebimento estão pouco claros. A prova pode perguntar em qual fase se estuda alternativas de solução: ETP.\n\n## Erros clássicos nas bancas\n**Pegadinha:** licitação não começa pela escolha da marca sem justificativa. **Pegadinha:** TR não é documento meramente publicitário; precisa critérios verificáveis. **Pegadinha:** ETP não “substitui automaticamente” o termo de referência. **Pegadinha:** fiscalização de contrato de TI não dispensa indicadores, aceite e documentação de execução.\n\n## Pratique sem consultar\nEscreva um mini-ETP de 12 linhas para contratar links redundantes para unidades de saúde e um mini-TR com objeto, requisito, testes de aceite, prazo, acompanhamento e critérios de medição. Identifique onde entram requisitos LGPD e segurança.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nPlanalto — Lei 14.133/2021: https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "Qual documento da fase preparatória se destina a estudar necessidade e viabilidade de alternativas de solução?",
+        "choices": [
+          "Estudo Técnico Preliminar (ETP)",
+          "Nota fiscal de serviço já executado",
+          "Termo de posse do fiscal",
+          "Ordem de pagamento"
+        ],
+        "correct_index": 0,
+        "explanation": "ETP fundamenta necessidade, alternativas e viabilidade da solução a contratar, na forma da legislação."
+      },
+      {
+        "stem": "Qual requisito é coerente com um Termo de Referência de serviço de backup?",
+        "choices": [
+          "Definir objeto, retenção, testes de restauração e critérios de aceite",
+          "Escolher qualquer marca sem critérios",
+          "Dispensar condições de medição do contrato",
+          "Não especificar responsabilidades de segurança"
+        ],
+        "correct_index": 0,
+        "explanation": "TR precisa descrever condições e requisitos para seleção, execução e fiscalização do objeto."
+      }
+    ],
+    "cards": [
+      [
+        "ETP e TR: qual diferença resumida?",
+        "ETP examina problema e solução viável; TR define detalhadamente objeto e condições da contratação."
+      ],
+      [
+        "Por que métricas de aceite são importantes em contratos de TI?",
+        "Permitem verificar entrega e desempenho antes de aceitar e pagar por serviços/bens."
+      ]
+    ],
+    "source_url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm",
+    "source_label": "Planalto — Lei 14.133/2021",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  },
+  {
+    "code": "LEG",
+    "title": "[Aprofundamento] LAI, Governo Digital e transparência com privacidade",
+    "objective": "Conciliar acesso à informação, proteção de dados e transformação digital.",
+    "content": "# Objetivo e contexto\nConciliar acesso à informação, proteção de dados e transformação digital.\n\n## Aula detalhada — entenda o mecanismo\nA **Lei 12.527/2011 (LAI)** regula acesso a informações públicas e obriga transparência ativa e passiva conforme regras, competências e exceções legais. Transparência ativa publica dados de interesse geral; passiva responde a solicitações. Informações pessoais podem ter restrições e tratamento próprios. Sigilo legal é exceção delimitada, não justificativa automática para negar todo documento.\n\nA **Lei 14.129/2021 (Governo Digital)** busca eficiência, desburocratização, transformação digital e participação do cidadão nas esferas e hipóteses previstas. Serviços digitais devem considerar acessibilidade, interoperabilidade, simplificação, transparência e segurança, sem presumir que todos os dados do cidadão devem estar públicos. **Interoperabilidade** envolve troca e interpretação de dados entre sistemas, com padrões e governança, respeitando direitos e sigilos.\n\nA LAI e a LGPD não se anulam: acesso público e privacidade devem ser conciliados. Uma planilha de gastos contratuais pode ser pública, mas dados de saúde de pacientes não devem ser divulgados indistintamente. **Anonimização** precisa avaliar possibilidade razoável de reidentificação, particularmente em pequenas populações e combinações de atributos. Nenhum “dashboard de transparência” dispensa análise de finalidade e requisitos normativos.\n\n## Exemplo resolvido passo a passo\nUm cidadão solicita informações sobre despesas de TI da prefeitura. A equipe identifica contratos, valores e critérios disponíveis para acesso, observando a LAI. Um documento também contém CPF e dados clínicos de um paciente anexados indevidamente. A solução não é publicar integralmente nem negar necessariamente todos os dados: avalie separar e proteger dados pessoais enquanto disponibiliza o que for acessível, segundo regras do órgão.\n\nPara lançar serviço digital, equipe desenha formulário acessível, coleta mínimo necessário, valida identidade e autorização, registra auditoria e integra com cadastros permitidos. Teste o fluxo com usuários reais e assegure alternativa e suporte conforme legislação e desenho de serviço.\n\n## Erros clássicos nas bancas\n**Pegadinha:** “transparência = publicar qualquer dado pessoal” é falso. **Pegadinha:** LAI e LGPD podem ser aplicadas simultaneamente; não há revogação automática de uma pela outra. **Pegadinha:** acessibilidade não é apenas bom design visual; envolve acesso por pessoas com deficiências e tecnologias assistivas. **Pegadinha:** interoperabilidade não implica acesso irrestrito entre órgãos.\n\n## Pratique sem consultar\nListe cinco informações de um contrato público de tecnologia que podem ser objeto de transparência, e duas informações pessoais sensíveis que exigem proteção. Explique a diferença de transparência ativa e passiva. Desenhe um serviço digital de solicitação de documento com autenticação, rastreabilidade e acessibilidade.\n\n## Revisão e transferência\nFeche esta explicação. Tente responder à pergunta da seção anterior com suas próprias palavras, crie um exemplo diferente e só então passe às questões. Se errar, registre **a causa do erro**, não apenas a alternativa correta. Repita o conceito em outra sessão e confirme com questões inéditas.\n\n## Fonte de aprofundamento\nPortal oficial de Acesso à Informação: https://www.gov.br/acessoainformacao/pt-br\nMaterial autoral de preparação; para legislação, confirme sempre a redação vigente e as exigências específicas do edital.",
+    "questions": [
+      {
+        "stem": "A divulgação proativa de informações de interesse coletivo em portal público é chamada:",
+        "choices": [
+          "Transparência ativa",
+          "Transparência passiva",
+          "Segredo industrial automático",
+          "Anonimização reversível"
+        ],
+        "correct_index": 0,
+        "explanation": "Transparência ativa consiste em publicar informações sem necessidade de pedido específico."
+      },
+      {
+        "stem": "Como conciliar LAI e LGPD em documento público que contém dados pessoais desnecessários à finalidade de acesso?",
+        "choices": [
+          "Avaliar acesso à parte pública com proteção de dados pessoais conforme regras legais",
+          "Divulgar qualquer dado de saúde sem restrições",
+          "Negar automaticamente todos os documentos do órgão",
+          "Ignorar a LAI porque existe LGPD"
+        ],
+        "correct_index": 0,
+        "explanation": "A análise pode permitir acesso parcial, com proteção ou restrição dos dados pessoais conforme a lei."
+      }
+    ],
+    "cards": [
+      [
+        "Diferença entre transparência ativa e passiva?",
+        "Ativa: publicação espontânea; passiva: atendimento a pedido de acesso."
+      ],
+      [
+        "Interoperabilidade de sistemas autoriza compartilhamento irrestrito?",
+        "Não; troca de dados exige finalidade, segurança, bases legais e governança."
+      ]
+    ],
+    "source_url": "https://www.gov.br/acessoainformacao/pt-br",
+    "source_label": "Portal oficial de Acesso à Informação",
+    "minutes": 70,
+    "track": "Aprofundamento",
+    "version": "2026-11"
+  }
+]

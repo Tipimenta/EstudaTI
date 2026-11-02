@@ -1,0 +1,3 @@
+subject_code,topic_id,question,option_a,option_b,option_c,option_d,option_e,correct,explanation,origin,board,exam,year,question_number,source_url,license_note
+RED,,No modelo TCP/IP o protocolo IP atua na camada de Internet.,Certo,Errado,,,,A,"O protocolo IP integra a camada de Internet no modelo TCP/IP; esta questão autoral é de certo ou errado.",autoral,,,,,,Questão autoral demonstrativa
+SO,,Qual utilitário normalmente permite consultar registros do journal de serviços em distribuições Linux com systemd?,journalctl,nslookup,chkdsk,ipconfig,netsh,A,"journalctl consulta o journal mantido pelo systemd-journald. As outras ferramentas têm finalidades distintas.",autoral,,,,,,Questão autoral demonstrativa

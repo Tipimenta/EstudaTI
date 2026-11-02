@@ -1,0 +1,20 @@
+{
+  "questions": [
+    {
+      "subject_code": "RED",
+      "question": "Em um laboratório didático, o nome do servidor resolve, mas a conexão TCP à porta 443 falha. Qual passo inicial é adequado?",
+      "option_a": "Trocar a placa de vídeo do cliente",
+      "option_b": "Testar conexão à porta 443 e o roteamento até o destino",
+      "option_c": "Desabilitar toda autenticação de usuários",
+      "option_d": "Modificar o idioma do navegador",
+      "correct": "B",
+      "explanation": "A resolução DNS bem-sucedida não garante que a porta de serviço esteja acessível. A investigação deve concentrar-se na conectividade IP e TCP.",
+      "explanation_a": "A placa de vídeo não participa do estabelecimento TCP à porta 443.",
+      "explanation_b": "O teste de conexão e o diagnóstico da rota verificam camadas pertinentes à falha relatada.",
+      "explanation_c": "Desativar autenticação não isola a causa da falha e amplia o risco.",
+      "explanation_d": "O idioma do navegador não controla roteamento ou transporte TCP.",
+      "origin": "autoral",
+      "license_note": "Questão de exemplo, autoral, não oriunda de banca."
+    }
+  ]
+}
