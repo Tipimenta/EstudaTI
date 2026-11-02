@@ -1,0 +1,242 @@
+[
+  {
+    "topic_id": 1,
+    "question": "Um analista identifica quadros Ethernet chegando ao gateway, mas a rota para a rede remota está ausente. Em qual camada do modelo OSI se concentra a falha observada?",
+    "choices": [
+      "Física",
+      "Rede",
+      "Sessão",
+      "Apresentação"
+    ],
+    "correct_index": 1,
+    "explanation": "A ausência de rota IP afeta a camada de rede (3); a chegada de quadros ao gateway indica que ao menos parte do enlace funciona."
+  },
+  {
+    "topic_id": 2,
+    "question": "Uma sub-rede IPv4 convencional utiliza o prefixo /27. Quantos endereços há no bloco, incluindo rede e broadcast?",
+    "choices": [
+      "16",
+      "30",
+      "32",
+      "64"
+    ],
+    "correct_index": 2,
+    "explanation": "Com 32−27=5 bits de host, são 2^5=32 endereços no bloco; em cenário tradicional, 30 são utilizáveis por hosts."
+  },
+  {
+    "topic_id": 3,
+    "question": "Duas VLANs usam a mesma infraestrutura física. Qual recurso é necessário para que hosts de VLANs distintas troquem pacotes IP?",
+    "choices": [
+      "Roteamento inter-VLAN com política adequada",
+      "Somente uma porta access",
+      "Apenas aprender endereços MAC",
+      "Desativar o protocolo ARP"
+    ],
+    "correct_index": 0,
+    "explanation": "A comutação L2 separa broadcasts entre VLANs; comunicação IP entre elas requer dispositivo ou função de camada 3."
+  },
+  {
+    "topic_id": 19,
+    "question": "Para o host 192.168.12.130/26, qual é o endereço de rede?",
+    "choices": [
+      "192.168.12.0",
+      "192.168.12.64",
+      "192.168.12.128",
+      "192.168.12.192"
+    ],
+    "correct_index": 2,
+    "explanation": "Um /26 gera blocos de 64 endereços no último octeto; 130 pertence ao intervalo 128–191."
+  },
+  {
+    "topic_id": 20,
+    "question": "Uma porta de switch precisa transportar quadros de três VLANs até outro switch. Qual configuração é a mais apropriada, assumindo suporte IEEE 802.1Q?",
+    "choices": [
+      "Porta access em cada quadro",
+      "Porta trunk com tagging conforme as VLANs",
+      "Desativar todas as VLANs",
+      "Habilitar NAT na porta Ethernet"
+    ],
+    "correct_index": 1,
+    "explanation": "Uma porta trunk permite transportar múltiplas VLANs com tags 802.1Q, observadas as configurações de VLAN nativa e permitidas."
+  },
+  {
+    "topic_id": 21,
+    "question": "Um servidor TCP mantém a janela de recepção quase zerada porque o aplicativo lê lentamente os dados. O que está limitando o emissor?",
+    "choices": [
+      "Controle de fluxo do receptor",
+      "Tempo de vida IP",
+      "Tabela ARP",
+      "Criptografia simétrica"
+    ],
+    "correct_index": 0,
+    "explanation": "A janela anunciada pelo receptor (rwnd) sinaliza capacidade de buffer e controla o fluxo independentemente do congestionamento da rede."
+  },
+  {
+    "topic_id": 22,
+    "question": "Um domínio possui registros A e AAAA. Ao consultar o AAAA, o cliente espera obter qual informação?",
+    "choices": [
+      "Endereço IPv4",
+      "Endereço IPv6",
+      "Servidor de e-mail",
+      "Chave de certificado TLS"
+    ],
+    "correct_index": 1,
+    "explanation": "O registro AAAA associa nome a endereço IPv6; A associa a IPv4, MX descreve servidores de e-mail."
+  },
+  {
+    "topic_id": 23,
+    "question": "Um cliente DHCP IPv4 não possui endereço e inicia a descoberta de servidor. Qual mensagem é típica do primeiro passo do DORA?",
+    "choices": [
+      "DHCPACK",
+      "DHCPREQUEST",
+      "DHCPDISCOVER",
+      "DHCPRELEASE"
+    ],
+    "correct_index": 2,
+    "explanation": "O processo inicial tradicional é Discover, Offer, Request e Acknowledge; o Discover procura servidores disponíveis."
+  },
+  {
+    "topic_id": 24,
+    "question": "Em IPv6, um dispositivo recebe anúncios de roteador e configura endereço por SLAAC. Qual componente fornece o prefixo da rede?",
+    "choices": [
+      "Router Advertisement",
+      "Registro DNS MX",
+      "Gateway DHCPv4",
+      "Porta UDP 53 obrigatoriamente"
+    ],
+    "correct_index": 0,
+    "explanation": "Em SLAAC, anúncios ICMPv6 do roteador podem fornecer prefixo e parâmetros; DNS pode usar mecanismos distintos."
+  },
+  {
+    "topic_id": 25,
+    "question": "Um roteador residencial traduz vários endereços privados para um único IPv4 público, distinguindo conexões pelas portas. Que técnica está descrita?",
+    "choices": [
+      "NAT64 puro",
+      "PAT/NAPT",
+      "VLAN trunk",
+      "DNS reverso"
+    ],
+    "correct_index": 1,
+    "explanation": "A tradução de endereços e portas (PAT/NAPT) permite multiplexar diversas conexões internas no mesmo IPv4 público."
+  },
+  {
+    "topic_id": 26,
+    "question": "Uma API recebeu dados válidos e criou um recurso. Qual status HTTP é apropriado quando a criação foi bem-sucedida?",
+    "choices": [
+      "201 Created",
+      "401 Unauthorized",
+      "404 Not Found",
+      "503 Service Unavailable"
+    ],
+    "correct_index": 0,
+    "explanation": "201 Created indica criação do recurso; os demais códigos informam problemas de autenticação, inexistência ou indisponibilidade."
+  },
+  {
+    "topic_id": 91,
+    "question": "Uma captura mostra cabeçalhos Ethernet, IPv4 e TCP. Qual afirmação é adequada sobre o desencapsulamento no destino?",
+    "choices": [
+      "O TCP interpreta o quadro físico antes do Ethernet",
+      "Cada camada interpreta seu cabeçalho e entrega os dados úteis à camada superior",
+      "O roteador decodifica obrigatoriamente o conteúdo HTTP",
+      "A camada de sessão substitui todos os endereços IP"
+    ],
+    "correct_index": 1,
+    "explanation": "No receptor, as camadas processam os cabeçalhos pertinentes, entregando a unidade de dados à camada superior."
+  },
+  {
+    "topic_id": 92,
+    "question": "Duas sub-redes precisam comportar 50 e 12 hosts, respectivamente, usando IPv4 tradicional. Quais os menores prefixos adequados?",
+    "choices": [
+      "/27 e /28",
+      "/26 e /28",
+      "/25 e /30",
+      "/30 e /27"
+    ],
+    "correct_index": 1,
+    "explanation": "/26 oferece 62 endereços de host utilizáveis; /28 oferece 14. /27 daria 30, insuficientes para 50."
+  },
+  {
+    "topic_id": 93,
+    "question": "Um cliente resolve o nome corretamente, mas não estabelece TCP/443 com o IP retornado. Qual teste melhor isola a próxima hipótese?",
+    "choices": [
+      "Trocar imediatamente todos os switches",
+      "Testar conexão TCP/443 e regras de firewall/serviço",
+      "Excluir a zona DNS sem análise",
+      "Alterar máscara de todas as estações"
+    ],
+    "correct_index": 1,
+    "explanation": "Após confirmar resolução, valide rota, filtragem e porta de destino; não há indicação suficiente para reconstruir DNS."
+  },
+  {
+    "topic_id": 118,
+    "question": "Um switch recebe quadro por porta 4 com MAC de origem ainda desconhecido. Qual atualização é típica em uma tabela MAC dinâmica?",
+    "choices": [
+      "Associar MAC de origem à porta 4",
+      "Associar IP de destino à porta 4",
+      "Gravar uma rota OSPF",
+      "Desligar a VLAN automaticamente"
+    ],
+    "correct_index": 0,
+    "explanation": "Switches L2 aprendem endereço MAC de origem e porta de entrada; destino é usado para decisão de encaminhamento."
+  },
+  {
+    "topic_id": 119,
+    "question": "Uma rede passa a registrar perdas e o emissor reduz a janela de congestionamento, apesar de o receptor ainda anunciar buffer amplo. O fenômeno envolve principalmente:",
+    "choices": [
+      "Fluxo do receptor",
+      "Controle de congestionamento do caminho",
+      "Atualização DNS",
+      "Identificação de VLAN nativa"
+    ],
+    "correct_index": 1,
+    "explanation": "cwnd reage às condições de rede; rwnd representa capacidade de recepção. O limite efetivo considera ambos."
+  },
+  {
+    "topic_id": 120,
+    "question": "Uma tabela de rotas contém 10.1.0.0/16 e 10.1.5.0/24. Para o destino 10.1.5.22, qual rota será preferida pela correspondência de prefixo?",
+    "choices": [
+      "10.1.0.0/16",
+      "10.1.5.0/24",
+      "Ambas obrigatoriamente em paralelo",
+      "A rota padrão, ainda que exista /24"
+    ],
+    "correct_index": 1,
+    "explanation": "A correspondência de prefixo mais longo privilegia /24 para o endereço 10.1.5.22."
+  },
+  {
+    "topic_id": 121,
+    "question": "Um registro DNS foi alterado no autoritativo, mas clientes seguem recebendo o valor antigo durante algum tempo. Qual explicação é plausível?",
+    "choices": [
+      "Cache em resolvedor recursivo ainda dentro do TTL",
+      "ARP criptografou o registro",
+      "A consulta DNS dispensa caches",
+      "HTTP 200 força o DNS a mudar imediatamente"
+    ],
+    "correct_index": 0,
+    "explanation": "Resolvedores podem servir dados armazenados enquanto válidos conforme política de cache e TTL; a atualização não é instantânea para todos os clientes."
+  },
+  {
+    "topic_id": 152,
+    "question": "O gateway responde ping e o DNS resolve o nome, mas o servidor retorna HTTP 503. Que conclusão inicial é mais defensável?",
+    "choices": [
+      "O enlace local necessariamente está rompido",
+      "A camada HTTP informou indisponibilidade; investigar aplicação e backend",
+      "O DNS é obrigatoriamente a causa",
+      "O MAC local está ausente"
+    ],
+    "correct_index": 1,
+    "explanation": "Resposta HTTP 503 pressupõe comunicação com um servidor ou intermediário e direciona a investigação à disponibilidade do serviço."
+  },
+  {
+    "topic_id": 153,
+    "question": "Ao calcular a sumarização de 192.168.20.0/24 e 192.168.21.0/24 contíguas e alinhadas, qual prefixo cobre exatamente ambas?",
+    "choices": [
+      "192.168.20.0/25",
+      "192.168.20.0/23",
+      "192.168.0.0/16",
+      "192.168.21.0/24"
+    ],
+    "correct_index": 1,
+    "explanation": "Duas redes /24 contíguas alinhadas em fronteira par podem ser agregadas em um /23 (512 endereços)."
+  }
+]
