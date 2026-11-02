@@ -1,0 +1,344 @@
+[
+  {
+    "topic_id": 19,
+    "question": "Qual é a rede do endereço 172.16.8.173/28?",
+    "choices": [
+      "172.16.8.160",
+      "172.16.8.172",
+      "172.16.8.176",
+      "172.16.8.128"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: /28 gera blocos de 16, e 173 pertence a 160–175.",
+      "172 não é começo de bloco /28.",
+      "176 inicia o bloco seguinte.",
+      "128–143 não contém 173."
+    ],
+    "explanation": "Correto: /28 gera blocos de 16, e 173 pertence a 160–175.",
+    "fingerprint": "academy-core-20261102-19-1"
+  },
+  {
+    "topic_id": 19,
+    "question": "Qual bloco /27 pode comportar convencionalmente 28 hosts?",
+    "choices": [
+      "Um bloco com 16 endereços.",
+      "Um bloco com 32 endereços, dos quais 30 hosts convencionais.",
+      "Um único endereço /32.",
+      "Um bloco /30 com dois endereços utilizáveis."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Um /28 tem 16 endereços e normalmente 14 hosts, insuficientes.",
+      "Correto: /27 deixa 5 bits de host e suporta 30 hosts em cenário convencional.",
+      "/32 representa um único endereço.",
+      "/30 suporta convencionalmente dois hosts."
+    ],
+    "explanation": "Correto: /27 deixa 5 bits de host e suporta 30 hosts em cenário convencional.",
+    "fingerprint": "academy-core-20261102-19-2"
+  },
+  {
+    "topic_id": 27,
+    "question": "A empresa tem risco alto de perda de dados e adquire seguro, mas não corrige ausência de backup. Qual conclusão é correta?",
+    "choices": [
+      "O seguro elimina o risco técnico.",
+      "O seguro pode compartilhar consequências financeiras, sem assegurar recuperação operacional.",
+      "A probabilidade de falha virou zero.",
+      "A gestão do risco não precisa mais de responsável."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Seguro não recupera arquivos por si só.",
+      "Correto: transferência/compartilhamento de consequência financeira não substitui tratamento técnico.",
+      "Probabilidade não é zerada por contrato de seguro.",
+      "A responsabilidade pela gestão do risco permanece."
+    ],
+    "explanation": "Correto: transferência/compartilhamento de consequência financeira não substitui tratamento técnico.",
+    "fingerprint": "academy-core-20261102-27-1"
+  },
+  {
+    "topic_id": 27,
+    "question": "Depois de implementar MFA e revisão de acessos, ainda há possibilidade de credenciais serem comprometidas. Como se chama esse risco remanescente?",
+    "choices": [
+      "Risco residual.",
+      "Risco excluído da análise.",
+      "Ameaça impossível.",
+      "Disponibilidade garantida."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: o risco que permanece depois dos controles é residual.",
+      "A análise ainda deve considerá-lo.",
+      "Ameaças não deixam de existir automaticamente.",
+      "MFA não garante disponibilidade absoluta."
+    ],
+    "explanation": "Correto: o risco que permanece depois dos controles é residual.",
+    "fingerprint": "academy-core-20261102-27-2"
+  },
+  {
+    "topic_id": 35,
+    "question": "Duas threads atualizam a mesma variável e uma alteração sobrescreve a outra. Qual fenômeno ocorreu?",
+    "choices": [
+      "Condição de corrida/atualização perdida.",
+      "Resolução DNS.",
+      "Comutação de VLAN.",
+      "Isolamento total de memória compartilhada."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: acesso concorrente sem sincronização pode produzir resultado incorreto.",
+      "DNS resolve nomes, não explica atualização de variável.",
+      "VLAN é segmentação de rede.",
+      "Threads do mesmo processo normalmente compartilham memória."
+    ],
+    "explanation": "Correto: acesso concorrente sem sincronização pode produzir resultado incorreto.",
+    "fingerprint": "academy-core-20261102-35-1"
+  },
+  {
+    "topic_id": 35,
+    "question": "Em um único núcleo, múltiplas tarefas alternam execução em fatias de tempo. Isso demonstra principalmente:",
+    "choices": [
+      "Paralelismo simultâneo físico entre núcleos.",
+      "Concorrência por escalonamento.",
+      "Duplicação automática de memória.",
+      "Ausência de custo de troca de contexto."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Não há execução física simultânea em múltiplos núcleos no cenário.",
+      "Correto: alternância faz progresso de tarefas concorrentes.",
+      "Concorrência não implica duplicação de memória.",
+      "A troca de contexto possui custo."
+    ],
+    "explanation": "Correto: alternância faz progresso de tarefas concorrentes.",
+    "fingerprint": "academy-core-20261102-35-2"
+  },
+  {
+    "topic_id": 43,
+    "question": "Leia: 'O curso elevou o desempenho de alguns participantes'. Qual alternativa extrapola o texto?",
+    "choices": [
+      "Parte dos participantes apresentou melhora.",
+      "Todos os participantes melhoraram por causa exclusivamente do curso.",
+      "O texto descreve melhora de parte dos participantes.",
+      "O desempenho aumentou para alguns."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "'Alguns' sustenta melhora de parte.",
+      "Correto: troca alguns por todos e adiciona causa exclusiva não demonstrada.",
+      "É uma paráfrase compatível.",
+      "Respeita a quantificação informada."
+    ],
+    "explanation": "Correto: troca alguns por todos e adiciona causa exclusiva não demonstrada.",
+    "fingerprint": "academy-core-20261102-43-1"
+  },
+  {
+    "topic_id": 43,
+    "question": "Na frase 'A servidora voltou a trabalhar remotamente', qual pressuposição é usualmente ativada?",
+    "choices": [
+      "Ela já trabalhara remotamente em período anterior.",
+      "Ela nunca trabalhara remotamente.",
+      "Ela foi promovida.",
+      "A conexão VPN foi encerrada."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: 'voltou a' sugere ocorrência anterior.",
+      "Contradiz a ideia de retorno.",
+      "Nada é dito sobre promoção.",
+      "Não há informação sobre VPN."
+    ],
+    "explanation": "Correto: 'voltou a' sugere ocorrência anterior.",
+    "fingerprint": "academy-core-20261102-43-2"
+  },
+  {
+    "topic_id": 51,
+    "question": "Usuário solicita acesso previsto no catálogo e serviço opera normalmente. Qual classificação é a mais adequada?",
+    "choices": [
+      "Incidente de indisponibilidade.",
+      "Requisição de serviço.",
+      "Problema de causa raiz.",
+      "Falha elétrica."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Não há interrupção descrita.",
+      "Correto: o pedido é serviço normal com fluxo definido.",
+      "Não houve recorrência de incidentes para investigação.",
+      "Nenhum dado indica energia."
+    ],
+    "explanation": "Correto: o pedido é serviço normal com fluxo definido.",
+    "fingerprint": "academy-core-20261102-51-1"
+  },
+  {
+    "topic_id": 51,
+    "question": "Um serviço essencial cai e várias equipes param de trabalhar, enquanto outro chamado pede troca de assinatura de e-mail. A prioridade deve considerar:",
+    "choices": [
+      "Somente a ordem de abertura.",
+      "Impacto e urgência conforme política de atendimento.",
+      "Somente o tamanho do texto do chamado.",
+      "A posição hierárquica sem critério."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Ordem cronológica isolada não representa criticidade.",
+      "Correto: impacto e urgência permitem classificar prioridade.",
+      "Quantidade de texto não mede gravidade.",
+      "Critérios arbitrários prejudicam tratamento consistente."
+    ],
+    "explanation": "Correto: impacto e urgência permitem classificar prioridade.",
+    "fingerprint": "academy-core-20261102-51-2"
+  },
+  {
+    "topic_id": 59,
+    "question": "Qual filtro encontra linhas com coluna data_retorno sem valor informado em SQL?",
+    "choices": [
+      "WHERE data_retorno = NULL",
+      "WHERE data_retorno IS NULL",
+      "WHERE data_retorno = '' obrigatoriamente",
+      "ORDER BY data_retorno NULL"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Comparação com NULL não funciona como igualdade convencional em SQL.",
+      "Correto: IS NULL verifica ausência de valor.",
+      "String vazia é distinta de NULL.",
+      "ORDER BY ordena, não filtra."
+    ],
+    "explanation": "Correto: IS NULL verifica ausência de valor.",
+    "fingerprint": "academy-core-20261102-59-1"
+  },
+  {
+    "topic_id": 59,
+    "question": "Qual consulta obtém pendentes do setor US, sem incluir pendentes de outros setores?",
+    "choices": [
+      "WHERE status='pendente' OR setor='US'",
+      "WHERE status='pendente' AND setor='US'",
+      "WHERE setor='US' ORDER BY status apenas",
+      "HAVING setor='US' sem agrupamento"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "OR inclui registros que satisfazem apenas uma das condições.",
+      "Correto: ambas as condições precisam valer.",
+      "Não exige o status pendente.",
+      "HAVING não é o filtro de linhas apropriado."
+    ],
+    "explanation": "Correto: ambas as condições precisam valer.",
+    "fingerprint": "academy-core-20261102-59-2"
+  },
+  {
+    "topic_id": 67,
+    "question": "Qual critério de aceitação é mais verificável para um sistema de agendamento?",
+    "choices": [
+      "O sistema será ótimo.",
+      "Ao reservar um horário indisponível, deve rejeitar a operação e apresentar mensagem específica.",
+      "A tela deve ser muito bonita.",
+      "A equipe se compromete com qualidade."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Não há observação objetiva para testar.",
+      "Correto: condição, comportamento e resultado estão explícitos.",
+      "É julgamento subjetivo sem parâmetros.",
+      "Promessa não define comportamento aceito."
+    ],
+    "explanation": "Correto: condição, comportamento e resultado estão explícitos.",
+    "fingerprint": "academy-core-20261102-67-1"
+  },
+  {
+    "topic_id": 67,
+    "question": "A frase 'O portal deve suportar 95% das buscas em até 2 segundos sob carga descrita' é exemplo de:",
+    "choices": [
+      "Requisito não funcional mensurável.",
+      "Somente identidade visual.",
+      "História de usuário completa.",
+      "Comando SQL."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: descreve desempenho como atributo de qualidade sob condição mensurável.",
+      "Identidade visual não trata latência.",
+      "Não define papel, necessidade e finalidade no formato típico de história.",
+      "É uma regra sobre serviço, não uma instrução SQL."
+    ],
+    "explanation": "Correto: descreve desempenho como atributo de qualidade sob condição mensurável.",
+    "fingerprint": "academy-core-20261102-67-2"
+  },
+  {
+    "topic_id": 75,
+    "question": "Se P é verdadeira e Q falsa, qual o resultado de (P ∧ Q) ∨ ¬Q?",
+    "choices": [
+      "Verdadeiro",
+      "Falso",
+      "Não determinado",
+      "Contradição em toda avaliação"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: P∧Q é F, ¬Q é V, e F∨V é V.",
+      "Ignora que ¬Q é verdadeiro.",
+      "Valores foram definidos, então o resultado é determinado.",
+      "A fórmula pode ser verdadeira ou falsa conforme valores, não é contradição."
+    ],
+    "explanation": "Correto: P∧Q é F, ¬Q é V, e F∨V é V.",
+    "fingerprint": "academy-core-20261102-75-1"
+  },
+  {
+    "topic_id": 75,
+    "question": "Qual proposição equivale logicamente a 'Se P, então Q'?",
+    "choices": [
+      "Q→P",
+      "¬Q→¬P",
+      "P∧¬Q",
+      "¬P→¬Q"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Recíproca não é equivalente em geral.",
+      "Correto: contrapositiva preserva tabela-verdade.",
+      "É negação de P→Q.",
+      "É inversa, não equivalente em geral."
+    ],
+    "explanation": "Correto: contrapositiva preserva tabela-verdade.",
+    "fingerprint": "academy-core-20261102-75-2"
+  },
+  {
+    "topic_id": 83,
+    "question": "Uma empresa determina finalidade de um tratamento e outra executa operações conforme suas instruções. Quais papéis tendem a existir?",
+    "choices": [
+      "Controlador e operador, respectivamente.",
+      "Ambas titulares de dados por definição.",
+      "A segunda é sempre autoridade fiscalizadora.",
+      "O primeiro é sempre operador."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: quem decide finalidades é controlador; quem trata em nome dele é operador, conforme operação real.",
+      "Titular é pessoa natural à qual os dados se referem.",
+      "Autoridade supervisora não é papel automático do prestador.",
+      "Inverte os papéis previstos."
+    ],
+    "explanation": "Correto: quem decide finalidades é controlador; quem trata em nome dele é operador, conforme operação real.",
+    "fingerprint": "academy-core-20261102-83-1"
+  },
+  {
+    "topic_id": 83,
+    "question": "Um registro médico identificável foi pseudonimizado, mas ainda pode ser reidentificado com chave separada. Qual afirmação é adequada?",
+    "choices": [
+      "Deixou de ser dado pessoal em qualquer hipótese.",
+      "Ainda pode ser dado pessoal e exige controles pertinentes.",
+      "Pseudonimização autoriza publicação irrestrita.",
+      "Virou um dado obrigatoriamente público."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Pseudonimização não equivale necessariamente a anonimização efetiva.",
+      "Correto: se reidentificação permanece possível, o dado pode continuar pessoal.",
+      "Publicidade exige base e finalidade, não é automática.",
+      "Nada determina publicidade irrestrita."
+    ],
+    "explanation": "Correto: se reidentificação permanece possível, o dado pode continuar pessoal.",
+    "fingerprint": "academy-core-20261102-83-2"
+  }
+]
