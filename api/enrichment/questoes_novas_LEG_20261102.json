@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 17,
+    "question": "Um órgão pretende publicar nomes e informações médicas de usuários em portal aberto sem finalidade clara. Qual preocupação jurídica surge?",
+    "choices": [
+      "Proteção de dados pessoais, especialmente dados sensíveis",
+      "Somente largura de banda do portal",
+      "Proibição de qualquer informação pública",
+      "Apenas índice de páginas web"
+    ],
+    "correct_index": 0,
+    "explanation": "Dados de saúde são sensíveis na LGPD; publicidade deve observar base legal, finalidade e proteção apropriadas."
+  },
+  {
+    "topic_id": 18,
+    "question": "Na preparação de contratação de software, qual documento busca demonstrar necessidade, alternativas e viabilidade antes da especificação final?",
+    "choices": [
+      "Estudo Técnico Preliminar",
+      "Somente nota fiscal posterior",
+      "Registro DNS",
+      "Atestado de execução sem planejamento"
+    ],
+    "correct_index": 0,
+    "explanation": "O ETP integra o planejamento e caracteriza necessidade, alternativas e solução, fundamentando a contratação quando exigido."
+  },
+  {
+    "topic_id": 83,
+    "question": "Uma empresa define por que dados dos clientes serão coletados e quais operações serão realizadas. Na LGPD, ela tende a atuar como:",
+    "choices": [
+      "Controladora",
+      "Operadora necessariamente",
+      "Autoridade fiscalizadora",
+      "Titular dos dados"
+    ],
+    "correct_index": 0,
+    "explanation": "O controlador toma decisões referentes ao tratamento de dados pessoais; operador trata em nome do controlador."
+  },
+  {
+    "topic_id": 84,
+    "question": "Uma aplicação solicita todos os dados possíveis embora só precise de nome e contato para agendamento. Qual princípio da LGPD é especialmente relevante?",
+    "choices": [
+      "Necessidade",
+      "Livre concorrência exclusivamente",
+      "Indivisibilidade do dado",
+      "Adoção obrigatória de consentimento"
+    ],
+    "correct_index": 0,
+    "explanation": "Necessidade orienta limitação do tratamento ao mínimo necessário, pertinente e não excessivo à finalidade."
+  },
+  {
+    "topic_id": 85,
+    "question": "Um titular pergunta quais dados pessoais a organização mantém sobre ele. Qual direito da LGPD está diretamente relacionado?",
+    "choices": [
+      "Acesso aos dados",
+      "Direito de obter senha do administrador",
+      "Direito de excluir todos os registros sem exceção",
+      "Direito de impedir toda obrigação legal"
+    ],
+    "correct_index": 0,
+    "explanation": "A LGPD prevê direitos de confirmação e acesso; outros direitos têm condições e hipóteses específicas."
+  },
+  {
+    "topic_id": 86,
+    "question": "Na fase preparatória de contratação pública, qual atividade é mais compatível com bom planejamento?",
+    "choices": [
+      "Definir necessidade, estudar alternativas e critérios de contratação",
+      "Escolher fornecedor sem justificar",
+      "Assinar antes de identificar objeto",
+      "Dispensar registros de justificativa em toda hipótese"
+    ],
+    "correct_index": 0,
+    "explanation": "A etapa preparatória deve fundamentar demanda e desenho da solução, não começar pela escolha imotivada de fornecedor."
+  },
+  {
+    "topic_id": 87,
+    "question": "Na Lei 14.133/2021, o pregão é modalidade associada à contratação de:",
+    "choices": [
+      "Bens e serviços comuns nas condições legais",
+      "Qualquer serviço técnico especializado intelectual, sem distinção",
+      "Somente alienação de imóveis",
+      "Apenas concursos de provas e títulos"
+    ],
+    "correct_index": 0,
+    "explanation": "O pregão é modalidade apropriada para bens e serviços comuns, conforme hipóteses e regras legais."
+  },
+  {
+    "topic_id": 88,
+    "question": "Um cidadão solicita documento público, mas o órgão identifica nele dados pessoais de terceiros. Qual abordagem é mais coerente com LAI e proteção de dados?",
+    "choices": [
+      "Avaliar acesso e proteção de trechos pessoais conforme legislação",
+      "Negar toda informação pública para sempre",
+      "Divulgar irrestritamente os dados sensíveis",
+      "Destruir documento para evitar resposta"
+    ],
+    "correct_index": 0,
+    "explanation": "Transparência e proteção de dados devem ser conciliadas; há hipóteses de restrição e tratamentos de informações pessoais."
+  },
+  {
+    "topic_id": 89,
+    "question": "Qual prática combina melhor com a orientação de Governo Digital?",
+    "choices": [
+      "Simplificar acesso e desenho de serviços públicos digitais com segurança e inclusão",
+      "Exigir papel em todo atendimento digital",
+      "Duplicar cadastros sem finalidade",
+      "Desconsiderar acessibilidade"
+    ],
+    "correct_index": 0,
+    "explanation": "Governo Digital enfatiza eficiência, simplificação, participação e serviço centrado no usuário, respeitando segurança e direitos."
+  },
+  {
+    "topic_id": 90,
+    "question": "Um agente público altera a ordem de atendimento para beneficiar amigo sem critério justificável. Qual princípio administrativo é diretamente afetado?",
+    "choices": [
+      "Impessoalidade",
+      "Publicidade como permissão de favoritismo",
+      "Eficiência como direito ao privilégio",
+      "Continuidade da rede"
+    ],
+    "correct_index": 0,
+    "explanation": "O princípio da impessoalidade veda favorecimentos pessoais na atuação administrativa."
+  },
+  {
+    "topic_id": 115,
+    "question": "Uma empresa diz que qualquer tratamento de dados exige consentimento. Qual avaliação é correta?",
+    "choices": [
+      "Incorreta: a LGPD prevê outras bases legais além do consentimento",
+      "Correta para todo dado e hipótese",
+      "Correta somente em servidor Linux",
+      "A LGPD não prevê bases legais"
+    ],
+    "correct_index": 0,
+    "explanation": "Consentimento é uma base legal, mas a LGPD prevê hipóteses adicionais, dependentes do contexto e da categoria de dados."
+  },
+  {
+    "topic_id": 116,
+    "question": "Um termo de referência descreve como a execução será medida e paga. Qual elemento do TR está sendo trabalhado?",
+    "choices": [
+      "Critérios de medição e pagamento",
+      "Endereço MAC do fornecedor",
+      "Resolução DNS interna",
+      "Somente nome da comissão"
+    ],
+    "correct_index": 0,
+    "explanation": "Na Lei 14.133, TR pode abranger modelo de execução e gestão e critérios de medição e pagamento, conforme objeto e condições."
+  },
+  {
+    "topic_id": 117,
+    "question": "Ao responder pedido de informação pública, a administração busca preservar trechos com dados pessoais protegidos e disponibilizar os demais. Qual lógica está presente?",
+    "choices": [
+      "Conciliação de transparência e privacidade",
+      "Segredo absoluto de todo documento",
+      "Publicação irrestrita de todos os dados",
+      "Exclusão automática do documento"
+    ],
+    "correct_index": 0,
+    "explanation": "LAI e proteção de dados exigem análise concreta de restrições, proporcionalidade e possibilidades de acesso parcial."
+  },
+  {
+    "topic_id": 148,
+    "question": "Um órgão trata dados pessoais para executar política pública com competência legal. Qual afirmação sobre bases legais é correta?",
+    "choices": [
+      "Consentimento não é a única hipótese, e a finalidade pública precisa ser justificada",
+      "Qualquer dado pode ser publicado sem controle",
+      "Órgãos públicos nunca se submetem à LGPD",
+      "É proibido registrar tratamentos"
+    ],
+    "correct_index": 0,
+    "explanation": "A LGPD prevê bases e regras próprias de tratamento pelo poder público; finalidade, necessidade e transparência permanecem importantes."
+  },
+  {
+    "topic_id": 149,
+    "question": "Uma empresa contrata prestador para processar dados seguindo instruções documentadas. Sem decidir finalidades, o prestador tende a ser:",
+    "choices": [
+      "Operador",
+      "Controlador por definição exclusiva",
+      "Titular dos dados de terceiros",
+      "ANPD"
+    ],
+    "correct_index": 0,
+    "explanation": "Operador realiza tratamento em nome do controlador, embora papéis dependam das decisões efetivas sobre operações."
+  },
+  {
+    "topic_id": 150,
+    "question": "Uma contratação de serviço de TI foi realizada e o órgão precisa acompanhar cumprimento das obrigações. Que função é essencial?",
+    "choices": [
+      "Fiscalização/gestão contratual com registro de ocorrências",
+      "Somente elaboração de slogan",
+      "Criação de senha padrão pública",
+      "Encerrar auditoria antes da execução"
+    ],
+    "correct_index": 0,
+    "explanation": "Acompanhamento e fiscalização verificam execução conforme contrato, com registros e providências quando necessário."
+  },
+  {
+    "topic_id": 151,
+    "question": "Um pedido de acesso versa sobre gasto público, mas documento anexo contém dados pessoais não necessários à resposta. Qual conduta inicial é razoável?",
+    "choices": [
+      "Examinar acesso ao gasto e proteger dados pessoais dispensáveis",
+      "Negar informação financeira sem avaliar",
+      "Publicar todo prontuário",
+      "Apagar arquivos antes da análise"
+    ],
+    "correct_index": 0,
+    "explanation": "Deve-se equilibrar transparência de gastos com preservação de dados pessoais e avaliar formas de acesso parcial."
+  },
+  {
+    "topic_id": 168,
+    "question": "Um atendimento municipal recebe dados pessoais para prestar serviço específico. Qual prática melhor demonstra conformidade?",
+    "choices": [
+      "Informar finalidade e tratar somente dados necessários com controles proporcionais",
+      "Captar biometria de todos sem justificativa",
+      "Reutilizar dados para qualquer campanha",
+      "Compartilhar prontuários irrestritamente"
+    ],
+    "correct_index": 0,
+    "explanation": "Finalidade, adequação, necessidade e segurança orientam o tratamento público, observando a base legal pertinente."
+  },
+  {
+    "topic_id": 169,
+    "question": "Em contratação de TI, a equipe escolheu solução tecnológica antes de identificar a necessidade pública. Qual correção é indicada?",
+    "choices": [
+      "Caracterizar problema, comparar alternativas no planejamento e justificar solução",
+      "Assinar o contrato antes do ETP",
+      "Ignorar estimativas e riscos",
+      "Declarar que ETP é sempre proibido"
+    ],
+    "correct_index": 0,
+    "explanation": "Planejamento começa por necessidade e alternativas; a seleção e especificação devem ser justificadas conforme legislação aplicável."
+  }
+]
