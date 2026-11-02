@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+backups/
+node_modules/
+dist/
+__pycache__/
+.pytest_cache/
+.vercel/
+*.log
+*.pem
+*.p12
+*.pfx
+.DS_Store
