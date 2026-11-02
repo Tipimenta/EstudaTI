@@ -72,37 +72,36 @@ function RichText({content}:{content:string}){
  })}</article>
 }
 function cleanTitle(title:string){return title.replace(/^\[(Aprofundamento|Oficina)\]\s*/i,'')}
+function LessonSteps({active,total,onChange}:{active:number;total:number;onChange:(n:number)=>void}){
+ return <div className="mt-6 flex items-center justify-between gap-3 border-t border-white/10 pt-5"><button disabled={active===0} className="btn btn-outline text-xs" onClick={()=>onChange(Math.max(0,active-1))}><ArrowLeft size={15}/> Voltar</button><span className="text-xs font-semibold text-slate-300">{active+1} / {total}</span><button disabled={active===total-1} className="btn btn-primary text-xs" onClick={()=>{onChange(Math.min(total-1,active+1));document.querySelector('#etapa-da-aula')?.scrollIntoView({behavior:'smooth',block:'start'})}}>Continuar <ArrowRight size={15}/></button></div>
+}
 function AcademyLesson({lesson}:{lesson:PedagogicalLesson}){
- return <div className="space-y-7">
-  <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/5 p-5 sm:p-6">
-   <div className="mb-2 flex flex-wrap items-center gap-2"><span className="badge bg-emerald-300 text-emerald-950">Aula reconstruída</span><span className="text-xs text-slate-400">Conteúdo essencial</span></div>
-   <h3 className="mt-3 text-xl font-bold text-white">{lesson.title}</h3>
-   <p className="mt-3 text-sm leading-7 text-slate-200">{lesson.goal}</p>
-  </div>
-  <div className="space-y-4">{lesson.steps.map((step,i)=><section key={i} className="rounded-2xl border border-white/10 bg-[#101b2d] p-5 sm:p-7">
-   <div className="mb-4 flex items-start gap-3"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-400/15 text-sm font-extrabold text-emerald-300">{i+1}</span><h3 className="pt-1 text-lg font-bold leading-7 text-white">{step.title}</h3></div>
-   <RichText content={step.body}/>
-  </section>)}</div>
-  <section className="rounded-2xl border border-sky-400/20 bg-sky-400/5 p-5 sm:p-7"><p className="mb-2 text-xs font-bold uppercase tracking-widest text-sky-300">Exemplo resolvido, passo a passo</p><h3 className="mb-5 text-xl font-bold text-white">{lesson.worked.title}</h3><RichText content={lesson.worked.body}/></section>
-  <section className="rounded-2xl border border-amber-400/15 bg-amber-400/5 p-5 sm:p-7"><h3 className="text-lg font-bold text-amber-100">Atenção às pegadinhas de prova</h3><div className="mt-4 space-y-3">{lesson.pitfalls.map((line,i)=><p key={i} className="flex items-start gap-3 text-sm leading-7 text-slate-200"><span className="mt-1 shrink-0 text-amber-300">✦</span>{line}</p>)}</div></section>
-  <section className="rounded-2xl border border-white/10 p-5 sm:p-7"><h3 className="text-lg font-bold text-white">Você realmente entendeu?</h3><p className="mt-2 text-sm leading-6 text-slate-400">Responda antes de abrir a explicação. Essa recuperação ativa ajuda mais do que apenas reler o texto.</p><div className="mt-4 space-y-3">{lesson.review.map((item,i)=><details key={i} className="rounded-xl border border-white/10 bg-white/[.035] p-4"><summary className="cursor-pointer text-sm font-semibold leading-6 text-slate-100">{i+1}. {item.ask}</summary><p className="mt-3 border-t border-white/10 pt-3 text-sm leading-7 text-emerald-100">{item.answer}</p></details>)}</div></section>
-  <details className="rounded-xl border border-white/10 bg-white/[.025] p-5"><summary className="cursor-pointer text-sm font-semibold text-emerald-200">Aprofundamento opcional — só depois da aula</summary><p className="mt-4 text-sm leading-7 text-slate-200">{lesson.extra}</p></details>
-  <p className="text-xs leading-5 text-slate-400">Material autoral do EstudaTI. Questões inéditas são identificadas como autorais; leis, normas e detalhes de editais devem ser conferidos na versão vigente.</p>
+ const [active,setActive]=useState(0)
+ const total=lesson.steps.length+2
+ const step=lesson.steps[active]
+ return <div id="etapa-da-aula" className="scroll-mt-28 space-y-5">
+  <div className="rounded-2xl border border-emerald-400/15 bg-emerald-400/5 p-5"><p className="text-xs font-bold uppercase tracking-wider text-emerald-300">Leitura guiada · Aula revisada</p><h3 className="mt-2 text-lg font-bold text-white">{lesson.title}</h3><p className="mt-2 text-sm leading-6 text-slate-200">{lesson.goal}</p><div className="bartrack mt-4 h-1.5"><div className="barfill" style={{width:((active+1)/total*100)+'%'}}/></div></div>
+  <section className="rounded-2xl border border-white/10 bg-white/[.025] p-5 sm:p-7">
+   {step?<><p className="mb-2 text-xs font-bold uppercase tracking-widest text-sky-300">PARTE {active+1} · ENTENDA</p><h3 className="mb-5 text-xl font-bold leading-8 text-white">{step.title}</h3><RichText content={step.body}/></>:active===lesson.steps.length?<><p className="mb-2 text-xs font-bold uppercase text-sky-300">VEJA NA PRÁTICA</p><h3 className="mb-5 text-xl font-bold text-white">{lesson.worked.title}</h3><RichText content={lesson.worked.body}/></>:<><h3 className="mb-4 text-xl font-bold text-amber-100">Cuidado com as pegadinhas</h3><ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-slate-200">{lesson.pitfalls.map((x,i)=><li key={i}>{x}</li>)}</ul><p className="mt-5 text-sm leading-6 text-emerald-200">Você terminou a explicação. Agora resolva as questões e depois revise os flashcards.</p></>}
+   <LessonSteps active={active} total={total} onChange={setActive}/>
+  </section>
+  <details className="rounded-xl border border-white/10 bg-white/[.025] p-4"><summary className="cursor-pointer text-sm font-semibold text-emerald-200">Aprofundamento complementar (opcional)</summary><p className="mt-3 text-sm leading-7 text-slate-200">{lesson.extra}</p></details>
+  <p className="text-xs text-slate-400">Material autoral em revisão editorial contínua. Fontes legais e normativas precisam ser conferidas na versão vigente.</p>
  </div>
 }
 function GuidedLesson({guide}:{guide:LessonGuide}){
- return <div className="space-y-5">
-  <div className="rounded-2xl border border-sky-300/15 bg-sky-300/5 p-5"><p className="text-xs font-bold uppercase tracking-wider text-sky-300">O que você vai aprender</p><p className="mt-2 text-base leading-7 text-slate-100">{guide.objective}</p></div>
-  <section className="rounded-2xl border border-white/10 p-5 sm:p-7"><p className="text-xs font-bold uppercase tracking-wider text-emerald-300">PARTE 1 · COMPREENDA</p><h3 className="mb-4 mt-2 text-xl font-bold text-white">{guide.title}</h3><RichText content={guide.theory}/></section>
-  {!!guide.practical&&<section className="rounded-2xl border border-sky-300/15 bg-sky-300/5 p-5 sm:p-7"><p className="text-xs font-bold uppercase tracking-wider text-sky-300">PARTE 2 · VEJA NA PRÁTICA</p><h3 className="mb-4 mt-2 text-lg font-bold text-white">Um exemplo para entender melhor</h3><RichText content={guide.practical}/></section>}
-  {!!guide.warning&&<section className="rounded-xl border border-amber-300/15 bg-amber-300/5 p-5"><p className="text-sm font-bold text-amber-100">Não confunda na prova</p><div className="mt-3"><RichText content={guide.warning}/></div></section>}
-  <p className="rounded-xl bg-emerald-300/5 p-4 text-sm leading-6 text-slate-300">Agora que você estudou o conceito e o exemplo, resolva questões para verificar se conseguiu aplicar o conhecimento. A revisão por flashcards vem depois.</p>
-  <p className="text-xs leading-6 text-slate-400">Material autoral em aperfeiçoamento. O roteiro utiliza o conteúdo específico deste assunto, sem juntar textos automáticos de disciplinas diferentes.</p>
+ const [active,setActive]=useState(0)
+ const pages=[{label:'1 · Entenda',title:guide.title,body:guide.theory},{label:'2 · Aplique',title:'Exemplo aplicado',body:guide.practical},{label:'3 · Atenção',title:'O que não confundir',body:guide.warning}].filter(x=>!!x.body)
+ const page=pages[Math.min(active,pages.length-1)]
+ return <div id="etapa-da-aula" className="scroll-mt-28 space-y-5">
+  <div className="rounded-xl border border-sky-400/15 bg-sky-400/5 p-5"><p className="text-xs font-bold uppercase tracking-wider text-sky-300">Aula por etapas · {guide.source_kind==='brief'?'Em aprofundamento editorial':'Material detalhado'}</p><h3 className="mt-2 text-lg font-bold text-white">{guide.title}</h3><p className="mt-2 text-sm leading-6 text-slate-200">{guide.objective}</p><div className="bartrack mt-4 h-1.5"><div className="barfill" style={{width:((active+1)/pages.length*100)+'%'}}/></div></div>
+  <section className="rounded-2xl border border-white/10 p-5 sm:p-7"><p className="mb-2 text-xs font-bold uppercase tracking-wider text-emerald-300">{page.label}</p><h3 className="mb-5 text-xl font-bold text-white">{page.title}</h3><RichText content={page.body}/><LessonSteps active={active} total={pages.length} onChange={setActive}/></section>
+  {guide.source_kind==='brief'&&<p className="rounded-xl border border-amber-400/15 bg-amber-400/5 p-4 text-xs leading-6 text-slate-300">Este capítulo recebeu uma organização mais clara, mas sua teoria ainda precisa de aprofundamento individual. Evitamos misturar conteúdos de outras aulas apenas para aumentar o tamanho do texto.</p>}
  </div>
 }
 function TeachingTheory({lesson}:{lesson:StudyLessonDetail}){
- const authored=academyLessons[lesson.id];if(authored)return <AcademyLesson lesson={authored}/>
- const guide=lessonGuides[lesson.id];if(guide)return <GuidedLesson guide={guide}/>
+ const authored=academyLessons[lesson.id];if(authored)return <AcademyLesson key={lesson.id} lesson={authored}/>
+ const guide=lessonGuides[lesson.id];if(guide)return <GuidedLesson key={lesson.id} guide={guide}/>
  return <div className="space-y-4"><h3 className="text-xl font-semibold">Entenda o assunto</h3><RichText content={lesson.content.split(/<!--/)[0]}/></div>
 }
 export default function StudyCourse({onGoReview}:{onGoReview?:()=>void}){
