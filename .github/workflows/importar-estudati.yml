@@ -62,7 +62,7 @@ jobs:
           PY
       - name: Verificar API
         run: |
-          python3 -m pip install -q -r api/requirements.txt pytest
+          python3 -m pip install -q -r api/requirements.txt pytest httpx2
           PYTHONPATH=api python3 -m pytest -q tests
       - name: Verificar frontend
         working-directory: web
