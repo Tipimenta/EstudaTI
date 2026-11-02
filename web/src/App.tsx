@@ -11,7 +11,7 @@ import TutorHub from './TutorHub'
 import NetworkLab from './NetworkLab'
 import DiscursivePage from './DiscursivePage'
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
-import { Activity, AlertCircle, ArrowRight, Award, BookOpen, Brain, CalendarDays, Check, CheckCircle2, ChevronRight, CircleHelp, Clock3, CloudDownload, ExternalLink, FileText, Flame, GraduationCap, LayoutDashboard, ListChecks, LockKeyhole, LogOut, Menu, Play, RefreshCw, RotateCcw, Save, Search, Settings2, ShieldCheck, Sparkles, Target, Timer, Trophy, X } from 'lucide-react'
+import { Activity, AlertCircle, ArrowRight, BookOpen, Brain, CalendarDays, Check, CheckCircle2, CircleHelp, Clock3, CloudDownload, ExternalLink, FileText, GraduationCap, LayoutDashboard, ListChecks, LockKeyhole, LogOut, Menu, Play, RefreshCw, RotateCcw, Save, Settings2, ShieldCheck, Sparkles, Target, Timer, Trophy, X } from 'lucide-react'
 import {api,post,patch,type Card,type Contest,type Dashboard,type Plan,type Progress,type QuizQuestion,type QuizResult,type Subject} from './api'
 
 type Page='painel'|'cronograma'|'conteudos'|'flashcards'|'simulados'|'banco'|'editais'|'foco'|'concursos'|'desempenho'|'fontes'|'dominio'|'ajustes'|'inteligencia'|'tutor'|'laboratorio'|'discursivas'|'matriz'
@@ -48,10 +48,6 @@ const formatSeconds=(seconds:number)=>`${String(Math.floor(seconds/60)).padStart
 function ErrorBox({error}:{error:string|null}){return error?<div className="my-4 flex items-center gap-2 rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-200"><AlertCircle size={17}/>{error}</div>:null}
 function Heading({eyebrow,title,subtitle,action}:{eyebrow:string,title:string,subtitle?:string,action?:ReactNode}){
  return <div className="mb-7 flex flex-wrap items-end justify-between gap-4"><div><p className="mb-2 text-xs font-bold uppercase tracking-[.20em] text-emerald-300/85">{eyebrow}</p><h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h1>{subtitle&&<p className="mt-2 max-w-2xl text-sm leading-6 muted">{subtitle}</p>}</div>{action}</div>
-}
-function Tile({label,value,caption,icon:Icon,accent='emerald'}:{label:string,value:string|number,caption:string,icon:typeof Activity,accent?:'emerald'|'violet'|'amber'|'blue'}){
- const tones={emerald:'text-emerald-300 bg-emerald-400/10',violet:'text-violet-300 bg-violet-400/10',amber:'text-amber-300 bg-amber-400/10',blue:'text-blue-300 bg-blue-400/10'}
- return <div className="panel p-5"><div className="flex items-start justify-between gap-3"><span className="text-sm muted">{label}</span><div className={`rounded-xl p-2.5 ${tones[accent]}`}><Icon size={18}/></div></div><div className="mt-3 text-3xl font-bold tracking-tight text-white">{value}</div><p className="mt-1 text-xs muted">{caption}</p></div>
 }
 function Login({onLogin}:{onLogin:()=>void}){
  const [password,setPassword]=useState('');const [busy,setBusy]=useState(false);const [error,setError]=useState<string|null>(null)
