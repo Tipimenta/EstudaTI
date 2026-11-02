@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 12,
+    "question": "Uma transação grava um pedido e desconta estoque. A atualização do estoque falha. Qual propriedade ACID ajuda a garantir que ambas as alterações sejam confirmadas juntas ou desfeitas?",
+    "choices": [
+      "Atomicidade",
+      "Disponibilidade",
+      "Escalabilidade",
+      "Idempotência do HTTP"
+    ],
+    "correct_index": 0,
+    "explanation": "Atomicidade exige que a transação seja tratada como unidade: ou as operações são efetivadas, ou são revertidas."
+  },
+  {
+    "topic_id": 13,
+    "question": "Uma tabela Pedidos tem várias linhas com cliente_id apontando para Clientes(id). Qual regra formaliza essa referência?",
+    "choices": [
+      "FOREIGN KEY",
+      "ORDER BY",
+      "VIEW sem restrições",
+      "DISTINCT"
+    ],
+    "correct_index": 0,
+    "explanation": "Uma chave estrangeira exige referência válida à chave candidata/única da tabela pai, observadas nulabilidade e regras da restrição."
+  },
+  {
+    "topic_id": 59,
+    "question": "Qual comando retorna apenas registros de atendimento de 2026 ordenados do mais recente para o mais antigo?",
+    "choices": [
+      "SELECT * FROM atendimento WHERE ano=2026 ORDER BY data DESC",
+      "SELECT * FROM atendimento ORDER BY data ASC sem filtro",
+      "DELETE FROM atendimento WHERE ano=2026",
+      "SELECT * FROM atendimento GROUP BY data sem agregações"
+    ],
+    "correct_index": 0,
+    "explanation": "WHERE filtra linhas e ORDER BY data DESC ordena da data mais recente para a mais antiga."
+  },
+  {
+    "topic_id": 60,
+    "question": "Uma consulta precisa mostrar todos os clientes, inclusive os sem pedidos, junto com eventuais pedidos. Que junção é adequada?",
+    "choices": [
+      "INNER JOIN somente",
+      "LEFT JOIN de Clientes para Pedidos",
+      "CROSS JOIN obrigatoriamente",
+      "RIGHT JOIN de Pedidos para Clientes sem condição"
+    ],
+    "correct_index": 1,
+    "explanation": "LEFT JOIN preserva todas as linhas da tabela esquerda, preenchendo colunas do lado direito com NULL quando não há correspondência."
+  },
+  {
+    "topic_id": 61,
+    "question": "Uma consulta calcula a quantidade de pedidos por cliente e deve listar apenas clientes com mais de cinco pedidos. Qual cláusula filtra o resultado agregado?",
+    "choices": [
+      "WHERE COUNT(*) > 5",
+      "HAVING COUNT(*) > 5",
+      "LIMIT COUNT(*) > 5",
+      "JOIN COUNT(*) > 5"
+    ],
+    "correct_index": 1,
+    "explanation": "HAVING filtra grupos depois do agrupamento; WHERE atua sobre linhas antes da agregação."
+  },
+  {
+    "topic_id": 62,
+    "question": "Duas transações concorrentes tentam reduzir o mesmo saldo. Qual preocupação de concorrência precisa ser controlada?",
+    "choices": [
+      "Atualização perdida",
+      "Quebra de endereço MAC",
+      "Remoção automática do banco",
+      "Falta de CSS"
+    ],
+    "correct_index": 0,
+    "explanation": "Sem isolamento/concor­rência adequados, operações simultâneas podem sobrescrever resultados e produzir inconsistência."
+  },
+  {
+    "topic_id": 63,
+    "question": "Uma tabela contém cliente_id e nome_cliente em cada pedido, com várias cópias do nome. Qual anomalia pode ocorrer?",
+    "choices": [
+      "Anomalia de atualização",
+      "A impossibilidade de SELECT",
+      "A execução automática de rollback",
+      "Uma FK sem coluna referida"
+    ],
+    "correct_index": 0,
+    "explanation": "Redundância de atributos dependentes de outra entidade pode levar a nomes inconsistentes se nem todas as cópias forem atualizadas."
+  },
+  {
+    "topic_id": 64,
+    "question": "Uma consulta usa filtro seletivo por email em uma tabela muito grande. Qual estrutura costuma ser considerada para acelerar a busca por igualdade?",
+    "choices": [
+      "Índice B-tree sobre email, se adequado à carga",
+      "Apenas comentário SQL",
+      "Desabilitar todos os índices",
+      "Recriar o banco a cada consulta"
+    ],
+    "correct_index": 0,
+    "explanation": "Índices B-tree são úteis para diversos filtros por igualdade, dependendo de seletividade, custos e plano de execução."
+  },
+  {
+    "topic_id": 65,
+    "question": "Uma aplicação de leitura de relatórios possui credencial com permissão DELETE em todas as tabelas. Qual princípio deveria orientar a revisão?",
+    "choices": [
+      "Menor privilégio",
+      "Concessão universal de privilégios",
+      "Não repúdio como substituto de autorização",
+      "Negar apenas conexões IPv6"
+    ],
+    "correct_index": 0,
+    "explanation": "Uma conta de consulta deve ter apenas privilégios necessários; permissões de escrita e exclusão aumentam impacto de falhas ou abuso."
+  },
+  {
+    "topic_id": 66,
+    "question": "Uma rotina faz backup de banco, mas restaurações nunca são exercitadas. Qual risco técnico permanece?",
+    "choices": [
+      "Backup pode estar incompleto ou não restaurável dentro das metas",
+      "Índices tornam backup desnecessário",
+      "Transações deixam de existir",
+      "Não há possibilidade de perda de dados"
+    ],
+    "correct_index": 0,
+    "explanation": "Cópia sem teste não comprova consistência, cadeia de dependências e recuperabilidade."
+  },
+  {
+    "topic_id": 106,
+    "question": "Em um relacionamento N:N entre alunos e disciplinas, qual tabela é usualmente adequada?",
+    "choices": [
+      "Matricula(aluno_id,disciplina_id) com FKs",
+      "Aluno com coluna lista_de_disciplinas sem regras",
+      "Disciplina com campo aluno1 e aluno2",
+      "Nenhuma tabela é necessária"
+    ],
+    "correct_index": 0,
+    "explanation": "Uma tabela associativa representa os pares e suas propriedades, podendo usar chave composta ou constraint UNIQUE."
+  },
+  {
+    "topic_id": 107,
+    "question": "Uma consulta usa SELECT cliente, COUNT(*) FROM vendas GROUP BY cliente. O resultado representa:",
+    "choices": [
+      "Uma linha por venda",
+      "Uma linha por cliente agrupado com sua contagem de vendas",
+      "A quantidade total de clientes por linha",
+      "Uma atualização nas vendas"
+    ],
+    "correct_index": 1,
+    "explanation": "GROUP BY agrega linhas com mesmo valor de cliente; COUNT(*) conta as linhas de cada grupo."
+  },
+  {
+    "topic_id": 108,
+    "question": "Uma transação T1 lê uma linha, outra transação a altera e confirma, e T1 relê valor diferente. Que fenômeno é descrito?",
+    "choices": [
+      "Leitura não repetível",
+      "Deadlock necessariamente",
+      "Atomicidade satisfeita",
+      "Dirty read obrigatório"
+    ],
+    "correct_index": 0,
+    "explanation": "Leitura não repetível ocorre quando o mesmo registro é relido com valor diferente devido a confirmação concorrente."
+  },
+  {
+    "topic_id": 137,
+    "question": "Uma aplicação só confirma a movimentação financeira quando débito e crédito concluem. Essa garantia remete especialmente a:",
+    "choices": [
+      "Atomicidade",
+      "Cache DNS",
+      "Balanceamento L4",
+      "Normalização 1FN"
+    ],
+    "correct_index": 0,
+    "explanation": "Atomicidade torna as operações uma unidade transacional com commit ou rollback."
+  },
+  {
+    "topic_id": 138,
+    "question": "Um índice pode acelerar leituras, mas há custo adicional. Qual alternativa descreve esse trade-off?",
+    "choices": [
+      "Índices exigem armazenamento e manutenção nas escritas",
+      "Índices eliminam todo I/O",
+      "Índices substituem integridade referencial",
+      "Índices tornam COUNT sempre O(1)"
+    ],
+    "correct_index": 0,
+    "explanation": "Índices ocupam espaço e devem ser atualizados conforme inserções, modificações e exclusões, o que exige planejamento."
+  },
+  {
+    "topic_id": 139,
+    "question": "Uma relação está na 1FN, mas um atributo não-primo depende apenas de parte de uma chave candidata composta. Qual forma normal é violada?",
+    "choices": [
+      "2FN",
+      "1FN necessariamente",
+      "5FN apenas",
+      "BCNF não depende de chaves"
+    ],
+    "correct_index": 0,
+    "explanation": "A 2FN requer ausência de dependência parcial de atributo não-primo em relação a chave candidata composta."
+  },
+  {
+    "topic_id": 140,
+    "question": "Uma consulta JOIN entre pedidos e itens retorna o valor total de um pedido repetido em cada linha de item. Qual cuidado é necessário antes de somar?",
+    "choices": [
+      "Controlar granularidade para evitar dupla contagem",
+      "Somar todos os valores sem analisar chave",
+      "Trocar JOIN por DELETE",
+      "Desabilitar constraints"
+    ],
+    "correct_index": 0,
+    "explanation": "Junção 1:N multiplica linhas da entidade pai, o que pode duplicar agregações se não houver pré-agregação/estratégia apropriada."
+  },
+  {
+    "topic_id": 162,
+    "question": "Uma consulta conta pacientes após JOIN com 3 exames por paciente. Qual expressão evita contar o mesmo paciente várias vezes?",
+    "choices": [
+      "COUNT(DISTINCT paciente.id)",
+      "COUNT(*) sem critérios",
+      "SUM(paciente.id)",
+      "MAX(exame.nome)"
+    ],
+    "correct_index": 0,
+    "explanation": "COUNT(DISTINCT) elimina repetições de identificadores no resultado, evitando inflar o número de pacientes."
+  },
+  {
+    "topic_id": 163,
+    "question": "Uma aplicação usa transações sem coordenação e duas sessões atualizam a mesma linha. Que recurso pode ajudar a proteger a consistência?",
+    "choices": [
+      "Controle de concorrência e isolamento apropriado",
+      "Remover chaves estrangeiras",
+      "Desativar trilha de auditoria",
+      "Forçar commit antes de validar"
+    ],
+    "correct_index": 0,
+    "explanation": "Transações, locks/controle multiversão e nível de isolamento devem refletir regras de negócio e conflitos possíveis."
+  }
+]
