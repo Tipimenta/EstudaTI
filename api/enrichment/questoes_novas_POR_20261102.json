@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 8,
+    "question": "Leia: 'Embora o sistema estivesse disponível, os relatórios não foram enviados.' O conectivo 'embora' estabelece qual relação?",
+    "choices": [
+      "Causa",
+      "Concessão",
+      "Finalidade",
+      "Conclusão"
+    ],
+    "correct_index": 1,
+    "explanation": "Embora introduz oração concessiva: a disponibilidade seria expectativa favorável ao envio, mas o resultado foi diferente."
+  },
+  {
+    "topic_id": 9,
+    "question": "Assinale a construção em conformidade com a norma-padrão:",
+    "choices": [
+      "Fazem três anos que o sistema foi instalado.",
+      "Houveram muitos chamados ontem.",
+      "Faz três anos que o sistema foi instalado.",
+      "Existe problemas urgentes."
+    ],
+    "correct_index": 2,
+    "explanation": "Fazer indicando tempo decorrido e haver no sentido de existir são impessoais; 'existir' concorda com o sujeito."
+  },
+  {
+    "topic_id": 43,
+    "question": "No trecho 'O relatório foi revisado, mas ainda contém ressalvas', é possível inferir que:",
+    "choices": [
+      "A revisão eliminou todas as falhas",
+      "Há ressalvas mesmo depois da revisão",
+      "O relatório nunca foi entregue",
+      "A revisão foi proibida"
+    ],
+    "correct_index": 1,
+    "explanation": "A conjunção adversativa indica contraste entre revisão e persistência das ressalvas; não se afirma eliminação de todos os problemas."
+  },
+  {
+    "topic_id": 44,
+    "question": "Qual frase apresenta concordância verbal adequada?",
+    "choices": [
+      "Haviam cinco servidores inativos.",
+      "Existia cinco servidores inativos.",
+      "Havia cinco servidores inativos.",
+      "Fazem duas semanas desde o incidente."
+    ],
+    "correct_index": 2,
+    "explanation": "Haver com sentido de existir é impessoal e fica no singular; existir concordaria com cinco servidores, e fazer temporal também é impessoal."
+  },
+  {
+    "topic_id": 45,
+    "question": "Em qual frase o acento grave indica crase adequada?",
+    "choices": [
+      "Entregou o documento à gerente responsável.",
+      "Dirigiu-se à servidores de TI.",
+      "Fez a solicitação à partir de hoje.",
+      "Respondeu à uma mensagem genérica."
+    ],
+    "correct_index": 0,
+    "explanation": "'Entregar algo a alguém' pede preposição a, e 'a gerente' admite artigo a. Não há crase antes de plural sem artigo compatível, de verbo ou de artigo indefinido."
+  },
+  {
+    "topic_id": 46,
+    "question": "Assinale a opção em que a vírgula separa indevidamente sujeito e predicado:",
+    "choices": [
+      "Os técnicos de suporte, atualizaram os equipamentos.",
+      "Após a reunião, o time registrou decisões.",
+      "O sistema, contudo, permaneceu estável.",
+      "Os usuários, que foram avisados, compareceram."
+    ],
+    "correct_index": 0,
+    "explanation": "Na ordem direta, não se usa vírgula entre sujeito e verbo: 'Os técnicos de suporte atualizaram os equipamentos'."
+  },
+  {
+    "topic_id": 47,
+    "question": "Em 'O servidor reiniciou. Esse equipamento já apresentava instabilidade', 'esse equipamento' retoma:",
+    "choices": [
+      "Uma informação futura apenas",
+      "O servidor mencionado anteriormente",
+      "A equipe de atendimento",
+      "A rede inteira obrigatoriamente"
+    ],
+    "correct_index": 1,
+    "explanation": "O demonstrativo realiza retomada anafórica do referente anterior e contribui para coesão textual."
+  },
+  {
+    "topic_id": 48,
+    "question": "Assinale a palavra corretamente acentuada segundo a ortografia vigente:",
+    "choices": [
+      "Ideía",
+      "Assembléia",
+      "Herói",
+      "Vôo"
+    ],
+    "correct_index": 2,
+    "explanation": "'Herói' mantém acento por ser ditongo aberto tônico em oxítona; 'ideia', 'assembleia' e 'voo' não levam esses acentos na norma atual."
+  },
+  {
+    "topic_id": 49,
+    "question": "Na frase 'A notícia caiu como uma bomba', a expressão destaca:",
+    "choices": [
+      "Uso exclusivamente denotativo do verbo cair",
+      "Sentido figurado para impacto emocional",
+      "Proibição de metáforas",
+      "Sentido técnico de explosivo real"
+    ],
+    "correct_index": 1,
+    "explanation": "A comparação descreve figurativamente o impacto da notícia, não uma explosão literal."
+  },
+  {
+    "topic_id": 50,
+    "question": "Na frase 'A equipe revisou os logs', o termo 'os logs' exerce a função de:",
+    "choices": [
+      "Sujeito",
+      "Predicativo do sujeito",
+      "Objeto direto",
+      "Adjunto adverbial"
+    ],
+    "correct_index": 2,
+    "explanation": "O verbo transitivo direto 'revisar' exige complemento sem preposição, realizado por 'os logs'."
+  },
+  {
+    "topic_id": 100,
+    "question": "No enunciado 'Até o administrador conseguiu resolver o caso', a partícula 'até' pode pressupor que:",
+    "choices": [
+      "A solução era esperada apenas do administrador",
+      "A participação dele é apresentada como surpreendente ou enfática",
+      "Não houve resolução",
+      "Outras pessoas foram obrigatoriamente reprovadas"
+    ],
+    "correct_index": 1,
+    "explanation": "'Até' pode funcionar como operador argumentativo que destaca um caso surpreendente na escala sugerida pelo enunciador."
+  },
+  {
+    "topic_id": 101,
+    "question": "Qual frase apresenta regência e crase corretas?",
+    "choices": [
+      "O técnico assistiu à apresentação.",
+      "O técnico assistiu a apresentação como espectador, sem preposição.",
+      "O técnico obedeceu à regulamento.",
+      "O técnico chegou à pé."
+    ],
+    "correct_index": 0,
+    "explanation": "Assistir no sentido de presenciar rege 'a'; com artigo feminino, ocorre crase: assistiu à apresentação."
+  },
+  {
+    "topic_id": 102,
+    "question": "Compare 'O servidor caiu porque faltou energia' com 'Faltou energia; portanto, o servidor caiu'. O segundo conectivo exprime:",
+    "choices": [
+      "Concessão",
+      "Conclusão",
+      "Alternância",
+      "Comparação"
+    ],
+    "correct_index": 1,
+    "explanation": "'Portanto' é conclusivo e apresenta a queda do servidor como consequência da falta de energia."
+  },
+  {
+    "topic_id": 129,
+    "question": "Assinale a frase correta quanto à concordância:",
+    "choices": [
+      "Mais de um técnico participaram do plantão.",
+      "Mais de um técnico participou do plantão.",
+      "Houveram relatórios novos.",
+      "Fazem dois meses desde a migração."
+    ],
+    "correct_index": 1,
+    "explanation": "Em regra, 'mais de um' leva verbo no singular; demais frases usam haver e fazer temporais de forma impessoal."
+  },
+  {
+    "topic_id": 130,
+    "question": "Em 'A equipe se dirigiu à unidade de saúde', por que ocorre crase?",
+    "choices": [
+      "Há preposição exigida por dirigir-se a e artigo feminino antes de unidade",
+      "Toda palavra feminina exige crase",
+      "O acento substitui uma vírgula",
+      "O verbo é intransitivo e dispensa preposição"
+    ],
+    "correct_index": 0,
+    "explanation": "O verbo exige a preposição a e o substantivo feminino definido admite artigo a, havendo fusão a+a."
+  },
+  {
+    "topic_id": 131,
+    "question": "Na frase 'Ele revisou o contrato. Depois, enviou-o à chefia', o pronome 'o' retoma:",
+    "choices": [
+      "O contrato",
+      "A chefia",
+      "O horário",
+      "O verbo revisar"
+    ],
+    "correct_index": 0,
+    "explanation": "O pronome oblíquo 'o' retoma o objeto direto já mencionado: o contrato."
+  },
+  {
+    "topic_id": 132,
+    "question": "Em 'Os usuários que receberam o aviso compareceram', a ausência de vírgulas na oração relativa indica, em geral:",
+    "choices": [
+      "Valor restritivo: um subconjunto de usuários",
+      "Explicação sobre todos os usuários",
+      "Erro obrigatório de pontuação",
+      "Citação literal"
+    ],
+    "correct_index": 0,
+    "explanation": "Oração relativa sem vírgulas tende a restringir o referente; com vírgulas, seria explicativa."
+  },
+  {
+    "topic_id": 158,
+    "question": "A frase 'O sistema não foi atualizado porque estava indisponível' pode gerar ambiguidade principalmente sobre:",
+    "choices": [
+      "A razão e a relação de causa da não atualização",
+      "O uso de palavras inglesas",
+      "A ordem alfabética do substantivo",
+      "A existência de artigo definido"
+    ],
+    "correct_index": 0,
+    "explanation": "Sem contexto, é preciso determinar a quem se atribui a indisponibilidade e o nexo causal; reescrita cuidadosa esclarece a mensagem."
+  },
+  {
+    "topic_id": 159,
+    "question": "Qual reescrita é mais apropriada para comunicação técnica objetiva?",
+    "choices": [
+      "Tipo assim, deu ruim no negócio.",
+      "O aplicativo apresentou erro 503 às 9h; a equipe iniciou análise dos logs.",
+      "Aconteceu um problema gigante e inexplicável.",
+      "O servidor parece estar ruim em tudo."
+    ],
+    "correct_index": 1,
+    "explanation": "Relato objetivo registra fato observável, horário e ação, evitando julgamentos vagos ou linguagem coloquial."
+  }
+]
