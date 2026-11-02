@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 7,
+    "question": "Uma VM possui snapshot local e o datastore inteiro falha fisicamente. Qual avaliação é correta?",
+    "choices": [
+      "Snapshot local é garantia de recuperação fora do datastore.",
+      "Snapshot pode ser perdido com o datastore; backup independente é necessário.",
+      "RAID 0 preserva snapshot após a perda do volume.",
+      "Contêiner Docker restaura snapshots de hipervisor automaticamente."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Snapshots costumam depender do armazenamento original.",
+      "Correto: a independência do backup é essencial contra perda do datastore.",
+      "RAID 0 não oferece redundância.",
+      "Contêiner não substitui a estratégia de recuperação da VM."
+    ],
+    "explanation": "Correto: a independência do backup é essencial contra perda do datastore.",
+    "fingerprint": "academy-20261102-7-1"
+  },
+  {
+    "topic_id": 7,
+    "question": "Uma VM originalmente inicializa por BIOS em disco MBR. Ao migrá-la para Hyper-V, qual aspecto deve ser validado antes da escolha da geração?",
+    "choices": [
+      "Só o nome da máquina.",
+      "Compatibilidade de firmware e particionamento; Geração 1 costuma ser adequada para BIOS/MBR.",
+      "Somente a quantidade de monitores do técnico.",
+      "Todos os discos MBR exigem Geração 2."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Nome não garante inicialização.",
+      "Correto: firmware virtual e esquema de partições determinam compatibilidade, além de demais requisitos.",
+      "Monitor do operador não define geração de VM.",
+      "Geração 2 utiliza UEFI e não é opção obrigatória para MBR/BIOS."
+    ],
+    "explanation": "Correto: firmware virtual e esquema de partições determinam compatibilidade, além de demais requisitos.",
+    "fingerprint": "academy-20261102-7-2"
+  },
+  {
+    "topic_id": 8,
+    "question": "Leia: 'Alguns candidatos finalizaram a prova antes do horário'. Qual conclusão é amparada pelo texto?",
+    "choices": [
+      "Todos os candidatos concluíram antes.",
+      "Pelo menos parte dos candidatos concluiu antes.",
+      "Nenhum candidato concluiu antes.",
+      "Todos os outros foram reprovados."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "'Alguns' não autoriza universalidade.",
+      "Correto: afirmação de parte, sem estender para todos.",
+      "Contradiz a existência informada.",
+      "Nada foi dito sobre aprovação."
+    ],
+    "explanation": "Correto: afirmação de parte, sem estender para todos.",
+    "fingerprint": "academy-20261102-8-1"
+  },
+  {
+    "topic_id": 8,
+    "question": "Leia: 'A equipe melhorou o desempenho; entretanto, ainda há falhas'. Qual interpretação respeita o conectivo?",
+    "choices": [
+      "A melhora eliminou todos os problemas.",
+      "Melhora e persistência de falhas coexistem.",
+      "Nenhuma melhora ocorreu.",
+      "O texto afirma que as falhas aumentaram."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "'Ainda há falhas' nega eliminação total.",
+      "Correto: 'entretanto' estabelece contraste entre avanço e problema remanescente.",
+      "O texto afirma explicitamente que houve melhora.",
+      "Não há informação de aumento de falhas."
+    ],
+    "explanation": "Correto: 'entretanto' estabelece contraste entre avanço e problema remanescente.",
+    "fingerprint": "academy-20261102-8-2"
+  },
+  {
+    "topic_id": 9,
+    "question": "Assinale a frase correta segundo a norma-padrão:",
+    "choices": [
+      "Houveram três atualizações ontem.",
+      "Fazem dois anos desde a implantação.",
+      "Existem três atualizações pendentes.",
+      "A equipe de TI, concluiu o teste."
+    ],
+    "correct_index": 2,
+    "rationales": [
+      "Haver com sentido de existir é impessoal: houve.",
+      "Fazer indicando tempo é impessoal: faz dois anos.",
+      "Correto: 'existir' concorda com sujeito plural.",
+      "A vírgula separa indevidamente sujeito e verbo."
+    ],
+    "explanation": "Correto: 'existir' concorda com sujeito plural.",
+    "fingerprint": "academy-20261102-9-1"
+  },
+  {
+    "topic_id": 9,
+    "question": "Em 'Os técnicos se dirigiram à unidade', por que há crase?",
+    "choices": [
+      "Toda palavra feminina leva crase.",
+      "O verbo rege preposição a e a expressão admite o artigo a.",
+      "O acento substitui a vírgula.",
+      "Crase ocorre obrigatoriamente antes de qualquer verbo."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "A presença de substantivo feminino isoladamente não é suficiente.",
+      "Correto: a preposição a se funde ao artigo a em 'a unidade'.",
+      "Crase tem função diferente da vírgula.",
+      "Em regra, não há artigo feminino antes de verbo no infinitivo."
+    ],
+    "explanation": "Correto: a preposição a se funde ao artigo a em 'a unidade'.",
+    "fingerprint": "academy-20261102-9-2"
+  },
+  {
+    "topic_id": 10,
+    "question": "Uma equipe reinicia o serviço diariamente para restabelecer o acesso, mas a causa desconhecida provoca novos chamados. O trabalho de investigar a origem da recorrência é:",
+    "choices": [
+      "Gerenciamento de incidentes exclusivamente.",
+      "Gerenciamento de problemas.",
+      "Gestão de estoque físico.",
+      "Mudança concluída sem análise."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Incidente busca restabelecer o serviço; investigação de causa é foco distinto.",
+      "Correto: a prática busca causa ou potencial causa de incidentes.",
+      "Estoque físico não explica recorrência técnica.",
+      "Mudança pode ser resultado, não substitui identificação da causa."
+    ],
+    "explanation": "Correto: a prática busca causa ou potencial causa de incidentes.",
+    "fingerprint": "academy-20261102-10-1"
+  },
+  {
+    "topic_id": 10,
+    "question": "Uma correção em firewall é proposta para restaurar sistema crítico e afeta produção. Qual cuidado continua pertinente?",
+    "choices": [
+      "Aplicar sem registrar e sem validar, pois incidentes anulam toda governança.",
+      "Avaliar riscos e registrar autorização/teste apropriados ao processo de mudança.",
+      "Liberar acesso irrestrito para sempre.",
+      "Proibir qualquer ação emergencial."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Urgência não elimina necessidade de controle proporcional.",
+      "Correto: mudanças precisam de avaliação e controles de acordo com a urgência e política.",
+      "Abertura geral amplia risco e não é boa prática.",
+      "Processos podem prever mudanças emergenciais."
+    ],
+    "explanation": "Correto: mudanças precisam de avaliação e controles de acordo com a urgência e política.",
+    "fingerprint": "academy-20261102-10-2"
+  },
+  {
+    "topic_id": 11,
+    "question": "Um PDTI registra 'comprar 30 computadores' sem justificar necessidade nem benefício. O principal problema é:",
+    "choices": [
+      "Falta de alinhamento entre necessidade institucional, iniciativa e resultado esperado.",
+      "Não indicar endereço IP individual no título.",
+      "Usar plural no texto.",
+      "Não citar número da VLAN nas compras."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: o planejamento deve explicitar a necessidade e benefício pretendido.",
+      "IP específico não substitui justificativa de planejamento.",
+      "Não é questão de gramática.",
+      "VLAN não fundamenta a compra por si só."
+    ],
+    "explanation": "Correto: o planejamento deve explicitar a necessidade e benefício pretendido.",
+    "fingerprint": "academy-20261102-11-1"
+  },
+  {
+    "topic_id": 11,
+    "question": "A alta direção define risco aceito e objetivos, e a equipe de TI executa iniciativas e monitora atividades. Essa diferença é melhor descrita por:",
+    "choices": [
+      "Ambas são apenas tarefas de suporte.",
+      "Governança direciona e supervisiona; gestão planeja e executa conforme objetivos.",
+      "Governança apenas instala ferramentas.",
+      "Gestão proíbe indicadores."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Direção estratégica e execução são responsabilidades distintas.",
+      "Correto: distingue governança de gestão, ainda que cooperem.",
+      "Ferramentas podem ser meios, não definição de governança.",
+      "Indicadores são necessários para acompanhar resultado."
+    ],
+    "explanation": "Correto: distingue governança de gestão, ainda que cooperem.",
+    "fingerprint": "academy-20261102-11-2"
+  },
+  {
+    "topic_id": 12,
+    "question": "Uma consulta usa LEFT JOIN entre clientes e pedidos e quer contar quantos pedidos cada cliente possui, inclusive os sem pedido. Qual agregação é mais apropriada?",
+    "choices": [
+      "COUNT(*) sem analisar linhas nulas.",
+      "COUNT(pedidos.id) agrupando cliente.",
+      "SUM(clientes.id) como quantidade.",
+      "COUNT(*) da tabela pedidos sem LEFT JOIN."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Após LEFT JOIN, COUNT(*) contabiliza a linha resultante do cliente sem correspondência.",
+      "Correto: COUNT(coluna do lado direito) ignora NULL e retorna zero para cliente sem pedidos.",
+      "Somar IDs não conta registros de pedidos.",
+      "Excluir LEFT JOIN remove clientes que não possuem pedidos."
+    ],
+    "explanation": "Correto: COUNT(coluna do lado direito) ignora NULL e retorna zero para cliente sem pedidos.",
+    "fingerprint": "academy-20261102-12-1"
+  },
+  {
+    "topic_id": 12,
+    "question": "Uma transferência precisa debitar uma conta e creditar outra. Uma falha ocorre após o débito e antes do crédito. Que propriedade orienta desfazer tudo?",
+    "choices": [
+      "Atomicidade.",
+      "Legibilidade de SQL.",
+      "Indexação B-tree.",
+      "Autenticação HTTP."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: transação completa deve ser confirmada como unidade ou revertida.",
+      "Legibilidade não garante rollback.",
+      "Índices não tornam movimentos indivisíveis.",
+      "Autenticação não assegura unidade transacional."
+    ],
+    "explanation": "Correto: transação completa deve ser confirmada como unidade ou revertida.",
+    "fingerprint": "academy-20261102-12-2"
+  }
+]
