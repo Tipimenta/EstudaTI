@@ -1,0 +1,213 @@
+{
+  "version": "estudati-masterclass-2026-11-02",
+  "code": "RED",
+  "topic_id": 91,
+  "title": "Material avançado complementar — OSI, TCP/IP e diagnóstico",
+  "content": "\n## Aula ampliada — como raciocinar em vez de decorar\n\nImagine um computador que abre um sistema de exames usando `https://sistema.exemplo`. A comunicação não é um único protocolo: cada camada resolve um problema. O navegador produz uma requisição HTTP; TLS protege o conteúdo da sessão; o TCP (no cenário usual HTTP/1.1 sobre TLS) organiza a comunicação em um fluxo confiável de bytes; o IP transporta datagramas entre redes; Ethernet ou Wi-Fi realiza a entrega no enlace; sinais elétricos, ópticos ou de rádio carregam os bits. Para HTTP/3, a pilha muda: HTTP/3 utiliza QUIC sobre UDP, não TCP. A banca pode cobrar justamente essa exceção.\n\n### 1. O que significa encapsular?\n\nO aplicativo produz **dados**. No transporte, o TCP acrescenta cabeçalho com portas, números de sequência e flags, formando um **segmento**. Na rede, o IP acrescenta IP de origem e destino, formando um **pacote/datagrama IP**. No enlace Ethernet, há endereços MAC de origem/destino e verificação de integridade do quadro, formando um **quadro**. Na camada física seguem **bits/sinais**. No receptor, o processo é inverso: desencapsular significa interpretar e remover os cabeçalhos correspondentes.\n\n```\nAplicação     HTTP (mensagem)\nTransporte    [TCP | dados da aplicação]                 → segmento\nRede          [IP | TCP | dados]                         → datagrama IP\nEnlace        [Ethernet | IP | TCP | dados | FCS]        → quadro\nFísica        bits no meio de transmissão\n```\n\nO termo PDU significa unidade de dados de protocolo. A camada de transporte também pode utilizar UDP, que forma **datagramas UDP**. Não confunda unidade de dados com garantia: IP realiza entrega de melhor esforço, e TCP acrescenta mecanismos de confiabilidade *acima* dele.\n\n### 2. Exemplo resolvido — acesso a outro prédio\n\nUma estação `192.168.1.50/24` quer acessar `192.168.30.20`. Ela calcula que o destino não pertence à sua sub-rede `192.168.1.0/24`; por isso encaminha ao gateway configurado, suponha `192.168.1.1`. Antes de montar o quadro Ethernet, precisa descobrir o MAC do gateway via ARP (se ainda não houver entrada em cache).\n\nO quadro que sai da estação contém **MAC de destino do gateway**; já o pacote IP continua tendo **IP de destino 192.168.30.20**. O roteador recebe, avalia a tabela de roteamento e gera um novo quadro para o próximo enlace. Se houver NAT no percurso, endereços IP ou portas podem ser traduzidos conforme a regra — por isso é errado afirmar que o IP jamais muda. Por outro lado, o roteador não usa o MAC do servidor remoto como destino do quadro no primeiro salto.\n\n**Erros clássicos:** (a) imaginar que switch L2 encaminha usando IP; (b) achar que MAC é igual ao IP; (c) achar que ARP resolve um endereço de outro segmento diretamente; (d) tratar máscara de sub-rede como porta de transporte.\n\n### 3. TCP na prática: conexão, sequência e limites\n\nEm um handshake TCP típico, cliente envia **SYN**, servidor responde **SYN+ACK** e cliente confirma com **ACK**. Os números de sequência permitem reconhecer ordem e dados ausentes. O receptor anuncia uma **janela de recepção (rwnd)** para controle de fluxo, enquanto o emissor utiliza mecanismos de controle de congestionamento (como `cwnd`) para reagir às condições da rede. O volume efetivo em trânsito é limitado por ambos. Perdas podem levar a retransmissão; isso não significa, isoladamente, falha de criptografia.\n\nUma aplicação que usa UDP pode oferecer sua própria confiabilidade, mas **UDP, por si só, não garante** confirmação, ordenação ou retransmissão. DNS usa UDP ou TCP conforme a operação e as implementações. Assim, dizer “DNS é sempre UDP” é falso.\n\n### 4. Roteiro de diagnóstico com hipóteses verificáveis\n\nSituação: o usuário vê “não foi possível acessar o site”. Não reinicie o servidor às cegas. Teste em sequência e registre o resultado:\n\n- **Físico/enlace:** adaptador ativo, LED de link, SSID/VLAN corretos, endereço MAC aprendido? Uma placa sem link sugere camada física ou enlace.\n- **IP local:** endereço, máscara, gateway e rota. `ipconfig /all` no Windows; `ip addr`, `ip route` no Linux. Um IP `169.254.x.x` pode indicar autoconfiguração após falha do DHCP IPv4.\n- **Alcance:** teste o gateway e o IP de destino. `ping` mede resposta ICMP, não comprova serviço HTTP disponível. Firewall pode bloquear ICMP mesmo com o aplicativo funcional.\n- **DNS:** `nslookup sistema.exemplo` ou `dig sistema.exemplo`. Se IP funciona e nome falha, investigue resolução, cache, registros e servidor DNS.\n- **Transporte/serviço:** `Test-NetConnection servidor -Port 443` no PowerShell verifica tentativa TCP na porta. Um sucesso de TCP não prova que autenticação e aplicação HTTP estejam corretas.\n- **TLS e aplicação:** examine certificado, nome de host, validade, proxy e código HTTP. Um `401` indica problema de autenticação/autorização na camada da aplicação, não necessariamente “cabo rompido”.\n\n**Caso resolvido:** DNS resolve, gateway responde e TCP/443 conecta, mas a página retorna HTTP 503. É razoável investigar serviço, proxy, sobrecarga ou disponibilidade do backend. Não concluir que “a camada 1 caiu”: houve comunicação suficiente para obter uma resposta HTTP.\n\n### 5. Como a banca cobra\n\n| Situação | Conceito determinante |\n| --- | --- |\n| Um host precisa do MAC do gateway | ARP, enlace e decisão pela sub-rede |\n| Um roteador escolhe rota /24 em vez de /16 | Correspondência de prefixo mais longo |\n| Retransmissão e entrega ordenada | TCP, transporte |\n| Serviço responde HTTP 404 | Aplicação; recurso não encontrado |\n| Nome não resolve, mas IP é acessível | DNS; serviço de aplicação |\n| Um link Ethernet perde portadora | Física |\n| HTTP/3 utiliza QUIC | QUIC sobre UDP; não generalizar TCP |\n\n### 6. Autoexplicação e transferência\n\nSem olhar, explique: por que o IP de destino e o MAC de destino podem apontar para equipamentos diferentes? Qual a diferença entre “o ping responde” e “o serviço está saudável”? Escreva as PDUs em ordem e dê dois exemplos em que HTTP, DNS e TCP podem falhar separadamente. Só depois responda às questões, justificando também as alternativas erradas.\n\n**Leituras técnicas:** [RFC 9293 — TCP](https://www.rfc-editor.org/rfc/rfc9293), [RFC 9000 — QUIC](https://www.rfc-editor.org/rfc/rfc9000). Material autoral; não são questões oficiais de bancas.\n",
+  "questions": [
+    {
+      "question": "Uma estação 10.1.1.8/24 envia pacote para 10.1.2.9 via gateway 10.1.1.1. Qual MAC deve aparecer como destino no primeiro quadro Ethernet?",
+      "choices": [
+        "MAC do destino 10.1.2.9",
+        "MAC do gateway 10.1.1.1",
+        "MAC do servidor DNS",
+        "MAC do switch gerenciável, obrigatoriamente"
+      ],
+      "correct_index": 1,
+      "explanation": "Como o IP remoto está fora da sub-rede, o host endereça o quadro ao gateway; o pacote IP mantém o destino remoto.",
+      "rationales": [
+        "O MAC do host remoto não é resolvido no enlace local.",
+        "Correta: a próxima interface L3 é o próximo salto.",
+        "DNS resolve nomes, não define destino Ethernet.",
+        "O switch L2 encaminha quadros e não precisa ser destino deles."
+      ]
+    },
+    {
+      "question": "Ao atravessar um roteador IPv4 sem NAT, qual mudança é normalmente esperada?",
+      "choices": [
+        "Novo cabeçalho de enlace; IP de destino preservado",
+        "IP de destino substituído pelo gateway sempre",
+        "Porta TCP de destino substituída por 53",
+        "Mensagem HTTP reescrita obrigatoriamente"
+      ],
+      "correct_index": 0,
+      "explanation": "O quadro é reconstruído para o enlace de saída, enquanto a camada IP mantém o destinatário final; TTL também diminui.",
+      "rationales": [
+        "Correta: o roteador reencapsula o pacote para o novo enlace.",
+        "O endereço IP de destino normalmente continua sendo o do serviço.",
+        "A porta do aplicativo não vira DNS pelo simples roteamento.",
+        "Um roteador comum não precisa ler ou alterar HTTP."
+      ]
+    },
+    {
+      "question": "Um usuário consegue acessar 203.0.113.10 por IP, mas falha ao usar o nome corporativo. Qual hipótese inicial é mais coerente?",
+      "choices": [
+        "Erro no endereço MAC do teclado",
+        "Falha de DNS ou nome",
+        "Falha obrigatória de cabo físico",
+        "Defeito de processador do servidor"
+      ],
+      "correct_index": 1,
+      "explanation": "A diferença entre acesso por IP e nome orienta a investigar o sistema de nomes, sem descartar particularidades de hospedagem virtual.",
+      "rationales": [
+        "Teclado não participa da resolução de nomes.",
+        "Correta: verificar registro e resolver DNS.",
+        "Acesso por IP mostra que há alguma conectividade.",
+        "Não há evidência suficiente de defeito de CPU."
+      ]
+    },
+    {
+      "question": "Em TCP, qual mecanismo informa ao emissor a capacidade disponível no buffer do receptor?",
+      "choices": [
+        "TTL",
+        "Janela anunciada de recepção",
+        "Tamanho da VLAN",
+        "Registro DNS MX"
+      ],
+      "correct_index": 1,
+      "explanation": "A janela de recepção anunciada permite controle de fluxo; congestionamento do caminho é uma questão distinta.",
+      "rationales": [
+        "TTL limita saltos de pacote IP.",
+        "Correta: rwnd trata da capacidade do receptor.",
+        "VLAN segmenta enlaces, não fluxo TCP.",
+        "MX identifica destinos de e-mail."
+      ]
+    },
+    {
+      "question": "Qual sequência descreve o estabelecimento típico de conexão TCP?",
+      "choices": [
+        "ACK, SYN, FIN",
+        "SYN, SYN+ACK, ACK",
+        "FIN, FIN, ACK",
+        "SYN, RST, FIN"
+      ],
+      "correct_index": 1,
+      "explanation": "O handshake de três vias sincroniza estados e números iniciais de sequência.",
+      "rationales": [
+        "ACK isolado não inicia o handshake típico.",
+        "Correta: abertura usual em três mensagens.",
+        "FIN está associado ao encerramento.",
+        "RST rejeita ou reinicia uma conexão."
+      ]
+    },
+    {
+      "question": "A aplicação retorna HTTP 503 após conexão TLS bem-sucedida. Qual conclusão se sustenta?",
+      "choices": [
+        "O enlace físico certamente caiu",
+        "O problema é obrigatoriamente do endereço IP",
+        "Há resposta HTTP indicando indisponibilidade do serviço",
+        "A camada de transporte usa apenas UDP"
+      ],
+      "correct_index": 2,
+      "explanation": "503 indica indisponibilidade temporária do serviço que respondeu, frequentemente em servidor ou proxy. Não identifica sozinho a causa exata.",
+      "rationales": [
+        "Houve comunicação suficiente para receber HTTP.",
+        "Não decorre necessariamente de roteamento IP.",
+        "Correta: é sinalização de aplicação/serviço.",
+        "HTTP/1.1 e HTTP/2 normalmente utilizam TCP."
+      ]
+    },
+    {
+      "question": "Qual afirmação sobre DNS é tecnicamente adequada?",
+      "choices": [
+        "DNS é necessariamente TCP na porta 443",
+        "DNS utiliza apenas UDP, sem exceções",
+        "DNS pode utilizar UDP e TCP conforme o caso",
+        "DNS opera exclusivamente na camada física"
+      ],
+      "correct_index": 2,
+      "explanation": "Operações DNS frequentemente usam UDP, mas TCP também é utilizado; existem transportes adicionais como DNS sobre TLS/HTTPS.",
+      "rationales": [
+        "Porta 443 não é o transporte DNS clássico.",
+        "Existem operações DNS em TCP.",
+        "Correta: não restringir o transporte.",
+        "Resolução de nomes é serviço de aplicação."
+      ]
+    },
+    {
+      "question": "Em uma captura, o cabeçalho TCP contém portas e números de sequência. Qual camada do OSI corresponde a esses campos?",
+      "choices": [
+        "Física",
+        "Enlace",
+        "Rede",
+        "Transporte"
+      ],
+      "correct_index": 3,
+      "explanation": "Portas e sequência são conceitos de transporte; IP de origem/destino são da camada de rede.",
+      "rationales": [
+        "Física transmite sinais.",
+        "Enlace usa quadro e MAC.",
+        "Rede trata do encaminhamento IP.",
+        "Correta: campos de segmento TCP."
+      ]
+    },
+    {
+      "question": "Que associação de unidade de dados está correta em um exemplo Ethernet/IPv4/TCP?",
+      "choices": [
+        "IP=quadro, Ethernet=segmento",
+        "TCP=segmento, IP=datagrama, Ethernet=quadro",
+        "TCP=pacote físico, IP=fluxo HTTP",
+        "Ethernet=registro DNS, TCP=quadro"
+      ],
+      "correct_index": 1,
+      "explanation": "Cada camada encapsula os dados anteriores em sua própria unidade; a terminologia deve acompanhar o protocolo.",
+      "rationales": [
+        "Os termos foram invertidos.",
+        "Correta: segmento, datagrama IP, quadro.",
+        "HTTP é de aplicação, não PDU de IP.",
+        "DNS e quadro Ethernet são conceitos distintos."
+      ]
+    },
+    {
+      "question": "Ao identificar um host com endereço 169.254.20.50 no Windows, qual hipótese inicial pode ser pertinente?",
+      "choices": [
+        "Atribuição automática IPv4 após não obter DHCP",
+        "Gateway IPv6 obrigatório",
+        "Tradução NAT pública bem-sucedida",
+        "Certificado TLS vencido"
+      ],
+      "correct_index": 0,
+      "explanation": "Endereços IPv4 link-local 169.254/16 são compatíveis com APIPA/autoconfiguração, frequentemente diante de indisponibilidade DHCP.",
+      "rationales": [
+        "Correta, mas exige verificar configuração e contexto.",
+        "Não corresponde a gateway IPv6.",
+        "169.254/16 não é endereço público NAT.",
+        "TLS não determina atribuição IPv4."
+      ]
+    },
+    {
+      "question": "Um ping ICMP ao servidor funciona. O que se pode concluir sobre o serviço na porta 443?",
+      "choices": [
+        "Ele está necessariamente funcional",
+        "A conectividade ICMP foi observada; HTTPS ainda precisa de teste",
+        "A autenticação web está correta",
+        "O banco de dados foi validado"
+      ],
+      "correct_index": 1,
+      "explanation": "Ping apenas comprova resposta ICMP no cenário testado; TCP, TLS, HTTP e aplicação exigem verificações próprias.",
+      "rationales": [
+        "ICMP não prova disponibilidade de TCP/HTTPS.",
+        "Correta: delimita o que o teste mostrou.",
+        "Ping não autentica usuário web.",
+        "Não realiza consulta ao banco."
+      ]
+    },
+    {
+      "question": "Qual comparação sobre HTTP/3 está correta?",
+      "choices": [
+        "HTTP/3 necessariamente usa TCP",
+        "HTTP/3 foi definido para funcionar sobre QUIC, que usa UDP",
+        "HTTP/3 é um protocolo Ethernet",
+        "HTTP/3 dispensa segurança criptográfica por padrão"
+      ],
+      "correct_index": 1,
+      "explanation": "HTTP/3 usa QUIC sobre UDP com segurança integrada via TLS 1.3; HTTP/1.1 e HTTP/2 tipicamente usam TCP.",
+      "rationales": [
+        "HTTP/3 não é baseado em TCP.",
+        "Correta: QUIC funciona sobre UDP.",
+        "HTTP é protocolo de aplicação.",
+        "QUIC protege a conexão criptograficamente."
+      ]
+    }
+  ]
+}
