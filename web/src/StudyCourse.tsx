@@ -18,18 +18,34 @@ const palette:Record<string,{icon:string,subtitle:string,focus:string}>={
 function norm(s:string){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,' ').trim().toLowerCase()}
 function pct(n:number,d:number){return d?Math.round(100*n/d):0}
 function TextInline({text}:{text:string}){
- const parts=text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g)
- return <>{parts.map((part,i)=>part.startsWith('**')&&part.endsWith('**')?<strong key={i} className="font-bold text-white">{part.slice(2,-2)}</strong>:part.startsWith('`')&&part.endsWith('`')?<code key={i} className="rounded bg-emerald-400/10 px-1 py-0.5 font-mono text-emerald-200">{part.slice(1,-1)}</code>:<span key={i}>{part}</span>)}</>
+ const parts=text.split(/(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\(https?:\/\/[^)]+\))/g)
+ return <>{parts.map((part,i)=>{
+  if(part.startsWith('**')&&part.endsWith('**'))return <strong key={i} className="font-bold text-white">{part.slice(2,-2)}</strong>
+  if(part.startsWith('`')&&part.endsWith('`'))return <code key={i} className="rounded bg-emerald-400/10 px-1 py-0.5 font-mono text-emerald-200">{part.slice(1,-1)}</code>
+  const link=part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/)
+  if(link)return <a key={i} className="break-words text-sky-300 underline" href={link[2]} target="_blank" rel="noopener noreferrer">{link[1]}</a>
+  return <span key={i}>{part}</span>
+ })}</>
 }
 function RichText({content}:{content:string}){
- type Block={kind:'heading'|'para'|'bullet'|'code'|'quote';text:string}
+ type Block={kind:'heading'|'para'|'bullet'|'code'|'quote'|'table';text:string;rows?:string[][]}
  const blocks:Block[]=[];const paragraphs:string[]=[];let inCode=false;let code:string[]=[]
  const flush=()=>{if(paragraphs.length){blocks.push({kind:'para',text:paragraphs.join(' ')});paragraphs.length=0}}
  for(const raw of content.split('\n')){
   const line=raw.trim()
+  if(line.startsWith('<!--'))continue
   if(line.startsWith('```')){if(!inCode){flush();code=[];inCode=true}else{blocks.push({kind:'code',text:code.join('\n')});inCode=false}continue}
   if(inCode){code.push(raw);continue}
   if(!line){flush();continue}
+  if(/^\|.+\|$/.test(line)){
+   flush()
+   if(/^\|[\s:|\-]+\|$/.test(line))continue
+   const row=line.slice(1,-1).split('|').map(x=>x.trim())
+   const last=blocks[blocks.length-1]
+   if(last?.kind==='table')last.rows?.push(row)
+   else blocks.push({kind:'table',text:'',rows:[row]})
+   continue
+  }
   if(/^#{1,4} /.test(line)){flush();blocks.push({kind:'heading',text:line.replace(/^#+ /,'')});continue}
   if(/^[-*] /.test(line)){flush();blocks.push({kind:'bullet',text:line.slice(2)});continue}
   if(line.startsWith('>')){flush();blocks.push({kind:'quote',text:line.slice(1).trim()});continue}
@@ -38,7 +54,8 @@ function RichText({content}:{content:string}){
  if(inCode&&code.length)blocks.push({kind:'code',text:code.join('\n')})
  return <article className="space-y-4 text-[15px] leading-8 text-slate-200">{blocks.map((b,i)=>{
   if(b.kind==='heading')return <h3 key={i} className="mt-8 border-b border-white/10 pb-3 text-lg font-bold text-emerald-100"><TextInline text={b.text}/></h3>
-  if(b.kind==='code')return <pre key={i} className="overflow-auto rounded-xl border border-white/10 bg-[#080e19] p-4 text-sm leading-6 text-emerald-100"><code>{b.text}</code></pre>
+  if(b.kind==='code')return <pre key={i} className="overflow-x-auto whitespace-pre rounded-xl border border-white/10 bg-[#080e19] p-4 text-sm leading-6 text-emerald-100"><code>{b.text}</code></pre>
+  if(b.kind==='table')return <div key={i} className="overflow-x-auto rounded-xl border border-white/10"><table className="w-full min-w-[440px] text-left text-sm"><thead className="bg-white/10"><tr>{b.rows?.[0]?.map((col,j)=><th key={j} className="border-b border-white/10 px-4 py-3 font-bold text-white"><TextInline text={col}/></th>)}</tr></thead><tbody>{b.rows?.slice(1).map((row,j)=><tr key={j} className="border-b border-white/5">{row.map((col,k)=><td key={k} className="px-4 py-3 align-top text-slate-300"><TextInline text={col}/></td>)}</tr>)}</tbody></table></div>
   if(b.kind==='bullet')return <p key={i} className="ml-2 border-l-2 border-emerald-400/30 pl-4"><TextInline text={b.text}/></p>
   if(b.kind==='quote')return <blockquote key={i} className="border-l-2 border-amber-400/50 pl-4 italic text-amber-100"><TextInline text={b.text}/></blockquote>
   return <p key={i}><TextInline text={b.text}/></p>
@@ -52,10 +69,7 @@ function TeachingTheory({lesson}:{lesson:StudyLessonDetail}){
   <div className="rounded-2xl border border-violet-400/20 bg-violet-400/5 p-5"><h3 className="flex items-center gap-2 font-bold text-violet-200"><Brain size={18}/> Recuperação ativa — antes de marcar como concluído</h3><p className="mt-2 text-sm leading-7 text-slate-200">Sem consultar a teoria, explique o mecanismo, refaça o exemplo e cite uma armadilha de prova. Depois confira sua resposta no texto.</p><button type="button" onClick={()=>setShowPrompt(v=>!v)} className="btn btn-secondary mt-4 text-xs">{showPrompt?'Ocultar roteiro':'Mostrar roteiro de autoavaliação'}</button>{showPrompt&&<p className="mt-3 text-sm leading-7 text-violet-100">1. Eu consigo explicar em 60 segundos? 2. Reproduzi o exemplo de memória? 3. Acertei as questões sem consultar? 4. Sei dizer por que as alternativas incorretas estão erradas? Se alguma resposta for não, registre o ponto em Minhas anotações e retorne depois.</p>}</div>
   <div className="rounded-xl border border-emerald-300/15 bg-emerald-400/5 p-4 text-sm text-slate-300"><b className="text-emerald-200">Fonte técnica para conferir as premissas:</b> {lesson.source_url?<a className="ml-2 break-all text-sky-300 underline" href={lesson.source_url} target="_blank" rel="noopener noreferrer">{lesson.source_label||lesson.source_url}</a>:<span>consulte o edital e a bibliografia da disciplina.</span>}<p className="mt-2 text-xs text-slate-400">Material autoral. Texto normativo e jurisprudência devem ser conferidos em versões vigentes.</p></div>
  </div>
- const sections=lesson.content.split(/\n\n(?=[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ0-9 /-]{6,}\n)/)
- return <div className="space-y-5"><div className="rounded-2xl border border-sky-400/15 bg-sky-400/5 p-5"><p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sky-200"><Target size={15}/> Objetivo da introdução</p><p className="text-base font-medium leading-7 text-white">{lesson.objective}</p></div>
- {sections.map((segment,i)=>{const split=segment.match(/^([^\n]{5,65})\n([\s\S]+)$/);const heading=split&&/^[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ0-9 /-]+$/.test(split[1])?split[1]:null;const body=heading?split![2]:segment;return <article key={i} className="rounded-2xl border border-white/10 bg-[#101a2b] p-5 sm:p-6"><h3 className="mb-4 flex items-center gap-2 text-base font-bold text-emerald-200"><BookOpen size={17}/>{heading?heading.replace(' / ',' — '):'Conceito fundamental'}</h3><p className="whitespace-pre-line text-[15px] leading-8 text-slate-200">{body}</p></article>})}
- <div className="rounded-xl border border-violet-400/20 bg-violet-400/5 p-5"><h3 className="flex items-center gap-2 font-bold text-violet-200"><Brain size={18}/> Recuperação ativa</h3><p className="mt-3 text-sm leading-7 text-slate-200">Explique sem consultar a teoria; depois pratique as questões e registre o que errou.</p></div></div>
+ return <div className="space-y-5"><div className="rounded-2xl border border-sky-400/15 bg-sky-400/5 p-5"><p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sky-200"><Target size={15}/> O que você aprenderá</p><p className="text-base font-medium leading-7 text-white">{lesson.objective}</p></div><RichText content={lesson.content}/><div className="rounded-xl border border-violet-400/20 bg-violet-400/5 p-5"><h3 className="flex items-center gap-2 font-bold text-violet-200"><Brain size={18}/> Agora explique sem consultar</h3><p className="mt-3 text-sm leading-7 text-slate-200">Descreva o conceito, elabore um exemplo e teste seu conhecimento na próxima etapa de questões.</p></div></div>
 }
 export default function StudyCourse(){
  const [subjects,setSubjects]=useState<Subject[]>([]);const [lessons,setLessons]=useState<StudyLesson[]>([])
