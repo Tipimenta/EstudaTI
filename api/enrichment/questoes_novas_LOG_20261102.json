@@ -1,0 +1,218 @@
+[
+  {
+    "topic_id": 16,
+    "question": "A condicional 'Se P, então Q' é falsa exatamente em qual situação?",
+    "choices": [
+      "P verdadeira e Q falsa",
+      "P falsa e Q verdadeira",
+      "P falsa e Q falsa",
+      "P verdadeira e Q verdadeira"
+    ],
+    "correct_index": 0,
+    "explanation": "A implicação material só é falsa quando a condição antecedente ocorre, mas a consequência não."
+  },
+  {
+    "topic_id": 75,
+    "question": "Para P verdadeira e Q falsa, qual o valor lógico de (P ∧ Q) ∨ ¬Q?",
+    "choices": [
+      "Verdadeiro",
+      "Falso",
+      "Indeterminado sem mais dados",
+      "Sempre contraditório"
+    ],
+    "correct_index": 0,
+    "explanation": "P∧Q é falso, ¬Q é verdadeiro; falso OU verdadeiro resulta verdadeiro."
+  },
+  {
+    "topic_id": 76,
+    "question": "Qual proposição é logicamente equivalente a 'Se o processo está ativo, então o servidor responde'?",
+    "choices": [
+      "Se o servidor não responde, então o processo não está ativo",
+      "Se o servidor responde, então o processo está ativo",
+      "O processo está ativo e não responde",
+      "Se o processo não está ativo, o servidor não responde"
+    ],
+    "correct_index": 0,
+    "explanation": "A contrapositiva ¬Q→¬P é equivalente à implicação P→Q; recíproca e inversa não são equivalentes em geral."
+  },
+  {
+    "topic_id": 77,
+    "question": "Qual é a negação de 'Todos os técnicos concluíram o treinamento'?",
+    "choices": [
+      "Nenhum técnico concluiu",
+      "Pelo menos um técnico não concluiu",
+      "Todos os técnicos faltaram",
+      "Alguns técnicos concluíram"
+    ],
+    "correct_index": 1,
+    "explanation": "Negar um quantificador universal exige um contraexemplo: existe ao menos um elemento que não satisfaz a propriedade."
+  },
+  {
+    "topic_id": 78,
+    "question": "Um evento tem probabilidade 0,35 de ocorrer. Qual a probabilidade do complementar?",
+    "choices": [
+      "0,35",
+      "0,65",
+      "1,35",
+      "0"
+    ],
+    "correct_index": 1,
+    "explanation": "Para evento A, P(não A)=1−P(A)=0,65."
+  },
+  {
+    "topic_id": 79,
+    "question": "De cinco candidatos, uma comissão selecionará três sem atribuir cargos distintos. Quantas seleções são possíveis?",
+    "choices": [
+      "10",
+      "15",
+      "20",
+      "60"
+    ],
+    "correct_index": 0,
+    "explanation": "A ordem não importa: C(5,3)=5!/(3!2!)=10."
+  },
+  {
+    "topic_id": 80,
+    "question": "Em um grupo de 40 pessoas, 22 estudam redes, 18 estudam SQL e 7 estudam ambas. Quantas estudam ao menos uma dessas disciplinas?",
+    "choices": [
+      "40",
+      "33",
+      "47",
+      "29"
+    ],
+    "correct_index": 1,
+    "explanation": "Pela inclusão-exclusão, |R∪S|=22+18−7=33."
+  },
+  {
+    "topic_id": 81,
+    "question": "Uma progressão aritmética inicia em 4 e aumenta 3 a cada termo. Qual o quinto termo?",
+    "choices": [
+      "13",
+      "16",
+      "19",
+      "20"
+    ],
+    "correct_index": 1,
+    "explanation": "Termo n: a_n=4+(n−1)×3. No quinto, 4+12=16."
+  },
+  {
+    "topic_id": 82,
+    "question": "Uma empresa compra 12 unidades a R$ 25 cada. Se o preço unitário aumentar 20% e a quantidade permanecer, qual será o gasto?",
+    "choices": [
+      "R$ 300",
+      "R$ 330",
+      "R$ 360",
+      "R$ 400"
+    ],
+    "correct_index": 2,
+    "explanation": "Preço novo=25×1,2=30; 12×30=R$ 360."
+  },
+  {
+    "topic_id": 112,
+    "question": "A negação lógica de (P → Q) é:",
+    "choices": [
+      "P ∧ ¬Q",
+      "¬P ∧ Q",
+      "P → ¬Q",
+      "¬P ∨ Q"
+    ],
+    "correct_index": 0,
+    "explanation": "P→Q equivale a ¬P∨Q; sua negação é P∧¬Q."
+  },
+  {
+    "topic_id": 113,
+    "question": "Uma urna tem 3 bolas vermelhas e 2 azuis. Sem reposição, qual a probabilidade de duas vermelhas em sequência?",
+    "choices": [
+      "3/5",
+      "3/10",
+      "9/25",
+      "1/5"
+    ],
+    "correct_index": 1,
+    "explanation": "P(primeira vermelha)=3/5 e P(segunda vermelha | primeira)=2/4; produto=6/20=3/10."
+  },
+  {
+    "topic_id": 114,
+    "question": "Uma progressão geométrica tem a1=3 e razão 2. Qual a4?",
+    "choices": [
+      "9",
+      "12",
+      "18",
+      "24"
+    ],
+    "correct_index": 3,
+    "explanation": "a4=a1×r^(4−1)=3×2^3=24."
+  },
+  {
+    "topic_id": 144,
+    "question": "Qual é a contrapositiva de 'Se há energia, o servidor liga'?",
+    "choices": [
+      "Se o servidor não liga, então não há energia",
+      "Se não há energia, o servidor não liga",
+      "Se liga, então há energia",
+      "Há energia e não liga"
+    ],
+    "correct_index": 0,
+    "explanation": "P→Q equivale a ¬Q→¬P. A contrapositiva nega e inverte antecedente e consequente."
+  },
+  {
+    "topic_id": 145,
+    "question": "A negação da frase 'O sistema está online e o backup terminou' é:",
+    "choices": [
+      "O sistema não está online ou o backup não terminou",
+      "O sistema não está online e o backup não terminou",
+      "O sistema está online ou o backup terminou",
+      "O backup terminou e o sistema não está online"
+    ],
+    "correct_index": 0,
+    "explanation": "Lei de De Morgan: ¬(P∧Q) é ¬P∨¬Q."
+  },
+  {
+    "topic_id": 146,
+    "question": "Dois eventos independentes têm probabilidades de 0,4 e 0,5. Qual a probabilidade de ambos ocorrerem?",
+    "choices": [
+      "0,9",
+      "0,2",
+      "0,45",
+      "0,1"
+    ],
+    "correct_index": 1,
+    "explanation": "Para eventos independentes, P(A∩B)=P(A)×P(B)=0,4×0,5=0,2."
+  },
+  {
+    "topic_id": 147,
+    "question": "Quatro pessoas disputarão primeiro e segundo lugar. Quantos pares ordenados de vencedores são possíveis?",
+    "choices": [
+      "6",
+      "8",
+      "12",
+      "24"
+    ],
+    "correct_index": 2,
+    "explanation": "Escolhas ordenadas sem repetição: 4 opções para 1º e 3 para 2º, resultando 4×3=12."
+  },
+  {
+    "topic_id": 166,
+    "question": "Em 50 candidatos, 30 fizeram redes, 28 fizeram português e 15 fizeram ambas. Quantos não fizeram nenhuma das duas matérias?",
+    "choices": [
+      "7",
+      "8",
+      "13",
+      "22"
+    ],
+    "correct_index": 0,
+    "explanation": "Fizeram ao menos uma: 30+28−15=43. Nenhuma: 50−43=7."
+  },
+  {
+    "topic_id": 167,
+    "question": "Um evento de falha tem probabilidade 0,1 por execução, independentemente entre duas execuções. Qual a chance de não haver falha nas duas?",
+    "choices": [
+      "0,01",
+      "0,10",
+      "0,81",
+      "0,90"
+    ],
+    "correct_index": 2,
+    "explanation": "Chance de não falha é 0,9 em cada execução; P(sem falha em ambas)=0,9²=0,81."
+  }
+]
