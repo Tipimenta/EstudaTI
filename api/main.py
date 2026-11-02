@@ -34,6 +34,7 @@ from learning_api import register as register_learning_routes
 from discursive_api import setup as setup_discursive, register as register_discursive
 
 DB_PATH = os.getenv('DATABASE_PATH', '/data/estudati.sqlite3')
+DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 PASSWORD = os.getenv('APP_PASSWORD', '')
 SECRET = os.getenv('APP_SECRET', '')
 COOKIE_SECURE = os.getenv('COOKIE_SECURE', 'false').lower() == 'true'
@@ -47,6 +48,9 @@ login_lock = threading.Lock()
 
 
 def conn():
+    if DATABASE_URL:
+        from postgres_compat import connect as pg_connect
+        return pg_connect(DATABASE_URL)
     db = sqlite3.connect(DB_PATH, timeout=30)
     db.row_factory = sqlite3.Row
     db.execute('PRAGMA foreign_keys=ON')
@@ -58,7 +62,8 @@ def jrows(rows):
 
 
 def init_db():
-    Path(DB_PATH).parent.mkdir(parents=True, exist_ok=True)
+    if not DATABASE_URL:
+        Path(DB_PATH).parent.mkdir(parents=True, exist_ok=True)
     with conn() as db:
         db.executescript('''
         PRAGMA journal_mode=WAL;
