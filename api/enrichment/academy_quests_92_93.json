@@ -1,0 +1,154 @@
+[
+  {
+    "topic_id": 92,
+    "question": "O endereço 172.16.8.173/28 pertence a qual bloco e qual é seu broadcast?",
+    "choices": [
+      "Rede .160 e broadcast .175",
+      "Rede .168 e broadcast .183",
+      "Rede .172 e broadcast .187",
+      "Rede .176 e broadcast .191"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: /28 avança de 16 em 16 no último octeto; 173 está no intervalo 160–175.",
+      "168 não é fronteira válida para /28.",
+      "172 também não é múltiplo de 16.",
+      "176 inicia o próximo bloco, que não contém 173."
+    ],
+    "explanation": "Correto: /28 avança de 16 em 16 no último octeto; 173 está no intervalo 160–175.",
+    "fingerprint": "academy-fix-coesao-20261102-92-1"
+  },
+  {
+    "topic_id": 92,
+    "question": "Qual é a máscara decimal correspondente ao prefixo IPv4 /27?",
+    "choices": [
+      "255.255.255.192",
+      "255.255.255.240",
+      "255.255.255.224",
+      "255.255.255.248"
+    ],
+    "correct_index": 2,
+    "rationales": [
+      "Equivale a /26, que reserva 26 bits de rede.",
+      "Equivale a /28, que reserva 28 bits.",
+      "Correto: 27 bits um = 255.255.255.224.",
+      "Equivale a /29."
+    ],
+    "explanation": "Correto: 27 bits um = 255.255.255.224.",
+    "fingerprint": "academy-fix-coesao-20261102-92-2"
+  },
+  {
+    "topic_id": 92,
+    "question": "Há rotas 10.1.0.0/16 e 10.1.5.0/24. Qual rota tem maior especificidade para 10.1.5.22?",
+    "choices": [
+      "10.1.0.0/16, porque é a maior rede",
+      "10.1.5.0/24, porque tem mais bits de prefixo correspondentes",
+      "A rota padrão sempre prevalece",
+      "Nenhuma, pois o destino pertence a redes privadas"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "O /16 cobre mais endereços, mas é menos específico.",
+      "Correto: /24 corresponde aos 24 bits iniciais do destino e supera /16 em especificidade.",
+      "Rota padrão tem prefixo /0, menos específico.",
+      "Redes privadas podem ser roteadas internamente normalmente."
+    ],
+    "explanation": "Correto: /24 corresponde aos 24 bits iniciais do destino e supera /16 em especificidade.",
+    "fingerprint": "academy-fix-coesao-20261102-92-3"
+  },
+  {
+    "topic_id": 92,
+    "question": "Uma rede exige 28 endereços de hosts convencionais, além de rede e broadcast. Qual é o menor bloco IPv4 usual suficiente?",
+    "choices": [
+      "/28",
+      "/29",
+      "/27",
+      "/30"
+    ],
+    "correct_index": 2,
+    "rationales": [
+      "/28 oferece apenas 14 hosts convencionais.",
+      "/29 oferece seis hosts convencionais.",
+      "Correto: /27 possui 32 endereços totais e 30 de host convencional.",
+      "/30 oferece dois hosts convencionais."
+    ],
+    "explanation": "Correto: /27 possui 32 endereços totais e 30 de host convencional.",
+    "fingerprint": "academy-fix-coesao-20261102-92-4"
+  },
+  {
+    "topic_id": 93,
+    "question": "A estação possui IP, máscara e gateway coerentes. A consulta nslookup retorna NXDOMAIN para nome desejado. Qual hipótese ganha prioridade?",
+    "choices": [
+      "Ausência de registros ou nome inexistente na resolução DNS consultada",
+      "Cabo físico comprovadamente rompido",
+      "Senha do banco inválida comprovadamente",
+      "Porta 443 comprovadamente aberta"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: NXDOMAIN indica que o nome solicitado não existe na visão da resposta DNS; investigar zona e nome.",
+      "Houve comunicação com resolvedor, não há demonstração de ruptura física.",
+      "Não se obteve autenticação de banco por DNS.",
+      "Consulta DNS não comprova conexão HTTPS."
+    ],
+    "explanation": "Correto: NXDOMAIN indica que o nome solicitado não existe na visão da resposta DNS; investigar zona e nome.",
+    "fingerprint": "academy-fix-coesao-20261102-93-1"
+  },
+  {
+    "topic_id": 93,
+    "question": "O navegador retorna HTTP 401 depois da tentativa de abrir recurso protegido. Onde é mais coerente começar a investigar?",
+    "choices": [
+      "Alimentação elétrica da estação exclusivamente",
+      "Autenticação e credenciais aceitas pela aplicação",
+      "Falta de MAC do gateway comprovada",
+      "Problema de broadcast IPv4 necessariamente"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Houve resposta HTTP, sem evidência de falta de energia.",
+      "Correto: 401 relaciona-se a ausência ou insuficiência de autenticação apropriada.",
+      "A comunicação aconteceu o suficiente para resposta HTTP.",
+      "Não decorre necessariamente de broadcast."
+    ],
+    "explanation": "Correto: 401 relaciona-se a ausência ou insuficiência de autenticação apropriada.",
+    "fingerprint": "academy-fix-coesao-20261102-93-2"
+  },
+  {
+    "topic_id": 93,
+    "question": "Um teste ping falha mas o navegador consegue usar HTTPS normalmente. O que isso mostra?",
+    "choices": [
+      "O navegador está necessariamente simulando a página sem rede",
+      "ICMP pode estar filtrado, e falha no ping não prova falha da aplicação HTTPS",
+      "TCP não funciona se ICMP não responde",
+      "Servidor DNS foi desativado por regra de camada física"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Um serviço pode funcionar mesmo com ICMP bloqueado.",
+      "Correto: ping e HTTPS usam mecanismos diferentes, e firewalls podem permitir um e bloquear outro.",
+      "TCP não depende da permissão para resposta ICMP Echo.",
+      "DNS e camada física não estão determinados pelo ping."
+    ],
+    "explanation": "Correto: ping e HTTPS usam mecanismos diferentes, e firewalls podem permitir um e bloquear outro.",
+    "fingerprint": "academy-fix-coesao-20261102-93-3"
+  },
+  {
+    "topic_id": 93,
+    "question": "Um serviço HTTPS usa nome correto e TCP/443 conecta, mas exibe erro de nome do certificado TLS. Qual hipótese é pertinente?",
+    "choices": [
+      "Incompatibilidade entre domínio acessado e nomes cobertos pelo certificado",
+      "Falha obrigatória do DHCP",
+      "Ausência total de enlace físico",
+      "Uso de RAID 0 no servidor comprovado"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: a validação do nome no certificado pode rejeitar certificado que não abrange o hostname solicitado.",
+      "DHCP não explica automaticamente incompatibilidade no certificado.",
+      "TCP chegou a conectar, indicando algum enlace funcional.",
+      "RAID do servidor não é determinado por certificado."
+    ],
+    "explanation": "Correto: a validação do nome no certificado pode rejeitar certificado que não abrange o hostname solicitado.",
+    "fingerprint": "academy-fix-coesao-20261102-93-4"
+  }
+]
