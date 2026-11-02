@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 6,
+    "question": "Em Linux, um serviço não inicia após atualização. Qual primeira verificação costuma fornecer evidência relevante em sistemas com systemd?",
+    "choices": [
+      "systemctl status e journalctl do serviço",
+      "Formatar a partição de dados",
+      "Apagar todos os usuários",
+      "Trocar a máscara IPv4 sem teste"
+    ],
+    "correct_index": 0,
+    "explanation": "Estado e logs da unidade indicam falhas de execução e dependências, permitindo diagnóstico antes de alterações invasivas."
+  },
+  {
+    "topic_id": 7,
+    "question": "Um ambiente virtualizado utiliza snapshots, mas não executa backups externos. Qual afirmação é mais correta?",
+    "choices": [
+      "Snapshot substitui backup em qualquer falha",
+      "Snapshot não substitui estratégia de backup e recuperação",
+      "RAID 1 garante reversão de alterações lógicas",
+      "Contêiner mantém banco mesmo com disco efêmero"
+    ],
+    "correct_index": 1,
+    "explanation": "Snapshots geralmente dependem do armazenamento original e são úteis para pontos de retorno, mas não substituem backup segregado."
+  },
+  {
+    "topic_id": 35,
+    "question": "Duas threads do mesmo processo acessam memória compartilhada sem coordenação. Qual risco clássico surge?",
+    "choices": [
+      "Condição de corrida",
+      "Exclusivamente falha DNS",
+      "Duplicação de endereço MAC",
+      "Aumento automático de privilégios"
+    ],
+    "correct_index": 0,
+    "explanation": "A ordem não determinística de execução pode levar a resultados inconsistentes quando há concorrência sem sincronização."
+  },
+  {
+    "topic_id": 36,
+    "question": "Um arquivo Linux tem permissões rw-r----- e pertence ao usuário joao e grupo ti. Um membro apenas do grupo ti possui qual acesso?",
+    "choices": [
+      "Leitura, sem escrita",
+      "Leitura e escrita",
+      "Execução, sem leitura",
+      "Nenhum, mesmo pertencendo ao grupo"
+    ],
+    "correct_index": 0,
+    "explanation": "No grupo, os bits r-- concedem leitura; o dono possui rw- e outros não têm permissões."
+  },
+  {
+    "topic_id": 37,
+    "question": "Uma unidade systemd falha durante a inicialização. Qual comando é adequado para ler seus registros recentes?",
+    "choices": [
+      "journalctl -u nome.service",
+      "chmod 777 /",
+      "mkfs.ext4 /dev/sda",
+      "route -n exclusivamente"
+    ],
+    "correct_index": 0,
+    "explanation": "journalctl -u filtra mensagens de uma unidade systemd, ajudando a investigar falhas com evidência."
+  },
+  {
+    "topic_id": 38,
+    "question": "Um usuário do domínio consegue autenticar-se em uma máquina, mas não acessar pasta compartilhada. Qual suspeita é pertinente?",
+    "choices": [
+      "Permissão de compartilhamento/NTFS inadequada",
+      "Kerberos não pode coexistir com LDAP",
+      "DNS usa apenas ICMP",
+      "Toda autenticação equivale a autorização"
+    ],
+    "correct_index": 0,
+    "explanation": "Estar autenticado não assegura permissão de acesso; é necessário examinar políticas e ACLs efetivas."
+  },
+  {
+    "topic_id": 39,
+    "question": "Uma VM Windows instalada com firmware BIOS e disco MBR é migrada para Hyper-V. Qual tipo de geração costuma preservar compatibilidade de inicialização?",
+    "choices": [
+      "Geração 1",
+      "Geração 2 obrigatoriamente",
+      "Qualquer tipo sem checagem",
+      "Somente contêiner OCI"
+    ],
+    "correct_index": 0,
+    "explanation": "Geração 1 usa BIOS virtual e é mais compatível com sistemas MBR/BIOS; Geração 2 é UEFI e pode demandar adaptações."
+  },
+  {
+    "topic_id": 40,
+    "question": "Um contêiner Docker grava dados apenas no sistema de arquivos gravável interno e é removido. O que acontece em regra com esses dados?",
+    "choices": [
+      "Permanecem sempre em outro host",
+      "Podem ser perdidos ao remover o contêiner",
+      "São automaticamente copiados a todos os bancos",
+      "São criptografados no DNS"
+    ],
+    "correct_index": 1,
+    "explanation": "Persistência deve ser planejada com volumes ou armazenamento externo; o sistema gravável do contêiner é efêmero."
+  },
+  {
+    "topic_id": 41,
+    "question": "Um arranjo RAID 5 perde um disco e segue operando degradado. Qual medida é coerente?",
+    "choices": [
+      "Substituir disco conforme procedimento e reconstruir com monitoramento",
+      "Considerar RAID um backup completo",
+      "Ignorar alertas até perder outro disco",
+      "Desligar a controladora sem inventário"
+    ],
+    "correct_index": 0,
+    "explanation": "RAID 5 tolera normalmente a falha de um disco, mas a perda de outro antes da recuperação pode comprometer dados."
+  },
+  {
+    "topic_id": 42,
+    "question": "Em um serviço PaaS gerenciado, qual responsabilidade tende a continuar com o cliente?",
+    "choices": [
+      "Desenvolvimento seguro e gestão das identidades da aplicação",
+      "Substituição física de placas no data center",
+      "Alimentação do rack do provedor",
+      "Operação direta do hipervisor do provedor"
+    ],
+    "correct_index": 0,
+    "explanation": "Mesmo em PaaS, aplicação, dados e acessos seguem com responsabilidades do cliente, conforme contrato e modelo compartilhado."
+  },
+  {
+    "topic_id": 97,
+    "question": "Uma GPO vinculada a OU não foi aplicada a uma conta recém-movida. Qual primeira investigação é relevante?",
+    "choices": [
+      "Escopo, herança, filtro de segurança e atualização de política",
+      "Trocar imediatamente os discos RAID",
+      "Excluir as zonas DNS do domínio",
+      "Desativar relógio do cliente"
+    ],
+    "correct_index": 0,
+    "explanation": "Aplicação de GPO depende de vinculação, herança, escopo, filtros e atualização, além de acesso ao domínio."
+  },
+  {
+    "topic_id": 98,
+    "question": "Uma aplicação Linux consegue ler um arquivo, mas falha ao executá-lo. Qual distinção de permissões é essencial?",
+    "choices": [
+      "Permissão de leitura não equivale a permissão de execução",
+      "Leitura sempre implica x",
+      "O dono ignora permissões",
+      "O sistema usa NTFS sempre"
+    ],
+    "correct_index": 0,
+    "explanation": "Bits r e x têm propósitos diferentes; execução pode exigir x e outras condições, mesmo quando leitura é permitida."
+  },
+  {
+    "topic_id": 99,
+    "question": "Uma VM tem snapshot do dia anterior e backups regulares em armazenamento externo. Qual elemento protege melhor contra perda do próprio datastore?",
+    "choices": [
+      "Backup independente testado",
+      "Somente snapshot local",
+      "Ajuste de tamanho da RAM",
+      "Renomear a máquina virtual"
+    ],
+    "correct_index": 0,
+    "explanation": "Uma cópia independente e restaurável é mais resiliente à perda do datastore que snapshot armazenado no mesmo local."
+  },
+  {
+    "topic_id": 125,
+    "question": "Para aplicar uma política Windows a computadores de determinado setor, qual estratégia é mais coerente?",
+    "choices": [
+      "Vincular GPO à OU correspondente e validar filtros",
+      "Criar usuário local com senha compartilhada",
+      "Alterar todos os DNS públicos",
+      "Adicionar registro MX"
+    ],
+    "correct_index": 0,
+    "explanation": "GPOs são vinculadas a sites, domínios e OUs com processamento por herança e filtros; o escopo correto é indispensável."
+  },
+  {
+    "topic_id": 126,
+    "question": "Uma umask 027, aplicada a novos arquivos com permissões base 666, normalmente produz que permissão?",
+    "choices": [
+      "777",
+      "640",
+      "750",
+      "600"
+    ],
+    "correct_index": 1,
+    "explanation": "Em modo convencional, arquivos 666 com umask 027 resultam 640 (rw-r-----); diretórios têm base 777 e resultam 750."
+  },
+  {
+    "topic_id": 127,
+    "question": "Uma equipe cria imagem Docker que inclui credenciais em camadas do build. Qual problema permanece mesmo após remover o arquivo em etapa posterior?",
+    "choices": [
+      "Segredos podem ficar no histórico/camadas da imagem",
+      "A imagem se torna automaticamente imutável para auditoria",
+      "Contêiner impede qualquer acesso ao segredo",
+      "A senha será armazenada apenas em DNS"
+    ],
+    "correct_index": 0,
+    "explanation": "Segredos escritos durante build podem persistir em camadas/cache; use gerenciamento de segredos em vez de incluí-los na imagem."
+  },
+  {
+    "topic_id": 128,
+    "question": "Uma organização tem RAID 1 em produção e nenhuma cópia externa. Qual risco segue sem mitigação?",
+    "choices": [
+      "Exclusão acidental ou ransomware afetar ambas as cópias",
+      "Falha física de um disco",
+      "Troca a quente ser possível",
+      "Leitura simultânea"
+    ],
+    "correct_index": 0,
+    "explanation": "RAID espelha alterações, inclusive exclusões ou criptografia maliciosa; backups independentes são necessários."
+  },
+  {
+    "topic_id": 156,
+    "question": "Um cliente não encontra controlador de domínio apesar de ter IP e gateway válidos. Que serviço deve ser checado especialmente para localização do AD?",
+    "choices": [
+      "DNS com registros SRV do domínio",
+      "Servidor NTP apenas",
+      "Registro SPF da internet",
+      "Cache de impressora"
+    ],
+    "correct_index": 0,
+    "explanation": "AD depende fortemente de DNS para localizar controladores e serviços; configuração DNS inadequada causa falhas de ingresso e login."
+  },
+  {
+    "topic_id": 157,
+    "question": "Um daemon Linux falha ao abrir arquivo e o log mostra EACCES. Qual hipótese imediata é mais consistente?",
+    "choices": [
+      "Permissões/ACL ou política de segurança negaram acesso",
+      "Serviço DNS não resolveu hostname necessariamente",
+      "O relógio precisa estar UTC",
+      "A rede IPv4 caiu obrigatoriamente"
+    ],
+    "correct_index": 0,
+    "explanation": "EACCES indica acesso negado; verifique dono, permissões, ACL, SELinux/AppArmor e contexto efetivo."
+  }
+]
