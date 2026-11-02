@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 10,
+    "question": "Uma aplicação caiu e o time precisa restabelecer o serviço, ainda que usando solução temporária. Qual prática ITIL tem foco mais imediato?",
+    "choices": [
+      "Gerenciamento de incidentes",
+      "Gerenciamento de portfólio",
+      "Gestão de ativos financeiros",
+      "Planejamento orçamentário anual"
+    ],
+    "correct_index": 0,
+    "explanation": "Incidente trata restauração do serviço o mais rápido possível, podendo adotar contorno documentado."
+  },
+  {
+    "topic_id": 11,
+    "question": "Um PDTI define iniciativas, orçamento indicativo, prioridades e responsáveis. O que demonstra melhor seu alinhamento?",
+    "choices": [
+      "Relação explícita entre necessidades de TI e objetivos institucionais",
+      "Quantidade de páginas da política",
+      "Uso obrigatório de um fabricante",
+      "Listagem de periféricos sem justificativa"
+    ],
+    "correct_index": 0,
+    "explanation": "O planejamento de TI deve ser orientado às necessidades e estratégias da organização, com prioridades e indicadores verificáveis."
+  },
+  {
+    "topic_id": 51,
+    "question": "Um servidor de impressão parou inesperadamente e usuários não conseguem concluir trabalhos. Qual classificação inicial é adequada?",
+    "choices": [
+      "Incidente",
+      "Mudança aprovada",
+      "Requisição de acesso novo",
+      "Inventário patrimonial"
+    ],
+    "correct_index": 0,
+    "explanation": "A interrupção não planejada da qualidade ou disponibilidade de um serviço corresponde a incidente."
+  },
+  {
+    "topic_id": 52,
+    "question": "Vários incidentes similares são atribuídos à mesma falha de configuração. Qual prática busca identificar e administrar a causa subjacente?",
+    "choices": [
+      "Gerenciamento de problemas",
+      "Apenas abertura de requisições",
+      "Gestão de marketing",
+      "Encerramento automático de todo chamado"
+    ],
+    "correct_index": 0,
+    "explanation": "Problemas visam causas e soluções permanentes ou contornos documentados, distinguindo-se do restabelecimento imediato dos incidentes."
+  },
+  {
+    "topic_id": 53,
+    "question": "Um conselho define direção e acompanha resultados, enquanto os gestores planejam e executam atividades. Essa distinção reflete:",
+    "choices": [
+      "Governança versus gestão",
+      "DNS versus DHCP",
+      "Gestão versus contabilidade apenas",
+      "Incidente versus requisição"
+    ],
+    "correct_index": 0,
+    "explanation": "Governança avalia, direciona e monitora; gestão planeja, constrói, executa e monitora de acordo com a direção."
+  },
+  {
+    "topic_id": 54,
+    "question": "Um serviço mede a proporção de solicitações concluídas em menos de 300 ms. Essa medição operacional é exemplo de:",
+    "choices": [
+      "SLI",
+      "SLA contratual por si só",
+      "Plano estratégico",
+      "Percentual de licenças"
+    ],
+    "correct_index": 0,
+    "explanation": "SLI é o indicador de nível de serviço medido; SLO é um objetivo para esse indicador; SLA formaliza compromissos."
+  },
+  {
+    "topic_id": 55,
+    "question": "Um PDTI apresenta dez projetos sem critério de priorização ou relação com necessidades do órgão. Qual falha metodológica é mais clara?",
+    "choices": [
+      "Falta de justificativa e alinhamento das prioridades",
+      "Excesso de tabelas SQL",
+      "Ausência obrigatória de Scrum",
+      "Incompatibilidade universal com COBIT"
+    ],
+    "correct_index": 0,
+    "explanation": "Um plano de TI efetivo explicita relação entre necessidades, iniciativas, restrições, responsáveis, prioridades e metas."
+  },
+  {
+    "topic_id": 56,
+    "question": "Uma equipe limita o número de tarefas 'Em andamento' num quadro Kanban. Qual efeito se busca?",
+    "choices": [
+      "Reduzir trabalho em progresso e favorecer fluxo",
+      "Garantir entregas sem testes",
+      "Eliminar retrabalho definitivamente",
+      "Trocar todas as prioridades diariamente"
+    ],
+    "correct_index": 0,
+    "explanation": "Limitar WIP ajuda a visualizar gargalos e evitar excesso de tarefas iniciadas sem conclusão."
+  },
+  {
+    "topic_id": 57,
+    "question": "Durante contrato de suporte, a fiscalização registra descumprimento de níveis de serviço e notifica o contratado conforme regras do ajuste. Isso exemplifica:",
+    "choices": [
+      "Acompanhamento da execução contratual",
+      "Mudança de endereço IP",
+      "Backup de estação",
+      "Renovação automática sem avaliação"
+    ],
+    "correct_index": 0,
+    "explanation": "A fiscalização compara execução ao contrato e documenta ocorrências para decisões e providências cabíveis."
+  },
+  {
+    "topic_id": 58,
+    "question": "Uma empresa concede a fornecedor acesso permanente ao banco de produção sem revisão de privilégios. Qual medida trata melhor o risco?",
+    "choices": [
+      "Gestão de terceiros com acesso mínimo e revisão periódica",
+      "Liberar acesso anônimo",
+      "Ignorar prazo contratual",
+      "Guardar senha em planilha compartilhada"
+    ],
+    "correct_index": 0,
+    "explanation": "Gestão de terceiros envolve requisitos, monitoramento e encerramento de acessos, alinhados ao risco de cada relação."
+  },
+  {
+    "topic_id": 103,
+    "question": "Um serviço é restaurado por reinício, mas a falha volta semanalmente. O trabalho de restaurar no momento e investigar a causa corresponde a:",
+    "choices": [
+      "Incidente e problema, respectivamente",
+      "Mudança e incidente, respectivamente",
+      "Disponibilidade e só inventário",
+      "SLA e DNS"
+    ],
+    "correct_index": 0,
+    "explanation": "Incidente busca recuperar operação, enquanto problema procura causas e prevenção de recorrências."
+  },
+  {
+    "topic_id": 104,
+    "question": "Em uma organização, a alta direção define prioridades de valor e risco, e a TI executa o plano. Qual alternativa está mais alinhada ao COBIT?",
+    "choices": [
+      "Governança dirige e monitora; gestão realiza atividades",
+      "Governança é somente suporte ao usuário",
+      "Gestão substitui integralmente direção",
+      "O modelo se restringe ao hardware"
+    ],
+    "correct_index": 0,
+    "explanation": "COBIT diferencia objetivos de governança e de gestão para tratar valor, risco e recursos de informação e tecnologia."
+  },
+  {
+    "topic_id": 105,
+    "question": "Uma equipe Scrum muda a prioridade dos itens do Product Backlog. Quem é responsável pela ordenação do backlog para maximizar valor?",
+    "choices": [
+      "Product Owner",
+      "Qualquer stakeholder sem coordenação",
+      "Scrum Master sozinho",
+      "Gerente de infraestrutura obrigatoriamente"
+    ],
+    "correct_index": 0,
+    "explanation": "No Scrum, o Product Owner é responsável pelo gerenciamento eficaz do Product Backlog, incluindo sua ordenação."
+  },
+  {
+    "topic_id": 133,
+    "question": "A equipe restaura rapidamente um serviço e cria investigação da causa raiz. Qual indicador faria mais sentido para a fase de incidente?",
+    "choices": [
+      "Tempo para restauração do serviço",
+      "Número de crachás emitidos",
+      "Quantidade de contratos assinados",
+      "Percentual de licenças Microsoft"
+    ],
+    "correct_index": 0,
+    "explanation": "O objetivo imediato de incidentes é restaurar o serviço; métricas de tempo e qualidade da restauração são pertinentes."
+  },
+  {
+    "topic_id": 134,
+    "question": "Uma diretoria avalia se investimentos de TI entregam valor e respeitam riscos aceitos. Qual dimensão está mais diretamente evidenciada?",
+    "choices": [
+      "Objetivos de governança",
+      "Somente execução de chamados",
+      "Somente desenvolvimento de interface",
+      "Manipulação de registros DNS"
+    ],
+    "correct_index": 0,
+    "explanation": "A supervisão de valor, riscos e alinhamento estratégico é responsabilidade de governança."
+  },
+  {
+    "topic_id": 135,
+    "question": "Uma iniciativa de PDTI foi concluída, mas não produz o benefício previsto. Qual avaliação é mais útil?",
+    "choices": [
+      "Confrontar indicador de resultado com meta de negócio",
+      "Contar apenas horas investidas",
+      "Trocar a cor da apresentação",
+      "Encerrar o plano sem revisão"
+    ],
+    "correct_index": 0,
+    "explanation": "Conclusão de atividade não demonstra benefício; é preciso medir resultados em relação às necessidades e metas."
+  },
+  {
+    "topic_id": 136,
+    "question": "Um serviço atingiu disponibilidade mensal de 99,8%, mas seu SLO era de 99,9%. Qual interpretação é correta?",
+    "choices": [
+      "O resultado ficou abaixo do objetivo",
+      "O objetivo foi superado",
+      "SLA e SLO são sempre a mesma coisa",
+      "Não se pode medir porcentagens"
+    ],
+    "correct_index": 0,
+    "explanation": "Disponibilidade observada (SLI) de 99,8% ficou 0,1 ponto percentual abaixo da meta de 99,9%."
+  },
+  {
+    "topic_id": 160,
+    "question": "O SLA estabelece prazo de atendimento, o SLO uma meta de tempo e o SLI registra o desempenho. Qual item é a medida efetivamente observada?",
+    "choices": [
+      "SLI",
+      "SLO",
+      "SLA",
+      "PDTI"
+    ],
+    "correct_index": 0,
+    "explanation": "SLI é métrica observável do serviço; SLO estabelece valor-alvo; SLA documenta compromisso entre partes."
+  },
+  {
+    "topic_id": 161,
+    "question": "Há dois projetos: A entrega benefício alto com risco baixo; B entrega benefício incerto com risco elevado. Qual decisão é mais técnica?",
+    "choices": [
+      "Comparar valor, risco, recursos e prioridades explícitas antes de escolher",
+      "Selecionar B por ter nome maior",
+      "Selecionar qualquer um sem critério",
+      "Ignorar dependências e custos"
+    ],
+    "correct_index": 0,
+    "explanation": "Priorizar demanda critérios explícitos e análise de custo, benefício, urgência, riscos e capacidade de execução."
+  }
+]
