@@ -1,0 +1,344 @@
+[
+  {
+    "topic_id": 20,
+    "question": "Um switch transporta quadros das VLANs 10 e 20 por uma mesma porta até outro switch. Qual característica costuma indicar o uso de trunk 802.1Q?",
+    "choices": [
+      "Todos os quadros são transmitidos como broadcast IP",
+      "As VLANs são identificadas por marcação de quadro conforme configuração",
+      "A porta atua como VPN de camada 7",
+      "O endereçamento IP é substituído por número de VLAN"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Trunk não faz todos os quadros se tornarem broadcasts IP.",
+      "Correto: tags 802.1Q identificam VLANs em quadros Ethernet, observadas regras da VLAN nativa.",
+      "VPN é solução distinta de encapsulamento/segurança de tráfego.",
+      "VLAN tag não substitui cabeçalho IP."
+    ],
+    "explanation": "Correto: tags 802.1Q identificam VLANs em quadros Ethernet, observadas regras da VLAN nativa.",
+    "fingerprint": "academy-ninecore-20261102-20-1"
+  },
+  {
+    "topic_id": 20,
+    "question": "Uma empresa separa convidados na VLAN 20 e servidores internos na VLAN 10. Qual afirmação sobre a política de acesso é adequada?",
+    "choices": [
+      "O simples uso de VLAN autoriza convidados a todos os servidores",
+      "A separação L2 pode ser combinada com regras L3/firewall para restringir comunicação inter-VLAN",
+      "VLAN cifra todos os dados automaticamente",
+      "O roteamento inter-VLAN ocorre sem equipamento de camada 3"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Separação de VLAN não concede autorização geral.",
+      "Correto: roteamento e regras de acesso devem refletir a política de rede.",
+      "VLAN não é tecnologia de criptografia.",
+      "Comunicação entre sub-redes requer função de rede L3."
+    ],
+    "explanation": "Correto: roteamento e regras de acesso devem refletir a política de rede.",
+    "fingerprint": "academy-ninecore-20261102-20-2"
+  },
+  {
+    "topic_id": 28,
+    "question": "Uma aplicação solicita senha e outro PIN memorizado pelo mesmo usuário. O método é necessariamente MFA?",
+    "choices": [
+      "Sim, porque há duas telas",
+      "Não, porque ambos podem pertencer à categoria conhecimento",
+      "Sim, porque todo PIN é biométrico",
+      "Não, porque MFA só pode usar chave física e nunca senha"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "A quantidade de telas não estabelece independência entre fatores.",
+      "Correto: dois segredos memorizados não correspondem necessariamente a fatores de categorias diferentes.",
+      "PIN não é característica biométrica.",
+      "Senha pode compor MFA com outro fator adequado."
+    ],
+    "explanation": "Correto: dois segredos memorizados não correspondem necessariamente a fatores de categorias diferentes.",
+    "fingerprint": "academy-ninecore-20261102-28-1"
+  },
+  {
+    "topic_id": 28,
+    "question": "Um usuário autentica com MFA e tenta consultar dados sem permissão. O que deve impedir a consulta?",
+    "choices": [
+      "Regras de autorização e privilégio mínimo",
+      "Somente aumento da complexidade da senha",
+      "A tabela de roteamento IPv4",
+      "Backup automático do aplicativo"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: autenticação não substitui autorização por recurso/ação.",
+      "Complexidade de senha protege autenticação, não define privilégio.",
+      "Rota de rede não é política de acesso ao recurso.",
+      "Backup não controla permissão de consulta."
+    ],
+    "explanation": "Correto: autenticação não substitui autorização por recurso/ação.",
+    "fingerprint": "academy-ninecore-20261102-28-2"
+  },
+  {
+    "topic_id": 36,
+    "question": "Um arquivo tem permissão Linux 750. Qual conjunto corresponde ao grupo dono?",
+    "choices": [
+      "rwx",
+      "r-x",
+      "rw-",
+      "---"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "rwx corresponde ao dono no modo 750.",
+      "Correto: 5=4+1, leitura e execução.",
+      "rw- seria 6, leitura e escrita.",
+      "--- corresponde ao grupo apenas se segundo dígito for 0."
+    ],
+    "explanation": "Correto: 5=4+1, leitura e execução.",
+    "fingerprint": "academy-ninecore-20261102-36-1"
+  },
+  {
+    "topic_id": 36,
+    "question": "Um script bash tem modo 640 e dono autorizado precisa executá-lo diretamente. Qual medida específica pode ser necessária, entre outras verificações?",
+    "choices": [
+      "Conceder bit x ao dono depois de confirmar requisitos",
+      "Definir todas as permissões de / como 777",
+      "Trocar o servidor DNS",
+      "Desabilitar obrigatoriamente SELinux para sempre"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: 640 não concede bit de execução; contexto pode exigir shebang e diretórios apropriados.",
+      "Ação excessivamente permissiva e perigosa.",
+      "DNS é assunto diferente do direito de execução.",
+      "Não é justificável desativar controles amplamente sem diagnóstico."
+    ],
+    "explanation": "Correto: 640 não concede bit de execução; contexto pode exigir shebang e diretórios apropriados.",
+    "fingerprint": "academy-ninecore-20261102-36-2"
+  },
+  {
+    "topic_id": 45,
+    "question": "Assinale a opção com crase correta na norma-padrão:",
+    "choices": [
+      "Começou à estudar antes da prova.",
+      "Encaminhou o documento à diretora.",
+      "O servidor foi à partir de ontem reiniciado.",
+      "Fez o procedimento à pé."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Antes de verbo no infinitivo não há artigo feminino a.",
+      "Correto: encaminhar algo a alguém, com artigo definido a diretora.",
+      "A partir de não usa crase nesse caso.",
+      "Pé é substantivo masculino; não há artigo feminino a."
+    ],
+    "explanation": "Correto: encaminhar algo a alguém, com artigo definido a diretora.",
+    "fingerprint": "academy-ninecore-20261102-45-1"
+  },
+  {
+    "topic_id": 45,
+    "question": "Qual raciocínio explica a crase em 'referiu-se à norma'?",
+    "choices": [
+      "O verbo exige preposição a, e norma admite artigo feminino a",
+      "Basta a palavra norma ser feminina",
+      "Crase é usada para separar sujeito de verbo",
+      "Há sempre crase antes de adjetivos"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: fusão da preposição com artigo feminino.",
+      "A feminilidade isolada não basta; regência importa.",
+      "Vírgula, e não crase, é pontuação de termos da frase.",
+      "Não há regra geral desse tipo."
+    ],
+    "explanation": "Correto: fusão da preposição com artigo feminino.",
+    "fingerprint": "academy-ninecore-20261102-45-2"
+  },
+  {
+    "topic_id": 52,
+    "question": "Um servidor é reiniciado e volta a funcionar, mas a falha reaparece semanalmente. Qual prática foca investigar a causa da recorrência?",
+    "choices": [
+      "Gerenciamento de problemas",
+      "Somente criação de requisição de serviço",
+      "Gerenciamento de catálogo sem investigação",
+      "Encerramento de todas as mudanças"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: problemas tratam causas ou causas potenciais de incidentes.",
+      "Requisição padrão não substitui investigação da causa.",
+      "Catálogo de serviços não explica a falha técnica.",
+      "Mudanças devem ser avaliadas, não simplesmente proibidas."
+    ],
+    "explanation": "Correto: problemas tratam causas ou causas potenciais de incidentes.",
+    "fingerprint": "academy-ninecore-20261102-52-1"
+  },
+  {
+    "topic_id": 52,
+    "question": "Qual valor uma CMDB bem mantida pode adicionar ao planejamento de mudança?",
+    "choices": [
+      "Permitir avaliar relacionamentos e serviços que dependem dos itens afetados",
+      "Substituir todos os backups externos",
+      "Garantir que nenhum componente falhará",
+      "Conceder permissão administrativa aos solicitantes"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: dependências ajudam a entender impacto e risco das alterações.",
+      "CMDB não armazena necessariamente cópia recuperável dos dados.",
+      "Inventário de configuração não elimina falhas futuras.",
+      "CMDB não é sistema de autorização irrestrita."
+    ],
+    "explanation": "Correto: dependências ajudam a entender impacto e risco das alterações.",
+    "fingerprint": "academy-ninecore-20261102-52-2"
+  },
+  {
+    "topic_id": 60,
+    "question": "Para listar todos os pacientes, inclusive sem exames, a partir da tabela pacientes, qual junção é apropriada?",
+    "choices": [
+      "INNER JOIN exames",
+      "LEFT JOIN exames",
+      "CROSS JOIN sem condição",
+      "DELETE FROM exames"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "INNER JOIN tende a excluir pacientes sem correspondência.",
+      "Correto: LEFT JOIN preserva linhas de pacientes.",
+      "CROSS JOIN combina todas as linhas, sem a relação desejada.",
+      "DELETE modifica dados, não consulta."
+    ],
+    "explanation": "Correto: LEFT JOIN preserva linhas de pacientes.",
+    "fingerprint": "academy-ninecore-20261102-60-1"
+  },
+  {
+    "topic_id": 60,
+    "question": "Após LEFT JOIN de pacientes com exames, qual expressão conta exames por paciente retornando zero para quem não possui exames?",
+    "choices": [
+      "COUNT(*)",
+      "COUNT(e.id)",
+      "SUM(p.id)",
+      "MAX(p.nome)"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "COUNT(*) conta linha resultante mesmo para paciente sem exame.",
+      "Correto: COUNT(e.id) ignora NULL do lado direito não correspondente.",
+      "Somar IDs de paciente não conta exames.",
+      "MAX de nome não contabiliza registros."
+    ],
+    "explanation": "Correto: COUNT(e.id) ignora NULL do lado direito não correspondente.",
+    "fingerprint": "academy-ninecore-20261102-60-2"
+  },
+  {
+    "topic_id": 69,
+    "question": "Qual teste verifica se uma API realmente salva no banco o que a interface afirma ter registrado?",
+    "choices": [
+      "Teste de integração da API com persistência no banco",
+      "Inspeção do ícone de sucesso",
+      "Apenas teste isolado de uma função de formatação",
+      "Teste de cor do botão"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: integra API e banco e verifica estado persistido.",
+      "UI pode indicar sucesso sem gravação.",
+      "Função isolada não cobre persistência.",
+      "Estilo visual não demonstra comportamento do negócio."
+    ],
+    "explanation": "Correto: integra API e banco e verifica estado persistido.",
+    "fingerprint": "academy-ninecore-20261102-69-1"
+  },
+  {
+    "topic_id": 69,
+    "question": "Uma equipe afirma que 100% de cobertura de código garante software sem defeitos. Essa conclusão é:",
+    "choices": [
+      "Correta, pois executar todas as linhas prova requisitos",
+      "Incorreta; cobertura não avalia automaticamente qualidade das asserções ou casos",
+      "Correta se todos os testes forem unitários",
+      "Correta quando testes rodam em menos de um minuto"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Linhas executadas podem não ter sido verificadas com critérios relevantes.",
+      "Correto: cobertura mede execução, não garantia de correção.",
+      "Unidade não substitui integração e sistema.",
+      "Velocidade dos testes não garante qualidade."
+    ],
+    "explanation": "Correto: cobertura mede execução, não garantia de correção.",
+    "fingerprint": "academy-ninecore-20261102-69-2"
+  },
+  {
+    "topic_id": 76,
+    "question": "Uma proposição P→Q é falsa. Quais valores lógicos devem ocorrer?",
+    "choices": [
+      "P=V, Q=F",
+      "P=F, Q=V",
+      "P=F, Q=F",
+      "P=V, Q=V"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: único contraexemplo da implicação material.",
+      "Com antecedente falso, implicação material é verdadeira.",
+      "Também é verdadeira na lógica clássica.",
+      "Se antecedente e consequente verdadeiros, a implicação é verdadeira."
+    ],
+    "explanation": "Correto: único contraexemplo da implicação material.",
+    "fingerprint": "academy-ninecore-20261102-76-1"
+  },
+  {
+    "topic_id": 76,
+    "question": "Qual é a contrapositiva da frase 'Se P, então Q'?",
+    "choices": [
+      "Se Q, então P",
+      "Se não Q, então não P",
+      "P e não Q",
+      "Se não P, então não Q"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Recíproca não é equivalente em geral.",
+      "Correto: nega e inverte as duas proposições.",
+      "Essa expressão é a negação da implicação.",
+      "Inversa, não equivalente em geral."
+    ],
+    "explanation": "Correto: nega e inverte as duas proposições.",
+    "fingerprint": "academy-ninecore-20261102-76-2"
+  },
+  {
+    "topic_id": 84,
+    "question": "Uma empresa coleta histórico médico completo para simples lembrete de horário. Qual princípio merece atenção imediata?",
+    "choices": [
+      "Necessidade: dados pertinentes e não excessivos para a finalidade",
+      "Portabilidade como permissão de coletar tudo",
+      "Publicidade irrestrita de dados sensíveis",
+      "Consentimento que automaticamente elimina todos os princípios"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: limitação ao mínimo necessário para a finalidade é essencial.",
+      "Portabilidade não autoriza coleta irrestrita.",
+      "Dado de saúde é sensível e exige controles.",
+      "Qualquer base legal mantém a observância dos princípios."
+    ],
+    "explanation": "Correto: limitação ao mínimo necessário para a finalidade é essencial.",
+    "fingerprint": "academy-ninecore-20261102-84-1"
+  },
+  {
+    "topic_id": 84,
+    "question": "Qual afirmação sobre bases legais de tratamento na LGPD é correta?",
+    "choices": [
+      "Todo tratamento exige exclusivamente consentimento",
+      "Diferentes hipóteses legais existem, e a escolha depende da operação e do tipo de dado",
+      "Dados sensíveis nunca precisam de avaliação específica",
+      "Empresas podem tratar qualquer dado sem finalidade declarada"
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "A LGPD possui outras bases além de consentimento.",
+      "Correto: hipóteses dependem da finalidade, contexto e categoria de dado.",
+      "Dados sensíveis seguem disciplina própria.",
+      "Finalidade e outras condições legais continuam necessárias."
+    ],
+    "explanation": "Correto: hipóteses dependem da finalidade, contexto e categoria de dado.",
+    "fingerprint": "academy-ninecore-20261102-84-2"
+  }
+]
