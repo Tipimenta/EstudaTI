@@ -33,4 +33,10 @@ O leitor principal mostra os blocos na sequência *entenda → veja aplicado →
 ## Migração progressiva e proteção de dados
 O banco PostgreSQL Neon mantém a tabela de tópicos original e os registros de progresso. O novo conteúdo didático é versionado em arquivos TypeScript sob web/src/academy/ e associado ao mesmo ID existente, de modo que anotações, questões anteriores e conclusão continuem válidas. Não apagar nem renumerar tópicos durante a migração.
 
-Em 02/11/2026: 27 aulas com roteiro didático novo e 54 questões autorais novas com comentário por alternativa; o restante do catálogo continua disponível, mas ainda exige revisão editorial individual. A ampliação quantitativa prévia do acervo não deve ser descrita como reconstrução pedagógica concluída.
+Em 02/11/2026: 39 aulas reescritas integralmente em arquivos `web/src/academy` e 130 aulas restantes apresentadas em leitura guiada, usando `guides*.ts`. **Leitura guiada não significa reescrita completa**: guias anteriores têm matéria específica, exemplo e pegadinha, mas parte ainda é curta e requer revisão editorial.
+
+Os 169 tópicos estão organizados por disciplina e módulos curriculares. Cada aula apresenta as etapas **Aprender → Praticar → Revisar**. As questões são submetidas à API e registradas no Neon; os flashcards existentes são revisados por rodadas de 15 com agendamento no banco. Um erro de questão pode ser salvo como flashcard individual. Os cartões de consulta rápida na aula são diferentes da revisão espaçada efetiva, que precisa ser registrada na aba Revisar.
+
+Inventário validado: 169 aulas, 594 questões ativas e 410 flashcards (contagens no banco em 02/11/2026). 1 aula concluída preservada. As 18 questões criadas para os nove novos capítulos têm comentários para cada alternativa; não atribuir bancas reais às questões autorais.
+
+Padrão de continuidade: aprofundar os 130 capítulos curtos individualmente e elevar o número de questões autorais por tópico com revisão técnica real. Não preencher páginas com parágrafos repetidos, exercícios genéricos ou trechos de outras aulas apenas para aumentar estatísticas.
