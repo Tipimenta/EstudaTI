@@ -1,5 +1,5 @@
 import {useEffect,useMemo,useState} from 'react'
-import {ArrowLeft,ArrowRight,BookOpen,Brain,Check,CheckCircle2,ChevronRight,Clock3,Lightbulb,ListChecks,NotebookPen,RefreshCw,Save,Search,Target} from 'lucide-react'
+import {ArrowLeft,ArrowRight,BookOpen,Check,CheckCircle2,ChevronRight,Clock3,Lightbulb,ListChecks,NotebookPen,RefreshCw,Save,Search,Target} from 'lucide-react'
 import {api,patch,post,type Subject,type StudyLesson,type StudyLessonDetail,type QuizQuestion,type QuizResult} from './api'
 
 type Handbook={title:string;chapters:{title:string;body:string}[];source:string}
