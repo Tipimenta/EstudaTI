@@ -23,16 +23,21 @@ function TextInline({text}:{text:string}){
  const parts=text.split(/(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\(https?:\/\/[^)]+\))/g)
  return <>{parts.map((part,i)=>{
   if(part.startsWith('**')&&part.endsWith('**'))return <strong key={i} className="font-bold text-white">{part.slice(2,-2)}</strong>
-  if(part.startsWith('`')&&part.endsWith('`'))return <code key={i} className="rounded bg-emerald-400/10 px-1 py-0.5 font-mono text-emerald-200">{part.slice(1,-1)}</code>
+  if(part.startsWith('`')&&part.endsWith('`'))return <code key={i} className="break-all rounded bg-emerald-400/10 px-1 py-0.5 font-mono text-emerald-200">{part.slice(1,-1)}</code>
   const link=part.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)$/)
   if(link)return <a key={i} className="break-words text-sky-300 underline" href={link[2]} target="_blank" rel="noopener noreferrer">{link[1]}</a>
   return <span key={i}>{part}</span>
  })}</>
 }
 function RichText({content}:{content:string}){
- type Block={kind:'heading'|'para'|'bullet'|'code'|'quote'|'table';text:string;rows?:string[][]}
+ type Block={kind:'heading'|'para'|'bullet'|'numbered'|'code'|'quote'|'table';text:string;rows?:string[][];items?:string[]}
  const blocks:Block[]=[];const paragraphs:string[]=[];let inCode=false;let code:string[]=[]
  const flush=()=>{if(paragraphs.length){blocks.push({kind:'para',text:paragraphs.join(' ')});paragraphs.length=0}}
+ const appendItem=(kind:'bullet'|'numbered',item:string)=>{
+  const last=blocks[blocks.length-1]
+  if(last?.kind===kind)last.items?.push(item)
+  else blocks.push({kind,text:'',items:[item]})
+ }
  for(const raw of content.split('\n')){
   const line=raw.trim()
   if(line.startsWith('<!--'))continue
@@ -49,18 +54,20 @@ function RichText({content}:{content:string}){
    continue
   }
   if(/^#{1,4} /.test(line)){flush();blocks.push({kind:'heading',text:line.replace(/^#+ /,'')});continue}
-  if(/^[-*] /.test(line)){flush();blocks.push({kind:'bullet',text:line.slice(2)});continue}
+  if(/^[-*] /.test(line)){flush();appendItem('bullet',line.slice(2));continue}
+  if(/^\d+[.)]\s+/.test(line)){flush();appendItem('numbered',line.replace(/^\d+[.)]\s+/,''));continue}
   if(line.startsWith('>')){flush();blocks.push({kind:'quote',text:line.slice(1).trim()});continue}
   paragraphs.push(line)
  }flush()
  if(inCode&&code.length)blocks.push({kind:'code',text:code.join('\n')})
- return <article className="space-y-4 text-[15px] leading-8 text-slate-200">{blocks.map((b,i)=>{
-  if(b.kind==='heading')return <h3 key={i} className="mt-8 border-b border-white/10 pb-3 text-lg font-bold text-emerald-100"><TextInline text={b.text}/></h3>
-  if(b.kind==='code')return <pre key={i} className="overflow-x-auto whitespace-pre rounded-xl border border-white/10 bg-[#080e19] p-4 text-sm leading-6 text-emerald-100"><code>{b.text}</code></pre>
-  if(b.kind==='table')return <div key={i} className="overflow-x-auto rounded-xl border border-white/10"><table className="w-full min-w-[440px] text-left text-sm"><thead className="bg-white/10"><tr>{b.rows?.[0]?.map((col,j)=><th key={j} className="border-b border-white/10 px-4 py-3 font-bold text-white"><TextInline text={col}/></th>)}</tr></thead><tbody>{b.rows?.slice(1).map((row,j)=><tr key={j} className="border-b border-white/5">{row.map((col,k)=><td key={k} className="px-4 py-3 align-top text-slate-300"><TextInline text={col}/></td>)}</tr>)}</tbody></table></div>
-  if(b.kind==='bullet')return <p key={i} className="ml-2 border-l-2 border-emerald-400/30 pl-4"><TextInline text={b.text}/></p>
+ return <article className="space-y-4 text-[15px] leading-[1.8] text-slate-200 sm:text-base">{blocks.map((b,i)=>{
+  if(b.kind==='heading')return <h3 key={i} className="mt-7 border-b border-white/10 pb-2 text-base font-bold leading-7 text-emerald-100 sm:text-lg"><TextInline text={b.text}/></h3>
+  if(b.kind==='code')return <pre key={i} className="max-w-full overflow-x-auto whitespace-pre rounded-xl border border-white/10 bg-[#080e19] p-4 text-xs leading-6 text-emerald-100 sm:text-sm"><code>{b.text}</code></pre>
+  if(b.kind==='table')return <div key={i} className="max-w-full overflow-x-auto rounded-xl border border-white/10"><table className="w-full min-w-[400px] text-left text-sm"><thead className="bg-white/10"><tr>{b.rows?.[0]?.map((col,j)=><th key={j} className="border-b border-white/10 px-4 py-3 font-bold text-white"><TextInline text={col}/></th>)}</tr></thead><tbody>{b.rows?.slice(1).map((row,j)=><tr key={j} className="border-b border-white/5">{row.map((col,k)=><td key={k} className="px-4 py-3 align-top text-slate-300"><TextInline text={col}/></td>)}</tr>)}</tbody></table></div>
+  if(b.kind==='bullet')return <ul key={i} className="list-disc space-y-2 pl-5 marker:text-emerald-400">{b.items?.map((item,j)=><li key={j} className="pl-1"><TextInline text={item}/></li>)}</ul>
+  if(b.kind==='numbered')return <ol key={i} className="list-decimal space-y-2 pl-6 marker:font-semibold marker:text-emerald-400">{b.items?.map((item,j)=><li key={j} className="pl-1"><TextInline text={item}/></li>)}</ol>
   if(b.kind==='quote')return <blockquote key={i} className="border-l-2 border-amber-400/50 pl-4 italic text-amber-100"><TextInline text={b.text}/></blockquote>
-  return <p key={i}><TextInline text={b.text}/></p>
+  return <p key={i} className="break-words"><TextInline text={b.text}/></p>
  })}</article>
 }
 function cleanTitle(title:string){return title.replace(/^\[(Aprofundamento|Oficina)\]\s*/i,'')}
@@ -83,37 +90,25 @@ function AcademyLesson({lesson}:{lesson:PedagogicalLesson}){
  </div>
 }
 function TeachingTheory({lesson}:{lesson:StudyLessonDetail}){
- const authored=academyLessons[lesson.id];if(authored)return <AcademyLesson lesson={authored}/>
- // Separar teoria principal e anexos automáticos: os casos de outros assuntos não
- // devem interromper a explicação do tópico em estudo.
+ const authored=academyLessons[lesson.id]
+ if(authored)return <AcademyLesson lesson={authored}/>
+ // O acervo anterior contém textos de conteúdos misturados. Não apresentar
+ // cadernos concatenados como se fossem capítulos contínuos de uma aula.
  const fragments=lesson.content.split(/<!--\s*estudati-(?:enrichment|guia-aplicado-v2)-[^>]*-->/i).map(p=>p.trim()).filter(Boolean)
- const principal=fragments[0]||''
- const anexos=fragments.slice(1)
- const aprofundamento=anexos.filter(p=>!/^## Caderno de aplicação e revisão/i.test(p))
- const revisoes=anexos.filter(p=>/^## Caderno de aplicação e revisão/i.test(p))
+ const base=fragments[0]||''
+ const appendices=fragments.slice(1)
  return <div className="space-y-6">
-  <div className="rounded-xl border border-sky-400/20 bg-sky-400/5 px-4 py-4">
-   <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-200"><Target size={15}/> Objetivo desta aula</p>
-   <p className="text-sm leading-7 text-slate-100">{lesson.objective}</p>
+  <div className="rounded-2xl border border-amber-300/20 bg-amber-300/5 p-5 text-sm leading-7 text-amber-100">
+   <p className="font-bold">Esta aula ainda está em revisão editorial</p>
+   <p className="mt-2 text-slate-200">O material anterior foi preservado, mas ainda não recebeu a reconstrução didática completa. Leia a introdução e, se necessário, abra o arquivo complementar. Não tratamos os trechos antigos de assuntos diferentes como uma explicação contínua.</p>
   </div>
-  <section>
-   <h3 className="mb-4 text-xl font-bold text-white">Entenda o assunto</h3>
-   <RichText content={principal}/>
-  </section>
-  {aprofundamento.map((text,i)=><section key={i} className="rounded-2xl border border-white/10 bg-white/[.025] px-4 py-5 sm:px-6">
-   <p className="mb-2 text-xs font-bold uppercase tracking-widest text-emerald-300">Explicação e exemplo</p>
-   <RichText content={text}/>
-  </section>)}
-  {revisoes.map((text,i)=><details key={i} className="rounded-xl border border-white/10 bg-[#101a2a] p-4 sm:p-5">
-    <summary className="cursor-pointer text-sm font-semibold text-emerald-200">Estudo complementar e exercícios resolvidos (opcional)</summary>
-    <p className="mt-3 text-xs leading-5 text-slate-400">Este material reúne casos relacionados a outros assuntos. Use-o depois de compreender a teoria principal. As respostas aparecem no próprio texto.</p>
-    <div className="mt-4"><RichText content={text}/></div>
-   </details>)}
-  <div className="rounded-xl border border-violet-400/20 bg-violet-400/5 px-4 py-4">
-   <p className="font-semibold text-violet-100">Antes de ir para as questões</p>
-   <p className="mt-2 text-sm leading-6 text-slate-200">Tente explicar o tema com suas palavras e refazer um exemplo sem consultar a resposta. Depois confira seu desempenho.</p>
-  </div>
-  {lesson.source_url&&<a href={lesson.source_url} target="_blank" rel="noopener noreferrer" className="block break-all text-xs text-sky-300 underline">Consultar referência técnica desta aula</a>}
+  <section className="max-w-[75ch]"><h3 className="mb-3 text-xl font-bold text-white">Introdução ao assunto</h3><RichText content={base}/></section>
+  {appendices.length>0&&<details className="rounded-xl border border-white/10 bg-[#101b2b] p-5">
+   <summary className="cursor-pointer text-sm font-semibold text-emerald-200">Consultar material anterior e exercícios complementares (opcional)</summary>
+   <p className="mt-3 text-xs leading-6 text-slate-400">Arquivo preservado para consulta. O material pode conter exemplos de outros assuntos e não foi aprovado como capítulo didático.</p>
+   <div className="mt-5 space-y-6">{appendices.map((text,i)=><div key={i} className="border-t border-white/10 pt-5"><RichText content={text}/></div>)}</div>
+  </details>}
+  {lesson.source_url&&<a href={lesson.source_url} target="_blank" rel="noopener noreferrer" className="block break-all text-sm text-sky-300 underline">Consultar referência técnica</a>}
  </div>
 }
 export default function StudyCourse(){
