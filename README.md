@@ -13,7 +13,9 @@ Após isso, o GitHub Actions executa o processo **Importar pacote EstudaTI**, ex
 > IMPORTANTE: o pacote preparado especificamente para o GitHub exclui o PDF pessoal do edital. O ZIP ainda contém o código completo e materiais autorais. Não altere a visibilidade do repositório para pública sem revisão do conteúdo e do histórico.
 
 ## Ideias pesquisadas e planejamento
-Veja [referências e prioridades](docs/REFERENCIAS_E_PRIORIDADES.md) e as tarefas registradas em Issues.\n\n## Próxima etapa: publicação
+Veja [referências e prioridades](docs/REFERENCIAS_E_PRIORIDADES.md) e as tarefas registradas em Issues.
+
+## Próxima etapa: publicação
 A plataforma atual usa FastAPI + SQLite com volume Docker e frontend React/Vite. A Vercel pode hospedar o frontend, mas o backend precisa de implantação compatível e banco persistente para salvar respostas, estudos e anotações. Não consideramos o sistema implantado até configurar e testar esses recursos.
 
 ## Segurança
