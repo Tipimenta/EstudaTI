@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 13,
+    "question": "Uma tabela de pedidos repete nome do cliente em centenas de linhas. Qual solução costuma reduzir anomalias?",
+    "choices": [
+      "Remover a chave do pedido.",
+      "Armazenar cliente em tabela própria e referenciá-lo por FK.",
+      "Substituir texto por coluna BLOB.",
+      "Criar mais cópias do nome em cada pedido."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "A ausência de chave pode causar novas inconsistências.",
+      "Correto: separação de entidades reduz redundância e centraliza o dado do cliente.",
+      "O tipo BLOB não corrige dependência funcional.",
+      "Mais redundância amplia chance de divergência."
+    ],
+    "explanation": "Correto: separação de entidades reduz redundância e centraliza o dado do cliente.",
+    "fingerprint": "academy-20261102-13-1"
+  },
+  {
+    "topic_id": 13,
+    "question": "Uma relação aluno-disciplina é N:N. Qual desenho relacional é usual?",
+    "choices": [
+      "Uma coluna disciplina1, disciplina2 e disciplina3 na tabela aluno.",
+      "Tabela matrícula contendo FK para aluno e disciplina.",
+      "Um único aluno_id na tabela disciplina sem possibilidade de repetição.",
+      "Nenhuma restrição de integridade."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Colunas repetitivas limitam cardinalidade e prejudicam consultas.",
+      "Correto: tabela associativa registra pares com FKs e chave/UNIQUE apropriado.",
+      "Uma FK única não representa todas as matrículas possíveis.",
+      "Restrições ajudam a manter consistência entre registros."
+    ],
+    "explanation": "Correto: tabela associativa registra pares com FKs e chave/UNIQUE apropriado.",
+    "fingerprint": "academy-20261102-13-2"
+  },
+  {
+    "topic_id": 14,
+    "question": "Qual requisito está suficientemente mensurável para ser testado?",
+    "choices": [
+      "O sistema deve ser bastante agradável.",
+      "A busca deve responder em até 2 s em 95% das requisições no cenário de teste definido.",
+      "O aplicativo deve ser muito rápido.",
+      "O portal deve ser o melhor possível."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "'Agradável' sem critérios operacionais é subjetivo.",
+      "Correto: tempo, percentil e cenário formam critério verificável.",
+      "'Muito rápido' é vago.",
+      "'Melhor' sem métrica não é comprovável."
+    ],
+    "explanation": "Correto: tempo, percentil e cenário formam critério verificável.",
+    "fingerprint": "academy-20261102-14-1"
+  },
+  {
+    "topic_id": 14,
+    "question": "Um cálculo isolado passa nos testes, mas a API não persiste o resultado no banco. Que teste tem maior chance de revelar esse problema?",
+    "choices": [
+      "Teste de integração API-banco.",
+      "Teste de tipografia.",
+      "Somente teste de unidade do cálculo.",
+      "Inspeção do ícone da tela inicial."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: verifica interação entre componentes reais, incluindo persistência.",
+      "Tipografia não testa transação.",
+      "Função isolada pode passar mesmo com integração quebrada.",
+      "O ícone não representa efeito no banco."
+    ],
+    "explanation": "Correto: verifica interação entre componentes reais, incluindo persistência.",
+    "fingerprint": "academy-20261102-14-2"
+  },
+  {
+    "topic_id": 15,
+    "question": "Uma API responde 401 ao acesso a recurso protegido. Qual interpretação inicial é mais adequada?",
+    "choices": [
+      "A requisição exige autenticação válida ou credencial adequada.",
+      "Recurso foi criado com sucesso.",
+      "Servidor devolveu conteúdo normalmente.",
+      "Acesso foi definitivamente autorizado."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: 401 está ligado à ausência/insuficiência de autenticação, com detalhes conforme esquema.",
+      "Criação costuma usar status 201.",
+      "Não há sucesso de conteúdo garantido.",
+      "401 não representa concessão de acesso."
+    ],
+    "explanation": "Correto: 401 está ligado à ausência/insuficiência de autenticação, com detalhes conforme esquema.",
+    "fingerprint": "academy-20261102-15-1"
+  },
+  {
+    "topic_id": 15,
+    "question": "Um cliente reenvia um POST depois de timeout, sem saber se o pedido já foi criado. Qual recurso de desenho ajuda a evitar duplicação?",
+    "choices": [
+      "Desabilitar auditoria.",
+      "Usar chave de idempotência e deduplicação no servidor, quando apropriado.",
+      "Alterar sempre o ID para número aleatório diferente.",
+      "Retirar todas as validações da API."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Auditoria ajuda investigação, não evita duplicação.",
+      "Correto: identidade estável da intenção permite detectar repetição da operação.",
+      "IDs sempre diferentes podem aumentar duplicações.",
+      "Validação é necessária para consistência e segurança."
+    ],
+    "explanation": "Correto: identidade estável da intenção permite detectar repetição da operação.",
+    "fingerprint": "academy-20261102-15-2"
+  },
+  {
+    "topic_id": 16,
+    "question": "Em lógica proposicional clássica, a negação de P→Q equivale a:",
+    "choices": [
+      "¬P→¬Q.",
+      "P∧¬Q.",
+      "¬Q→¬P.",
+      "P∨Q."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "A inversa não é a negação da condicional.",
+      "Correto: o único contraexemplo é antecedente verdadeiro e consequente falso.",
+      "Essa é a contrapositiva, equivalente à proposição original.",
+      "Disjunção não representa o único caso falso da implicação."
+    ],
+    "explanation": "Correto: o único contraexemplo é antecedente verdadeiro e consequente falso.",
+    "fingerprint": "academy-20261102-16-1"
+  },
+  {
+    "topic_id": 16,
+    "question": "Qual é a negação de 'Todos os candidatos concluíram a aula'?",
+    "choices": [
+      "Nenhum candidato concluiu.",
+      "Pelo menos um candidato não concluiu.",
+      "Todos concluíram outra aula.",
+      "A maioria não concluiu."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Negar 'todos' não obriga que nenhum tenha concluído.",
+      "Correto: basta existir ao menos um contraexemplo.",
+      "Não responde à quantificação original.",
+      "A maioria é mais forte do que a negação exige."
+    ],
+    "explanation": "Correto: basta existir ao menos um contraexemplo.",
+    "fingerprint": "academy-20261102-16-2"
+  },
+  {
+    "topic_id": 17,
+    "question": "Uma organização pede dados de saúde detalhados para enviar simples lembrete de horário. Qual princípio deve orientar o exame da coleta excessiva?",
+    "choices": [
+      "Necessidade.",
+      "Publicidade ilimitada.",
+      "Inexistência de dados pessoais.",
+      "Obrigação de publicação."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: tratar apenas dados pertinentes e não excessivos para a finalidade.",
+      "Publicidade não autoriza coleta indiscriminada.",
+      "Dados de saúde são dados pessoais sensíveis.",
+      "Obrigação de publicação não decorre do cenário."
+    ],
+    "explanation": "Correto: tratar apenas dados pertinentes e não excessivos para a finalidade.",
+    "fingerprint": "academy-20261102-17-1"
+  },
+  {
+    "topic_id": 17,
+    "question": "Qual enunciado sobre LGPD e consentimento está correto?",
+    "choices": [
+      "Todo tratamento depende exclusivamente de consentimento.",
+      "Consentimento é uma das bases legais e o enquadramento depende do contexto e da categoria de dados.",
+      "A LGPD nunca alcança órgãos públicos.",
+      "Dados de saúde não são sensíveis."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "A LGPD prevê várias bases legais, com regras específicas para dados sensíveis.",
+      "Correto: análise da hipótese legal requer finalidade, categoria e situação.",
+      "A lei também disciplina tratamentos pelo poder público.",
+      "Dados referentes à saúde constam entre os sensíveis."
+    ],
+    "explanation": "Correto: análise da hipótese legal requer finalidade, categoria e situação.",
+    "fingerprint": "academy-20261102-17-2"
+  },
+  {
+    "topic_id": 18,
+    "question": "Qual diferenciação entre ETP e TR é mais correta no planejamento de contratação de TI?",
+    "choices": [
+      "ETP detalha somente a nota fiscal e TR elimina a necessidade de planejar.",
+      "ETP estuda necessidade e soluções; TR especifica objeto e condições de contratação, conforme hipóteses legais.",
+      "Ambos são apenas registros de IP.",
+      "TR existe apenas depois do encerramento de contrato."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "ETP não é nota fiscal e TR não dispensa planejamento.",
+      "Correto: as peças têm finalidades distintas e complementares, respeitando regras aplicáveis.",
+      "São documentos jurídicos/administrativos, não de rede.",
+      "TR integra planejamento da contratação, não apenas encerramento."
+    ],
+    "explanation": "Correto: as peças têm finalidades distintas e complementares, respeitando regras aplicáveis.",
+    "fingerprint": "academy-20261102-18-1"
+  },
+  {
+    "topic_id": 18,
+    "question": "Uma entidade pública precisa comprar serviço de TI e escolhe o fornecedor antes de definir critérios e necessidade. Qual a falha principal?",
+    "choices": [
+      "Falta de fundamentação e planejamento da solução.",
+      "Ausência obrigatória de switch VLAN.",
+      "Excesso de testes técnicos.",
+      "Uso de siglas inadequadas exclusivamente."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: necessidades, alternativas e regras de contratação devem orientar a escolha.",
+      "VLAN é assunto distinto da seleção de fornecedor.",
+      "Testes ajudam a definir aceite, não explicam a falha apontada.",
+      "O problema é substantivo, não meramente terminológico."
+    ],
+    "explanation": "Correto: necessidades, alternativas e regras de contratação devem orientar a escolha.",
+    "fingerprint": "academy-20261102-18-2"
+  }
+]
