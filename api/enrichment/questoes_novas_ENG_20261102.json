@@ -1,0 +1,218 @@
+[
+  {
+    "topic_id": 14,
+    "question": "Um requisito afirma que 'a consulta deve responder em até 2 segundos em 95% dos acessos'. Que tipo de requisito predomina?",
+    "choices": [
+      "Não funcional, de desempenho",
+      "Funcional, de criação de usuário",
+      "Somente regra de banco",
+      "Política de privacidade sem métrica"
+    ],
+    "correct_index": 0,
+    "explanation": "Tempo de resposta e percentil definem atributo de qualidade mensurável, não ação funcional."
+  },
+  {
+    "topic_id": 15,
+    "question": "Uma API permite consultar paciente por GET /pacientes/42. Qual propriedade se espera do método GET?",
+    "choices": [
+      "Seguro e sem alteração intencional de estado",
+      "Exclusivamente criar registros",
+      "Alterar recursos obrigatoriamente",
+      "Excluir um paciente após a leitura"
+    ],
+    "correct_index": 0,
+    "explanation": "GET é definido como método seguro e voltado à recuperação de representação, não à alteração intencional de estado."
+  },
+  {
+    "topic_id": 67,
+    "question": "A frase 'o sistema deve ser rápido' não permite aceitação objetiva. Qual reescrita melhora o requisito?",
+    "choices": [
+      "A tela deve carregar em até 2 s em 95% das tentativas no cenário definido",
+      "O sistema deve ser bem bonito",
+      "O time deve se esforçar",
+      "O aplicativo deve funcionar bem sempre"
+    ],
+    "correct_index": 0,
+    "explanation": "Critérios verificáveis incluem métrica, unidade, condição e limiar; termos vagos prejudicam teste e consenso."
+  },
+  {
+    "topic_id": 68,
+    "question": "Em UML, qual diagrama costuma representar classes, atributos, operações e associações?",
+    "choices": [
+      "Diagrama de classes",
+      "Diagrama de atividades exclusivamente",
+      "Diagrama de implantação",
+      "Diagrama de sequência somente"
+    ],
+    "correct_index": 0,
+    "explanation": "Diagrama de classes expressa estrutura estática, tipos e relacionamentos, não execução temporal detalhada."
+  },
+  {
+    "topic_id": 69,
+    "question": "Uma equipe testa a interação real entre API e banco após verificar funções isoladas. Qual nível de teste está sendo enfatizado?",
+    "choices": [
+      "Integração",
+      "Unidade isolada",
+      "Somente aceitação do usuário",
+      "Teste de fonte tipográfica"
+    ],
+    "correct_index": 0,
+    "explanation": "Teste de integração verifica contratos e efeitos na fronteira entre componentes e subsistemas."
+  },
+  {
+    "topic_id": 70,
+    "question": "Uma funcionalidade foi desenvolvida em branch separada. Antes de mesclar ao branch principal, qual prática reduz risco de defeitos?",
+    "choices": [
+      "Revisão de alterações e execução dos testes",
+      "Excluir o histórico",
+      "Mesclar sem executar nenhum teste",
+      "Compartilhar senha nos commits"
+    ],
+    "correct_index": 0,
+    "explanation": "Review e CI ajudam a validar alteração e evitar regressões; não garantem ausência absoluta de bugs."
+  },
+  {
+    "topic_id": 71,
+    "question": "Um cliente envia requisição GET para uma API e recebe 404. A interpretação mais comum é:",
+    "choices": [
+      "O recurso solicitado não foi encontrado",
+      "A ação foi criada com sucesso",
+      "O corpo está criptografado corretamente",
+      "O banco cometeu transação"
+    ],
+    "correct_index": 0,
+    "explanation": "HTTP 404 indica que a origem não encontrou representação para o recurso solicitado naquele contexto."
+  },
+  {
+    "topic_id": 72,
+    "question": "Um usuário autenticado tenta acessar relatório reservado a administradores e recebe HTTP 403. Qual controle falhou ou negou o acesso?",
+    "choices": [
+      "Autorização",
+      "Resolução ARP",
+      "Conexão elétrica",
+      "Geração de endereço IPv6"
+    ],
+    "correct_index": 0,
+    "explanation": "HTTP 403 indica que a solicitação foi entendida, mas a ação foi negada; identificação/autenticação não implica autorização."
+  },
+  {
+    "topic_id": 73,
+    "question": "Uma pipeline falha porque testes automatizados apontaram regressão. Qual prática de CI está demonstrada?",
+    "choices": [
+      "Validar mudanças continuamente antes da integração/implantação",
+      "Substituir todos os testes humanos",
+      "Aprovar alteração sem revisão",
+      "Ocultar falhas do versionamento"
+    ],
+    "correct_index": 0,
+    "explanation": "Integração contínua combina builds e testes para detectar problemas cedo e impedir promoção indevida."
+  },
+  {
+    "topic_id": 74,
+    "question": "Um algoritmo percorre uma lista com n elementos uma única vez. Qual complexidade de tempo típica do laço é esperada?",
+    "choices": [
+      "O(1)",
+      "O(log n)",
+      "O(n)",
+      "O(n²) obrigatoriamente"
+    ],
+    "correct_index": 2,
+    "explanation": "Um percurso linear que faz trabalho constante por elemento cresce proporcionalmente a n."
+  },
+  {
+    "topic_id": 109,
+    "question": "Uma história de usuário diz 'Como recepcionista, quero localizar agendamentos por data para organizar atendimento'. Qual complemento permite testá-la melhor?",
+    "choices": [
+      "Critérios de aceitação objetivos para filtragem e ordenação",
+      "Somente ícone bonito",
+      "Nome de desenvolvedor favorito",
+      "Promessa de entregar sem testes"
+    ],
+    "correct_index": 0,
+    "explanation": "Critérios verificáveis descrevem condições e resultados esperados, reduzindo ambiguidade da história."
+  },
+  {
+    "topic_id": 110,
+    "question": "Uma API recebe duas solicitações PUT idênticas para o mesmo recurso, sem efeitos colaterais adicionais. Qual propriedade é esperada semanticamente?",
+    "choices": [
+      "Idempotência",
+      "Obrigação de duplicar recursos",
+      "Autenticação por ICMP",
+      "Ausência de resposta"
+    ],
+    "correct_index": 0,
+    "explanation": "PUT é definido como idempotente: múltiplas solicitações equivalentes devem produzir o mesmo efeito pretendido que uma."
+  },
+  {
+    "topic_id": 111,
+    "question": "Uma falha ocorre somente quando dois serviços reais trocam mensagens, embora testes unitários passem. Qual classe de teste é mais indicada?",
+    "choices": [
+      "Integração/contrato entre serviços",
+      "Somente de unidade no serviço isolado",
+      "Apenas validação de CSS",
+      "Teste de teclado"
+    ],
+    "correct_index": 0,
+    "explanation": "Verificação de integração e contratos revela problemas de interoperabilidade e formatos que testes isolados podem não detectar."
+  },
+  {
+    "topic_id": 141,
+    "question": "Um teste verifica o método 'calcularDesconto' isolando dependências externas com mocks. Em geral, trata-se de:",
+    "choices": [
+      "Teste de unidade",
+      "Teste de aceitação em produção",
+      "Teste de recuperação de desastre",
+      "Teste de invasão obrigatório"
+    ],
+    "correct_index": 0,
+    "explanation": "Teste de unidade verifica comportamento de unidade pequena isolando dependências conforme escopo."
+  },
+  {
+    "topic_id": 142,
+    "question": "Uma API expõe PATCH para alterar parte de recurso. Qual afirmação é correta?",
+    "choices": [
+      "PATCH não é necessariamente idempotente; depende da semântica da operação",
+      "PATCH deve sempre excluir o recurso",
+      "PATCH é idêntico a GET",
+      "PATCH usa apenas protocolo UDP"
+    ],
+    "correct_index": 0,
+    "explanation": "PATCH aplica alterações parciais e a idempotência depende do formato e operação; diferentemente de PUT, não é uma garantia geral."
+  },
+  {
+    "topic_id": 143,
+    "question": "Duas pessoas alteram a mesma linha de um arquivo em branches diferentes. Que situação pode surgir ao mesclar?",
+    "choices": [
+      "Conflito de merge a resolver",
+      "Conversão automática para arquivo binário",
+      "Eliminação obrigatória de um commit",
+      "Mudança de senha do GitHub"
+    ],
+    "correct_index": 0,
+    "explanation": "Alterações concorrentes incompatíveis podem exigir resolução manual de conflitos ao integrar branches."
+  },
+  {
+    "topic_id": 164,
+    "question": "Uma história de usuário foi implementada mas não há critério para confirmar o resultado. Qual artefato ajuda a estabelecer o comportamento esperado?",
+    "choices": [
+      "Critérios de aceite/testes verificáveis",
+      "Somente logotipo",
+      "Mensagem de commit genérica",
+      "Planilha de horas sem relação"
+    ],
+    "correct_index": 0,
+    "explanation": "Critérios de aceite descrevem resultados que podem ser demonstrados em testes ou revisão com partes interessadas."
+  },
+  {
+    "topic_id": 165,
+    "question": "Um cliente repete POST de criação após timeout e gera pedido duplicado. Qual mecanismo pode reduzir esse problema?",
+    "choices": [
+      "Chave de idempotência com deduplicação no servidor",
+      "Reenviar infinitamente sem identificação",
+      "Desabilitar logs de requisição",
+      "Trocar JSON por HTML sem ajuste"
+    ],
+    "correct_index": 0,
+    "explanation": "Uma chave de idempotência estável permite identificar repetição da mesma intenção e evitar duplicação de operações de criação."
+  }
+]
