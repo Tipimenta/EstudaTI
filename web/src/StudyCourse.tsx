@@ -61,11 +61,11 @@ function RichText({content}:{content:string}){
   return <p key={i}><TextInline text={b.text}/></p>
  })}</article>
 }
-function cleanTitle(title:string){return title.replace(/^\\[(Aprofundamento|Oficina)\\]\\s*/i,'')}
+function cleanTitle(title:string){return title.replace(/^\[(Aprofundamento|Oficina)\]\s*/i,'')}
 function TeachingTheory({lesson}:{lesson:StudyLessonDetail}){
  // Separar teoria principal e anexos automáticos: os casos de outros assuntos não
  // devem interromper a explicação do tópico em estudo.
- const fragments=lesson.content.split(/<!--\\s*estudati-(?:enrichment|guia-aplicado-v2)-[^>]*-->/i).map(p=>p.trim()).filter(Boolean)
+ const fragments=lesson.content.split(/<!--\s*estudati-(?:enrichment|guia-aplicado-v2)-[^>]*-->/i).map(p=>p.trim()).filter(Boolean)
  const principal=fragments[0]||''
  const anexos=fragments.slice(1)
  const aprofundamento=anexos.filter(p=>!/^## Caderno de aplicação e revisão/i.test(p))
