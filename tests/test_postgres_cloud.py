@@ -18,7 +18,7 @@ from fastapi.testclient import TestClient
 def test_postgres_seed_login_and_persistence():
     url = os.environ["ESTUDATI_PG_TEST_URL"]
     # Evita execução acidental em banco remoto ou com credenciais reais.
-    if not (url.startswith("postgresql://estudati_test:") and
+    if not (url.startswith("postgresql://estudati_test@") and
             ("@localhost:" in url or "@127.0.0.1:" in url)):
         pytest.fail("O alvo do teste deve ser PostgreSQL local descartável.")
     os.environ["DATABASE_URL"] = url
