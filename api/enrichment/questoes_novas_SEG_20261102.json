@@ -1,0 +1,218 @@
+[
+  {
+    "topic_id": 4,
+    "question": "Um backup permanece disponível mas sofreu alteração não autorizada. Qual propriedade da informação foi afetada diretamente?",
+    "choices": [
+      "Disponibilidade",
+      "Integridade",
+      "Anonimato",
+      "Escalabilidade"
+    ],
+    "correct_index": 1,
+    "explanation": "Integridade envolve exatidão e proteção contra alterações indevidas; o fato de arquivo continuar acessível não garante seu conteúdo."
+  },
+  {
+    "topic_id": 5,
+    "question": "Após ransomware, a equipe possui backup íntegro em outra região, mas a restauração leva 48 horas e o RTO é de 4 horas. Qual conclusão é correta?",
+    "choices": [
+      "RTO foi atendido",
+      "O backup sozinho não assegurou a meta de recuperação",
+      "Criptografia garante retorno em quatro horas",
+      "O RPO é obrigatoriamente zero"
+    ],
+    "correct_index": 1,
+    "explanation": "Cópia íntegra é necessária em muitos planos, mas os testes e a capacidade de restaurar dentro do RTO precisam ser demonstrados."
+  },
+  {
+    "topic_id": 27,
+    "question": "Uma empresa contrata seguro para reduzir impacto financeiro de certo risco. Qual estratégia está mais diretamente envolvida?",
+    "choices": [
+      "Transferência/compartilhamento do risco",
+      "Eliminação de todas as ameaças",
+      "Aceitação sem análise",
+      "Criação de vulnerabilidade"
+    ],
+    "correct_index": 0,
+    "explanation": "Seguros são forma de compartilhamento/transferência de consequências financeiras, sem transferir integralmente responsabilidade pela segurança."
+  },
+  {
+    "topic_id": 28,
+    "question": "O login usa senha e PIN enviados no mesmo aplicativo. Isso constitui necessariamente dois fatores independentes?",
+    "choices": [
+      "Sim, porque há dois segredos",
+      "Não, ambos podem ser fatores de conhecimento",
+      "Sim, porque são duas telas",
+      "Não, porque MFA proíbe senhas"
+    ],
+    "correct_index": 1,
+    "explanation": "Dois segredos do mesmo tipo não equivalem necessariamente a MFA com fatores de categorias independentes."
+  },
+  {
+    "topic_id": 29,
+    "question": "Um sistema precisa verificar se um arquivo baixado sofreu modificação. Qual técnica é adequada para detectar alteração, supondo hash esperado confiável?",
+    "choices": [
+      "Hash criptográfico e comparação",
+      "Codificação Base64 como prova de autenticidade",
+      "Tradução de IP",
+      "Compressão ZIP sem conferência"
+    ],
+    "correct_index": 0,
+    "explanation": "Comparar digest criptográfico com valor obtido de fonte confiável ajuda a detectar alteração; sem confiança na referência, o teste isolado é fraco."
+  },
+  {
+    "topic_id": 30,
+    "question": "Um certificado TLS válido para api.exemplo.org é apresentado ao navegador para outro nome não abrangido pelo certificado. Qual verificação tende a falhar?",
+    "choices": [
+      "Correspondência entre certificado e nome do host",
+      "Cálculo de máscara /24",
+      "Resolução reversa obrigatória",
+      "Sequência SYN/ACK"
+    ],
+    "correct_index": 0,
+    "explanation": "A validação TLS inclui nome do servidor, cadeia de confiança e período de validade, entre outros critérios."
+  },
+  {
+    "topic_id": 31,
+    "question": "Um analista coleta evidência de incidente e registra hash e cadeia de custódia. Qual objetivo principal?",
+    "choices": [
+      "Preservar integridade e rastreabilidade da evidência",
+      "Acelerar DNS",
+      "Garantir ausência de atacantes",
+      "Substituir comunicação do incidente"
+    ],
+    "correct_index": 0,
+    "explanation": "Hash e registro de manuseio ajudam a demonstrar preservação e rastreabilidade; não provam sozinhos autoria do ataque."
+  },
+  {
+    "topic_id": 32,
+    "question": "Há duas cópias de backup na mesma sala física. Qual risco permanece especialmente relevante?",
+    "choices": [
+      "Falha de uma fonte única de alimentação e desastre local",
+      "Impossibilidade de restaurar qualquer arquivo",
+      "Proibição de criptografia",
+      "Falha inevitável de RAID por software"
+    ],
+    "correct_index": 0,
+    "explanation": "Um único incidente físico pode destruir as duas cópias; segregação e testes de restauração fortalecem continuidade."
+  },
+  {
+    "topic_id": 33,
+    "question": "Qual função do NIST CSF 2.0 enfatiza atribuições organizacionais, políticas e supervisão?",
+    "choices": [
+      "Detectar",
+      "Responder",
+      "Governar",
+      "Recuperar"
+    ],
+    "correct_index": 2,
+    "explanation": "GV estabelece contexto, estratégia, responsabilidades, políticas e supervisão; as demais funções executam outras ações de gestão de riscos."
+  },
+  {
+    "topic_id": 34,
+    "question": "Uma API concatena entrada do usuário em instrução SQL sem parametrização. Qual risco clássico é exemplificado?",
+    "choices": [
+      "SQL injection",
+      "Buffer de vídeo",
+      "Falta de resolução ARP",
+      "Compressão excessiva"
+    ],
+    "correct_index": 0,
+    "explanation": "Construir SQL por concatenação de entrada pode permitir alterar a consulta; parametrização é controle essencial."
+  },
+  {
+    "topic_id": 94,
+    "question": "Um gestor exige evidência de que controles de terceiros são revisados. Em qual conjunto do CSF 2.0 a governança de fornecedores é discutida explicitamente?",
+    "choices": [
+      "GV, cadeia de suprimentos de cibersegurança",
+      "Apenas RC, restaurar",
+      "Somente DNS",
+      "Camada física do OSI"
+    ],
+    "correct_index": 0,
+    "explanation": "O CSF 2.0 inclui gestão de riscos da cadeia de suprimentos dentro de Governar, embora medidas se conectem a várias funções."
+  },
+  {
+    "topic_id": 95,
+    "question": "Uma assinatura digital válida de documento foi gerada usando a chave privada de um signatário. Qual chave é normalmente usada para verificar a assinatura?",
+    "choices": [
+      "Chave pública correspondente",
+      "A chave privada do servidor DNS",
+      "O hash como chave de descriptografia",
+      "Uma senha universal publicada"
+    ],
+    "correct_index": 0,
+    "explanation": "Assinaturas assimétricas são verificadas com a chave pública correspondente, em modelo e algoritmo adequados."
+  },
+  {
+    "topic_id": 96,
+    "question": "Um processo possui RPO de 15 minutos e o último ponto restaurável está 2 horas antes da falha. O que isso indica?",
+    "choices": [
+      "A meta de RPO provavelmente não foi atendida",
+      "O RTO foi automaticamente atendido",
+      "Os dados não têm importância",
+      "Nenhuma avaliação pode ser feita"
+    ],
+    "correct_index": 0,
+    "explanation": "O ponto de restauração disponível implica possível perda de aproximadamente 2 horas, superior ao objetivo de 15 minutos."
+  },
+  {
+    "topic_id": 122,
+    "question": "Uma diretoria define apetite a risco, responsabilidades e supervisão de cibersegurança. Essa decisão representa sobretudo:",
+    "choices": [
+      "Governança",
+      "Antivírus local",
+      "Tradução NAT",
+      "Análise de pacotes Ethernet"
+    ],
+    "correct_index": 0,
+    "explanation": "Apetite, accountability e direção estratégica são elementos centrais da governança de riscos."
+  },
+  {
+    "topic_id": 123,
+    "question": "Um serviço deve voltar em até duas horas e admite perda máxima de dados correspondente a dez minutos. Esses dois objetivos são, respectivamente:",
+    "choices": [
+      "RPO e RTO",
+      "RTO e RPO",
+      "TTL e SLA",
+      "SLO e TCP"
+    ],
+    "correct_index": 1,
+    "explanation": "RTO corresponde à meta de tempo de recuperação; RPO à antiguidade máxima tolerável dos dados recuperados."
+  },
+  {
+    "topic_id": 124,
+    "question": "Em uma abordagem Zero Trust, qual decisão é mais coerente?",
+    "choices": [
+      "Confiar automaticamente em todo host na rede interna",
+      "Verificar continuamente acesso conforme identidade, contexto e menor privilégio",
+      "Desabilitar logging",
+      "Usar apenas senha igual para todos"
+    ],
+    "correct_index": 1,
+    "explanation": "Zero Trust evita confiança implícita por localização de rede e favorece verificação contextual, política e privilégio mínimo."
+  },
+  {
+    "topic_id": 154,
+    "question": "Após isolar uma máquina comprometida, o time apaga seus registros antes de documentar o evento. Qual problema principal?",
+    "choices": [
+      "Dificuldade de investigação e perda de evidência",
+      "Melhor controle de cadeia de custódia",
+      "Garantia de recuperação",
+      "Preservação automática de logs"
+    ],
+    "correct_index": 0,
+    "explanation": "Eliminar dados antes de coleta e documentação pode comprometer análise, auditoria e responsabilização."
+  },
+  {
+    "topic_id": 155,
+    "question": "Uma conta terceirizada continua ativa após o encerramento do contrato. Qual medida combina governança e controle de acesso?",
+    "choices": [
+      "Revisão periódica de contas e processo de desligamento com responsáveis",
+      "Somente aumentar banda de rede",
+      "Desativar backups",
+      "Compartilhar acesso entre todos os fornecedores"
+    ],
+    "correct_index": 0,
+    "explanation": "Políticas de ciclo de vida de identidades com responsabilidades e execução de revogação reduzem acessos indevidos."
+  }
+]
