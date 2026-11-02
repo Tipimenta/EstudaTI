@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": 1,
+    "question": "Um técnico verifica que o navegador recebe HTTP 503. Qual conclusão está mais bem fundamentada?",
+    "choices": [
+      "O cabo de rede está obrigatoriamente desconectado.",
+      "Um servidor ou intermediário HTTP conseguiu responder informando indisponibilidade.",
+      "A aplicação necessariamente utiliza UDP na camada de rede.",
+      "O servidor DNS está comprovadamente com defeito."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "HTTP não poderia chegar como resposta nesse cenário se toda comunicação estivesse fisicamente impossível.",
+      "O status 503 é resposta HTTP associada à indisponibilidade do serviço, mas não identifica isoladamente a causa.",
+      "UDP é transporte; o status HTTP não determina automaticamente a pilha utilizada.",
+      "Uma resposta HTTP não é prova de falha DNS."
+    ],
+    "explanation": "O status 503 é resposta HTTP associada à indisponibilidade do serviço, mas não identifica isoladamente a causa.",
+    "fingerprint": "academy-20261102-1-1"
+  },
+  {
+    "topic_id": 1,
+    "question": "Um host envia um pacote IP a outra sub-rede usando gateway. No primeiro salto Ethernet, o endereço MAC de destino é normalmente:",
+    "choices": [
+      "O MAC do servidor remoto, obtido diretamente por ARP através de todos os roteadores.",
+      "O MAC do gateway no enlace local.",
+      "O endereço IP do servidor convertido para hexadecimal.",
+      "O MAC do servidor DNS mesmo quando não participa da rota."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "ARP não resolve diretamente o MAC de um host que está atrás de um roteador em outra sub-rede.",
+      "Correto: o quadro alcança o próximo salto local, enquanto o IP continua destinado ao servidor remoto.",
+      "MAC e IPv4 são endereços distintos; não há simples conversão.",
+      "DNS resolve nomes, não é destino Ethernet obrigatório."
+    ],
+    "explanation": "Correto: o quadro alcança o próximo salto local, enquanto o IP continua destinado ao servidor remoto.",
+    "fingerprint": "academy-20261102-1-2"
+  },
+  {
+    "topic_id": 2,
+    "question": "Uma estação usa 192.168.40.190/27. Qual é o endereço de rede correto?",
+    "choices": [
+      "192.168.40.160",
+      "192.168.40.176",
+      "192.168.40.192",
+      "192.168.40.128"
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto. /27 divide o octeto em blocos de 32: 160 a 191 contém 190.",
+      "176 não é múltiplo de 32 e não é início de sub-rede /27.",
+      "192 começa o bloco seguinte; 190 pertence ao anterior.",
+      "128 a 159 não contém o endereço 190."
+    ],
+    "explanation": "Correto. /27 divide o octeto em blocos de 32: 160 a 191 contém 190.",
+    "fingerprint": "academy-20261102-2-1"
+  },
+  {
+    "topic_id": 2,
+    "question": "Uma máquina recebeu IPv4 do DHCP e acessa um serviço por IP, mas falha ao acessar pelo nome. Qual teste é a melhor próxima etapa?",
+    "choices": [
+      "Formatar a máquina sem coletar evidências.",
+      "Verificar resolução de nome via DNS e registros correspondentes.",
+      "Substituir todos os cabos de rede.",
+      "Alterar a máscara para /8 por tentativa."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Uma ação destrutiva não é diagnóstico e não decorre do sintoma.",
+      "Correto: diferença entre IP e nome torna DNS hipótese prioritária, sem excluir particularidades do aplicativo.",
+      "Acesso por IP mostra que alguma conectividade existe.",
+      "Trocar máscara sem análise pode criar novas falhas."
+    ],
+    "explanation": "Correto: diferença entre IP e nome torna DNS hipótese prioritária, sem excluir particularidades do aplicativo.",
+    "fingerprint": "academy-20261102-2-2"
+  },
+  {
+    "topic_id": 3,
+    "question": "Um switch L2 possui hosts nas VLANs 10 e 20. Sem dispositivo L3, qual afirmação está correta?",
+    "choices": [
+      "As VLANs automaticamente trocam pacotes IP porque o switch possui tabela MAC.",
+      "Cada VLAN forma domínio de broadcast separado; comunicação IP entre elas requer roteamento.",
+      "VLAN assegura criptografia obrigatória de todos os quadros.",
+      "Porta access carrega obrigatoriamente todas as VLANs em tags."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Tabela MAC L2 não substitui encaminhamento IP entre VLANs.",
+      "Correto: as VLANs isolam os domínios de broadcast no nível de enlace.",
+      "VLAN é segmentação; não é protocolo de criptografia.",
+      "Portas access normalmente associam dispositivos a uma VLAN."
+    ],
+    "explanation": "Correto: as VLANs isolam os domínios de broadcast no nível de enlace.",
+    "fingerprint": "academy-20261102-3-1"
+  },
+  {
+    "topic_id": 3,
+    "question": "Uma VPN remota está conectada, mas o usuário recebe bloqueio ao acessar a porta 1433 do banco. Qual abordagem é mais adequada?",
+    "choices": [
+      "Concluir que a VPN não existe, pois conexões VPN sempre liberam todas as portas.",
+      "Verificar rota, firewall, permissão de origem e serviço escutando na porta.",
+      "Desabilitar autenticação do banco definitivamente.",
+      "Criar VLAN trunk em todo equipamento externo."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "VPN conectada não implica autorização irrestrita.",
+      "Correto: conectividade do túnel, roteamento, filtros e serviço são verificações independentes.",
+      "Desabilitar autenticação é inseguro e não diagnostica a causa.",
+      "VLAN trunk não é solução geral para acesso remoto."
+    ],
+    "explanation": "Correto: conectividade do túnel, roteamento, filtros e serviço são verificações independentes.",
+    "fingerprint": "academy-20261102-3-2"
+  },
+  {
+    "topic_id": 4,
+    "question": "Uma pessoa autenticada no sistema tenta acessar um laudo sem perfil autorizado. Qual controle deve impedir a operação?",
+    "choices": [
+      "Autorização por papéis ou regras de acesso.",
+      "Resolução de nomes DNS.",
+      "Somente criptografia de disco.",
+      "Redundância RAID."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: autenticação não concede direito; a política de autorização decide acesso.",
+      "DNS não controla o direito do usuário ao laudo.",
+      "Cifra do disco não impede necessariamente usuário autenticado de abrir recurso não autorizado.",
+      "RAID protege contra algumas falhas físicas, não controla acesso lógico."
+    ],
+    "explanation": "Correto: autenticação não concede direito; a política de autorização decide acesso.",
+    "fingerprint": "academy-20261102-4-1"
+  },
+  {
+    "topic_id": 4,
+    "question": "Um backup permanece disponível, mas arquivos foram alterados indevidamente. Qual propriedade está diretamente comprometida?",
+    "choices": [
+      "Integridade.",
+      "Disponibilidade total.",
+      "Endereçamento lógico.",
+      "Escalabilidade do servidor."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: integridade diz respeito a alterações não autorizadas ou incorretas do conteúdo.",
+      "O arquivo continuar acessível não significa perda completa de disponibilidade.",
+      "IP não é uma das propriedades da tríade CID.",
+      "Escalabilidade é atributo distinto da tríade CID."
+    ],
+    "explanation": "Correto: integridade diz respeito a alterações não autorizadas ou incorretas do conteúdo.",
+    "fingerprint": "academy-20261102-4-2"
+  },
+  {
+    "topic_id": 5,
+    "question": "Uma organização aceita RTO de 3 horas e RPO de 20 minutos. O sistema volta em 2 horas com backup de 90 minutos antes da falha. O que aconteceu?",
+    "choices": [
+      "Ambas as metas foram atendidas.",
+      "A meta de RTO foi atendida; a de RPO não.",
+      "A de RPO foi atendida; a de RTO não.",
+      "Nenhuma meta foi atendida."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "RTO sim, mas a perda potencial de dados de 90 minutos supera RPO de 20.",
+      "Correto: 2 horas <3, mas 90 minutos >20.",
+      "Inverte as métricas.",
+      "O tempo de recuperação ficou dentro do objetivo RTO."
+    ],
+    "explanation": "Correto: 2 horas <3, mas 90 minutos >20.",
+    "fingerprint": "academy-20261102-5-1"
+  },
+  {
+    "topic_id": 5,
+    "question": "Um arquivo e seu hash estão publicados no mesmo servidor comprometido. Qual limitação existe na checagem de integridade?",
+    "choices": [
+      "Hash é reversível e revela arquivo original.",
+      "Um atacante pode trocar arquivo e hash; é preciso confiar no valor esperado.",
+      "Hash automaticamente garante assinatura digital do fabricante.",
+      "Comparar hash não detecta nenhuma alteração de arquivo."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Função hash criptográfica não foi projetada para inversão do conteúdo.",
+      "Correto: referência do hash precisa ser confiável; ambos adulterados podem passar na comparação.",
+      "Hash sozinho não autentica a identidade de quem publicou.",
+      "Com valor esperado confiável, comparar hashes é técnica importante de detecção."
+    ],
+    "explanation": "Correto: referência do hash precisa ser confiável; ambos adulterados podem passar na comparação.",
+    "fingerprint": "academy-20261102-5-2"
+  },
+  {
+    "topic_id": 6,
+    "question": "Em Linux, um arquivo apresenta modo rw-r-----. Um usuário que não é dono, mas pertence ao grupo dono, consegue:",
+    "choices": [
+      "Ler o arquivo, sem gravar nele pelo modo mostrado.",
+      "Ler, gravar e executar.",
+      "Executar sem leitura.",
+      "Alterar qualquer permissão sem privilégio."
+    ],
+    "correct_index": 0,
+    "rationales": [
+      "Correto: segundo trio r-- representa permissões de grupo.",
+      "Grupo não possui w nem x nesse modo.",
+      "Não há bit x no trio do grupo.",
+      "Mudar permissões depende de propriedade/privilégios apropriados."
+    ],
+    "explanation": "Correto: segundo trio r-- representa permissões de grupo.",
+    "fingerprint": "academy-20261102-6-1"
+  },
+  {
+    "topic_id": 6,
+    "question": "Um serviço Linux não inicia após atualização. Qual sequência de diagnóstico é mais defensável?",
+    "choices": [
+      "Executar chmod 777 em todo /etc e reiniciar.",
+      "Verificar systemctl status, journalctl, dependências e permissões relacionadas.",
+      "Apagar logs para economizar espaço antes de investigar.",
+      "Remover o sistema operacional antes de ler mensagens."
+    ],
+    "correct_index": 1,
+    "rationales": [
+      "Permitir escrita geral é perigoso e não substitui a investigação.",
+      "Correto: estado, logs, dependências e ACLs ajudam a encontrar a causa.",
+      "Logs são evidência; apagar antes da análise pode prejudicar diagnóstico.",
+      "Reinstalação é prematura sem evidências."
+    ],
+    "explanation": "Correto: estado, logs, dependências e ACLs ajudam a encontrar a causa.",
+    "fingerprint": "academy-20261102-6-2"
+  }
+]
