@@ -17,6 +17,7 @@ from urllib.parse import urlparse
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, UploadFile, File
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from seed import CONTESTS, SUBJECTS, TOPICS
 from advanced_seed import prepare_units, RESOURCES
@@ -45,6 +46,21 @@ app = FastAPI(title='EstudaTI API', version='1.3.0', docs_url=None, redoc_url=No
 stop_monitor = threading.Event()
 login_attempts = {}
 login_lock = threading.Lock()
+boot_status = {'state': 'starting'}
+
+
+@app.middleware('http')
+async def init_guard(request: Request, call_next):
+    if request.url.path != '/api/health' and boot_status['state'] != 'ready':
+        return JSONResponse(status_code=503, content={'detail':'Banco de dados inicializando; tente novamente.'})
+    return await call_next(request)
+
+
+@app.get('/api/health')
+def health():
+    state=boot_status['state']
+    return JSONResponse(status_code=200 if state == 'ready' else 503,
+                        content={'app':'EstudaTI','database':state})
 
 
 def conn():
@@ -236,6 +252,8 @@ def init_db():
         # V1.2: adicionar oficinas de transferência em 9 disciplinas, sem alterar aulas existentes.
         seed_workshops(db,sub,nowstr)
         seed_curated_cases(db,nowstr)
+    # So aceitar requisicoes apos o commit da inicializacao.
+    boot_status['state']='ready'
 
 
 def sign_session():
@@ -996,10 +1014,19 @@ register_syllabus(app,authorized,conn,nowstr)
 
 @app.on_event('startup')
 def startup():
-    init_db()
-    if ENABLE_MONITOR:
-        thread=threading.Thread(target=monitor_loop,daemon=True,name='monitor-fontes')
-        thread.start()
+    # Neon remoto pode demorar no primeiro seed. Nao bloquear a porta Render.
+    def initialize():
+        try:
+            init_db()
+        except Exception as exc:
+            boot_status['state']='error'
+            # Nunca logar DATABASE_URL, senhas ou mensagem com DSN.
+            print('Falha na inicializacao do banco:', type(exc).__name__, flush=True)
+            return
+        if ENABLE_MONITOR:
+            thread=threading.Thread(target=monitor_loop,daemon=True,name='monitor-fontes')
+            thread.start()
+    threading.Thread(target=initialize,daemon=True,name='seed-inicial').start()
 
 
 @app.on_event('shutdown')
