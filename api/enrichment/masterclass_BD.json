@@ -1,0 +1,74 @@
+{
+  "version": "2026-11-02-v14",
+  "topic_id": 106,
+  "code": "BD",
+  "content": "## Estudo aprofundado — modelagem relacional e normalização\n### Por que modelar antes de consultar?\nSuponha uma planilha: `Exames(id_exame, nome_paciente, cpf_paciente, nome_medico, especialidade, data, aparelho)`. Ao alterar o nome de um paciente, centenas de linhas precisam ser corrigidas. Esse é o problema de **anomalia de atualização**. O banco relacional procura armazenar fatos com dependências bem definidas, permitindo integridade e consultas consistentes.\n\n### 1. Chaves e relações — um caso completo\nModele o domínio de agendamentos com `Paciente(id_paciente PK, nome)`, `Medico(id_medico PK, nome)`, `Agendamento(id_agendamento PK, paciente_id FK, medico_id FK, inicio, fim, status)`. Cada agendamento aponta para exatamente um paciente e um médico, se ambas as colunas forem `NOT NULL`; cada paciente pode ter vários agendamentos (1:N) e cada médico também.\n\nUm relacionamento **N:N**, como estudante cursa disciplina, exige normalmente tabela de associação: `Matricula(estudante_id FK, disciplina_id FK, inscrito_em, PK(estudante_id,disciplina_id))`. Uma chave substituta também seria possível se combinada a `UNIQUE(estudante_id,disciplina_id)` para impedir duplicação do par.\n\n### 2. O que cada forma normal realmente resolve?\n**1FN:** busca valores atômicos no domínio definido e ausência de grupos repetitivos. Guardar `telefone1, telefone2, telefone3` costuma violar o espírito do modelo, exigindo tabela `Telefone` para múltiplos números. **2FN:** não admite dependência de atributo não-primo de parte própria de uma chave candidata composta. Considere `Matricula(aluno_id, disciplina_id, aluno_nome, nota)`: `aluno_nome` depende só de `aluno_id`, portanto deve estar na tabela Aluno. **3FN:** elimina dependências transitivas inadequadas de atributos não-chave: `Produto(id, categoria_id, categoria_nome)` sugere que `categoria_nome` depende de `categoria_id`, que depende da chave produto; a categoria deve ser representada separadamente.\n\nNão basta criar muitas tabelas: normalização não substitui análise semântica do domínio. A desnormalização deliberada pode ser válida por desempenho, mas requer coerência, auditoria e aceitação da redundância.\n\n### 3. SQL de integridade e análise de erros\n```sql\nCREATE TABLE paciente (\n  id BIGINT PRIMARY KEY,\n  nome TEXT NOT NULL\n);\nCREATE TABLE agendamento (\n  id BIGINT PRIMARY KEY,\n  paciente_id BIGINT NOT NULL REFERENCES paciente(id),\n  inicio TIMESTAMP NOT NULL,\n  fim TIMESTAMP NOT NULL,\n  CHECK (fim > inicio)\n);\n```\n`PRIMARY KEY` impede nulos e duplicação da chave. `FOREIGN KEY` garante referência existente. `CHECK` valida regra local. `UNIQUE` controla duplicidade dentro dos critérios do SGBD; em SQL padrão, `NULL` não equivale a zero nem a string vazia. `UNIQUE(medico_id,inicio)` não impede sozinho consultas com intervalos sobrepostos de durações diferentes.\n\n### 4. Casos clássicos de prova\n- **Erro:** afirmar que toda FK deve ser única. Em 1:N, vários agendamentos podem apontar para o mesmo paciente.\n- **Erro:** achar que chave primária composta é proibida. É comum em relacionamentos N:N.\n- **Erro:** confundir `JOIN` com integridade referencial. Uma consulta JOIN correlaciona linhas, enquanto uma FK impõe regra aos dados gravados.\n- **Erro:** afirmar que normalização elimina qualquer duplicação física. Índices, cache e materializações também influenciam armazenamento.\n\n### 5. Desafio guiado\nConstrua um modelo de biblioteca: livros, autores e empréstimos. Explique por que Livro–Autor é N:N, como modelaria a associação, qual regra impediria empréstimos com datas inconsistentes e por que um `CHECK` simples não assegura exclusividade temporal entre linhas diferentes. Em seguida, escreva uma consulta que conte empréstimos por usuário e explique quando `LEFT JOIN` preserva usuários sem empréstimo.\n\nFonte técnica: documentação PostgreSQL — https://www.postgresql.org/docs/current/ddl-constraints.html. Conteúdo autoral.",
+  "questions": [
+    {
+      "question": "Uma tabela de matrículas tem chave composta (aluno_id,disciplina_id) e coluna aluno_nome. Qual dependência ameaça a 2FN?",
+      "choices": [
+        "aluno_nome depender apenas de aluno_id",
+        "nota depender do par",
+        "aluno_id fazer parte da chave",
+        "disciplina_id ser uma FK"
+      ],
+      "correct_index": 0,
+      "explanation": "Se um atributo não-primo depende só de parte de chave candidata composta, existe dependência parcial, que a 2FN elimina."
+    },
+    {
+      "question": "Qual é um modelo usual para relacionar autores e livros com cardinalidade N:N?",
+      "choices": [
+        "Adicionar vários campos autor1, autor2 na tabela livro",
+        "Colocar lista de autores em uma coluna texto",
+        "Criar tabela associativa LivroAutor com FKs",
+        "Proibir livros com mais de um autor"
+      ],
+      "correct_index": 2,
+      "explanation": "Uma tabela associativa representa pares livro–autor, permitindo integridade e cardinalidade N:N."
+    },
+    {
+      "question": "Por que UNIQUE(profissional_id,inicio) pode ser insuficiente para evitar conflitos de agenda?",
+      "choices": [
+        "Porque UNIQUE não funciona em PostgreSQL",
+        "Porque intervalos podem se sobrepor mesmo com inícios distintos",
+        "Porque a PK desativa UNIQUE",
+        "Porque FKs anulam todos os índices"
+      ],
+      "correct_index": 1,
+      "explanation": "Dois agendamentos podem começar em horários diferentes e ainda compartilhar minutos de execução; é preciso modelar intervalos."
+    },
+    {
+      "question": "Qual restrição verifica que um horário de término é posterior ao início na mesma linha?",
+      "choices": [
+        "CHECK(fim > inicio)",
+        "INDEX(fim, inicio)",
+        "FOREIGN KEY(fim)",
+        "ORDER BY fim"
+      ],
+      "correct_index": 0,
+      "explanation": "CHECK impõe condição sobre valores da linha, enquanto índice e ordenação não impõem essa regra de negócios."
+    },
+    {
+      "question": "Qual afirmação sobre chave estrangeira é correta?",
+      "choices": [
+        "Nunca aceita NULL",
+        "Deve ser também uma PK",
+        "Garante referência válida quando há valor e a restrição é aplicada",
+        "Impede relacionamentos 1:N"
+      ],
+      "correct_index": 2,
+      "explanation": "FK referencia chave válida no alvo; NULL é possível se a coluna permitir, e várias linhas podem referenciar a mesma chave."
+    },
+    {
+      "question": "Uma tabela repete categoria_nome em todos os produtos de uma categoria. Qual problema pode surgir?",
+      "choices": [
+        "O banco não poderá executar SELECT",
+        "Anomalia de atualização se o nome mudar em apenas parte das linhas",
+        "Eliminação automática de chaves",
+        "Conversão imediata para 5FN"
+      ],
+      "correct_index": 1,
+      "explanation": "Dados redundantes podem divergir quando atualizações deixam de alcançar todas as cópias. Separação de Categoria reduz esse risco."
+    }
+  ]
+}
