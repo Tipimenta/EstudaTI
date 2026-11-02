@@ -205,15 +205,15 @@
   },
   {
     "topic_id": 158,
-    "question": "A frase 'O sistema não foi atualizado porque estava indisponível' pode gerar ambiguidade principalmente sobre:",
+    "question": "Leia: 'A coordenadora conversou com a médica sobre sua avaliação.' Qual ambiguidade está presente na expressão 'sua avaliação'?",
     "choices": [
-      "A razão e a relação de causa da não atualização",
-      "O uso de palavras inglesas",
-      "A ordem alfabética do substantivo",
-      "A existência de artigo definido"
+      "Não está explícito se a avaliação pertence à coordenadora ou à médica",
+      "Não é possível identificar o verbo da oração",
+      "Não está definido o gênero da palavra coordenadora",
+      "É proibido empregar pronomes possessivos em relatórios"
     ],
     "correct_index": 0,
-    "explanation": "Sem contexto, é preciso determinar a quem se atribui a indisponibilidade e o nexo causal; reescrita cuidadosa esclarece a mensagem."
+    "explanation": "O possessivo 'sua' pode retomar mais de um referente feminino no contexto. Reescrever como 'avaliação da médica' ou 'avaliação da coordenadora' elimina a ambiguidade, conforme a intenção."
   },
   {
     "topic_id": 159,
