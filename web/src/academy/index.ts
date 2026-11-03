@@ -17,8 +17,13 @@ import {completedBD} from './completedBD'
 import {completedENG} from './completedENG'
 import {completedLOG} from './completedLOG'
 import {completedLEG} from './completedLEG'
+import {pedagogicalBoosts} from './pedagogicalBoosts'
 import type {PedagogicalLesson} from './intro1'
 
 export type {PedagogicalLesson} from './intro1'
-export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>[lesson.id,lesson]))
+export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>{
+ const more=pedagogicalBoosts[lesson.id]
+ if(!more)return [lesson.id,lesson]
+ return [lesson.id,{...lesson,steps:lesson.steps.map((step,i)=>i===1?{...step,body:more+'\n\n'+step.body}:step)}]
+}))
 export const academyTotal=Object.keys(academyLessons).length
