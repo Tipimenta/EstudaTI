@@ -1,0 +1,380 @@
+[
+  {
+    "topic_id": 21,
+    "question": "Um servidor TCP anuncia janela de recepção de 2 KB, embora a janela de congestionamento do emissor permita 32 KB. O que explica o limite mais restritivo de dados pendentes?",
+    "choices": [
+      "Controle de congestionamento causado obrigatoriamente por roteador.",
+      "Falha da aplicação DNS.",
+      "Controle de fluxo pela capacidade anunciada do receptor.",
+      "Ausência obrigatória do handshake TCP."
+    ],
+    "correct_index": 2,
+    "explanation": "O menor limite relevante é rwnd = 2 KB; o receptor está limitando dados em trânsito por sua capacidade disponível.",
+    "choice_rationales": {
+      "A": "cwnd está maior e não é a restrição mostrada.",
+      "B": "DNS não define a janela de recepção TCP.",
+      "C": "O menor limite relevante é rwnd = 2 KB; o receptor está limitando dados em trânsito por sua capacidade disponível.",
+      "D": "A janela anunciada pode diminuir numa sessão já estabelecida."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-21-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 23,
+    "question": "Um cliente está numa sub-rede sem servidor DHCP local, mas há servidor DHCPv4 em outra VLAN. Qual mecanismo pode permitir a obtenção do lease?",
+    "choices": [
+      "Relay DHCP configurado para encaminhar as mensagens apropriadas.",
+      "Uma consulta DNS A substitui as mensagens DORA.",
+      "Desativar IP em todos os roteadores.",
+      "Uma GPO necessariamente transforma DHCP em HTTP."
+    ],
+    "correct_index": 0,
+    "explanation": "O relay DHCP permite encaminhar mensagens entre segmentos onde o broadcast inicial não atravessa roteadores comuns.",
+    "choice_rationales": {
+      "A": "O relay DHCP permite encaminhar mensagens entre segmentos onde o broadcast inicial não atravessa roteadores comuns.",
+      "B": "DNS resolve nomes e não negocia concessão de IP.",
+      "C": "Sem roteamento, o servidor de outra sub-rede ficaria mais difícil de alcançar.",
+      "D": "GPO não transforma o protocolo DHCP em HTTP."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-23-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 30,
+    "question": "Um navegador acessa laudos.exemplo.org, mas recebe certificado confiável, ainda válido, emitido somente para portal.exemplo.org. Qual avaliação procede?",
+    "choices": [
+      "O certificado vale porque os dois serviços terminam em .org.",
+      "O cliente pode ignorar o nome se TLS estiver na porta 443.",
+      "A única verificação necessária é o prazo de validade.",
+      "Existe incompatibilidade de nome do host com o certificado apresentado."
+    ],
+    "correct_index": 3,
+    "explanation": "Além de validade e cadeia de confiança, o certificado precisa cobrir o nome do serviço acessado.",
+    "choice_rationales": {
+      "A": "Domínios diferentes não ficam automaticamente abrangidos por TLD comum.",
+      "B": "A porta 443 não dispensa verificação da identidade.",
+      "C": "Prazo válido é condição importante, mas insuficiente.",
+      "D": "Além de validade e cadeia de confiança, o certificado precisa cobrir o nome do serviço acessado."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-30-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 33,
+    "question": "Uma equipe configura correlação de logs para reconhecer tentativas de autenticação anômalas. No CSF 2.0, qual função descreve melhor o propósito imediato?",
+    "choices": [
+      "Recuperar",
+      "Detectar",
+      "Governar",
+      "Responder"
+    ],
+    "correct_index": 1,
+    "explanation": "Monitoramento para identificar atividade anômala se relaciona diretamente à função Detectar.",
+    "choice_rationales": {
+      "A": "Recuperar busca restaurar capacidades e serviços afetados.",
+      "B": "Monitoramento para identificar atividade anômala se relaciona diretamente à função Detectar.",
+      "C": "Governar define estratégia, diretrizes e responsabilidade.",
+      "D": "Responder trata incidentes identificados, mas a ação descrita é de detecção."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-33-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 37,
+    "question": "Um servidor responde a ping, mas o site não abre. 'systemctl status' mostra serviço web inativo. Qual primeiro diagnóstico coerente?",
+    "choices": [
+      "Ping prova que HTTP está ativo e o navegador é culpado.",
+      "É necessário apagar todos os logs.",
+      "Investigar estado e logs da unidade e confirmar porta de escuta.",
+      "Alterar o DNS de todos os usuários sem avaliar o servidor."
+    ],
+    "correct_index": 2,
+    "explanation": "Conectividade ICMP não comprova a atividade do processo HTTP; status, journalctl e ss ajudam a localizar falha.",
+    "choice_rationales": {
+      "A": "ICMP e HTTP são protocolos e caminhos de diagnóstico diferentes.",
+      "B": "Logs são evidência útil e não devem ser descartados.",
+      "C": "Conectividade ICMP não comprova a atividade do processo HTTP; status, journalctl e ss ajudam a localizar falha.",
+      "D": "Sem evidência de DNS, a troca de resolvedor é palpite."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-37-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 38,
+    "question": "Uma ferramenta consulta os atributos de um usuário no diretório. Outro componente obtém tickets para autenticação em serviços. Quais protocolos estão tipicamente associados, respectivamente?",
+    "choices": [
+      "Kerberos e DNS",
+      "LDAP e Kerberos",
+      "TCP e DHCP",
+      "TLS e SQL"
+    ],
+    "correct_index": 1,
+    "explanation": "LDAP consulta informação do diretório; Kerberos é associado à autenticação por tickets no AD.",
+    "choice_rationales": {
+      "A": "Kerberos não é o principal protocolo para consultas LDAP; DNS localiza nomes e serviços.",
+      "B": "LDAP consulta informação do diretório; Kerberos é associado à autenticação por tickets no AD.",
+      "C": "TCP transporta conexões, DHCP atribui parâmetros de rede.",
+      "D": "TLS e SQL não formam essa dupla funcional do Active Directory."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-38-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 44,
+    "question": "Qual frase emprega corretamente 'haver' como auxiliar pessoal?",
+    "choices": [
+      "Os técnicos haviam concluído o inventário.",
+      "Haviam cinco dispositivos novos no armário.",
+      "Devem haver alternativas para a operação.",
+      "Houveram problemas no servidor."
+    ],
+    "correct_index": 0,
+    "explanation": "'Haviam' é auxiliar do verbo concluir e concorda com 'os técnicos'.",
+    "choice_rationales": {
+      "A": "'Haviam' é auxiliar do verbo concluir e concorda com 'os técnicos'.",
+      "B": "Haver no sentido de existir é impessoal: havia cinco.",
+      "C": "Com haver existencial, o auxiliar permanece singular: deve haver.",
+      "D": "Houve problemas é a forma impessoal correta."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-44-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 46,
+    "question": "Compare 'Os sistemas que falharam foram reiniciados' e 'Os sistemas, que falharam, foram reiniciados'. Qual mudança de sentido é mais provável?",
+    "choices": [
+      "Ambas são obrigatoriamente idênticas em qualquer contexto.",
+      "A primeira afirma necessariamente que todos os sistemas falharam.",
+      "A segunda restringe a informação apenas a alguns sistemas.",
+      "A primeira contém relativa restritiva; a segunda apresenta a relativa como explicação do grupo referido."
+    ],
+    "correct_index": 3,
+    "explanation": "A presença das vírgulas geralmente distingue oração explicativa de restritiva, alterando o alcance da informação.",
+    "choice_rationales": {
+      "A": "A pontuação em relativa pode mudar a interpretação.",
+      "B": "Sem vírgulas, a oração tende a selecionar subconjunto.",
+      "C": "Com vírgulas, a oração tende a apresentar informação explicativa, não restringir.",
+      "D": "A presença das vírgulas geralmente distingue oração explicativa de restritiva, alterando o alcance da informação."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-46-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 53,
+    "question": "A equipe de operações atende chamados e restaura serviços diariamente. Qual domínio do COBIT 2019 é mais diretamente associado a essa entrega operacional?",
+    "choices": [
+      "BAI — Construção e implantação",
+      "APO — Alinhamento e planejamento",
+      "DSS — Entrega, serviços e suporte",
+      "EDM — Governança"
+    ],
+    "correct_index": 2,
+    "explanation": "DSS é o domínio de gestão relacionado à entrega, operação e suporte de serviços.",
+    "choice_rationales": {
+      "A": "BAI enfatiza construção, aquisição e implantação.",
+      "B": "APO cuida de alinhamento, planejamento e organização.",
+      "C": "DSS é o domínio de gestão relacionado à entrega, operação e suporte de serviços.",
+      "D": "EDM é o conjunto de objetivos de governança."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-53-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 55,
+    "question": "Um PDTI precisa escolher entre renovar um sistema crítico sem suporte de segurança e alterar detalhes visuais de um portal. Qual critério dá melhor fundamento à decisão?",
+    "choices": [
+      "Sempre atender o pedido mais recente.",
+      "Avaliar risco, criticidade, benefício, custo e dependências das propostas.",
+      "Escolher obrigatoriamente o projeto de menor custo.",
+      "Aprovar ambas sem verificar recursos."
+    ],
+    "correct_index": 1,
+    "explanation": "Prioridades devem resultar de critérios explícitos de risco, impacto e alinhamento institucional, além de recursos.",
+    "choice_rationales": {
+      "A": "Ordem de recebimento não considera risco e benefício.",
+      "B": "Prioridades devem resultar de critérios explícitos de risco, impacto e alinhamento institucional, além de recursos.",
+      "C": "Menor custo isolado não mede impacto ou continuidade.",
+      "D": "Sem recursos, aprovar tudo ignora restrições do planejamento."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-55-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 62,
+    "question": "T1 executa SELECT COUNT(*) FROM chamados WHERE status='aberto' e obtém 10. T2 insere outro chamado aberto e confirma; T1 repete o mesmo filtro e obtém 11. Qual fenômeno foi ilustrado?",
+    "choices": [
+      "Leitura fantasma",
+      "Apenas atomicidade",
+      "Deadlock obrigatório",
+      "Falha na integridade DNS"
+    ],
+    "correct_index": 0,
+    "explanation": "O conjunto de linhas que atende ao predicado mudou entre as consultas, típico de phantom read.",
+    "choice_rationales": {
+      "A": "O conjunto de linhas que atende ao predicado mudou entre as consultas, típico de phantom read.",
+      "B": "Atomicidade trata confirmar/desfazer conjunto de operações.",
+      "C": "O cenário não descreve espera circular de recursos.",
+      "D": "DNS não é parte desse comportamento de isolamento."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-62-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 63,
+    "question": "A tabela Funcionarios guarda (id_funcionario, id_departamento, nome_departamento). O nome depende do departamento, não diretamente da pessoa. Que problema de normalização deve ser investigado?",
+    "choices": [
+      "Violação obrigatória da 1FN por existir coluna texto.",
+      "Ausência de transação ACID.",
+      "Obrigatoriedade de gerar uma coluna de IP.",
+      "Dependência transitiva relevante à 3FN."
+    ],
+    "correct_index": 3,
+    "explanation": "Se id_funcionario determina departamento e id_departamento determina seu nome, há dependência transitiva de atributo não chave.",
+    "choice_rationales": {
+      "A": "Coluna textual não viola 1FN por si só.",
+      "B": "ACID é propriedade transacional, diferente de normalização.",
+      "C": "Endereço IP é irrelevante para dependências funcionais.",
+      "D": "Se id_funcionario determina departamento e id_departamento determina seu nome, há dependência transitiva de atributo não chave."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-63-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 71,
+    "question": "Uma API recebe DELETE /relatorios/8 duas vezes. Na primeira remove e responde 204; na segunda responde 404. Qual propriedade foi preservada?",
+    "choices": [
+      "Segurança do método GET.",
+      "Obrigatoriedade de respostas idênticas.",
+      "Idempotência do efeito pretendido de remover o recurso.",
+      "Garantia de que nenhuma linha de log foi registrada."
+    ],
+    "correct_index": 2,
+    "explanation": "DELETE continua idempotente porque repetir não altera o estado final pretendido de ausência do recurso.",
+    "choice_rationales": {
+      "A": "DELETE não é método seguro como GET.",
+      "B": "Idempotência não exige códigos HTTP iguais.",
+      "C": "DELETE continua idempotente porque repetir não altera o estado final pretendido de ausência do recurso.",
+      "D": "Efeitos colaterais como logs podem existir."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-71-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 72,
+    "question": "Uma API autentica corretamente João. Ele troca o número /pacientes/13 por /pacientes/14 e visualiza dados de outra pessoa sem autorização. Qual falha principal?",
+    "choices": [
+      "Falha de autorização no nível do objeto acessado.",
+      "Ausência obrigatória de chave TLS.",
+      "Corrupção da cache DNS.",
+      "Falta de botão escondido no frontend, única causa possível."
+    ],
+    "correct_index": 0,
+    "explanation": "A API deve verificar permissão sobre cada recurso; login válido não autoriza automaticamente outro paciente.",
+    "choice_rationales": {
+      "A": "A API deve verificar permissão sobre cada recurso; login válido não autoriza automaticamente outro paciente.",
+      "B": "TLS pode estar correto e a autorização da aplicação falhar.",
+      "C": "DNS não explica acesso indevido por troca de identificador.",
+      "D": "Ocultar botões ajuda interface, mas segurança precisa ser aplicada no servidor."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-72-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 77,
+    "question": "Negue corretamente a proposição 'Existe ao menos um servidor que não possui inventário atualizado'.",
+    "choices": [
+      "Existe servidor com inventário atualizado.",
+      "Nenhum servidor precisa de inventário.",
+      "Todos os servidores possuem inventário atualizado.",
+      "Pelo menos dois servidores possuem inventário atualizado."
+    ],
+    "correct_index": 2,
+    "explanation": "Negar a existência de um servidor não atualizado significa que todos estão atualizados.",
+    "choice_rationales": {
+      "A": "Algum atualizado pode coexistir com outros desatualizados.",
+      "B": "Não elimina a existência do contraexemplo descrito.",
+      "C": "Negar a existência de um servidor não atualizado significa que todos estão atualizados.",
+      "D": "Dois atualizados também não impedem existência de um desatualizado."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-77-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 80,
+    "question": "Numa turma, 30 pessoas estudam Português, 26 estudam Lógica e 12 estudam ambas. Quantas estudam apenas Português?",
+    "choices": [
+      "42",
+      "18",
+      "14",
+      "56"
+    ],
+    "correct_index": 1,
+    "explanation": "Apenas Português = |P| − |P∩L| = 30 − 12 = 18.",
+    "choice_rationales": {
+      "A": "42 não resulta da subtração da interseção de Português.",
+      "B": "Apenas Português = |P| − |P∩L| = 30 − 12 = 18.",
+      "C": "14 é apenas Lógica (26 − 12).",
+      "D": "56 é soma bruta que conta os dois grupos sem remover repetição."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-80-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 85,
+    "question": "Um usuário pergunta a uma organização com quais entidades públicas e privadas seus dados foram compartilhados. Qual direito da LGPD é pertinente?",
+    "choices": [
+      "Exigir obrigatoriamente apagamento de todos os registros históricos.",
+      "Alterar os campos de login sem informar finalidade.",
+      "Transformar todo dado sensível em informação pública.",
+      "Obter informação sobre entidades com as quais o controlador realizou compartilhamento."
+    ],
+    "correct_index": 3,
+    "explanation": "O art. 18 prevê direito de informação sobre entidades públicas e privadas com as quais o controlador compartilhou dados.",
+    "choice_rationales": {
+      "A": "O pedido não corresponde a eliminação irrestrita.",
+      "B": "Trata-se de informação sobre compartilhamento, não mera alteração de login.",
+      "C": "Dados pessoais não se tornam públicos pelo exercício de um direito de informação.",
+      "D": "O art. 18 prevê direito de informação sobre entidades públicas e privadas com as quais o controlador compartilhou dados."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-85-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 86,
+    "question": "Na contratação de serviço de TI, qual distinção entre Estudo Técnico Preliminar e Termo de Referência é mais adequada?",
+    "choices": [
+      "O ETP atesta notas fiscais e o TR audita logs de produção.",
+      "O ETP fundamenta necessidade e solução; o TR especifica objeto e condições quando aplicável.",
+      "São obrigatoriamente o mesmo documento com nomes diferentes.",
+      "O TR vem sempre após a execução do contrato."
+    ],
+    "correct_index": 1,
+    "explanation": "ETP analisa necessidade e viabilidade; TR detalha objeto e condições na fase de planejamento conforme aplicabilidade.",
+    "choice_rationales": {
+      "A": "Ateste e fiscalização ocorrem em contexto posterior e não definem esses documentos.",
+      "B": "ETP analisa necessidade e viabilidade; TR detalha objeto e condições na fase de planejamento conforme aplicabilidade.",
+      "C": "Os instrumentos possuem finalidades diferentes.",
+      "D": "O TR integra o planejamento, não é apenas documento posterior ao contrato."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-86-02",
+    "origin": "autoral",
+    "review_status": "revisada"
+  }
+]
