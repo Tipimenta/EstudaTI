@@ -339,7 +339,7 @@ export const completedPOR:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Compare: “Houve incidentes” e “Ocorreram incidentes”; a ideia pode ser parecida, mas as regras de concordância diferem.\n\n**Questão:** Qual forma respeita a norma-padrão?\n\n**Resposta:** Havia diversos arquivos no servidor..\n\n**Explicação:** Haver no sentido de existir é impessoal e permanece no singular.\n\n**Cuidado:** “Houveram problemas” é inadequado quando haver tem o sentido de existir."
+        "body": "Compare: “Houve incidentes” e “Ocorreram incidentes”; a ideia pode ser parecida, mas as regras de concordância diferem.\n\n**Um segundo cenário para entender:** Qual frase está adequada à norma-padrão em relação ao verbo haver com sentido de existir?\n\n**A regra aplicada:** Haver existencial é impessoal: permanece singular, inclusive em locução verbal apropriada.\n\n**Resultado explicado:** Havia muitos pedidos.\n\n**Cuidado:** “Houveram problemas” é inadequado quando haver tem o sentido de existir."
       }
     ],
     "worked": {
@@ -453,7 +453,7 @@ export const completedPOR:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Uma banca pode pedir reescrita com mudança de vírgula e perguntar se o sentido permanece igual.\n\n**Questão:** Em 'Os usuários que receberam o aviso compareceram', a ausência de vírgulas na oração relativa indica, em geral:\n\n**Resposta:** Valor restritivo: um subconjunto de usuários.\n\n**Explicação:** Oração relativa sem vírgulas tende a restringir o referente; com vírgulas, seria explicativa.\n\n**Cuidado:** A vírgula pode mudar o referente; não é só pausa de leitura."
+        "body": "Uma banca pode pedir reescrita com mudança de vírgula e perguntar se o sentido permanece igual.\n\n**Um segundo cenário para entender:** Considere 'Os candidatos que estudaram foram aprovados'. Qual leitura é mais adequada sem vírgulas?\n\n**A regra aplicada:** Sem vírgulas, a relativa pode identificar quais candidatos foram aprovados.\n\n**Resultado explicado:** A oração relativa restringe o conjunto referido.\n\n**Cuidado:** A vírgula pode mudar o referente; não é só pausa de leitura."
       }
     ],
     "worked": {
