@@ -25,9 +25,9 @@ jobs:
         with:
           persist-credentials: false
       - name: Instalar dependencias
-        run: python3 -m pip install -q -r api/requirements.txt pytest httpx2
+        run: python3 -m pip install -q -r api/requirements.txt pytest httpx
       - name: Rodar testes
-        run: PYTHONPATH=api python3 -m pytest -q tests
+        run: PYTHONPATH=api python3 -m pytest -q tests api/tests
   frontend:
     name: Frontend React
     runs-on: ubuntu-latest
@@ -67,6 +67,6 @@ jobs:
         with:
           persist-credentials: false
       - name: Instalar dependencias
-        run: python3 -m pip install -q -r api/requirements.txt pytest httpx2
+        run: python3 -m pip install -q -r api/requirements.txt pytest httpx
       - name: Testar inicializacao e persistencia
         run: PYTHONPATH=api python3 -m pytest -q tests/test_postgres_cloud.py
