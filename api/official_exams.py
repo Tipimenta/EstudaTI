@@ -215,6 +215,10 @@ class Answer(BaseModel):
     choice_index: int = Field(ge=0, le=4)
 
 
+class CardRequest(BaseModel):
+    number:int=Field(ge=1,le=70)
+
+
 class Submission(BaseModel):
     answers: list[Answer] = Field(min_length=1, max_length=70)
     duration_sec: int = Field(default=0, ge=0, le=18000)
@@ -285,6 +289,29 @@ def register(app, authorized, conn, nowstr):
                  correct,len(payload.answers),payload.duration_sec))
         return {"attempt_key":attempt_key,"total":len(payload.answers),"correct":correct,
                 "results":details}
+
+    @app.post("/api/provas/oficiais/{code}/flashcard")
+    def create_card(code:str, payload:CardRequest,_:None=Depends(authorized)):
+        exam=BY_CODE.get(code)
+        if not exam:raise HTTPException(404,"Prova não catalogada.")
+        with conn() as db:
+            row=db.execute("""SELECT question,choices_json,correct_index FROM official_exam_items
+                WHERE exam_code=? AND number=? AND status='verificada'""",
+                (code,payload.number)).fetchone()
+            if not row:raise HTTPException(404,"Questão não disponível.")
+            area="POR" if payload.number<=12 else exam["subject"]
+            topic=db.execute("""SELECT t.id FROM topics t JOIN subjects s ON s.id=t.subject_id
+                   WHERE s.code=? ORDER BY t.id LIMIT 1""",(area,)).fetchone()
+            if not topic:raise HTTPException(503,"Disciplina não está cadastrada.")
+            answer=json.loads(row["choices_json"])[row["correct_index"]]
+            front=exam["contest"]+" / "+exam["role"]+" / Q"+str(payload.number)+": "+row["question"][:900]
+            back="Gabarito definitivo FGV: "+ "ABCDE"[row["correct_index"]]+". "+answer
+            if db.execute("SELECT 1 FROM flashcards WHERE topic_id=? AND front=?",
+                          (topic[0],front)).fetchone():
+                return {"ok":True,"duplicate":True}
+            db.execute("INSERT INTO flashcards(topic_id,front,back,due_at) VALUES (?,?,?,?)",
+                       (topic[0],front,back,nowstr()))
+        return {"ok":True,"duplicate":False}
 
     @app.get("/api/provas/oficiais/{code}/historico")
     def history(code:str,_:None=Depends(authorized)):
