@@ -39,7 +39,7 @@ Os 169 tópicos estão organizados por disciplina e módulos curriculares. Cada 
 
 Inventário validado: 169 aulas, 594 questões ativas e 410 flashcards (contagens no banco em 02/11/2026). 1 aula concluída preservada. As questões criadas para os novos capítulos têm comentários para cada alternativa; não atribuir bancas reais às questões autorais.
 
-Padrão de continuidade: aprofundar os 130 capítulos curtos individualmente e elevar o número de questões autorais por tópico com revisão técnica real. Não preencher páginas com parágrafos repetidos, exercícios genéricos ou trechos de outras aulas apenas para aumentar estatísticas.
+Padrão de continuidade: aprofundar os 121 capítulos curtos individualmente e elevar o número de questões autorais por tópico com revisão técnica real. Não preencher páginas com parágrafos repetidos, exercícios genéricos ou trechos de outras aulas apenas para aumentar estatísticas.
 
 ## Ajuste de navegação e foco didático (02/11/2026, noite)
 A pedido do usuário, a seção visual de **Aprofundamento complementar (opcional)** foi eliminada, pois desviava da aula principal. O conteúdo extra segue versionado no código para eventual pesquisa editorial, mas não é exposto como outro bloco para o aluno. As abas Aprender, Praticar e Revisar permanecem.
