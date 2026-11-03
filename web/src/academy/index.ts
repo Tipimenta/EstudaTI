@@ -8,8 +8,17 @@ import {nineCore} from './nineCore'
 import {coreExpansion1} from './coreExpansion1'
 import {coreExpansion2} from './coreExpansion2'
 import {coreExpansion3} from './coreExpansion3'
+import {completedRED} from './completedRED'
+import {completedSEG} from './completedSEG'
+import {completedSO} from './completedSO'
+import {completedPOR} from './completedPOR'
+import {completedGOV} from './completedGOV'
+import {completedBD} from './completedBD'
+import {completedENG} from './completedENG'
+import {completedLOG} from './completedLOG'
+import {completedLEG} from './completedLEG'
 import type {PedagogicalLesson} from './intro1'
 
 export type {PedagogicalLesson} from './intro1'
-export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3].map(lesson=>[lesson.id,lesson]))
+export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>[lesson.id,lesson]))
 export const academyTotal=Object.keys(academyLessons).length
