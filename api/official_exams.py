@@ -18,6 +18,7 @@ from fastapi import Depends, HTTPException
 from pydantic import BaseModel, Field
 
 from official_exam_parser import extract_exam, extract_definitive_key, fingerprint
+from official_exam_quality import check_question, quarantine_existing
 
 SOURCE_PAGE = "https://conhecimento.fgv.br/concursos/dataprev24"
 KEY_URL = "https://conhecimento.fgv.br/sites/default/files/concursos/dataprev_gabarito_definitivo-1.pdf"
@@ -98,6 +99,7 @@ def setup(db):
           VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(code) DO NOTHING""",
           (e["code"], e["board"], e["contest"], e["role"], e["year"],
            1, PDF_ROOT + e["filename"], KEY_URL))
+    quarantine_existing(db, datetime.now().astimezone().isoformat(timespec='seconds'))
 
 
 def _download(url: str, binary: bool = True):
@@ -161,21 +163,23 @@ def refresh_one(exam, conn, nowstr):
         if present != list(range(1,71)):
             raise ValueError("A sequência de 70 questões não foi identificada integralmente; nenhum item liberado.")
         rows = []
-        blocked = 0
+        blocked_numbers = []
         for q in parsed:
             number = q["number"]
-            if q["status"] != "extraida" or key[number] == "*":
-                blocked += 1
-                continue
             answer = key[number]
             options = q.get("choices") or []
-            if len(options) != 5 or answer not in "ABCDE" or len(q["question"]) < 18:
-                blocked += 1
+            if q["status"] != "extraida" or answer == "*":
+                blocked_numbers.append((number,"Questão anulada no gabarito definitivo." if answer == "*" else q.get("reason","Extração incompleta.")))
+                continue
+            options, reason = check_question(q["question"],options)
+            if reason or answer not in "ABCDE":
+                blocked_numbers.append((number,reason or "Gabarito inconclusivo."))
                 continue
             rows.append((code, number, q["page"], q["question"],
                          json.dumps(options, ensure_ascii=False), "ABCDE".index(answer),
                          fingerprint(q["question"], options), pdf_url, key_url,
-                         "verificada", "Gabarito definitivo oficial: " + answer))
+                         "verificada", "Gabarito definitivo FGV: " + answer))
+        blocked=len(blocked_numbers)
         if len(rows) < 30:
             raise ValueError("Validação insuficiente: menos de 30 questões com texto e gabarito compatíveis.")
         with conn() as db:
@@ -192,6 +196,11 @@ def refresh_one(exam, conn, nowstr):
                   fingerprint=excluded.fingerprint,source_url=excluded.source_url,
                   key_url=excluded.key_url,status=excluded.status,reason=excluded.reason
                 """, row)
+            # Se uma reimportação constatar falha de texto, revoga a liberação
+            # anterior sem apagar a questão nem o histórico do estudante.
+            for number, reason in blocked_numbers:
+                db.execute("""UPDATE official_exam_items SET status='bloqueada',
+                    reason=? WHERE exam_code=? AND number=?""",(reason,code,number))
             db.execute("""UPDATE official_exam_sources SET source_url=?,answer_url=?,
                 last_checked_at=?,state='parcial' ,extracted_count=?,ready_count=?,
                 skipped_count=?,diagnostic=? WHERE code=?""",
@@ -199,10 +208,10 @@ def refresh_one(exam, conn, nowstr):
                 ("Importação pessoal de fonte pública. " +
                  ("Link localizado na página da banca. " if linked_pdf and linked_key
                   else "URLs oficiais confirmados diretamente. ") +
-                 "Questões com figura, texto compartilhado ou anulação foram excluídas.")[:280], code))
+                 "O sistema bloqueia itens anulados, incompletos ou com contexto ausente.")[:280], code))
         return {"ok": True, "exam_code": code, "extracted":len(parsed),
                 "imported":len(rows), "blocked":blocked,
-                "message":"Questões conferidas por número e gabarito definitivo; itens ambíguos não foram liberados."}
+                "message":"Gabarito oficial cruzado automaticamente; textos suspeitos bloqueados. Extração automática não equivale a revisão editorial humana."}
     except (ValueError, requests.RequestException, RuntimeError) as exc:
         reason = str(exc)[:280]
         _record_failure(conn, code, nowstr, reason)
