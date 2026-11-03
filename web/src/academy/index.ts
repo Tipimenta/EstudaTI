@@ -32,7 +32,7 @@ export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries(
  const patch=rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]
  const base={...lesson,...patch}
  const more=patch?undefined:pedagogicalBoosts[lesson.id]
- const card=recallSupplement[lesson.id]
+ const card=patch?undefined:recallSupplement[lesson.id]
  const review=card&&!base.review.some(c=>c.ask===card.ask)?[...base.review,card]:base.review
  const steps=more?base.steps.map((step,i)=>i===1?{...step,body:more+'\n\n'+step.body}:step):base.steps
  return [base.id,{...base,steps,review}]
