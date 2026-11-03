@@ -1,0 +1,380 @@
+[
+  {
+    "topic_id": 21,
+    "question": "O navegador envia uma requisição, mas a resposta do servidor cai antes de chegar ao sistema. Qual afirmação evita uma conclusão incorreta sobre o TCP?",
+    "choices": [
+      "O ACK TCP prova que o cadastro foi salvo.",
+      "A confirmação de transporte não garante o resultado da operação de negócio.",
+      "O TCP criptografa automaticamente os dados da operação.",
+      "Uma retransmissão TCP cria outro usuário no banco."
+    ],
+    "correct_index": 1,
+    "explanation": "ACKs confirmam bytes no transporte; confirmação do cadastro é responsabilidade da aplicação.",
+    "choice_rationales": {
+      "A": "ACK não representa commit do banco ou conclusão da ação do usuário.",
+      "B": "ACKs confirmam bytes no transporte; confirmação do cadastro é responsabilidade da aplicação.",
+      "C": "Criptografia de aplicação depende de mecanismos como TLS.",
+      "D": "Retransmissão de segmentos é tratada pelo transporte; efeitos de negócio dependem da aplicação."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-21-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 23,
+    "question": "Um cliente recebeu DHCPOFFER de um servidor, mas ainda não enviou DHCPREQUEST. Qual é a conclusão correta?",
+    "choices": [
+      "O lease já foi confirmado com DHCPACK.",
+      "O servidor já está atuando como roteador padrão.",
+      "Existe uma oferta, mas a concessão ainda não foi confirmada pela sequência normal.",
+      "O DNS já respondeu ao nome solicitado."
+    ],
+    "correct_index": 2,
+    "explanation": "Offer propõe parâmetros. Request e ACK ainda são necessários na obtenção clássica.",
+    "choice_rationales": {
+      "A": "ACK não foi enviado, então não se pode afirmar confirmação.",
+      "B": "Distribuir parâmetro de gateway não significa rotear pacotes.",
+      "C": "Offer propõe parâmetros. Request e ACK ainda são necessários na obtenção clássica.",
+      "D": "A obtenção do IP não equivale a uma consulta DNS."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-23-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 30,
+    "question": "Uma equipe deseja publicar certificado TLS no servidor. Qual dado precisa permanecer protegido e não deve ser distribuído como parte pública do certificado?",
+    "choices": [
+      "Chave pública",
+      "Nome do host",
+      "Período de validade",
+      "Chave privada correspondente"
+    ],
+    "correct_index": 3,
+    "explanation": "A chave privada correspondente ao certificado deve ficar protegida no servidor.",
+    "choice_rationales": {
+      "A": "A chave pública está prevista para distribuição.",
+      "B": "O nome do serviço é metadado de identificação no certificado.",
+      "C": "O período de validade pode ser conhecido pelo cliente.",
+      "D": "A chave privada correspondente ao certificado deve ficar protegida no servidor."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-30-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 33,
+    "question": "A direção define responsáveis pela aceitação de riscos e exige avaliação de fornecedores, mas ainda não instalou nenhum controle técnico. Qual função do CSF 2.0 melhor descreve essa atividade?",
+    "choices": [
+      "Governar",
+      "Detectar",
+      "Recuperar",
+      "Responder"
+    ],
+    "correct_index": 0,
+    "explanation": "A definição de responsabilidades, políticas, estratégia e supervisão pertence a Governar.",
+    "choice_rationales": {
+      "A": "A definição de responsabilidades, políticas, estratégia e supervisão pertence a Governar.",
+      "B": "Detectar corresponde à identificação de eventos e atividades suspeitas.",
+      "C": "Recuperar envolve restabelecer capacidades após incidentes.",
+      "D": "Responder envolve tratar incidentes identificados."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-33-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 37,
+    "question": "Um serviço systemd foi configurado com 'enable', mas não está ativo agora. Qual é a interpretação mais adequada?",
+    "choices": [
+      "Enable necessariamente inicia o processo naquele momento.",
+      "Enable configura a inicialização automática, mas não substitui iniciar a unidade agora.",
+      "Enable significa apagar os registros do serviço.",
+      "Enable demonstra que a porta TCP está em escuta."
+    ],
+    "correct_index": 1,
+    "explanation": "Enable controla a habilitação para inicialização apropriada; start inicia serviço no momento.",
+    "choice_rationales": {
+      "A": "O início imediato normalmente usa start, não apenas enable.",
+      "B": "Enable controla a habilitação para inicialização apropriada; start inicia serviço no momento.",
+      "C": "Limpeza de logs não é a função de enable.",
+      "D": "Estado da porta deve ser consultado por ferramenta adequada."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-37-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 38,
+    "question": "Um administrador vincula uma configuração de computador à OU dos usuários, enquanto as contas de computador estão em outra OU. Qual hipótese merece investigação?",
+    "choices": [
+      "Falha obrigatória na criptografia TLS.",
+      "Inexistência de banco SQL.",
+      "A porta 80 do proxy.",
+      "Escopo e vínculo da GPO em relação aos objetos de computador."
+    ],
+    "correct_index": 3,
+    "explanation": "Configurações de computador dependem do escopo aplicável às contas de computador, além de filtros e herança.",
+    "choice_rationales": {
+      "A": "TLS não determina o vínculo da política no AD.",
+      "B": "Banco relacional não é requisito para escopo de GPO.",
+      "C": "Proxy HTTP não define objetos atingidos por GPO.",
+      "D": "Configurações de computador dependem do escopo aplicável às contas de computador, além de filtros e herança."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-38-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 44,
+    "question": "Em qual alternativa a concordância com o verbo principal foi aplicada corretamente?",
+    "choices": [
+      "Devem haver muitos chamados em aberto.",
+      "Fazem dois anos que a equipe foi formada.",
+      "Devem existir novas soluções para o problema.",
+      "Houveram cinco solicitações urgentes."
+    ],
+    "correct_index": 2,
+    "explanation": "Existir é verbo pessoal e concorda com o sujeito plural 'novas soluções'.",
+    "choice_rationales": {
+      "A": "Haver existencial é impessoal: deve haver.",
+      "B": "Fazer indicando tempo decorrido fica singular: faz dois anos.",
+      "C": "Existir é verbo pessoal e concorda com o sujeito plural 'novas soluções'.",
+      "D": "Haver com sentido de existir fica singular: houve."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-44-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 46,
+    "question": "Leia: 'Coordenadora, confirme os relatórios.' Por que a vírgula está adequada?",
+    "choices": [
+      "Isola o vocativo, que chama a interlocutora.",
+      "Separa sujeito e verbo, conforme regra geral.",
+      "Separa o objeto direto do verbo.",
+      "Transforma a ordem em período composto."
+    ],
+    "correct_index": 0,
+    "explanation": "'Coordenadora' é chamamento direto (vocativo), portanto pode ser isolado por vírgula.",
+    "choice_rationales": {
+      "A": "'Coordenadora' é chamamento direto (vocativo), portanto pode ser isolado por vírgula.",
+      "B": "O vocativo não é sujeito do imperativo nessa construção.",
+      "C": "'Os relatórios' é objeto do verbo confirmar.",
+      "D": "Não há duas orações independentes nessa frase."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-46-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 53,
+    "question": "No COBIT 2019, uma equipe constrói e coloca em operação uma solução tecnológica conforme projeto aprovado. Qual domínio de gestão está mais ligado à implantação?",
+    "choices": [
+      "EDM",
+      "BAI",
+      "MEA",
+      "DSS"
+    ],
+    "correct_index": 1,
+    "explanation": "BAI é Build, Acquire and Implement, associado à construção, aquisição e implantação.",
+    "choice_rationales": {
+      "A": "EDM é governança — avaliar, direcionar e monitorar.",
+      "B": "BAI é Build, Acquire and Implement, associado à construção, aquisição e implantação.",
+      "C": "MEA trata de monitoramento e avaliação de resultados e conformidade.",
+      "D": "DSS trata principalmente da operação, entrega e suporte de serviços."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-53-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 55,
+    "question": "Uma instituição quer melhorar a experiência de atendimento. Qual indicador revela diretamente um benefício para o cidadão?",
+    "choices": [
+      "Número de computadores novos comprados.",
+      "Quantidade de reuniões de projeto.",
+      "Total de páginas do PDTI.",
+      "Redução do tempo médio de espera do cidadão."
+    ],
+    "correct_index": 3,
+    "explanation": "O tempo de espera mede efeito percebido pelo usuário, mais diretamente do que entregas ou atividades internas.",
+    "choice_rationales": {
+      "A": "Compra de hardware é insumo ou entrega, não resultado por si.",
+      "B": "Reuniões representam esforço administrativo.",
+      "C": "O tamanho do plano não demonstra melhoria no serviço.",
+      "D": "O tempo de espera mede efeito percebido pelo usuário, mais diretamente do que entregas ou atividades internas."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-55-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 62,
+    "question": "Duas transações estão abertas. T1 lê o saldo 200. T2 altera para 250 e confirma. T1 lê 250. Qual fenômeno é descrito?",
+    "choices": [
+      "Leitura suja obrigatória",
+      "Atomicidade",
+      "Leitura não repetível",
+      "Falha de DNS"
+    ],
+    "correct_index": 2,
+    "explanation": "O mesmo dado foi lido duas vezes com valores confirmados diferentes; é leitura não repetível.",
+    "choice_rationales": {
+      "A": "O valor 250 foi confirmado, logo não é leitura suja.",
+      "B": "Atomicidade descreve tudo ou nada do resultado transacional.",
+      "C": "O mesmo dado foi lido duas vezes com valores confirmados diferentes; é leitura não repetível.",
+      "D": "Não há resolução de nomes no cenário."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-62-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 63,
+    "question": "Uma relação usa chave composta (pedido_id, produto_id), mas possui o campo nome_produto, que depende somente de produto_id. Qual análise é adequada?",
+    "choices": [
+      "Há dependência parcial relevante à 2FN.",
+      "Todo atributo depende exclusivamente do par completo.",
+      "É automaticamente uma violação de DNS.",
+      "A relação não pode ter chave primária."
+    ],
+    "correct_index": 0,
+    "explanation": "nome_produto depende de parte da chave composta; isso indica problema para 2FN na situação usual.",
+    "choice_rationales": {
+      "A": "nome_produto depende de parte da chave composta; isso indica problema para 2FN na situação usual.",
+      "B": "A dependência de nome_produto não exige pedido_id.",
+      "C": "DNS não é conceito de normalização relacional.",
+      "D": "A tabela pode ter chave composta válida e ainda estar desnormalizada."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-63-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 71,
+    "question": "Uma API recebe PUT /itens/8 com a mesma representação completa três vezes. Qual característica decorre da semântica esperada de PUT?",
+    "choices": [
+      "Toda repetição deve gerar outro identificador.",
+      "PUT é inseguro porque faz criptografia.",
+      "Respostas HTTP precisam ser idênticas em todas as tentativas.",
+      "O efeito pretendido das requisições idênticas é idempotente."
+    ],
+    "correct_index": 3,
+    "explanation": "PUT possui semântica idempotente: repetir a representação desejada mantém o mesmo estado pretendido.",
+    "choice_rationales": {
+      "A": "Criação de novos IDs a cada tentativa não é a semântica esperada de PUT.",
+      "B": "Criptografia não explica a semântica do método HTTP.",
+      "C": "Idempotência trata efeito no estado, não igualdade de todas as respostas.",
+      "D": "PUT possui semântica idempotente: repetir a representação desejada mantém o mesmo estado pretendido."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-71-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 72,
+    "question": "Um aplicativo apresenta JWT assinado, mas sem criptografia de conteúdo. Qual afirmação é correta?",
+    "choices": [
+      "A assinatura esconde automaticamente todo o payload.",
+      "O payload pode ser legível, e a assinatura serve para verificar integridade/autenticidade.",
+      "JWT assinado autoriza qualquer rota da aplicação.",
+      "O token nunca precisa de validação de expiração."
+    ],
+    "correct_index": 1,
+    "explanation": "Assinatura permite validar integridade/autenticidade; não torna o conteúdo confidencial por si.",
+    "choice_rationales": {
+      "A": "Assinatura não é a mesma coisa que cifra.",
+      "B": "Assinatura permite validar integridade/autenticidade; não torna o conteúdo confidencial por si.",
+      "C": "A autorização deve ser validada para cada ação/recurso.",
+      "D": "Tokens devem ser validados segundo parâmetros como expiração e audiência."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-72-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 77,
+    "question": "Qual negação formal de 'Todo técnico que administra o domínio possui MFA' está correta?",
+    "choices": [
+      "Nenhum técnico possui MFA.",
+      "Todos os técnicos não administram o domínio.",
+      "Existe ao menos um técnico que administra o domínio e não possui MFA.",
+      "Existe ao menos um técnico que não administra domínio e não possui MFA."
+    ],
+    "correct_index": 2,
+    "explanation": "Para negar todo A é B, basta existir um elemento que seja A e não B.",
+    "choice_rationales": {
+      "A": "Nenhum com MFA é uma condição mais forte do que a negação requerida.",
+      "B": "Isso não produz um contraexemplo dentro dos administradores de domínio.",
+      "C": "Para negar todo A é B, basta existir um elemento que seja A e não B.",
+      "D": "Um técnico fora do grupo A não contradiz a proposição original."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-77-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 80,
+    "question": "Em uma turma de 40 pessoas, 24 estudam Redes, 19 estudam SQL e 7 estudam ambas. Quantas não estudam nenhuma das duas?",
+    "choices": [
+      "4",
+      "7",
+      "12",
+      "36"
+    ],
+    "correct_index": 0,
+    "explanation": "Pelo menos uma = 24 + 19 − 7 = 36. Nenhuma = 40 − 36 = 4.",
+    "choice_rationales": {
+      "A": "Pelo menos uma = 24 + 19 − 7 = 36. Nenhuma = 40 − 36 = 4.",
+      "B": "7 é o número da interseção, não o complemento.",
+      "C": "12 não é o resultado dessa união e universo.",
+      "D": "36 estudam pelo menos uma, não nenhuma."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-80-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 85,
+    "question": "Uma paciente solicita exclusão imediata de todos os registros clínicos, mas a instituição possui obrigações legais de conservação. Qual avaliação é correta?",
+    "choices": [
+      "Toda solicitação exige exclusão imediata sem verificar exceções.",
+      "O titular nunca pode solicitar informações sobre seus próprios dados.",
+      "A LGPD não alcança dados de saúde.",
+      "O pedido deve ser avaliado segundo base legal, finalidade e hipóteses de retenção."
+    ],
+    "correct_index": 3,
+    "explanation": "Direitos do titular coexistem com hipóteses legais de conservação; é necessária análise das finalidades e das normas aplicáveis.",
+    "choice_rationales": {
+      "A": "A lei prevê condições e hipóteses de conservação.",
+      "B": "O direito de acesso e outros direitos estão previstos na LGPD.",
+      "C": "Dados de saúde são dados pessoais sensíveis.",
+      "D": "Direitos do titular coexistem com hipóteses legais de conservação; é necessária análise das finalidades e das normas aplicáveis."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-85-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 86,
+    "question": "Na sequência geral do art. 17 da Lei 14.133/2021, qual fase vem depois do julgamento?",
+    "choices": [
+      "Elaboração do PDTI",
+      "Habilitação",
+      "Divulgação do edital",
+      "Preparatória"
+    ],
+    "correct_index": 1,
+    "explanation": "Na ordem geral, julgamento é seguido por habilitação, admitindo-se inversão motivada nas condições legais.",
+    "choice_rationales": {
+      "A": "PDTI não é fase do processo licitatório.",
+      "B": "Na ordem geral, julgamento é seguido por habilitação, admitindo-se inversão motivada nas condições legais.",
+      "C": "Divulgação do edital ocorre anteriormente.",
+      "D": "Fase preparatória inicia o processo."
+    },
+    "fingerprint": "estudati-aulas-editoriais-20261102-86-01",
+    "origin": "autoral",
+    "review_status": "revisada"
+  }
+]
