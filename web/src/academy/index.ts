@@ -19,14 +19,19 @@ import {completedLOG} from './completedLOG'
 import {completedLEG} from './completedLEG'
 import {pedagogicalBoosts} from './pedagogicalBoosts'
 import {recallSupplement} from './recallSupplement'
+import {rewrittenInfrastructure} from './rewrittenInfrastructure'
+import {rewrittenFoundations} from './rewrittenFoundations'
+import {rewrittenPractice} from './rewrittenPractice'
 import type {PedagogicalLesson} from './intro1'
 
 export type {PedagogicalLesson} from './intro1'
 export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>{
- const more=pedagogicalBoosts[lesson.id]
+ const patch=rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]
+ const base={...lesson,...patch}
+ const more=patch?undefined:pedagogicalBoosts[lesson.id]
  const card=recallSupplement[lesson.id]
- const review=card&&!lesson.review.some(c=>c.ask===card.ask)?[...lesson.review,card]:lesson.review
- const steps=more?lesson.steps.map((step,i)=>i===1?{...step,body:more+'\n\n'+step.body}:step):lesson.steps
- return [lesson.id,{...lesson,steps,review}]
+ const review=card&&!base.review.some(c=>c.ask===card.ask)?[...base.review,card]:base.review
+ const steps=more?base.steps.map((step,i)=>i===1?{...step,body:more+'\n\n'+step.body}:step):base.steps
+ return [base.id,{...base,steps,review}]
 }))
 export const academyTotal=Object.keys(academyLessons).length
