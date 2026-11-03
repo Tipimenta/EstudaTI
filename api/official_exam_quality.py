@@ -8,8 +8,12 @@ from __future__ import annotations
 
 import json
 import re
+import hashlib
 
-from official_exam_parser import fingerprint
+
+def fingerprint(question, choices):
+    data=' '.join(question.casefold().split())+'\n'+'\n'.join(' '.join(x.casefold().split()) for x in choices)
+    return hashlib.sha256(data.encode('utf-8')).hexdigest()
 
 # Cabeçalhos/rodapés e textos introdutórios da PRÓXIMA questão que podem ser
 # anexados à última alternativa por ordenação das colunas no PDF FGV.
