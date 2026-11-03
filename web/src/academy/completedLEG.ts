@@ -339,7 +339,7 @@ export const completedLEG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Uma clínica precisa de fundamento legal para processar dados de saúde e controles de acesso proporcionais ao risco.\n\n**Questão:** Um órgão trata dados pessoais para executar política pública com competência legal. Qual afirmação sobre bases legais é correta?\n\n**Resposta:** Consentimento não é a única hipótese, e a finalidade pública precisa ser justificada.\n\n**Explicação:** A LGPD prevê bases e regras próprias de tratamento pelo poder público; finalidade, necessidade e transparência permanecem importantes.\n\n**Cuidado:** Não confunda “dado público” com autorização irrestrita para qualquer tratamento."
+        "body": "Uma clínica precisa de fundamento legal para processar dados de saúde e controles de acesso proporcionais ao risco.\n\n**Um segundo cenário para entender:** Um órgão trata dados pessoais para executar política pública prevista em lei. Qual obrigação permanece?\n\n**A regra aplicada:** Regras de tratamento pelo poder público incluem finalidade e princípios de proteção de dados.\n\n**Resultado explicado:** Respeitar finalidade, necessidade e segurança conforme o tratamento.\n\n**Cuidado:** Não confunda “dado público” com autorização irrestrita para qualquer tratamento."
       }
     ],
     "worked": {
@@ -377,7 +377,7 @@ export const completedLEG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Uma empresa terceirizada que hospeda o RIS sob instruções da clínica pode atuar como operadora no contexto, enquanto a clínica decide finalidade e meios essenciais.\n\n**Questão:** Quem determina finalidades e meios essenciais de tratamento de dados pessoais?\n\n**Resposta:** Controlador.\n\n**Explicação:** Controlador determina decisões do tratamento.\n\n**Cuidado:** Uma mesma organização pode ter papéis diferentes em tratamentos diferentes."
+        "body": "Uma empresa terceirizada que hospeda o RIS sob instruções da clínica pode atuar como operadora no contexto, enquanto a clínica decide finalidade e meios essenciais.\n\n**Um segundo cenário para entender:** Um fornecedor inicialmente trata dados sob instruções, mas decide sozinho reutilizá-los para marketing próprio. O que isso implica?\n\n**A regra aplicada:** Definir finalidade própria pode atribuir papel de controlador naquela operação, independentemente do papel em outras.\n\n**Resultado explicado:** A operação própria exige avaliar se ele atua como controlador nessa finalidade.\n\n**Cuidado:** Uma mesma organização pode ter papéis diferentes em tratamentos diferentes."
       }
     ],
     "worked": {
@@ -415,7 +415,7 @@ export const completedLEG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Para adquirir uma solução de backup, inclua requisitos de restauração testável, retenção, RPO/RTO e critérios de validação técnica.\n\n**Questão:** Uma contratação de serviço de TI foi realizada e o órgão precisa acompanhar cumprimento das obrigações. Que função é essencial?\n\n**Resposta:** Fiscalização/gestão contratual com registro de ocorrências.\n\n**Explicação:** Acompanhamento e fiscalização verificam execução conforme contrato, com registros e providências quando necessário.\n\n**Cuidado:** Elaborar TR não autoriza direcionamento indevido a marca sem justificativa legal adequada."
+        "body": "Para adquirir uma solução de backup, inclua requisitos de restauração testável, retenção, RPO/RTO e critérios de validação técnica.\n\n**Um segundo cenário para entender:** Durante execução de contrato de backup, o fiscal recebe nota fiscal, mas não há prova de restauração. Qual conduta é mais coerente?\n\n**A regra aplicada:** A fiscalização deve conferir execução conforme requisitos e critérios de aceite pactuados.\n\n**Resultado explicado:** Comparar obrigações contratuais a evidências de backup e testes previstos.\n\n**Cuidado:** Elaborar TR não autoriza direcionamento indevido a marca sem justificativa legal adequada."
       }
     ],
     "worked": {
@@ -453,7 +453,7 @@ export const completedLEG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Portal de Transparência pode divulgar valores de contratos e remunerações em condições legais; prontuários médicos permanecem sujeitos à proteção especial.\n\n**Questão:** Um pedido de acesso versa sobre gasto público, mas documento anexo contém dados pessoais não necessários à resposta. Qual conduta inicial é razoável?\n\n**Resposta:** Examinar acesso ao gasto e proteger dados pessoais dispensáveis.\n\n**Explicação:** Deve-se equilibrar transparência de gastos com preservação de dados pessoais e avaliar formas de acesso parcial.\n\n**Cuidado:** Sigilo, classificação e dado pessoal são categorias relacionadas, mas distintas."
+        "body": "Portal de Transparência pode divulgar valores de contratos e remunerações em condições legais; prontuários médicos permanecem sujeitos à proteção especial.\n\n**Um segundo cenário para entender:** Um processo de compra pública contém valores de aquisição e dados de saúde desnecessários ao pedido. Qual medida pode conciliar LAI e proteção de dados?\n\n**A regra aplicada:** A análise pode permitir acesso parcial mantendo restrições legítimas a dados pessoais.\n\n**Resultado explicado:** Avaliar disponibilização das informações públicas com proteção dos trechos pessoais.\n\n**Cuidado:** Sigilo, classificação e dado pessoal são categorias relacionadas, mas distintas."
       }
     ],
     "worked": {
