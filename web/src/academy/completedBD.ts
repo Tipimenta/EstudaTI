@@ -339,7 +339,7 @@ export const completedBD:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Transferir saldo envolve debitar uma conta e creditar outra dentro da mesma transação com validações apropriadas.\n\n**Questão:** Qual propriedade ACID exige que alterações confirmadas sobrevivam a falhas cobertas pelas garantias de persistência?\n\n**Resposta:** Durabilidade.\n\n**Explicação:** Durabilidade protege as alterações após commit.\n\n**Cuidado:** Não confunda consistência de ACID com consenso absoluto de dados distribuídos; são conceitos distintos."
+        "body": "Transferir saldo envolve debitar uma conta e creditar outra dentro da mesma transação com validações apropriadas.\n\n**Um segundo cenário para entender:** Uma transação T1 lê saldo de R$ 200. T2 altera para R$ 250 e confirma. T1 lê novamente R$ 250. Qual fenômeno pode estar presente?\n\n**A regra aplicada:** Duas leituras do mesmo dado pela mesma transação observaram valores diferentes após commit de outra.\n\n**Resultado explicado:** Leitura não repetível.\n\n**Cuidado:** Não confunda consistência de ACID com consenso absoluto de dados distribuídos; são conceitos distintos."
       }
     ],
     "worked": {
@@ -377,7 +377,7 @@ export const completedBD:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Uma consulta por CPF em tabela grande pode se beneficiar de índice apropriado, desde que o plano e a distribuição de dados justifiquem.\n\n**Questão:** Qual ferramenta PostgreSQL permite inspecionar plano de execução estimado?\n\n**Resposta:** EXPLAIN.\n\n**Explicação:** EXPLAIN exibe estimativas e passos do plano escolhido.\n\n**Cuidado:** Mais índices nem sempre significa sistema mais rápido; INSERT/UPDATE/DELETE também os atualizam."
+        "body": "Uma consulta por CPF em tabela grande pode se beneficiar de índice apropriado, desde que o plano e a distribuição de dados justifiquem.\n\n**Um segundo cenário para entender:** Em uma tabela com milhões de registros, uma coluna apresenta poucos valores distintos. Qual afirmação sobre criar índice nessa coluna é correta?\n\n**A regra aplicada:** Índices pouco seletivos podem não compensar seu custo; o otimizador considera distribuição e plano.\n\n**Resultado explicado:** A seletividade e o plano podem reduzir o benefício desse índice.\n\n**Cuidado:** Mais índices nem sempre significa sistema mais rápido; INSERT/UPDATE/DELETE também os atualizam."
       }
     ],
     "worked": {
@@ -415,7 +415,7 @@ export const completedBD:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Guardar nome e telefone do paciente repetidos em cada exame pode criar inconsistência; separar paciente e exame com chave estrangeira reduz repetição.\n\n**Questão:** Uma relação está na 1FN, mas um atributo não-primo depende apenas de parte de uma chave candidata composta. Qual forma normal é violada?\n\n**Resposta:** 2FN.\n\n**Explicação:** A 2FN requer ausência de dependência parcial de atributo não-primo em relação a chave candidata composta.\n\n**Cuidado:** Evite memorizar formas normais sem estudar dependência funcional e chave."
+        "body": "Guardar nome e telefone do paciente repetidos em cada exame pode criar inconsistência; separar paciente e exame com chave estrangeira reduz repetição.\n\n**Um segundo cenário para entender:** Uma tabela com chave composta (pedido_id, produto_id) contém nome_pedido dependente apenas de pedido_id. Qual problema de normalização aparece?\n\n**A regra aplicada:** O atributo não-primo depende apenas de parte da chave composta.\n\n**Resultado explicado:** Dependência parcial relevante para a 2FN.\n\n**Cuidado:** Evite memorizar formas normais sem estudar dependência funcional e chave."
       }
     ],
     "worked": {
@@ -453,7 +453,7 @@ export const completedBD:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Para listar todos os pacientes, inclusive sem exames, a consulta pode partir de pacientes com LEFT JOIN exames.\n\n**Questão:** Uma consulta JOIN entre pedidos e itens retorna o valor total de um pedido repetido em cada linha de item. Qual cuidado é necessário antes de somar?\n\n**Resposta:** Controlar granularidade para evitar dupla contagem.\n\n**Explicação:** Junção 1:N multiplica linhas da entidade pai, o que pode duplicar agregações se não houver pré-agregação/estratégia apropriada.\n\n**Cuidado:** Adicionar condição da tabela da direita ao WHERE pode tornar um LEFT JOIN equivalente a INNER JOIN naquele filtro."
+        "body": "Para listar todos os pacientes, inclusive sem exames, a consulta pode partir de pacientes com LEFT JOIN exames.\n\n**Um segundo cenário para entender:** Uma consulta associa uma venda de R$ 100 aos seus três itens e soma o campo valor_total da venda após JOIN. Qual risco existe?\n\n**A regra aplicada:** O valor da linha pai é repetido a cada item na junção 1:N, exigindo cuidado na agregação.\n\n**Resultado explicado:** Contar R$ 300 em vez de R$ 100.\n\n**Cuidado:** Adicionar condição da tabela da direita ao WHERE pode tornar um LEFT JOIN equivalente a INNER JOIN naquele filtro."
       }
     ],
     "worked": {
