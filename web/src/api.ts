@@ -13,7 +13,7 @@ export type QuizQuestion={id:number,topic_id:number,question:string,choices:stri
 export type QuizResult={attempt_id:number,correct:number,total:number,results:{question_id:number,question:string,correct:boolean,your_choice:number,correct_index:number,choices:string[],explanation:string,choice_rationales:Record<string,string>}[]}
 export type Contest={id:number,name:string,position:string,location:string,salary:number|null,registration_deadline:string|null,url:string,notes:string,last_checked_at:string|null,changed:number,last_error:string|null,active:number,priority:number,verified_at:string|null}
 export type Dashboard={minutes_today:number,minutes_week:number,cards_due:number,question_count:number,quizzes_completed:number,quiz_accuracy:number,daily_goal:number,recent_quizzes:{id:number,created_at:string,count:number,correct:number}[],next_plan:Plan[]}
-export type Progress={subjects:{id:number,name:string,category:string,minutes:number,answers:number,accuracy:number}[],days:{day:string,minutes:number}[]}
+export type Progress={subjects:{id:number,name:string,category:string,minutes:number,answers:number,accuracy:number}[],days:{day:string,minutes:number}[],official_exams?:{attempts:number,answered:number,correct:number,accuracy:number}}
 
 export type StudyLesson = {id:number;subject_id:number;title:string;objective:string;minutes:number;subject:string;code:string;completed:number;notes:string;track:string;module_order:number}
 export type StudyLessonDetail = StudyLesson & {content:string;questions:{id:number;question:string;choices:string[]}[];source_url:string;source_label:string}
