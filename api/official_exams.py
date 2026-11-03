@@ -147,16 +147,19 @@ def _record_failure(conn, code, nowstr, message):
 def refresh_one(exam, conn, nowstr):
     code = exam["code"]
     try:
-        pdf_url, key_url, linked_pdf, linked_key = _discover(exam)
+        try:
+            pdf_url, key_url, linked_pdf, linked_key = _discover(exam)
+        except (ValueError, requests.RequestException):
+            # A página HTML pode estar indisponível mesmo com os PDFs oficiais
+            # acessíveis. Usar somente as URLs previamente confirmadas.
+            pdf_url, key_url, linked_pdf, linked_key = PDF_ROOT + exam["filename"], KEY_URL, False, False
         pdf_data = _download(pdf_url)
         key_data = _download(key_url)
         key = extract_definitive_key(key_data, exam["fragment"], 1)
         parsed = extract_exam(pdf_data)
-        if len(parsed) < 45:
-            raise ValueError("Extração incompleta: menos de 45 marcadores de questões. Nenhuma prova liberada.")
-        present = {q["number"] for q in parsed}
-        if len(present) < 45 or len(present) != len(parsed):
-            raise ValueError("Sequência duplicada ou incompleta do caderno. Nenhuma prova liberada.")
+        present = [q["number"] for q in parsed]
+        if present != list(range(1,71)):
+            raise ValueError("A sequência de 70 questões não foi identificada integralmente; nenhum item liberado.")
         rows = []
         blocked = 0
         for q in parsed:
