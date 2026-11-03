@@ -64,7 +64,7 @@ export const rewrittenPractice:Record<number,Partial<PedagogicalLesson>>={
       },
       {
         "title": "Negar existe é afirmar nenhum",
-        "body": "A frase **'Algum servidor está indisponível'** é verdadeira se pelo menos um servidor estiver indisponível. Sua negação precisa eliminar toda possibilidade: **'Nenhum servidor está indisponível'**, equivalente a 'Todos os servidores estão disponíveis'.\n\nEm símbolos, negar ∃x P(x) produz ∀x ¬P(x). Cuidado com 'alguns' em linguagem cotidiana: numa prova de lógica, quando usado como quantificador existencial, significa ao menos um e **não obriga que existam vários**."
+        "body": "A frase **'Algum servidor está indisponível'** é verdadeira se pelo menos um servidor estiver indisponível. Sua negação precisa eliminar toda possibilidade: **'Nenhum servidor está indisponível'**, equivalente a 'Todos os servidores estão disponíveis'.\n\nEm símbolos, negar ∃x P(x) produz ∀x ¬P(x). Cuidado com 'alguns' em linguagem cotidiana: numa prova de lógica, quando usado como quantificador existencial, significa ao menos um e **não obriga que existam vários**.\n\n**Verificação rápida com três casos.** Se três técnicos estão no domínio e só dois utilizam MFA, a frase “Todos os técnicos do domínio utilizam MFA” é falsa mesmo que a maioria cumpra a regra: o terceiro técnico é um contraexemplo suficiente. Por outro lado, “Existe técnico do domínio sem MFA” é verdadeira nesse cenário. Para negar uma frase, não é necessário saber a porcentagem de pessoas que atende à condição; basta identificar qual situação torna a afirmação original falsa."
       },
       {
         "title": "Condicionais dentro de quantificadores",
