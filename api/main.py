@@ -807,7 +807,15 @@ def progress(_=Depends(authorized)):
           FROM subjects s ORDER BY s.id'''))
         weekly=jrows(db.execute('''SELECT substr(created_at,1,10) day,SUM(minutes) minutes
           FROM sessions GROUP BY substr(created_at,1,10) ORDER BY day DESC LIMIT 14'''))
-        return {'subjects':items,'days':weekly}
+        off=db.execute("""SELECT COUNT(*) attempts,
+            COALESCE(SUM(total),0) answered,
+            COALESCE(SUM(correct_count),0) correct
+            FROM official_exam_attempts""").fetchone()
+        answered=off['answered']
+        return {'subjects':items,'days':weekly,
+                'official_exams':{'attempts':off['attempts'],
+                                  'answered':answered,'correct':off['correct'],
+                                  'accuracy':round(100*off['correct']/answered,1) if answered else 0}}
 
 
 class ContestUpdate(BaseModel):
@@ -942,9 +950,9 @@ def save_settings(body:SettingsPayload,_=Depends(authorized)):
 @app.get('/api/export')
 def export_data(_=Depends(authorized)):
     with conn() as db:
-        tables=('subjects','topics','flashcards','questions','quiz_attempts','quiz_answers','sessions','plan_items','contests','settings','lesson_progress','lesson_meta','subject_weights','question_reviews','recall_checks','discursive_questions','discursive_attempts','syllabus_items','question_quality','question_audit')
+        tables=('subjects','topics','flashcards','questions','quiz_attempts','quiz_answers','sessions','plan_items','contests','settings','lesson_progress','lesson_meta','subject_weights','question_reviews','recall_checks','discursive_questions','discursive_attempts','syllabus_items','question_quality','question_audit','official_exam_sources','official_exam_items','official_exam_attempts','official_exam_repairs')
         data={t:jrows(db.execute('SELECT * FROM '+t)) for t in tables}
-    return {'exported_at':nowstr(),'version':'1.3.0','data':data}
+    return {'exported_at':nowstr(),'version':'1.4.0','data':data}
 
 
 @app.get('/api/resources')
