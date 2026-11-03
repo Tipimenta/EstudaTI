@@ -72,37 +72,47 @@ function RichText({content}:{content:string}){
  })}</article>
 }
 function cleanTitle(title:string){return title.replace(/^\[(Aprofundamento|Oficina)\]\s*/i,'')}
-function LessonSteps({active,total,onChange}:{active:number;total:number;onChange:(n:number)=>void}){
- return <div className="mt-6 flex items-center justify-between gap-3 border-t border-white/10 pt-5"><button disabled={active===0} className="btn btn-outline text-xs" onClick={()=>onChange(Math.max(0,active-1))}><ArrowLeft size={15}/> Voltar</button><span className="text-xs font-semibold text-slate-300">{active+1} / {total}</span><button disabled={active===total-1} className="btn btn-primary text-xs" onClick={()=>{onChange(Math.min(total-1,active+1));document.querySelector('#etapa-da-aula')?.scrollIntoView({behavior:'smooth',block:'start'})}}>Continuar <ArrowRight size={15}/></button></div>
+function LessonSteps({active,total,onChange,onPractice}:{active:number;total:number;onChange:(n:number)=>void;onPractice:()=>void}){
+ const last=active===total-1
+ function next(){if(last){onPractice();return}onChange(active+1);requestAnimationFrame(()=>document.getElementById('etapa-da-aula')?.scrollIntoView({behavior:'smooth',block:'start'}))}
+ function back(){if(active>0){onChange(active-1);requestAnimationFrame(()=>document.getElementById('etapa-da-aula')?.scrollIntoView({behavior:'smooth',block:'start'}))}}
+ return <div className="mt-6 flex items-center justify-between gap-2 border-t border-white/10 pt-5">
+  <button disabled={active===0} className="btn btn-outline text-sm" onClick={back}><ArrowLeft size={15}/> Voltar</button>
+  <span className="shrink-0 text-xs font-semibold text-slate-400">{active+1} de {total}</span>
+  <button className="btn btn-primary text-sm" onClick={next}>{last?'Resolver questões':'Continuar'} <ArrowRight size={15}/></button>
+ </div>
 }
-function AcademyLesson({lesson}:{lesson:PedagogicalLesson}){
+function AcademyLesson({lesson,onPractice}:{lesson:PedagogicalLesson;onPractice:()=>void}){
  const [active,setActive]=useState(0)
  const total=lesson.steps.length+2
  const step=lesson.steps[active]
  return <div id="etapa-da-aula" className="scroll-mt-28 space-y-5">
-  <div className="rounded-2xl border border-emerald-400/15 bg-emerald-400/5 p-5"><p className="text-xs font-bold uppercase tracking-wider text-emerald-300">Leitura guiada · Aula revisada</p><h3 className="mt-2 text-lg font-bold text-white">{lesson.title}</h3><p className="mt-2 text-sm leading-6 text-slate-200">{lesson.goal}</p><div className="bartrack mt-4 h-1.5"><div className="barfill" style={{width:((active+1)/total*100)+'%'}}/></div></div>
-  <section className="rounded-2xl border border-white/10 bg-white/[.025] p-5 sm:p-7">
-   {step?<><p className="mb-2 text-xs font-bold uppercase tracking-widest text-sky-300">PARTE {active+1} · ENTENDA</p><h3 className="mb-5 text-xl font-bold leading-8 text-white">{step.title}</h3><RichText content={step.body}/></>:active===lesson.steps.length?<><p className="mb-2 text-xs font-bold uppercase text-sky-300">VEJA NA PRÁTICA</p><h3 className="mb-5 text-xl font-bold text-white">{lesson.worked.title}</h3><RichText content={lesson.worked.body}/></>:<><h3 className="mb-4 text-xl font-bold text-amber-100">Cuidado com as pegadinhas</h3><ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-slate-200">{lesson.pitfalls.map((x,i)=><li key={i}>{x}</li>)}</ul><p className="mt-5 text-sm leading-6 text-emerald-200">Você terminou a explicação. Agora resolva as questões e depois revise os flashcards.</p></>}
-   <LessonSteps active={active} total={total} onChange={setActive}/>
+  <div className="flex items-center gap-3 text-xs font-semibold text-slate-300">
+   <span>Etapa {active+1} de {total}</span><div className="bartrack h-1.5 flex-1"><div className="barfill" style={{width:((active+1)/total*100)+'%'}}/></div>
+  </div>
+  <section className="rounded-2xl border border-white/10 bg-white/[.025] p-4 sm:p-7">
+   {step?<><h3 className="mb-5 text-xl font-bold leading-8 text-white">{step.title.replace(/^\d+\.\s*/,'')}</h3><RichText content={step.body}/></>:active===lesson.steps.length?<><p className="mb-2 text-xs font-bold uppercase tracking-wide text-sky-300">Exemplo resolvido, passo a passo</p><h3 className="mb-5 text-xl font-bold text-white">{lesson.worked.title}</h3><RichText content={lesson.worked.body}/></>:<><h3 className="mb-4 text-xl font-bold text-white">O que não confundir na prova</h3><ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-slate-200">{lesson.pitfalls.map((x,i)=><li key={i}>{x}</li>)}</ul><p className="mt-5 text-sm leading-6 text-emerald-200">Terminou a explicação? Agora pratique com as questões desta aula.</p></>}
+   <LessonSteps active={active} total={total} onChange={setActive} onPractice={onPractice}/>
   </section>
-  <details className="rounded-xl border border-white/10 bg-white/[.025] p-4"><summary className="cursor-pointer text-sm font-semibold text-emerald-200">Aprofundamento complementar (opcional)</summary><p className="mt-3 text-sm leading-7 text-slate-200">{lesson.extra}</p></details>
-  <p className="text-xs text-slate-400">Material autoral em revisão editorial contínua. Fontes legais e normativas precisam ser conferidas na versão vigente.</p>
  </div>
 }
-function GuidedLesson({guide}:{guide:LessonGuide}){
+function GuidedLesson({guide,onPractice}:{guide:LessonGuide;onPractice:()=>void}){
  const [active,setActive]=useState(0)
- const pages=[{label:'1 · Entenda',title:guide.title,body:guide.theory},{label:'2 · Aplique',title:'Exemplo aplicado',body:guide.practical},{label:'3 · Atenção',title:'O que não confundir',body:guide.warning}].filter(x=>!!x.body)
+ const pages=[{title:guide.title,body:guide.theory},{title:'Exemplo aplicado',body:guide.practical},{title:'O que não confundir',body:guide.warning}].filter(x=>!!x.body)
  const page=pages[Math.min(active,pages.length-1)]
  return <div id="etapa-da-aula" className="scroll-mt-28 space-y-5">
-  <div className="rounded-xl border border-sky-400/15 bg-sky-400/5 p-5"><p className="text-xs font-bold uppercase tracking-wider text-sky-300">Aula por etapas · {guide.source_kind==='brief'?'Em aprofundamento editorial':'Material detalhado'}</p><h3 className="mt-2 text-lg font-bold text-white">{guide.title}</h3><p className="mt-2 text-sm leading-6 text-slate-200">{guide.objective}</p><div className="bartrack mt-4 h-1.5"><div className="barfill" style={{width:((active+1)/pages.length*100)+'%'}}/></div></div>
-  <section className="rounded-2xl border border-white/10 p-5 sm:p-7"><p className="mb-2 text-xs font-bold uppercase tracking-wider text-emerald-300">{page.label}</p><h3 className="mb-5 text-xl font-bold text-white">{page.title}</h3><RichText content={page.body}/><LessonSteps active={active} total={pages.length} onChange={setActive}/></section>
-  {guide.source_kind==='brief'&&<p className="rounded-xl border border-amber-400/15 bg-amber-400/5 p-4 text-xs leading-6 text-slate-300">Este capítulo recebeu uma organização mais clara, mas sua teoria ainda precisa de aprofundamento individual. Evitamos misturar conteúdos de outras aulas apenas para aumentar o tamanho do texto.</p>}
+  <div className="flex items-center gap-3 text-xs font-semibold text-slate-300"><span>Etapa {active+1} de {pages.length}</span><div className="bartrack h-1.5 flex-1"><div className="barfill" style={{width:((active+1)/pages.length*100)+'%'}}/></div></div>
+  <section className="rounded-2xl border border-white/10 bg-white/[.025] p-4 sm:p-7">
+   <h3 className="mb-5 text-xl font-bold text-white">{page.title}</h3>
+   <RichText content={page.body}/>
+   <LessonSteps active={active} total={pages.length} onChange={setActive} onPractice={onPractice}/>
+  </section>
  </div>
 }
-function TeachingTheory({lesson}:{lesson:StudyLessonDetail}){
- const authored=academyLessons[lesson.id];if(authored)return <AcademyLesson key={lesson.id} lesson={authored}/>
- const guide=lessonGuides[lesson.id];if(guide)return <GuidedLesson key={lesson.id} guide={guide}/>
- return <div className="space-y-4"><h3 className="text-xl font-semibold">Entenda o assunto</h3><RichText content={lesson.content.split(/<!--/)[0]}/></div>
+function TeachingTheory({lesson,onPractice}:{lesson:StudyLessonDetail;onPractice:()=>void}){
+ const authored=academyLessons[lesson.id];if(authored)return <AcademyLesson key={lesson.id} lesson={authored} onPractice={onPractice}/>
+ const guide=lessonGuides[lesson.id];if(guide)return <GuidedLesson key={lesson.id} guide={guide} onPractice={onPractice}/>
+ return <div className="space-y-5"><RichText content={lesson.content.split(/<!--/)[0]}/><button className="btn btn-primary" onClick={onPractice}>Resolver questões <ArrowRight size={16}/></button></div>
 }
 export default function StudyCourse({onGoReview}:{onGoReview?:()=>void}){
  const [subjects,setSubjects]=useState<Subject[]>([]);const [lessons,setLessons]=useState<StudyLesson[]>([])
