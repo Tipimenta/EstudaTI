@@ -30,7 +30,7 @@ const EXTRA_NAV:{id:Page;label:string;icon:typeof LayoutDashboard}[]=[
  {id:'tutor',label:'Tutor de estudos',icon:GraduationCap},
  {id:'laboratorio',label:'Laboratório prático',icon:Activity},
  {id:'discursivas',label:'Questões discursivas',icon:FileText},
- {id:'fontes',label:'Biblioteca e provas PDF',icon:BookOpen},
+ {id:'fontes',label:'Provas anteriores por concurso',icon:BookOpen},
  {id:'dominio',label:'Mapa de domínio',icon:Target},
  {id:'editais',label:'Ler edital em PDF',icon:FileText},
  {id:'matriz',label:'Matriz de editais',icon:ListChecks},
@@ -71,6 +71,7 @@ function DashboardPage({go}:{go:(p:Page)=>void}){
    <button onClick={()=>go('simulados')} className="panel p-5 text-left transition hover:border-emerald-400/30"><span className="mb-3 inline-flex rounded-xl bg-violet-400/10 p-3 text-violet-300"><Target size={22}/></span><h3 className="font-bold text-white">Fazer simulado</h3><p className="mt-1 text-sm leading-6 muted">Treine como se fosse uma prova.</p><span className="mt-4 flex items-center gap-2 text-sm font-semibold text-emerald-300">Começar <ArrowRight size={15}/></span></button>
    <button onClick={()=>go('flashcards')} className="panel p-5 text-left transition hover:border-emerald-400/30"><span className="mb-3 inline-flex rounded-xl bg-amber-400/10 p-3 text-amber-300"><Brain size={22}/></span><h3 className="font-bold text-white">Revisar flashcards</h3><p className="mt-1 text-sm leading-6 muted">{data?.cards_due??'—'} cartões aguardando revisão.</p><span className="mt-4 flex items-center gap-2 text-sm font-semibold text-emerald-300">Revisar <ArrowRight size={15}/></span></button>
   </div>
+  <button onClick={()=>go('fontes')} className="mt-4 flex w-full items-center justify-between gap-3 rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-5 py-4 text-left text-sm font-semibold text-emerald-200 hover:bg-emerald-400/10"><span>Provas anteriores de Analista e Suporte de TI · por concurso e banca</span><ArrowRight size={17} className="shrink-0"/></button>
   <section className="panel mt-5 p-5 sm:p-6"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-bold text-white">Seu ritmo de estudo</h3><button onClick={()=>go('desempenho')} className="text-sm font-semibold text-emerald-300">Ver meu progresso →</button></div><div className="mt-4 grid grid-cols-3 gap-3 border-t border-white/10 pt-4"><div><p className="text-xs muted">Hoje</p><p className="mt-1 text-lg font-bold">{data?.minutes_today??'—'} min</p></div><div><p className="text-xs muted">Simulados</p><p className="mt-1 text-lg font-bold">{data?.quizzes_completed??'—'}</p></div><div><p className="text-xs muted">Meta diária</p><p className="mt-1 text-lg font-bold">{data?.daily_goal??'—'} min</p></div></div></section>
  </div>
 }
