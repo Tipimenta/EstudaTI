@@ -15,6 +15,7 @@ export default function OfficialExams(){
  const [busy,setBusy]=useState('')
  const [error,setError]=useState('')
  const [message,setMessage]=useState('')
+ const [saved,setSaved]=useState<Record<number,string>>({})
  const [started,setStarted]=useState(0)
  async function load(){try{const r=await api<{items:Source[]}>('/provas/oficiais');setSources(r.items)}catch(e){setError((e as Error).message)}}
  useEffect(()=>{load()},[])
@@ -27,8 +28,14 @@ export default function OfficialExams(){
  }
  async function openExam(code:string){setBusy(code);setError('')
   try{const p=await api<Pack>('/provas/oficiais/'+code+'/questoes');if(!p.items.length)throw Error('Esta prova ainda não possui questões confirmadas.')
-   setPack(p);setActive(code);setSelected({});setResult(null);setIndex(0);setStarted(Date.now())
+   setPack(p);setActive(code);setSelected({});setSaved({});setResult(null);setIndex(0);setStarted(Date.now())
   }catch(e){setError((e as Error).message)}finally{setBusy('')}
+ }
+ async function saveCard(number:number){
+  if(!active)return
+  try{const r=await post<{duplicate:boolean}>('/provas/oficiais/'+active+'/flashcard',{number})
+   setSaved(x=>({...x,[number]:r.duplicate?'Este cartão já existe.':'Flashcard salvo para revisão espaçada.'}))
+  }catch(e){setError((e as Error).message)}
  }
  async function correct(){if(!pack||!active)return
   const answers=pack.items.filter(x=>selected[x.number]!==undefined).map(x=>({number:x.number,choice_index:selected[x.number]}))
@@ -61,7 +68,7 @@ export default function OfficialExams(){
     {index<pack!.items.length-1&&answered>0&&<button onClick={correct} disabled={!!busy} className="mt-5 w-full rounded-xl border border-white/20 p-3 text-sm font-semibold">Encerrar e corrigir {answered} respostas</button>}
    </div>}
    {result&&<div className="mt-5 space-y-3"><div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-5"><h3 className="text-xl font-bold">{result.correct}/{result.total} acertos · {Math.round(result.correct/result.total*100)}%</h3><p className="mt-2 text-sm text-slate-300">Tentativa armazenada no seu banco.</p><button className="btn btn-primary mt-4" onClick={()=>{setIndex(0);setSelected({});setResult(null);setStarted(Date.now())}}>Refazer prova</button></div>
-   {result.results.map(x=><div key={x.number} className="rounded-xl border border-white/10 p-4"><b>Questão {x.number} — {x.correct?'Correta':'Incorreta'}</b><p className="mt-2 text-sm text-slate-300">Sua resposta: {'ABCDE'[x.your_choice]} · Gabarito: {'ABCDE'[x.correct_index]}</p><p className="mt-2 text-xs text-slate-400">{x.explanation}</p></div>)}</div>}
+   {result.results.map(x=><div key={x.number} className="rounded-xl border border-white/10 p-4"><b>Questão {x.number} — {x.correct?'Correta':'Incorreta'}</b><p className="mt-2 text-sm text-slate-300">Sua resposta: {'ABCDE'[x.your_choice]} · Gabarito: {'ABCDE'[x.correct_index]}</p><p className="mt-2 text-xs text-slate-400">{x.explanation}</p>{!x.correct&&<div className="mt-3"><button onClick={()=>saveCard(x.number)} disabled={!!saved[x.number]} className="btn btn-secondary text-xs">Salvar erro nos flashcards</button>{saved[x.number]&&<p className="mt-2 text-xs text-emerald-300">{saved[x.number]}</p>}</div>}</div>)}</div>}
   </div>}
   {!active&&<p className="mt-5 text-xs leading-6 text-slate-400">O importador não inventa respostas: cruza número da questão com a tabela do gabarito definitivo e bloqueia anuladas, imagens e textos ambíguos. As demais provas catalogadas continuam disponíveis por link oficial até haver extrator adequado.</p>}
  </section>
