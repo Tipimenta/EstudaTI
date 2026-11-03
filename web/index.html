@@ -1,1 +1,18 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#0c1224"/><meta name="description" content="EstudaTI: estudo inteligente e simulados para concursos públicos de tecnologia."/><title>EstudaTI · Plataforma de estudos</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>
+<!doctype html>
+<html lang="pt-BR" data-theme="paper">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <meta name="theme-color" content="#f1efe8" />
+ <meta name="description" content="EstudaTI: aulas, revisão e provas anteriores de concursos de Tecnologia da Informação." />
+ <script>
+  try{
+    document.documentElement.dataset.theme=localStorage.getItem('estudati-theme')==='dark'?'dark':'paper';
+    document.documentElement.dataset.readingSize=localStorage.getItem('estudati-reading-size')==='large'?'large':'standard';
+    document.querySelector('meta[name="theme-color"]').content=document.documentElement.dataset.theme==='dark'?'#091120':'#f1efe8';
+  }catch(e){}
+ </script>
+ <title>EstudaTI · Minha área de estudos</title>
+</head>
+<body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body>
+</html>
