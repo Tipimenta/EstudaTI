@@ -2,7 +2,7 @@ import {useMemo,useState} from 'react'
 import {PRIOR_EXAMS,type PriorExam} from './priorExamCatalog'
 import {BookOpen,ExternalLink,Search,ShieldCheck,AlertCircle,ChevronDown} from 'lucide-react'
 
-const order=['Birigui','UFMS','Dataprev','INB','ABDI','Mossoró','IBGE / CPNU','INSS / CPNU']
+const order=['Birigui','Assis / SP','UFMS','Dataprev','INB','ABDI','Mossoró','IBGE / CPNU','INSS / CPNU']
 const label:Record<string,string>={
  'prova_definitiva':'Caderno + gabarito definitivo',
  'prova_preliminar':'Caderno + gabarito preliminar',
@@ -46,7 +46,7 @@ export default function PriorExams(){
    const text=[x.group,x.organization,x.board,x.role,x.exam,x.focus,x.year].join(' ').toLowerCase()
    return (!term||text.includes(term.toLowerCase()))&&(!board||x.board===board)&&(!focus||x.focus===focus)&&(!onlyAvailable||x.availability!=='edital')
  })
- const groups=(groupBy==='concurso'?order:banks).map(group=>({group,entries:filtered.filter(x=>groupBy==='concurso'?x.group===group:x.board===group)})).filter(x=>x.entries.length)
+ const groups=(groupBy==='concurso'?order:banks).map(group=>({group,entries:filtered.filter(x=>groupBy==='concurso'?x.group===group:x.board===group).sort((a,b)=>b.year-a.year||a.role.localeCompare(b.role,'pt-BR'))})).filter(x=>x.entries.length)
  const countAvailable=PRIOR_EXAMS.filter(x=>x.availability!=='edital').length
  return <section id="provas-por-concurso" className="panel p-5 sm:p-7">
   <div className="flex items-start gap-3"><BookOpen className="mt-1 shrink-0 text-emerald-300" size={24}/><div>
