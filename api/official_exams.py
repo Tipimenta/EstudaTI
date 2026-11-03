@@ -308,7 +308,17 @@ def register(app, authorized, conn, nowstr):
                 WHERE exam_code=? AND number=? AND status='verificada'""",
                 (code,payload.number)).fetchone()
             if not row:raise HTTPException(404,"Questão não disponível.")
-            area="POR" if payload.number<=12 else exam["subject"]
+            # Os blocos comuns não pertencem à especialidade técnica.
+            # Não classificar Inglês como Redes/Segurança/Desenvolvimento.
+            number=payload.number
+            if number<=12:area="POR"
+            elif 13<=number<=24:
+                raise HTTPException(409,"Revisão de Inglês ainda não tem disciplina própria no EstudaTI.")
+            elif number<=30:area="LOG"
+            elif 31<=number<=35:
+                raise HTTPException(409,"Questões de Atualidades ainda não têm trilha de revisão específica.")
+            elif number<=41:area="LEG"
+            else:area=exam["subject"]
             topic=db.execute("""SELECT t.id FROM topics t JOIN subjects s ON s.id=t.subject_id
                    WHERE s.code=? ORDER BY t.id LIMIT 1""",(area,)).fetchone()
             if not topic:raise HTTPException(503,"Disciplina não está cadastrada.")
