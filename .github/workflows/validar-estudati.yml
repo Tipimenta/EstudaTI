@@ -28,6 +28,22 @@ jobs:
         run: python3 -m pip install -q -r api/requirements.txt pytest httpx
       - name: Rodar testes
         run: PYTHONPATH=api python3 -m pytest -q tests api/tests
+  prova-real-diagnostico:
+    name: Diagnostico FGV (sem persistencia)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      ESTUDATI_FGV_LIVE: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Dependencias PDF
+        run: python3 -m pip install -q -r api/requirements.txt
+      - name: Validar fonte real sem copiar questoes para logs
+        run: PYTHONPATH=api python3 -m pytest -s -q api/tests/test_official_fgv_live.py
+
   frontend:
     name: Frontend React
     runs-on: ubuntu-latest
