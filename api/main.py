@@ -33,6 +33,7 @@ from pedagogical_workshops import seed_workshops
 from expert_seed import seed_expert_units
 from learning_api import register as register_learning_routes
 from discursive_api import setup as setup_discursive, register as register_discursive
+from official_exams import setup as setup_official_exams, register as register_official_exams
 
 DB_PATH = os.getenv('DATABASE_PATH', '/data/estudati.sqlite3')
 DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
@@ -249,6 +250,7 @@ def init_db():
         setup_discursive(db)
         setup_quality(db)
         setup_syllabus(db)
+        setup_official_exams(db)
         # V1.2: adicionar oficinas de transferência em 9 disciplinas, sem alterar aulas existentes.
         seed_workshops(db,sub,nowstr)
         seed_curated_cases(db,nowstr)
@@ -1011,6 +1013,7 @@ register_learning_routes(app,authorized,conn,now,nowstr)
 register_discursive(app,authorized,conn,nowstr)
 register_quality(app,authorized,conn,nowstr)
 register_syllabus(app,authorized,conn,nowstr)
+register_official_exams(app,authorized,conn,nowstr)
 
 @app.on_event('startup')
 def startup():
