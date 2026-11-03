@@ -30,7 +30,7 @@ def pdf_open(raw: bytes, max_pages: int = 60):
 
 
 _NUM = re.compile(r"^\s*(?:QUEST[ÃA]O\s+)?(\d{1,2})\s*$", re.I)
-_ALT = re.compile(r"^\s*\(([A-E])\)\s*(.*)$")
+_ALT = re.compile(r"^\s*\(([A-E])\)\s*(.*)$", re.M)
 _SUSPICIOUS = re.compile(
     r"(?:figura|imagem|gr[aá]fico|diagrama|fluxograma|c[oó]digo\s+a\s+seguir|"
     r"comandos\s+SQL\s+a\s+seguir|tabela\s+a\s+seguir|esquema\s+a\s+seguir|"
