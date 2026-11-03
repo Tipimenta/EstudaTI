@@ -328,7 +328,7 @@
     "choice_rationales": {
       "A": "42 não resulta da subtração da interseção de Português.",
       "B": "Apenas Português = |P| − |P∩L| = 30 − 12 = 18.",
-      "C": "14 é apenas Lógica (26 − 12).",
+      "C": "14 corresponde apenas às pessoas que estudam Lógica, pois 26 − 12 = 14; a pergunta exige apenas Português.",
       "D": "56 é soma bruta que conta os dois grupos sem remover repetição."
     },
     "fingerprint": "estudati-aulas-editoriais-20261102-80-02",
