@@ -12,6 +12,7 @@ import unicodedata
 from collections import defaultdict
 
 import fitz  # PyMuPDF
+from official_exam_quality import check_question
 
 
 def norm(value: str) -> str:
@@ -96,13 +97,9 @@ def extract_exam(raw: bytes):
                 choice = " ".join(fragment[found.start():end].split())
                 choice = re.sub(r"^\([A-E]\)\s*", "", choice)
                 choices.append(choice)
-            reason = ""
-            if len(stem) < 18 or any(len(x) < 2 or len(x) > 1800 for x in choices):
-                reason = "Enunciado ou alternativas incompletos."
-            elif len(stem) > 6000 or _SUSPICIOUS.search(stem):
-                reason = "Possível dependência de figura, tabela, código ou texto compartilhado."
-            elif any("CONHECIMENTOS ESPECIFICOS" in norm(x) for x in choices):
-                reason = "Trecho de outra seção misturado à questão."
+            choices, reason = check_question(stem,choices)
+            if not reason and _SUSPICIOUS.search(stem):
+                reason = "Enunciado possivelmente dependente de ilustração, texto ou código não capturado."
             out.append({"number": item["number"], "page": item["page"],
                         "status": "bloqueada" if reason else "extraida",
                         "reason": reason, "question": stem[:6000],
