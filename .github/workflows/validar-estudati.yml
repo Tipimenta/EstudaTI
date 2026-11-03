@@ -40,7 +40,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Dependencias PDF
-        run: python3 -m pip install -q -r api/requirements.txt
+        run: python3 -m pip install -q -r api/requirements.txt pytest
       - name: Validar fonte real sem copiar questoes para logs
         run: PYTHONPATH=api python3 -m pytest -s -q api/tests/test_official_fgv_live.py
 
