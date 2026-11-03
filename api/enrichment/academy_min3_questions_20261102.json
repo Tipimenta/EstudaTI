@@ -1,0 +1,591 @@
+[
+  {
+    "topic_id": 137,
+    "question": "Uma transação T1 lê saldo de R$ 200. T2 altera para R$ 250 e confirma. T1 lê novamente R$ 250. Qual fenômeno pode estar presente?",
+    "choices": [
+      "Leitura não repetível",
+      "Leitura suja necessariamente",
+      "Atomicidade impossível",
+      "Falha no DNS"
+    ],
+    "correct_index": 0,
+    "explanation": "Duas leituras do mesmo dado pela mesma transação observaram valores diferentes após commit de outra.",
+    "fingerprint": "academy-min3-20261102-137",
+    "choice_rationales": {
+      "A": "Duas leituras do mesmo dado pela mesma transação observaram valores diferentes após commit de outra.",
+      "B": "Leitura suja exigiria valor ainda não confirmado.",
+      "C": "Atomicidade diz respeito à confirmação como unidade, não ao fenômeno descrito.",
+      "D": "DNS não está envolvido no enunciado."
+    }
+  },
+  {
+    "topic_id": 138,
+    "question": "Em uma tabela com milhões de registros, uma coluna apresenta poucos valores distintos. Qual afirmação sobre criar índice nessa coluna é correta?",
+    "choices": [
+      "Todo índice sempre acelera qualquer consulta",
+      "A seletividade e o plano podem reduzir o benefício desse índice",
+      "Um índice elimina o custo de escrita",
+      "Índice cria automaticamente chave estrangeira"
+    ],
+    "correct_index": 1,
+    "explanation": "Índices pouco seletivos podem não compensar seu custo; o otimizador considera distribuição e plano.",
+    "fingerprint": "academy-min3-20261102-138",
+    "choice_rationales": {
+      "A": "Nem sempre o custo supera uma leitura sequencial.",
+      "B": "Índices pouco seletivos podem não compensar seu custo; o otimizador considera distribuição e plano.",
+      "C": "Índices precisam de manutenção em INSERT e UPDATE.",
+      "D": "Índice não é sinônimo de restrição FK."
+    }
+  },
+  {
+    "topic_id": 139,
+    "question": "Uma tabela com chave composta (pedido_id, produto_id) contém nome_pedido dependente apenas de pedido_id. Qual problema de normalização aparece?",
+    "choices": [
+      "Violação obrigatória da 1FN",
+      "Dependência parcial relevante para a 2FN",
+      "Integridade automaticamente garantida",
+      "Nenhuma dependência funcional possível"
+    ],
+    "correct_index": 1,
+    "explanation": "O atributo não-primo depende apenas de parte da chave composta.",
+    "fingerprint": "academy-min3-20261102-139",
+    "choice_rationales": {
+      "A": "1FN não é a forma normal que trata especificamente dependência parcial.",
+      "B": "O atributo não-primo depende apenas de parte da chave composta.",
+      "C": "Redundância pode causar inconsistência.",
+      "D": "A dependência é identificável pelo domínio."
+    }
+  },
+  {
+    "topic_id": 140,
+    "question": "Uma consulta associa uma venda de R$ 100 aos seus três itens e soma o campo valor_total da venda após JOIN. Qual risco existe?",
+    "choices": [
+      "Contar R$ 300 em vez de R$ 100",
+      "Eliminar sempre todos os itens",
+      "Impedir consulta de clientes",
+      "Transformar LEFT JOIN em DELETE"
+    ],
+    "correct_index": 0,
+    "explanation": "O valor da linha pai é repetido a cada item na junção 1:N, exigindo cuidado na agregação.",
+    "fingerprint": "academy-min3-20261102-140",
+    "choice_rationales": {
+      "A": "O valor da linha pai é repetido a cada item na junção 1:N, exigindo cuidado na agregação.",
+      "B": "JOIN não elimina necessariamente todos os itens.",
+      "C": "Não há impedimento geral.",
+      "D": "JOIN e DELETE são operações distintas."
+    }
+  },
+  {
+    "topic_id": 141,
+    "question": "Um teste verifica que um usuário consegue concluir o agendamento conforme critérios aprovados pelo negócio. Qual foco está presente?",
+    "choices": [
+      "Somente teste de unidade isolado",
+      "Teste de aceitação dos requisitos acordados",
+      "Teste de cabo físico",
+      "Compilação sem executar o sistema"
+    ],
+    "correct_index": 1,
+    "explanation": "A aceitação avalia se critérios funcionais de negócio são atendidos.",
+    "fingerprint": "academy-min3-20261102-141",
+    "choice_rationales": {
+      "A": "Unidade não valida o fluxo de negócio completo.",
+      "B": "A aceitação avalia se critérios funcionais de negócio são atendidos.",
+      "C": "Rede física não mede o requisito de agendamento.",
+      "D": "Compilar não comprova comportamento no processo."
+    }
+  },
+  {
+    "topic_id": 142,
+    "question": "Uma API recebe DELETE /arquivos/5 duas vezes. Na primeira remove o recurso; na segunda responde 404. Qual afirmação sobre idempotência é adequada?",
+    "choices": [
+      "O método perdeu idempotência porque os status diferem",
+      "DELETE pode ser idempotente quanto ao efeito pretendido mesmo com respostas diferentes",
+      "DELETE sempre gera recurso novo",
+      "GET é o único método idempotente"
+    ],
+    "correct_index": 1,
+    "explanation": "Idempotência trata efeito pretendido de requisições repetidas, não igualdade byte a byte de respostas.",
+    "fingerprint": "academy-min3-20261102-142",
+    "choice_rationales": {
+      "A": "Os efeitos desejados permanecem recurso removido.",
+      "B": "Idempotência trata efeito pretendido de requisições repetidas, não igualdade byte a byte de respostas.",
+      "C": "DELETE não é criação por semântica.",
+      "D": "PUT e DELETE também são idempotentes."
+    }
+  },
+  {
+    "topic_id": 143,
+    "question": "Após alterações em branches diferentes, o Git informa conflito de merge no mesmo arquivo. Qual procedimento é adequado?",
+    "choices": [
+      "Eliminar uma das branches sem analisar mudanças",
+      "Examinar as alterações incompatíveis, resolver conflito e testar",
+      "Compartilhar senha do repositório para liberar merge",
+      "Executar push forçado em todo branch"
+    ],
+    "correct_index": 1,
+    "explanation": "Resolver exige compreender os trechos em conflito e validar a integração.",
+    "fingerprint": "academy-min3-20261102-143",
+    "choice_rationales": {
+      "A": "Apagar sem analisar pode perder trabalho válido.",
+      "B": "Resolver exige compreender os trechos em conflito e validar a integração.",
+      "C": "Credenciais não solucionam conflitos de conteúdo.",
+      "D": "Push forçado pode sobrescrever histórico sem resolver conteúdo."
+    }
+  },
+  {
+    "topic_id": 134,
+    "question": "No COBIT, a liderança define limites de risco e avalia resultados, enquanto TI executa plano de controles. Qual alternativa descreve os papéis?",
+    "choices": [
+      "Governança direciona; gestão executa",
+      "Gestão define estratégia, governança somente instala sistemas",
+      "São atividades sempre idênticas",
+      "Auditoria substitui toda a gestão"
+    ],
+    "correct_index": 0,
+    "explanation": "Governança avalia, direciona e monitora; gestão executa planejamento e operações.",
+    "fingerprint": "academy-min3-20261102-134",
+    "choice_rationales": {
+      "A": "Governança avalia, direciona e monitora; gestão executa planejamento e operações.",
+      "B": "Implantação de sistemas não define governança.",
+      "C": "As responsabilidades são distintas embora conectadas.",
+      "D": "Auditoria não substitui operação de TI."
+    }
+  },
+  {
+    "topic_id": 135,
+    "question": "Um PDTI prioriza digitalização para reduzir espera. Qual indicador está mais próximo do benefício para o usuário?",
+    "choices": [
+      "Quantidade de computadores comprados",
+      "Número de reuniões internas",
+      "Tempo médio de espera para atendimento",
+      "Quantidade de páginas do PDTI"
+    ],
+    "correct_index": 2,
+    "explanation": "Tempo de espera mede resultado associado à necessidade declarada.",
+    "fingerprint": "academy-min3-20261102-135",
+    "choice_rationales": {
+      "A": "Compra mede atividade/recurso, não resultado final.",
+      "B": "Reuniões são atividade administrativa.",
+      "C": "Tempo de espera mede resultado associado à necessidade declarada.",
+      "D": "Tamanho do documento não representa benefício."
+    }
+  },
+  {
+    "topic_id": 136,
+    "question": "Uma equipe mediu disponibilidade em 99,5%, definiu meta de 99,9% e possui contrato que estabelece compromissos e consequências. Quais termos correspondem aos três elementos?",
+    "choices": [
+      "SLO, SLA, SLI",
+      "SLI, SLO, SLA",
+      "SLA, SLI, SLO",
+      "RTO, RPO, MTTR"
+    ],
+    "correct_index": 1,
+    "explanation": "O observado é SLI, a meta é SLO e o compromisso é SLA.",
+    "fingerprint": "academy-min3-20261102-136",
+    "choice_rationales": {
+      "A": "A meta não é SLA por si só.",
+      "B": "O observado é SLI, a meta é SLO e o compromisso é SLA.",
+      "C": "O contrato não é SLO isoladamente.",
+      "D": "RTO/RPO/MTTR são outros indicadores/metas."
+    }
+  },
+  {
+    "topic_id": 115,
+    "question": "Uma clínica precisa tratar dados de saúde para finalidade legítima. Qual avaliação jurídica inicial é apropriada?",
+    "choices": [
+      "Consentimento é sempre a única base possível",
+      "Analisar hipótese legal específica para dado sensível e os princípios aplicáveis",
+      "A LGPD não alcança dados de saúde",
+      "Ter firewall dispensa análise da finalidade"
+    ],
+    "correct_index": 1,
+    "explanation": "Dados sensíveis têm disciplina específica e a LGPD contempla hipóteses legais diversas conforme o contexto.",
+    "fingerprint": "academy-min3-20261102-115",
+    "choice_rationales": {
+      "A": "Há hipóteses legais além de consentimento.",
+      "B": "Dados sensíveis têm disciplina específica e a LGPD contempla hipóteses legais diversas conforme o contexto.",
+      "C": "Dados de saúde são sensíveis.",
+      "D": "Controle técnico não substitui base e finalidade."
+    }
+  },
+  {
+    "topic_id": 148,
+    "question": "Um órgão trata dados pessoais para executar política pública prevista em lei. Qual obrigação permanece?",
+    "choices": [
+      "Respeitar finalidade, necessidade e segurança conforme o tratamento",
+      "Publicar prontuários sem restrições",
+      "Reutilizar dados para qualquer propaganda",
+      "Ignorar os direitos dos titulares"
+    ],
+    "correct_index": 0,
+    "explanation": "Regras de tratamento pelo poder público incluem finalidade e princípios de proteção de dados.",
+    "fingerprint": "academy-min3-20261102-148",
+    "choice_rationales": {
+      "A": "Regras de tratamento pelo poder público incluem finalidade e princípios de proteção de dados.",
+      "B": "Dados de saúde exigem proteção legal.",
+      "C": "Reutilização ilimitada não decorre da política pública.",
+      "D": "Direitos existem, observadas hipóteses e exceções legais."
+    }
+  },
+  {
+    "topic_id": 149,
+    "question": "Um fornecedor inicialmente trata dados sob instruções, mas decide sozinho reutilizá-los para marketing próprio. O que isso implica?",
+    "choices": [
+      "O papel nunca pode mudar",
+      "A operação própria exige avaliar se ele atua como controlador nessa finalidade",
+      "Todo fornecedor é titular",
+      "Dados deixam automaticamente de ser pessoais"
+    ],
+    "correct_index": 1,
+    "explanation": "Definir finalidade própria pode atribuir papel de controlador naquela operação, independentemente do papel em outras.",
+    "fingerprint": "academy-min3-20261102-149",
+    "choice_rationales": {
+      "A": "Papéis dependem das decisões efetivas.",
+      "B": "Definir finalidade própria pode atribuir papel de controlador naquela operação, independentemente do papel em outras.",
+      "C": "Titular é pessoa natural a quem os dados se referem.",
+      "D": "Reutilização não anonimiza informação."
+    }
+  },
+  {
+    "topic_id": 150,
+    "question": "Durante execução de contrato de backup, o fiscal recebe nota fiscal, mas não há prova de restauração. Qual conduta é mais coerente?",
+    "choices": [
+      "Atestar todo requisito técnico sem verificar",
+      "Comparar obrigações contratuais a evidências de backup e testes previstos",
+      "Desabilitar os registros de execução",
+      "Ignorar os níveis de serviço"
+    ],
+    "correct_index": 1,
+    "explanation": "A fiscalização deve conferir execução conforme requisitos e critérios de aceite pactuados.",
+    "fingerprint": "academy-min3-20261102-150",
+    "choice_rationales": {
+      "A": "Nota fiscal não comprova, por si, recuperabilidade.",
+      "B": "A fiscalização deve conferir execução conforme requisitos e critérios de aceite pactuados.",
+      "C": "Apagar registros reduz rastreabilidade.",
+      "D": "SLAs são critérios relevantes quando contratados."
+    }
+  },
+  {
+    "topic_id": 151,
+    "question": "Um processo de compra pública contém valores de aquisição e dados de saúde desnecessários ao pedido. Qual medida pode conciliar LAI e proteção de dados?",
+    "choices": [
+      "Negar integralmente sem avaliar",
+      "Publicar dados de saúde irrestritamente",
+      "Avaliar disponibilização das informações públicas com proteção dos trechos pessoais",
+      "Eliminar todo o documento"
+    ],
+    "correct_index": 2,
+    "explanation": "A análise pode permitir acesso parcial mantendo restrições legítimas a dados pessoais.",
+    "fingerprint": "academy-min3-20261102-151",
+    "choice_rationales": {
+      "A": "Transparência é regra, com restrições legais.",
+      "B": "Publicação integral pode violar proteção de dados.",
+      "C": "A análise pode permitir acesso parcial mantendo restrições legítimas a dados pessoais.",
+      "D": "Destruição documental não resolve pedido."
+    }
+  },
+  {
+    "topic_id": 144,
+    "question": "A proposição P→Q é verdadeira. Qual outra proposição é logicamente equivalente?",
+    "choices": [
+      "Q→P",
+      "¬Q→¬P",
+      "¬P→¬Q",
+      "P∧¬Q"
+    ],
+    "correct_index": 1,
+    "explanation": "A contrapositiva preserva a mesma tabela-verdade.",
+    "fingerprint": "academy-min3-20261102-144",
+    "choice_rationales": {
+      "A": "Recíproca não é equivalente em geral.",
+      "B": "A contrapositiva preserva a mesma tabela-verdade.",
+      "C": "Inversa não é equivalente em geral.",
+      "D": "P∧¬Q é a negação da implicação."
+    }
+  },
+  {
+    "topic_id": 145,
+    "question": "Qual é a negação correta de 'Ana estuda ou Bruno trabalha', considerando OU inclusivo?",
+    "choices": [
+      "Ana não estuda ou Bruno não trabalha",
+      "Ana não estuda e Bruno não trabalha",
+      "Ana estuda e Bruno trabalha",
+      "Se Ana estuda, Bruno trabalha"
+    ],
+    "correct_index": 1,
+    "explanation": "De Morgan: ¬(P∨Q)=¬P∧¬Q.",
+    "fingerprint": "academy-min3-20261102-145",
+    "choice_rationales": {
+      "A": "Usar OU após negar não é equivalente.",
+      "B": "De Morgan: ¬(P∨Q)=¬P∧¬Q.",
+      "C": "Isso é conjunção das proposições, não negação da disjunção.",
+      "D": "Implicação é outra operação."
+    }
+  },
+  {
+    "topic_id": 147,
+    "question": "Se seis candidatos disputarão presidente e vice sem acumular posições, quantos resultados ordenados podem ocorrer?",
+    "choices": [
+      "15",
+      "12",
+      "30",
+      "36"
+    ],
+    "correct_index": 2,
+    "explanation": "Há seis escolhas para presidente e cinco restantes para vice: 6×5=30.",
+    "fingerprint": "academy-min3-20261102-147",
+    "choice_rationales": {
+      "A": "15 é combinação sem cargos.",
+      "B": "12 não corresponde à contagem completa.",
+      "C": "Há seis escolhas para presidente e cinco restantes para vice: 6×5=30.",
+      "D": "36 permite repetição da mesma pessoa nas duas posições."
+    }
+  },
+  {
+    "topic_id": 129,
+    "question": "Qual frase está adequada à norma-padrão em relação ao verbo haver com sentido de existir?",
+    "choices": [
+      "Houveram muitos pedidos",
+      "Havia muitos pedidos",
+      "Haviam três equipamentos",
+      "Devem haver várias soluções"
+    ],
+    "correct_index": 1,
+    "explanation": "Haver existencial é impessoal: permanece singular, inclusive em locução verbal apropriada.",
+    "fingerprint": "academy-min3-20261102-129",
+    "choice_rationales": {
+      "A": "Houveram está flexionado indevidamente.",
+      "B": "Haver existencial é impessoal: permanece singular, inclusive em locução verbal apropriada.",
+      "C": "Haviam está flexionado indevidamente.",
+      "D": "O auxiliar concorda com haver impessoal: deve haver."
+    }
+  },
+  {
+    "topic_id": 132,
+    "question": "Considere 'Os candidatos que estudaram foram aprovados'. Qual leitura é mais adequada sem vírgulas?",
+    "choices": [
+      "Todos os candidatos necessariamente estudaram",
+      "A oração relativa restringe o conjunto referido",
+      "A oração é obrigatoriamente explicativa",
+      "O termo 'que' inicia oração coordenada"
+    ],
+    "correct_index": 1,
+    "explanation": "Sem vírgulas, a relativa pode identificar quais candidatos foram aprovados.",
+    "fingerprint": "academy-min3-20261102-132",
+    "choice_rationales": {
+      "A": "Não se afirma que todos estudaram.",
+      "B": "Sem vírgulas, a relativa pode identificar quais candidatos foram aprovados.",
+      "C": "Explicativas costumam ser isoladas por vírgulas.",
+      "D": "Trata-se de oração relativa subordinada."
+    }
+  },
+  {
+    "topic_id": 118,
+    "question": "Uma estação da rede 10.0.1.0/24 precisa chegar a 10.0.2.30. Qual MAC costuma utilizar no quadro inicial?",
+    "choices": [
+      "MAC do servidor remoto diretamente",
+      "MAC do gateway no segmento local",
+      "MAC do servidor de DNS sempre",
+      "O endereço IP convertido em MAC"
+    ],
+    "correct_index": 1,
+    "explanation": "Para destino de outra sub-rede, a estação encaminha ao próximo salto L2.",
+    "fingerprint": "academy-min3-20261102-118",
+    "choice_rationales": {
+      "A": "ARP local não descobre diretamente o MAC remoto atrás de roteador.",
+      "B": "Para destino de outra sub-rede, a estação encaminha ao próximo salto L2.",
+      "C": "DNS não é o próximo salto obrigatório.",
+      "D": "Endereços IP e MAC não são conversíveis assim."
+    }
+  },
+  {
+    "topic_id": 119,
+    "question": "Um receptor TCP ficou lento e anuncia uma janela rwnd muito pequena, mesmo sem perda na rede. Qual mecanismo está limitando o envio?",
+    "choices": [
+      "Controle de fluxo baseado na capacidade do receptor",
+      "Congestionamento detectado obrigatoriamente por roteador",
+      "Falha de autenticação Kerberos",
+      "Criptografia TLS"
+    ],
+    "correct_index": 0,
+    "explanation": "A janela anunciada pelo receptor limita quanto o emissor pode deixar pendente.",
+    "fingerprint": "academy-min3-20261102-119",
+    "choice_rationales": {
+      "A": "A janela anunciada pelo receptor limita quanto o emissor pode deixar pendente.",
+      "B": "Não há evidência de congestão do caminho.",
+      "C": "Kerberos não controla rwnd TCP.",
+      "D": "TLS não define essa janela."
+    }
+  },
+  {
+    "topic_id": 120,
+    "question": "Uma rota estática permanece configurada embora um enlace falhe e não exista detecção específica. Qual preocupação é válida?",
+    "choices": [
+      "Todo roteador descobrirá automaticamente uma rota substituta",
+      "O administrador pode precisar intervir ou usar mecanismo de detecção/failover",
+      "Rota estática sempre é mais segura do que qualquer dinâmica",
+      "Rota só depende de DNS"
+    ],
+    "correct_index": 1,
+    "explanation": "Rotas estáticas exigem operação/ajustes conforme desenho, enquanto protocolos dinâmicos podem reagir a mudanças.",
+    "fingerprint": "academy-min3-20261102-120",
+    "choice_rationales": {
+      "A": "Mudança de caminho não é automática universal para rota estática.",
+      "B": "Rotas estáticas exigem operação/ajustes conforme desenho, enquanto protocolos dinâmicos podem reagir a mudanças.",
+      "C": "Segurança depende de contexto e configuração.",
+      "D": "DNS não determina diretamente escolha de rota IP."
+    }
+  },
+  {
+    "topic_id": 121,
+    "question": "Um registro DNS teve IP alterado no servidor autoritativo, mas um cliente ainda recebe IP antigo por algum tempo. Qual fator pode explicar?",
+    "choices": [
+      "Cache de resolvedor respeitando TTL do registro anterior",
+      "Ausência universal de DHCP",
+      "Falha física obrigatória de todos os switches",
+      "Senha do usuário incorreta"
+    ],
+    "correct_index": 0,
+    "explanation": "Respostas em cache podem persistir até expiração de TTL conforme configuração.",
+    "fingerprint": "academy-min3-20261102-121",
+    "choice_rationales": {
+      "A": "Respostas em cache podem persistir até expiração de TTL conforme configuração.",
+      "B": "DHCP não controla diretamente cache DNS da resposta.",
+      "C": "Não há evidência de falha física.",
+      "D": "Credenciais não explicam registro DNS antigo."
+    }
+  },
+  {
+    "topic_id": 122,
+    "question": "Na estrutura do NIST CSF 2.0, qual atividade se associa especialmente a Governar?",
+    "choices": [
+      "Definir responsabilidades, estratégia de risco e supervisão",
+      "Somente bloquear um pacote no firewall",
+      "Apenas restaurar cópia de arquivos",
+      "Somente analisar alertas do antivírus"
+    ],
+    "correct_index": 0,
+    "explanation": "Governar inclui papéis, estratégia, políticas, contexto e supervisão.",
+    "fingerprint": "academy-min3-20261102-122",
+    "choice_rationales": {
+      "A": "Governar inclui papéis, estratégia, políticas, contexto e supervisão.",
+      "B": "Configurar firewall é medida técnica de proteção.",
+      "C": "Restauração se relaciona à função Recuperar.",
+      "D": "Monitoramento se relaciona mais diretamente à Detectar."
+    }
+  },
+  {
+    "topic_id": 123,
+    "question": "Uma restauração conclui em 2 horas, mas a cópia recuperada perde 6 horas de dados. Se RTO=3h e RPO=1h, qual resultado?",
+    "choices": [
+      "Ambas metas cumpridas",
+      "Somente RPO cumprido",
+      "Somente RTO cumprido",
+      "Nenhuma cumprida"
+    ],
+    "correct_index": 2,
+    "explanation": "Tempo de recuperação atende RTO, mas perda de 6 horas supera RPO.",
+    "fingerprint": "academy-min3-20261102-123",
+    "choice_rationales": {
+      "A": "RPO foi descumprido.",
+      "B": "RPO não foi cumprido.",
+      "C": "Tempo de recuperação atende RTO, mas perda de 6 horas supera RPO.",
+      "D": "RTO de 3 horas foi atendido."
+    }
+  },
+  {
+    "topic_id": 124,
+    "question": "Uma política Zero Trust decide permitir a operação sem verificar contexto só porque o dispositivo está na rede interna. Qual avaliação é mais adequada?",
+    "choices": [
+      "Coerente porque toda rede interna é confiável",
+      "Inadequada: decisões de acesso devem verificar identidade, autorização e contexto pertinente",
+      "Obrigatória para uso de MFA",
+      "Correção de falhas DNS"
+    ],
+    "correct_index": 1,
+    "explanation": "Zero Trust evita confiança implícita baseada apenas na localização da rede.",
+    "fingerprint": "academy-min3-20261102-124",
+    "choice_rationales": {
+      "A": "A rede interna não garante legitimidade da solicitação.",
+      "B": "Zero Trust evita confiança implícita baseada apenas na localização da rede.",
+      "C": "MFA é controle complementar, não justificativa da confiança implícita.",
+      "D": "DNS não define regra Zero Trust."
+    }
+  },
+  {
+    "topic_id": 125,
+    "question": "Uma GPO está vinculada à OU de usuários, mas a equipe quer configurar computadores de outra OU. Qual verificação é indispensável?",
+    "choices": [
+      "Escopo e vínculo da política aos objetos corretos",
+      "Trocar todas as impressoras",
+      "Desligar autenticação Kerberos",
+      "Criar banco PostgreSQL"
+    ],
+    "correct_index": 0,
+    "explanation": "O escopo das configurações depende dos objetos, vínculos e filtros de GPO.",
+    "fingerprint": "academy-min3-20261102-125",
+    "choice_rationales": {
+      "A": "O escopo das configurações depende dos objetos, vínculos e filtros de GPO.",
+      "B": "Não altera escopo de GPO.",
+      "C": "Desligar autenticação é inadequado.",
+      "D": "PostgreSQL não trata aplicação de GPO."
+    }
+  },
+  {
+    "topic_id": 126,
+    "question": "Num Linux típico, qual permissão resulta para arquivo regular criado com modo base 666 e umask 022?",
+    "choices": [
+      "777",
+      "600",
+      "644",
+      "755"
+    ],
+    "correct_index": 2,
+    "explanation": "0666 com bits limitados por 0022 resulta 0644.",
+    "fingerprint": "academy-min3-20261102-126",
+    "choice_rationales": {
+      "A": "777 é modo com execução para todos e não decorre do exemplo.",
+      "B": "600 exigiria máscara/regras diferentes.",
+      "C": "0666 com bits limitados por 0022 resulta 0644.",
+      "D": "755 inclui bit x, normalmente não concedido automaticamente a arquivos comuns."
+    }
+  },
+  {
+    "topic_id": 127,
+    "question": "Qual diferença fundamental entre contêiner Linux e máquina virtual com sistema Linux convidado?",
+    "choices": [
+      "Contêiner normalmente compartilha kernel do hospedeiro; VM usa kernel convidado",
+      "Ambos sempre possuem kernel próprio separado",
+      "Contêiner substitui completamente backup",
+      "VM nunca executa serviços de rede"
+    ],
+    "correct_index": 0,
+    "explanation": "O isolamento e recursos oferecidos são distintos; contêiner Linux normalmente usa kernel do host.",
+    "fingerprint": "academy-min3-20261102-127",
+    "choice_rationales": {
+      "A": "O isolamento e recursos oferecidos são distintos; contêiner Linux normalmente usa kernel do host.",
+      "B": "Contêiner não traz kernel convidado independente como VM clássica.",
+      "C": "Contêiner não recupera dados automaticamente.",
+      "D": "VM pode executar serviços e aplicativos de rede."
+    }
+  },
+  {
+    "topic_id": 128,
+    "question": "Um servidor usa RAID 1 e possui snapshot no mesmo armazenamento. Qual risco permanece sem backup independente?",
+    "choices": [
+      "Nenhum: RAID e snapshot garantem recuperação total",
+      "Perda dos dados por exclusão lógica, ransomware ou falha completa do armazenamento",
+      "RAID 1 impede todo tipo de falha de software",
+      "Snapshot substitui política de retenção externa"
+    ],
+    "correct_index": 1,
+    "explanation": "RAID e snapshot não cobrem todos os incidentes nem substituem backup recuperável independente.",
+    "fingerprint": "academy-min3-20261102-128",
+    "choice_rationales": {
+      "A": "Esses mecanismos não garantem proteção integral.",
+      "B": "RAID e snapshot não cobrem todos os incidentes nem substituem backup recuperável independente.",
+      "C": "RAID não protege contra erros lógicos.",
+      "D": "Snapshot local pode depender do mesmo armazenamento e falhar junto dele."
+    }
+  }
+]
