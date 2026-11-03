@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import PriorExams from './PriorExams'
+import OfficialExams from './OfficialExams'
 import { api, post, type Subject } from './api'
 import { BookOpen, ExternalLink, FileQuestion, AlertCircle, CloudUpload, CheckCircle2, FileText, Search, RefreshCw } from 'lucide-react'
 
@@ -43,6 +44,7 @@ export default function StudyLibrary(){
   <header><p className="mb-2 text-xs font-bold uppercase tracking-[.20em] text-emerald-300">Base confiável para estudar</p><h1 className="text-3xl font-bold">Provas anteriores e biblioteca</h1><p className="mt-3 max-w-3xl text-sm leading-6 muted">Consulte provas por concurso, banca, ano e área de TI. A biblioteca também oferece referências técnicas e importação assistida de PDFs; os gabaritos precisam ser conferidos.</p></header>
   {error&&<div className="rounded-xl border border-rose-400/30 bg-rose-400/10 p-4 text-sm text-rose-200"><AlertCircle className="mr-2 inline" size={16}/>{error}</div>}
   {message&&<div className="rounded-xl border border-emerald-400/25 bg-emerald-400/10 p-4 text-sm text-emerald-200"><CheckCircle2 className="mr-2 inline" size={16}/>{message}</div>}
+  <OfficialExams/>
   <PriorExams/>
   <section className="panel p-5 sm:p-7"><div className="mb-5 flex items-center gap-3"><BookOpen size={22} className="text-emerald-300"/><h2 className="text-xl font-bold">Fontes oficiais e materiais abertos</h2><span className="ml-auto badge bg-slate-700/50 text-slate-300">{resources.length} links</span></div>
    <div className="mb-5 grid gap-3 md:grid-cols-[1fr_260px]"><div className="relative"><Search className="absolute left-3 top-3.5 text-slate-400" size={17}/><input className="field pl-10" placeholder="Buscar fonte, tema ou órgão" value={filter} onChange={e=>setFilter(e.target.value)}/></div><select className="field" value={category} onChange={e=>setCategory(e.target.value)}><option value="">Todas as categorias</option>{Array.from(new Set(resources.map(x=>x.category))).map(c=><option key={c}>{c}</option>)}</select></div>
