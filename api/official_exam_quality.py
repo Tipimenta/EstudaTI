@@ -128,5 +128,5 @@ def quarantine_existing(db, nowstr):
         code=source["code"]
         row=db.execute("""SELECT COUNT(*) total FROM official_exam_items
                         WHERE exam_code=? AND status='verificada'""",(code,)).fetchone()
-        db.execute("UPDATE official_exam_sources SET ready_count=? WHERE code=?",
-                   (row["total"],code))
+        db.execute("UPDATE official_exam_sources SET ready_count=?,skipped_count=CASE WHEN extracted_count>0 THEN extracted_count-? ELSE skipped_count END WHERE code=?",
+                   (row["total"],row["total"],code))
