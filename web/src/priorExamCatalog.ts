@@ -435,5 +435,61 @@ export const PRIOR_EXAMS:PriorExam[]=[
     "url": "https://jcconcursos.uol.com.br/provas/prova-inss-superior-2014-37945",
     "notes": "Prova de TI aplicada em 09/02/2014, com caderno e gabarito em acervo externo. Banca FUNRIO; concurso do edital de 2013 com aplicação em 2014.",
     "source": "Acervo externo"
+  },
+  {
+    "id": "assis26analista",
+    "group": "Assis / SP",
+    "organization": "Câmara Municipal de Assis/SP",
+    "board": "VUNESP",
+    "year": 2026,
+    "role": "Analista de Sistemas",
+    "focus": "Analista de TI",
+    "exam": "Câmara de Assis 2026",
+    "availability": "edital",
+    "url": "https://www.vunesp.com.br/CMAS2601",
+    "notes": "Concurso de 2026 em andamento, sem prova aplicada até 02/11/2026. Referência regional; consultar edital e confirmar formato da avaliação.",
+    "source": "Oficial"
+  },
+  {
+    "id": "assis26support",
+    "group": "Assis / SP",
+    "organization": "Câmara Municipal de Assis/SP",
+    "board": "VUNESP",
+    "year": 2026,
+    "role": "Assistente Técnico — Informática",
+    "focus": "Suporte / Técnico",
+    "exam": "Câmara de Assis 2026",
+    "availability": "edital",
+    "url": "https://www.vunesp.com.br/CMAS2601",
+    "notes": "Cargo técnico da Câmara de Assis. A prova desta edição ainda não havia sido realizada em 02/11/2026.",
+    "source": "Oficial"
+  },
+  {
+    "id": "assis14support",
+    "group": "Assis / SP",
+    "organization": "Câmara Municipal de Assis/SP",
+    "board": "Câmara de Assis/SP",
+    "year": 2014,
+    "role": "Assistente Técnico de Informática",
+    "focus": "Suporte / Técnico",
+    "exam": "Câmara de Assis 2014",
+    "availability": "acervo",
+    "url": "https://www.pciconcursos.com.br/provas/download/assistente-tecnico-de-informatica-camara-de-assis-sp-camara-de-assis-sp-2014",
+    "notes": "Caderno e gabarito indicados em acervo público. Organizadora identificada como a própria Câmara, não VUNESP: não confundir as bancas.",
+    "source": "Acervo externo"
+  },
+  {
+    "id": "unesp13support",
+    "group": "Assis / SP",
+    "organization": "UNESP — Campus de Assis",
+    "board": "VUNESP",
+    "year": 2013,
+    "role": "Assistente de Informática II",
+    "focus": "Suporte / Técnico",
+    "exam": "UNESP Assis 2013",
+    "availability": "acervo",
+    "url": "https://www.pciconcursos.com.br/provas/download/assistente-de-informatica-ii-unesp-campus-de-assis-fcl-vunesp-2013",
+    "notes": "Prova antiga de instituição diferente, porém organizada pela VUNESP. Acervo externo indica PDF e gabarito; acesso pode exigir verificação no navegador.",
+    "source": "Acervo externo"
   }
 ];
