@@ -69,33 +69,32 @@ function RichText({content}:{content:string}){
  })}</article>
 }
 function cleanTitle(title:string){return title.replace(/^\[(Aprofundamento|Oficina)\]\s*/i,'')}
-function LessonSteps({active,total,onChange,onPractice}:{active:number;total:number;onChange:(n:number)=>void;onPractice:()=>void}){
- const last=active===total-1
- function next(){if(last){onPractice();return}onChange(active+1);requestAnimationFrame(()=>document.getElementById('etapa-da-aula')?.scrollIntoView({behavior:'smooth',block:'start'}))}
- function back(){if(active>0){onChange(active-1);requestAnimationFrame(()=>document.getElementById('etapa-da-aula')?.scrollIntoView({behavior:'smooth',block:'start'}))}}
- return <div className="mt-6 flex items-center justify-between gap-2 border-t border-white/10 pt-5">
-  <button disabled={active===0} className="btn btn-outline text-sm" onClick={back}><ArrowLeft size={15}/> Voltar</button>
-  <span className="shrink-0 text-xs font-semibold text-slate-400">{active+1} de {total}</span>
-  <button className="btn btn-primary text-sm" onClick={next}>{last?'Resolver questões':'Continuar'} <ArrowRight size={15}/></button>
- </div>
-}
 function AcademyLesson({lesson,onPractice}:{lesson:PedagogicalLesson;onPractice:()=>void}){
- const [active,setActive]=useState(0)
- const total=lesson.steps.length+2
- const step=lesson.steps[active]
- return <div id="etapa-da-aula" className="scroll-mt-28 space-y-5">
-  <div className="flex items-center gap-3 text-xs font-semibold text-slate-300">
-   <span>Etapa {active+1} de {total}</span><div className="bartrack h-1.5 flex-1"><div className="barfill" style={{width:((active+1)/total*100)+'%'}}/></div>
-  </div>
-  <section className="rounded-2xl border border-white/10 bg-white/[.025] p-4 sm:p-7">
-   {step?<><h3 className="mb-5 text-xl font-bold leading-8 text-white">{step.title.replace(/^\d+\.\s*/,'')}</h3><RichText content={step.body}/></>:active===lesson.steps.length?<><p className="mb-2 text-xs font-bold uppercase tracking-wide text-sky-300">Exemplo resolvido, passo a passo</p><h3 className="mb-5 text-xl font-bold text-white">{lesson.worked.title}</h3><RichText content={lesson.worked.body}/></>:<><h3 className="mb-4 text-xl font-bold text-white">O que não confundir na prova</h3><ul className="list-disc space-y-3 pl-5 text-sm leading-7 text-slate-200">{lesson.pitfalls.map((x,i)=><li key={i}>{x}</li>)}</ul><p className="mt-5 text-sm leading-6 text-emerald-200">Terminou a explicação? Agora pratique com as questões desta aula.</p></>}
-   <LessonSteps active={active} total={total} onChange={setActive} onPractice={onPractice}/>
+ const objective=lesson.goal&&!lesson.goal.startsWith('Explicar e aplicar:')?lesson.goal:''
+ return <div className="reader scroll-mt-28 space-y-6">
+  {objective&&<div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-4 text-sm leading-7 text-slate-200"><span className="font-bold text-emerald-200">Você vai aprender:</span> {objective}</div>}
+  {lesson.steps.map((step,index)=><section key={index} className={index?'border-t border-white/10 pt-6':''}>
+    <h3 className="mb-4 text-xl font-bold leading-8 text-white">{step.title.replace(/^\\d+\\.\\s*/,'').replace(/^Entenda /,'Conhecendo ')}</h3>
+    <RichText content={step.body}/>
+  </section>)}
+  <section className="rounded-2xl border border-emerald-400/20 bg-emerald-400/5 p-5 sm:p-7">
+   <p className="mb-2 text-xs font-bold uppercase tracking-wide text-emerald-300">Aplicação passo a passo</p>
+   <h3 className="mb-4 text-xl font-bold text-white">{lesson.worked.title}</h3>
+   <RichText content={lesson.worked.body}/>
   </section>
+  {lesson.pitfalls.length>0&&<section className="border-t border-white/10 pt-5">
+   <h3 className="mb-4 text-lg font-bold text-white">Atenção às pegadinhas da banca</h3>
+   <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-slate-200">{lesson.pitfalls.map((item,index)=><li key={index}>{item}</li>)}</ul>
+  </section>}
+  <div className="flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+   <p className="text-sm leading-6 muted">Terminou a leitura? Teste o que compreendeu nas questões da aula.</p>
+   <button className="btn btn-primary shrink-0" onClick={onPractice}>Resolver questões <ArrowRight size={16}/></button>
+  </div>
  </div>
 }
 function TeachingTheory({lesson,onPractice}:{lesson:StudyLessonDetail;onPractice:()=>void}){
  const authored=academyLessons[lesson.id];if(authored)return <AcademyLesson key={lesson.id} lesson={authored} onPractice={onPractice}/>
- return <div className="space-y-5"><RichText content={lesson.content.split(/<!--/)[0]}/><button className="btn btn-primary" onClick={onPractice}>Resolver questões <ArrowRight size={16}/></button></div>
+ return <div className="reader space-y-5"><RichText content={lesson.content.split(/<!--/)[0]}/><button className="btn btn-primary" onClick={onPractice}>Resolver questões <ArrowRight size={16}/></button></div>
 }
 export default function StudyCourse({onGoReview}:{onGoReview?:()=>void}){
  const [subjects,setSubjects]=useState<Subject[]>([]);const [lessons,setLessons]=useState<StudyLesson[]>([])
@@ -139,8 +138,8 @@ export default function StudyCourse({onGoReview}:{onGoReview?:()=>void}){
  <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wider text-emerald-300">AULAS DA DISCIPLINA</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">{subject?.name}</h1></div><div className="min-w-[140px] text-xs text-slate-300"><span>{ofSubject.filter(l=>l.completed).length} de {ofSubject.length} concluídas</span><div className="bartrack mt-2"><div className="barfill" style={{width:pct(ofSubject.filter(l=>l.completed).length,ofSubject.length)+'%'}}/></div></div></div>
  {error&&<div role="alert" className="mb-5 rounded-xl bg-rose-400/10 p-3 text-sm text-rose-200">{error}</div>}
  <button onClick={()=>setShowLessonPicker(v=>!v)} className="btn btn-secondary mb-4 w-full justify-between lg:hidden"><span className="flex items-center gap-2"><BookOpen size={17}/> {showLessonPicker?'Ocultar lista de aulas':'Escolher outra aula'}</span><ChevronRight size={16}/></button>
- <div className="grid items-start gap-5 lg:grid-cols-[285px_minmax(0,1fr)]"><aside className={(showLessonPicker?'block ':'hidden lg:block ')+'panel max-h-[60vh] overflow-y-auto p-3 lg:sticky lg:top-24 lg:max-h-[75vh]'}><div className="mb-2 px-3 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">Aulas desta matéria</div>{ofSubject.map((l,i)=><div key={l.id}>{(i===0||moduleForTopic(l.code,l.id)?.title!==moduleForTopic(ofSubject[i-1].code,ofSubject[i-1].id)?.title)&&<h4 className="mb-2 mt-5 border-t border-white/10 px-3 pt-4 text-[11px] font-bold uppercase tracking-wider text-emerald-200">{moduleForTopic(l.code,l.id)?.title||'Outros assuntos'}</h4>}<button onClick={()=>openLesson(l.id)} className={`mb-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left ${l.id===lessonId?'border border-emerald-400/20 bg-emerald-400/10 text-white':'text-slate-300 hover:bg-white/5'}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-xs font-bold ${l.completed?'bg-emerald-400 text-emerald-950':'bg-slate-700/70'}`}>{l.completed?<Check size={15}/>:String(i+1).padStart(2,'0')}</span><div className="min-w-0 flex-1"><p className="text-sm font-medium leading-5">{academyLessons[l.id]?.title||cleanTitle(l.title)}</p><p className="mt-1 text-[11px] text-slate-400">{academyLessons[l.id]?'Aula estruturada · ':''}{l.completed?'Concluída':'Pendente'}</p></div>{l.id===lessonId&&<ChevronRight size={15} className="shrink-0 text-emerald-300"/>}</button></div>)}</aside>
- <section className="min-w-0">{!detail?<div className="panel p-9 text-sm text-slate-400">Carregando aula...</div>:<><section className="heroGlow rounded-[22px] border border-emerald-300/15 p-6 sm:p-8"><div className="mb-3 flex flex-wrap items-center gap-2"><span className="badge bg-emerald-400/10 text-emerald-200">Aula {currentIndex+1} de {ofSubject.length}</span><span className="badge bg-white/10 text-slate-200"><Clock3 size={12}/> {academyLessons[detail.id]?'Leitura orientada':detail.minutes+' min sugeridos'}</span>{detail.completed>0&&<span className="badge bg-emerald-400/20 text-emerald-200"><Check size={12}/> Concluída</span>}</div><h2 className="text-2xl font-bold text-white sm:text-3xl">{academyLessons[detail.id]?.title||cleanTitle(detail.title)}</h2><p className="mt-3 text-sm leading-7 text-slate-200">{detail.objective}</p></section>
+ <div className="grid items-start gap-5 lg:grid-cols-[285px_minmax(0,1fr)]"><aside className={(showLessonPicker?'block ':'hidden lg:block ')+'panel max-h-[60vh] overflow-y-auto p-3 lg:sticky lg:top-24 lg:max-h-[75vh]'}><div className="mb-2 px-3 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">Aulas desta matéria</div>{ofSubject.map((l,i)=><div key={l.id}>{(i===0||moduleForTopic(l.code,l.id)?.title!==moduleForTopic(ofSubject[i-1].code,ofSubject[i-1].id)?.title)&&<h4 className="mb-2 mt-5 border-t border-white/10 px-3 pt-4 text-[11px] font-bold uppercase tracking-wider text-emerald-200">{moduleForTopic(l.code,l.id)?.title||'Outros assuntos'}</h4>}<button onClick={()=>openLesson(l.id)} className={`mb-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left ${l.id===lessonId?'border border-emerald-400/20 bg-emerald-400/10 text-white':'text-slate-300 hover:bg-white/5'}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-xs font-bold ${l.completed?'bg-emerald-400 text-emerald-950':'bg-slate-700/70'}`}>{l.completed?<Check size={15}/>:String(i+1).padStart(2,'0')}</span><div className="min-w-0 flex-1"><p className="text-sm font-medium leading-5">{academyLessons[l.id]?.title||cleanTitle(l.title)}</p><p className="mt-1 text-[11px] text-slate-400">{l.completed?'Concluída':'Pendente'}</p></div>{l.id===lessonId&&<ChevronRight size={15} className="shrink-0 text-emerald-300"/>}</button></div>)}</aside>
+ <section className="min-w-0">{!detail?<div className="panel p-9 text-sm text-slate-400">Carregando aula...</div>:<><section className="heroGlow rounded-[22px] border border-emerald-300/15 p-6 sm:p-8"><div className="mb-3 flex flex-wrap items-center gap-2"><span className="badge bg-emerald-400/10 text-emerald-200">Aula {currentIndex+1} de {ofSubject.length}</span><span className="badge bg-white/10 text-slate-200"><Clock3 size={12}/> {detail.minutes} min sugeridos</span>{detail.completed>0&&<span className="badge bg-emerald-400/20 text-emerald-200"><Check size={12}/> Concluída</span>}</div><h2 className="text-2xl font-bold text-white sm:text-3xl">{academyLessons[detail.id]?.title||cleanTitle(detail.title)}</h2>{!(academyLessons[detail.id]?.goal&&!academyLessons[detail.id]?.goal.startsWith("Explicar e aplicar:"))&&<p className="mt-3 text-sm leading-7 text-slate-200">{detail.objective}</p>}</section>
  <nav id="estudati-tabs" aria-label="Etapas da aula" className="my-4 grid scroll-mt-28 grid-cols-3 gap-2">{([{id:'teoria',text:'1. Aprender',icon:BookOpen},{id:'pratica',text:'2. Praticar',icon:ListChecks},{id:'revisao',text:'3. Revisar',icon:NotebookPen}] as const).map(({id,text,icon:Icon})=><button key={id} onClick={()=>goToTab(id)} className={tab===id?'flex min-w-0 items-center justify-center gap-2 rounded-xl bg-emerald-400/15 px-2 py-3 text-xs font-bold text-emerald-100 ring-1 ring-emerald-400/40':'flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-2 py-3 text-xs font-semibold text-slate-300 hover:bg-white/10'}><Icon size={15} className="hidden sm:block"/>{text}</button>)}</nav>
  <section className="panel min-h-[370px] p-4 sm:p-8">{tab==='teoria'&&<TeachingTheory lesson={detail} onPractice={()=>goToTab('pratica')}/>}
  {tab==='pratica'&&<div id="estudati-questoes">
