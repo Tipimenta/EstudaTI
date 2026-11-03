@@ -1,0 +1,487 @@
+[
+  {
+    "topic_id": 1,
+    "front": "Um host envia um pacote IP a outra sub-rede usando gateway. No primeiro salto Ethernet, o endereço MAC de destino é normalmente:",
+    "back": "O MAC do gateway no enlace local.. o quadro alcança o próximo salto local, enquanto o IP continua destinado ao servidor remoto."
+  },
+  {
+    "topic_id": 2,
+    "front": "Uma máquina recebeu IPv4 do DHCP e acessa um serviço por IP, mas falha ao acessar pelo nome. Qual teste é a melhor próxima etapa?",
+    "back": "Verificar resolução de nome via DNS e registros correspondentes.. diferença entre IP e nome torna DNS hipótese prioritária, sem excluir particularidades do aplicativo."
+  },
+  {
+    "topic_id": 3,
+    "front": "Um switch L2 possui hosts nas VLANs 10 e 20. Sem dispositivo L3, qual afirmação está correta?",
+    "back": "Cada VLAN forma domínio de broadcast separado; comunicação IP entre elas requer roteamento.. as VLANs isolam os domínios de broadcast no nível de enlace."
+  },
+  {
+    "topic_id": 4,
+    "front": "Um backup permanece disponível, mas arquivos foram alterados indevidamente. Qual propriedade está diretamente comprometida?",
+    "back": "Integridade.. integridade diz respeito a alterações não autorizadas ou incorretas do conteúdo."
+  },
+  {
+    "topic_id": 5,
+    "front": "Um arquivo e seu hash estão publicados no mesmo servidor comprometido. Qual limitação existe na checagem de integridade?",
+    "back": "Um atacante pode trocar arquivo e hash; é preciso confiar no valor esperado.. referência do hash precisa ser confiável; ambos adulterados podem passar na comparação."
+  },
+  {
+    "topic_id": 6,
+    "front": "Um serviço Linux não inicia após atualização. Qual sequência de diagnóstico é mais defensável?",
+    "back": "Verificar systemctl status, journalctl, dependências e permissões relacionadas.. estado, logs, dependências e ACLs ajudam a encontrar a causa."
+  },
+  {
+    "topic_id": 7,
+    "front": "Uma VM possui snapshot local e o datastore inteiro falha fisicamente. Qual avaliação é correta?",
+    "back": "Snapshot pode ser perdido com o datastore; backup independente é necessário.. a independência do backup é essencial contra perda do datastore."
+  },
+  {
+    "topic_id": 8,
+    "front": "Leia: 'A equipe melhorou o desempenho; entretanto, ainda há falhas'. Qual interpretação respeita o conectivo?",
+    "back": "Melhora e persistência de falhas coexistem.. 'entretanto' estabelece contraste entre avanço e problema remanescente."
+  },
+  {
+    "topic_id": 9,
+    "front": "Assinale a construção em conformidade com a norma-padrão:",
+    "back": "Faz três anos que o sistema foi instalado.. Fazer indicando tempo decorrido e haver no sentido de existir são impessoais; 'existir' concorda com o sujeito."
+  },
+  {
+    "topic_id": 10,
+    "front": "Uma correção em firewall é proposta para restaurar sistema crítico e afeta produção. Qual cuidado continua pertinente?",
+    "back": "Avaliar riscos e registrar autorização/teste apropriados ao processo de mudança.. mudanças precisam de avaliação e controles de acordo com a urgência e política."
+  },
+  {
+    "topic_id": 11,
+    "front": "Um PDTI registra 'comprar 30 computadores' sem justificar necessidade nem benefício. O principal problema é:",
+    "back": "Falta de alinhamento entre necessidade institucional, iniciativa e resultado esperado.. o planejamento deve explicitar a necessidade e benefício pretendido."
+  },
+  {
+    "topic_id": 12,
+    "front": "Uma consulta usa LEFT JOIN entre clientes e pedidos e quer contar quantos pedidos cada cliente possui, inclusive os sem pedido. Qual agregação é mais apropriada?",
+    "back": "COUNT(pedidos.id) agrupando cliente.. COUNT(coluna do lado direito) ignora NULL e retorna zero para cliente sem pedidos."
+  },
+  {
+    "topic_id": 13,
+    "front": "Uma tabela de pedidos repete nome do cliente em centenas de linhas. Qual solução costuma reduzir anomalias?",
+    "back": "Armazenar cliente em tabela própria e referenciá-lo por FK.. separação de entidades reduz redundância e centraliza o dado do cliente."
+  },
+  {
+    "topic_id": 14,
+    "front": "Qual requisito está suficientemente mensurável para ser testado?",
+    "back": "A busca deve responder em até 2 s em 95% das requisições no cenário de teste definido.. tempo, percentil e cenário formam critério verificável."
+  },
+  {
+    "topic_id": 15,
+    "front": "Um cliente reenvia um POST depois de timeout, sem saber se o pedido já foi criado. Qual recurso de desenho ajuda a evitar duplicação?",
+    "back": "Usar chave de idempotência e deduplicação no servidor, quando apropriado.. identidade estável da intenção permite detectar repetição da operação."
+  },
+  {
+    "topic_id": 16,
+    "front": "Em lógica proposicional clássica, a negação de P→Q equivale a:",
+    "back": "P∧¬Q.. o único contraexemplo é antecedente verdadeiro e consequente falso."
+  },
+  {
+    "topic_id": 17,
+    "front": "Qual enunciado sobre LGPD e consentimento está correto?",
+    "back": "Consentimento é uma das bases legais e o enquadramento depende do contexto e da categoria de dados.. análise da hipótese legal requer finalidade, categoria e situação."
+  },
+  {
+    "topic_id": 18,
+    "front": "Uma entidade pública precisa comprar serviço de TI e escolhe o fornecedor antes de definir critérios e necessidade. Qual a falha principal?",
+    "back": "Falta de fundamentação e planejamento da solução.. necessidades, alternativas e regras de contratação devem orientar a escolha."
+  },
+  {
+    "topic_id": 91,
+    "front": "Uma captura mostra cabeçalhos Ethernet, IPv4 e TCP. Qual afirmação é adequada sobre o desencapsulamento no destino?",
+    "back": "Cada camada interpreta seu cabeçalho e entrega os dados úteis à camada superior. No receptor, as camadas processam os cabeçalhos pertinentes, entregando a unidade de dados à camada superior."
+  },
+  {
+    "topic_id": 92,
+    "front": "Uma rede exige 28 endereços de hosts convencionais, além de rede e broadcast. Qual é o menor bloco IPv4 usual suficiente?",
+    "back": "/27. /27 possui 32 endereços totais e 30 de host convencional."
+  },
+  {
+    "topic_id": 93,
+    "front": "Um serviço HTTPS usa nome correto e TCP/443 conecta, mas exibe erro de nome do certificado TLS. Qual hipótese é pertinente?",
+    "back": "Incompatibilidade entre domínio acessado e nomes cobertos pelo certificado. a validação do nome no certificado pode rejeitar certificado que não abrange o hostname solicitado."
+  },
+  {
+    "topic_id": 94,
+    "front": "Um gestor exige evidência de que controles de terceiros são revisados. Em qual conjunto do CSF 2.0 a governança de fornecedores é discutida explicitamente?",
+    "back": "GV, cadeia de suprimentos de cibersegurança. O CSF 2.0 inclui gestão de riscos da cadeia de suprimentos dentro de Governar, embora medidas se conectem a várias funções."
+  },
+  {
+    "topic_id": 95,
+    "front": "Uma assinatura digital válida de documento foi gerada usando a chave privada de um signatário. Qual chave é normalmente usada para verificar a assinatura?",
+    "back": "Chave pública correspondente. Assinaturas assimétricas são verificadas com a chave pública correspondente, em modelo e algoritmo adequados."
+  },
+  {
+    "topic_id": 96,
+    "front": "Um processo possui RPO de 15 minutos e o último ponto restaurável está 2 horas antes da falha. O que isso indica?",
+    "back": "A meta de RPO provavelmente não foi atendida. O ponto de restauração disponível implica possível perda de aproximadamente 2 horas, superior ao objetivo de 15 minutos."
+  },
+  {
+    "topic_id": 97,
+    "front": "Uma GPO vinculada a OU não foi aplicada a uma conta recém-movida. Qual primeira investigação é relevante?",
+    "back": "Escopo, herança, filtro de segurança e atualização de política. Aplicação de GPO depende de vinculação, herança, escopo, filtros e atualização, além de acesso ao domínio."
+  },
+  {
+    "topic_id": 98,
+    "front": "Uma aplicação Linux consegue ler um arquivo, mas falha ao executá-lo. Qual distinção de permissões é essencial?",
+    "back": "Permissão de leitura não equivale a permissão de execução. Bits r e x têm propósitos diferentes; execução pode exigir x e outras condições, mesmo quando leitura é permitida."
+  },
+  {
+    "topic_id": 99,
+    "front": "Uma VM tem snapshot do dia anterior e backups regulares em armazenamento externo. Qual elemento protege melhor contra perda do próprio datastore?",
+    "back": "Backup independente testado. Uma cópia independente e restaurável é mais resiliente à perda do datastore que snapshot armazenado no mesmo local."
+  },
+  {
+    "topic_id": 100,
+    "front": "No enunciado 'Até o administrador conseguiu resolver o caso', a partícula 'até' pode pressupor que:",
+    "back": "A participação dele é apresentada como surpreendente ou enfática. 'Até' pode funcionar como operador argumentativo que destaca um caso surpreendente na escala sugerida pelo enunciador."
+  },
+  {
+    "topic_id": 101,
+    "front": "Qual frase apresenta regência e crase corretas?",
+    "back": "O técnico assistiu à apresentação.. Assistir no sentido de presenciar rege 'a'; com artigo feminino, ocorre crase: assistiu à apresentação."
+  },
+  {
+    "topic_id": 102,
+    "front": "Compare 'O servidor caiu porque faltou energia' com 'Faltou energia; portanto, o servidor caiu'. O segundo conectivo exprime:",
+    "back": "Conclusão. 'Portanto' é conclusivo e apresenta a queda do servidor como consequência da falta de energia."
+  },
+  {
+    "topic_id": 103,
+    "front": "Um serviço é restaurado por reinício, mas a falha volta semanalmente. O trabalho de restaurar no momento e investigar a causa corresponde a:",
+    "back": "Incidente e problema, respectivamente. Incidente busca recuperar operação, enquanto problema procura causas e prevenção de recorrências."
+  },
+  {
+    "topic_id": 104,
+    "front": "Em uma organização, a alta direção define prioridades de valor e risco, e a TI executa o plano. Qual alternativa está mais alinhada ao COBIT?",
+    "back": "Governança dirige e monitora; gestão realiza atividades. COBIT diferencia objetivos de governança e de gestão para tratar valor, risco e recursos de informação e tecnologia."
+  },
+  {
+    "topic_id": 105,
+    "front": "Uma equipe Scrum muda a prioridade dos itens do Product Backlog. Quem é responsável pela ordenação do backlog para maximizar valor?",
+    "back": "Product Owner. No Scrum, o Product Owner é responsável pelo gerenciamento eficaz do Product Backlog, incluindo sua ordenação."
+  },
+  {
+    "topic_id": 106,
+    "front": "Em um relacionamento N:N entre alunos e disciplinas, qual tabela é usualmente adequada?",
+    "back": "Matricula(aluno_id,disciplina_id) com FKs. Uma tabela associativa representa os pares e suas propriedades, podendo usar chave composta ou constraint UNIQUE."
+  },
+  {
+    "topic_id": 107,
+    "front": "Uma consulta usa SELECT cliente, COUNT(*) FROM vendas GROUP BY cliente. O resultado representa:",
+    "back": "Uma linha por cliente agrupado com sua contagem de vendas. GROUP BY agrega linhas com mesmo valor de cliente; COUNT(*) conta as linhas de cada grupo."
+  },
+  {
+    "topic_id": 108,
+    "front": "Uma transação T1 lê uma linha, outra transação a altera e confirma, e T1 relê valor diferente. Que fenômeno é descrito?",
+    "back": "Leitura não repetível. Leitura não repetível ocorre quando o mesmo registro é relido com valor diferente devido a confirmação concorrente."
+  },
+  {
+    "topic_id": 109,
+    "front": "Uma história de usuário diz 'Como recepcionista, quero localizar agendamentos por data para organizar atendimento'. Qual complemento permite testá-la melhor?",
+    "back": "Critérios de aceitação objetivos para filtragem e ordenação. Critérios verificáveis descrevem condições e resultados esperados, reduzindo ambiguidade da história."
+  },
+  {
+    "topic_id": 110,
+    "front": "Uma API recebe duas solicitações PUT idênticas para o mesmo recurso, sem efeitos colaterais adicionais. Qual propriedade é esperada semanticamente?",
+    "back": "Idempotência. PUT é definido como idempotente: múltiplas solicitações equivalentes devem produzir o mesmo efeito pretendido que uma."
+  },
+  {
+    "topic_id": 111,
+    "front": "Uma falha ocorre somente quando dois serviços reais trocam mensagens, embora testes unitários passem. Qual classe de teste é mais indicada?",
+    "back": "Integração/contrato entre serviços. Verificação de integração e contratos revela problemas de interoperabilidade e formatos que testes isolados podem não detectar."
+  },
+  {
+    "topic_id": 112,
+    "front": "Qual expressão é equivalente a P → Q?",
+    "back": "¬Q → ¬P. Contrapositiva é equivalente à implicação original; recíproca não é em geral."
+  },
+  {
+    "topic_id": 113,
+    "front": "Uma urna tem 3 bolas vermelhas e 2 azuis. Sem reposição, qual a probabilidade de duas vermelhas em sequência?",
+    "back": "3/10. P(primeira vermelha)=3/5 e P(segunda vermelha | primeira)=2/4; produto=6/20=3/10."
+  },
+  {
+    "topic_id": 114,
+    "front": "Uma progressão geométrica tem a1=3 e razão 2. Qual a4?",
+    "back": "24. a4=a1×r^(4−1)=3×2^3=24."
+  },
+  {
+    "topic_id": 115,
+    "front": "Uma empresa diz que qualquer tratamento de dados exige consentimento. Qual avaliação é correta?",
+    "back": "Incorreta: a LGPD prevê outras bases legais além do consentimento. Consentimento é uma base legal, mas a LGPD prevê hipóteses adicionais, dependentes do contexto e da categoria de dados."
+  },
+  {
+    "topic_id": 116,
+    "front": "Um termo de referência descreve como a execução será medida e paga. Qual elemento do TR está sendo trabalhado?",
+    "back": "Critérios de medição e pagamento. Na Lei 14.133, TR pode abranger modelo de execução e gestão e critérios de medição e pagamento, conforme objeto e condições."
+  },
+  {
+    "topic_id": 117,
+    "front": "Ao responder pedido de informação pública, a administração busca preservar trechos com dados pessoais protegidos e disponibilizar os demais. Qual lógica está presente?",
+    "back": "Conciliação de transparência e privacidade. LAI e proteção de dados exigem análise concreta de restrições, proporcionalidade e possibilidades de acesso parcial."
+  },
+  {
+    "topic_id": 118,
+    "front": "Um switch recebe quadro por porta 4 com MAC de origem ainda desconhecido. Qual atualização é típica em uma tabela MAC dinâmica?",
+    "back": "Associar MAC de origem à porta 4. Switches L2 aprendem endereço MAC de origem e porta de entrada; destino é usado para decisão de encaminhamento."
+  },
+  {
+    "topic_id": 119,
+    "front": "Uma rede passa a registrar perdas e o emissor reduz a janela de congestionamento, apesar de o receptor ainda anunciar buffer amplo. O fenômeno envolve principalmente:",
+    "back": "Controle de congestionamento do caminho. cwnd reage às condições de rede; rwnd representa capacidade de recepção. O limite efetivo considera ambos."
+  },
+  {
+    "topic_id": 120,
+    "front": "Uma tabela de rotas contém 10.1.0.0/16 e 10.1.5.0/24. Para o destino 10.1.5.22, qual rota será preferida pela correspondência de prefixo?",
+    "back": "10.1.5.0/24. A correspondência de prefixo mais longo privilegia /24 para o endereço 10.1.5.22."
+  },
+  {
+    "topic_id": 121,
+    "front": "Um registro DNS foi alterado no autoritativo, mas clientes seguem recebendo o valor antigo durante algum tempo. Qual explicação é plausível?",
+    "back": "Cache em resolvedor recursivo ainda dentro do TTL. Resolvedores podem servir dados armazenados enquanto válidos conforme política de cache e TTL; a atualização não é instantânea para todos os clientes."
+  },
+  {
+    "topic_id": 122,
+    "front": "Uma diretoria define apetite a risco, responsabilidades e supervisão de cibersegurança. Essa decisão representa sobretudo:",
+    "back": "Governança. Apetite, accountability e direção estratégica são elementos centrais da governança de riscos."
+  },
+  {
+    "topic_id": 123,
+    "front": "Um serviço deve voltar em até duas horas e admite perda máxima de dados correspondente a dez minutos. Esses dois objetivos são, respectivamente:",
+    "back": "RTO e RPO. RTO corresponde à meta de tempo de recuperação; RPO à antiguidade máxima tolerável dos dados recuperados."
+  },
+  {
+    "topic_id": 124,
+    "front": "Em uma abordagem Zero Trust, qual decisão é mais coerente?",
+    "back": "Verificar continuamente acesso conforme identidade, contexto e menor privilégio. Zero Trust evita confiança implícita por localização de rede e favorece verificação contextual, política e privilégio mínimo."
+  },
+  {
+    "topic_id": 125,
+    "front": "Para aplicar uma política Windows a computadores de determinado setor, qual estratégia é mais coerente?",
+    "back": "Vincular GPO à OU correspondente e validar filtros. GPOs são vinculadas a sites, domínios e OUs com processamento por herança e filtros; o escopo correto é indispensável."
+  },
+  {
+    "topic_id": 126,
+    "front": "Uma umask 027, aplicada a novos arquivos com permissões base 666, normalmente produz que permissão?",
+    "back": "640. Em modo convencional, arquivos 666 com umask 027 resultam 640 (rw-r-----); diretórios têm base 777 e resultam 750."
+  },
+  {
+    "topic_id": 127,
+    "front": "Uma equipe cria imagem Docker que inclui credenciais em camadas do build. Qual problema permanece mesmo após remover o arquivo em etapa posterior?",
+    "back": "Segredos podem ficar no histórico/camadas da imagem. Segredos escritos durante build podem persistir em camadas/cache; use gerenciamento de segredos em vez de incluí-los na imagem."
+  },
+  {
+    "topic_id": 128,
+    "front": "Uma organização tem RAID 1 em produção e nenhuma cópia externa. Qual risco segue sem mitigação?",
+    "back": "Exclusão acidental ou ransomware afetar ambas as cópias. RAID espelha alterações, inclusive exclusões ou criptografia maliciosa; backups independentes são necessários."
+  },
+  {
+    "topic_id": 129,
+    "front": "Assinale a frase correta quanto à concordância:",
+    "back": "Mais de um técnico participou do plantão.. Em regra, 'mais de um' leva verbo no singular; demais frases usam haver e fazer temporais de forma impessoal."
+  },
+  {
+    "topic_id": 130,
+    "front": "Em 'A equipe se dirigiu à unidade de saúde', por que ocorre crase?",
+    "back": "Há preposição exigida por dirigir-se a e artigo feminino antes de unidade. O verbo exige a preposição a e o substantivo feminino definido admite artigo a, havendo fusão a+a."
+  },
+  {
+    "topic_id": 131,
+    "front": "Na frase 'Ele revisou o contrato. Depois, enviou-o à chefia', o pronome 'o' retoma:",
+    "back": "O contrato. O pronome oblíquo 'o' retoma o objeto direto já mencionado: o contrato."
+  },
+  {
+    "topic_id": 132,
+    "front": "Em 'Os usuários que receberam o aviso compareceram', a ausência de vírgulas na oração relativa indica, em geral:",
+    "back": "Valor restritivo: um subconjunto de usuários. Oração relativa sem vírgulas tende a restringir o referente; com vírgulas, seria explicativa."
+  },
+  {
+    "topic_id": 133,
+    "front": "A equipe restaura rapidamente um serviço e cria investigação da causa raiz. Qual indicador faria mais sentido para a fase de incidente?",
+    "back": "Tempo para restauração do serviço. O objetivo imediato de incidentes é restaurar o serviço; métricas de tempo e qualidade da restauração são pertinentes."
+  },
+  {
+    "topic_id": 134,
+    "front": "Uma diretoria avalia se investimentos de TI entregam valor e respeitam riscos aceitos. Qual dimensão está mais diretamente evidenciada?",
+    "back": "Objetivos de governança. A supervisão de valor, riscos e alinhamento estratégico é responsabilidade de governança."
+  },
+  {
+    "topic_id": 135,
+    "front": "Uma iniciativa de PDTI foi concluída, mas não produz o benefício previsto. Qual avaliação é mais útil?",
+    "back": "Confrontar indicador de resultado com meta de negócio. Conclusão de atividade não demonstra benefício; é preciso medir resultados em relação às necessidades e metas."
+  },
+  {
+    "topic_id": 136,
+    "front": "Um serviço atingiu disponibilidade mensal de 99,8%, mas seu SLO era de 99,9%. Qual interpretação é correta?",
+    "back": "O resultado ficou abaixo do objetivo. Disponibilidade observada (SLI) de 99,8% ficou 0,1 ponto percentual abaixo da meta de 99,9%."
+  },
+  {
+    "topic_id": 137,
+    "front": "Uma aplicação só confirma a movimentação financeira quando débito e crédito concluem. Essa garantia remete especialmente a:",
+    "back": "Atomicidade. Atomicidade torna as operações uma unidade transacional com commit ou rollback."
+  },
+  {
+    "topic_id": 138,
+    "front": "Um índice pode acelerar leituras, mas há custo adicional. Qual alternativa descreve esse trade-off?",
+    "back": "Índices exigem armazenamento e manutenção nas escritas. Índices ocupam espaço e devem ser atualizados conforme inserções, modificações e exclusões, o que exige planejamento."
+  },
+  {
+    "topic_id": 139,
+    "front": "Uma relação está na 1FN, mas um atributo não-primo depende apenas de parte de uma chave candidata composta. Qual forma normal é violada?",
+    "back": "2FN. A 2FN requer ausência de dependência parcial de atributo não-primo em relação a chave candidata composta."
+  },
+  {
+    "topic_id": 140,
+    "front": "Uma consulta JOIN entre pedidos e itens retorna o valor total de um pedido repetido em cada linha de item. Qual cuidado é necessário antes de somar?",
+    "back": "Controlar granularidade para evitar dupla contagem. Junção 1:N multiplica linhas da entidade pai, o que pode duplicar agregações se não houver pré-agregação/estratégia apropriada."
+  },
+  {
+    "topic_id": 141,
+    "front": "Um teste verifica o método 'calcularDesconto' isolando dependências externas com mocks. Em geral, trata-se de:",
+    "back": "Teste de unidade. Teste de unidade verifica comportamento de unidade pequena isolando dependências conforme escopo."
+  },
+  {
+    "topic_id": 142,
+    "front": "Uma API expõe PATCH para alterar parte de recurso. Qual afirmação é correta?",
+    "back": "PATCH não é necessariamente idempotente; depende da semântica da operação. PATCH aplica alterações parciais e a idempotência depende do formato e operação; diferentemente de PUT, não é uma garantia geral."
+  },
+  {
+    "topic_id": 143,
+    "front": "Duas pessoas alteram a mesma linha de um arquivo em branches diferentes. Que situação pode surgir ao mesclar?",
+    "back": "Conflito de merge a resolver. Alterações concorrentes incompatíveis podem exigir resolução manual de conflitos ao integrar branches."
+  },
+  {
+    "topic_id": 144,
+    "front": "Qual é a contrapositiva de 'Se há energia, o servidor liga'?",
+    "back": "Se o servidor não liga, então não há energia. P→Q equivale a ¬Q→¬P. A contrapositiva nega e inverte antecedente e consequente."
+  },
+  {
+    "topic_id": 145,
+    "front": "A negação da frase 'O sistema está online e o backup terminou' é:",
+    "back": "O sistema não está online ou o backup não terminou. Lei de De Morgan: ¬(P∧Q) é ¬P∨¬Q."
+  },
+  {
+    "topic_id": 146,
+    "front": "Dois eventos independentes têm probabilidades de 0,4 e 0,5. Qual a probabilidade de ambos ocorrerem?",
+    "back": "0,2. Para eventos independentes, P(A∩B)=P(A)×P(B)=0,4×0,5=0,2."
+  },
+  {
+    "topic_id": 147,
+    "front": "Quatro pessoas disputarão primeiro e segundo lugar. Quantos pares ordenados de vencedores são possíveis?",
+    "back": "12. Escolhas ordenadas sem repetição: 4 opções para 1º e 3 para 2º, resultando 4×3=12."
+  },
+  {
+    "topic_id": 148,
+    "front": "Um órgão trata dados pessoais para executar política pública com competência legal. Qual afirmação sobre bases legais é correta?",
+    "back": "Consentimento não é a única hipótese, e a finalidade pública precisa ser justificada. A LGPD prevê bases e regras próprias de tratamento pelo poder público; finalidade, necessidade e transparência permanecem importantes."
+  },
+  {
+    "topic_id": 149,
+    "front": "Uma empresa contrata prestador para processar dados seguindo instruções documentadas. Sem decidir finalidades, o prestador tende a ser:",
+    "back": "Operador. Operador realiza tratamento em nome do controlador, embora papéis dependam das decisões efetivas sobre operações."
+  },
+  {
+    "topic_id": 150,
+    "front": "Uma contratação de serviço de TI foi realizada e o órgão precisa acompanhar cumprimento das obrigações. Que função é essencial?",
+    "back": "Fiscalização/gestão contratual com registro de ocorrências. Acompanhamento e fiscalização verificam execução conforme contrato, com registros e providências quando necessário."
+  },
+  {
+    "topic_id": 151,
+    "front": "Um pedido de acesso versa sobre gasto público, mas documento anexo contém dados pessoais não necessários à resposta. Qual conduta inicial é razoável?",
+    "back": "Examinar acesso ao gasto e proteger dados pessoais dispensáveis. Deve-se equilibrar transparência de gastos com preservação de dados pessoais e avaliar formas de acesso parcial."
+  },
+  {
+    "topic_id": 152,
+    "front": "O gateway responde ping e o DNS resolve o nome, mas o servidor retorna HTTP 503. Que conclusão inicial é mais defensável?",
+    "back": "A camada HTTP informou indisponibilidade; investigar aplicação e backend. Resposta HTTP 503 pressupõe comunicação com um servidor ou intermediário e direciona a investigação à disponibilidade do serviço."
+  },
+  {
+    "topic_id": 153,
+    "front": "Ao calcular a sumarização de 192.168.20.0/24 e 192.168.21.0/24 contíguas e alinhadas, qual prefixo cobre exatamente ambas?",
+    "back": "192.168.20.0/23. Duas redes /24 contíguas alinhadas em fronteira par podem ser agregadas em um /23 (512 endereços)."
+  },
+  {
+    "topic_id": 154,
+    "front": "Após isolar uma máquina comprometida, o time apaga seus registros antes de documentar o evento. Qual problema principal?",
+    "back": "Dificuldade de investigação e perda de evidência. Eliminar dados antes de coleta e documentação pode comprometer análise, auditoria e responsabilização."
+  },
+  {
+    "topic_id": 155,
+    "front": "Uma conta terceirizada continua ativa após o encerramento do contrato. Qual medida combina governança e controle de acesso?",
+    "back": "Revisão periódica de contas e processo de desligamento com responsáveis. Políticas de ciclo de vida de identidades com responsabilidades e execução de revogação reduzem acessos indevidos."
+  },
+  {
+    "topic_id": 156,
+    "front": "Um cliente não encontra controlador de domínio apesar de ter IP e gateway válidos. Que serviço deve ser checado especialmente para localização do AD?",
+    "back": "DNS com registros SRV do domínio. AD depende fortemente de DNS para localizar controladores e serviços; configuração DNS inadequada causa falhas de ingresso e login."
+  },
+  {
+    "topic_id": 157,
+    "front": "Um daemon Linux falha ao abrir arquivo e o log mostra EACCES. Qual hipótese imediata é mais consistente?",
+    "back": "Permissões/ACL ou política de segurança negaram acesso. EACCES indica acesso negado; verifique dono, permissões, ACL, SELinux/AppArmor e contexto efetivo."
+  },
+  {
+    "topic_id": 158,
+    "front": "Leia: 'A coordenadora conversou com a médica sobre sua avaliação.' Qual ambiguidade está presente na expressão 'sua avaliação'?",
+    "back": "Não está explícito se a avaliação pertence à coordenadora ou à médica. O possessivo 'sua' pode retomar mais de um referente feminino no contexto. Reescrever como 'avaliação da médica' ou 'avaliação da coordenadora' elimina a ambiguidade, conforme a intenção."
+  },
+  {
+    "topic_id": 159,
+    "front": "Qual reescrita é mais apropriada para comunicação técnica objetiva?",
+    "back": "O aplicativo apresentou erro 503 às 9h; a equipe iniciou análise dos logs.. Relato objetivo registra fato observável, horário e ação, evitando julgamentos vagos ou linguagem coloquial."
+  },
+  {
+    "topic_id": 160,
+    "front": "O SLA estabelece prazo de atendimento, o SLO uma meta de tempo e o SLI registra o desempenho. Qual item é a medida efetivamente observada?",
+    "back": "SLI. SLI é métrica observável do serviço; SLO estabelece valor-alvo; SLA documenta compromisso entre partes."
+  },
+  {
+    "topic_id": 161,
+    "front": "Há dois projetos: A entrega benefício alto com risco baixo; B entrega benefício incerto com risco elevado. Qual decisão é mais técnica?",
+    "back": "Comparar valor, risco, recursos e prioridades explícitas antes de escolher. Priorizar demanda critérios explícitos e análise de custo, benefício, urgência, riscos e capacidade de execução."
+  },
+  {
+    "topic_id": 162,
+    "front": "Uma consulta conta pacientes após JOIN com 3 exames por paciente. Qual expressão evita contar o mesmo paciente várias vezes?",
+    "back": "COUNT(DISTINCT paciente.id). COUNT(DISTINCT) elimina repetições de identificadores no resultado, evitando inflar o número de pacientes."
+  },
+  {
+    "topic_id": 163,
+    "front": "Uma aplicação usa transações sem coordenação e duas sessões atualizam a mesma linha. Que recurso pode ajudar a proteger a consistência?",
+    "back": "Controle de concorrência e isolamento apropriado. Transações, locks/controle multiversão e nível de isolamento devem refletir regras de negócio e conflitos possíveis."
+  },
+  {
+    "topic_id": 164,
+    "front": "Uma história de usuário foi implementada mas não há critério para confirmar o resultado. Qual artefato ajuda a estabelecer o comportamento esperado?",
+    "back": "Critérios de aceite/testes verificáveis. Critérios de aceite descrevem resultados que podem ser demonstrados em testes ou revisão com partes interessadas."
+  },
+  {
+    "topic_id": 165,
+    "front": "Um cliente repete POST de criação após timeout e gera pedido duplicado. Qual mecanismo pode reduzir esse problema?",
+    "back": "Chave de idempotência com deduplicação no servidor. Uma chave de idempotência estável permite identificar repetição da mesma intenção e evitar duplicação de operações de criação."
+  },
+  {
+    "topic_id": 166,
+    "front": "Qual é a contrapositiva de “Se N então D”?",
+    "back": "Se não D, então não N. A contrapositiva de N→D é ¬D→¬N; a recíproca e a inversa não são equivalentes gerais."
+  },
+  {
+    "topic_id": 167,
+    "front": "Um evento de falha tem probabilidade 0,1 por execução, independentemente entre duas execuções. Qual a chance de não haver falha nas duas?",
+    "back": "0,81. Chance de não falha é 0,9 em cada execução; P(sem falha em ambas)=0,9²=0,81."
+  },
+  {
+    "topic_id": 168,
+    "front": "Um atendimento municipal recebe dados pessoais para prestar serviço específico. Qual prática melhor demonstra conformidade?",
+    "back": "Informar finalidade e tratar somente dados necessários com controles proporcionais. Finalidade, adequação, necessidade e segurança orientam o tratamento público, observando a base legal pertinente."
+  },
+  {
+    "topic_id": 169,
+    "front": "Em contratação de TI, a equipe escolheu solução tecnológica antes de identificar a necessidade pública. Qual correção é indicada?",
+    "back": "Caracterizar problema, comparar alternativas no planejamento e justificar solução. Planejamento começa por necessidade e alternativas; a seleção e especificação devem ser justificadas conforme legislação aplicável."
+  }
+]
