@@ -64,7 +64,7 @@ export const rewrittenIntegration:Record<number,Partial<PedagogicalLesson>>={
       },
       {
         "title": "Como descobrir somente A, somente B e nenhum",
-        "body": "Se 24 estudam Redes e 7 também estudam Banco, então **somente Redes = 24 − 7 = 17**. Se 19 estudam Banco e 7 estudam Redes, **somente Banco = 19 − 7 = 12**. O total que estuda as duas é 7. Somando os grupos separados, 17 + 7 + 12 = 36, o mesmo resultado da fórmula.\n\nSe o universo contém 40 pessoas, **nenhuma das duas = 40 − 36 = 4**. O complemento exige conhecer o universo total; sem essa informação, não podemos calcular quantos estão fora de ambos."
+        "body": "Se 24 estudam Redes e 7 também estudam Banco, então **somente Redes = 24 − 7 = 17**. Se 19 estudam Banco e 7 estudam Redes, **somente Banco = 19 − 7 = 12**. O total que estuda as duas é 7. Somando os grupos separados, 17 + 7 + 12 = 36, o mesmo resultado da fórmula.\n\nSe o universo contém 40 pessoas, **nenhuma das duas = 40 − 36 = 4**. O complemento exige conhecer o universo total; sem essa informação, não podemos calcular quantos estão fora de ambos.\n\n**Faça uma checagem por regiões.** Em um diagrama de Venn de dois conjuntos, há quatro regiões possíveis no universo: só A, só B, A e B, e nenhuma delas. A soma das quatro regiões deve coincidir com o número total de elementos do universo. Isso permite verificar se uma solução está coerente sem confiar apenas na fórmula. Se o total não fechar, procure um elemento contado duas vezes ou esquecido no complemento. Na expressão “pelo menos uma”, inclua a região de interseção; na expressão “exatamente uma”, exclua-a."
       },
       {
         "title": "Palavras que mudam a operação",
