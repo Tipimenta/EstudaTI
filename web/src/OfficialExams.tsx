@@ -22,7 +22,7 @@ export default function OfficialExams(){
  useEffect(()=>{load()},[])
  async function refresh(code:string){setBusy(code);setMessage('');setError('')
   try{const r=await post<{ok:boolean;imported:number;blocked:number|null;message:string}>('/provas/oficiais/'+code+'/atualizar',{})
-   setMessage(r.ok?'Foram verificadas '+r.imported+' questões com gabarito definitivo; '+(r.blocked||0)+' bloqueadas.':r.message)
+   setMessage(r.ok?'Foram disponibilizadas '+r.imported+' questões após checagem automática de texto e gabarito; '+(r.blocked||0)+' bloqueadas.':r.message)
    if(!r.ok)setError('A importação não foi liberada: '+r.message)
    await load()
   }catch(e){setError((e as Error).message)}finally{setBusy('')}
@@ -39,7 +39,7 @@ export default function OfficialExams(){
     }catch(e){failed++}
   }
   await load()
-  setMessage('Atualização concluída. '+imported+' questões verificadas; '+blocked+' bloqueadas; '+failed+' fontes não processadas. As provas já importadas permanecem disponíveis.')
+  setMessage('Atualização concluída. '+imported+' questões disponíveis após checagem; '+blocked+' bloqueadas; '+failed+' fontes não processadas. As provas já importadas permanecem disponíveis.')
   if(failed)setError('Uma ou mais fontes não puderam ser importadas. Cada prova mostra o último diagnóstico; tente atualizá-la individualmente.')
   setProgress('');setBusy('')
  }
@@ -64,17 +64,25 @@ export default function OfficialExams(){
  const current=pack?.items[index]
  const answered=pack?.items.filter(x=>selected[x.number]!==undefined).length||0
  return <section className="panel p-4 sm:p-7">
-  <div className="flex items-start gap-3"><BookOpen size={24} className="mt-1 text-emerald-300"/><div><h2 className="text-xl font-bold">Importar e resolver provas da banca</h2><p className="mt-2 text-sm leading-6 text-slate-300">A busca acontece <strong>somente ao apertar o botão</strong>, sem agendamentos nem serviços pagos. Nesta primeira versão, Dataprev 2024 (FGV), caderno tipo 1 e gabarito definitivo.</p></div></div>
+  <div className="flex items-start gap-3"><BookOpen size={24} className="mt-1 text-emerald-300"/><div><h2 className="text-xl font-bold">Escolha uma prova para resolver</h2><p className="mt-2 text-sm leading-6 text-slate-300">As provas já importadas aparecem abaixo, separadas por cargo. <strong>A pesquisa e atualização só acontecem quando você aperta o botão.</strong> A integração disponível agora cobre quatro cadernos FGV da Dataprev 2024.</p></div></div>
   {error&&<div role="alert" className="mt-4 rounded-lg border border-rose-400/20 bg-rose-400/10 p-4 text-sm text-rose-200">{error}</div>}
   {message&&<p className="mt-4 rounded-lg bg-emerald-400/10 p-4 text-sm leading-6 text-emerald-100">{message}</p>}
-  {!active&&<button onClick={refreshAll} disabled={!!busy||!sources.length} className="btn btn-primary mt-5 w-full sm:w-auto"><RefreshCw size={16}/>{busy==='all'?progress:'Buscar e importar todas as 4 provas FGV disponíveis'}</button>}
+  {!active&&<button onClick={refreshAll} disabled={!!busy||!sources.length} className="btn btn-primary mt-5 w-full sm:w-auto"><RefreshCw size={16}/>{busy==='all'?progress:'Pesquisar e atualizar as 4 provas compatíveis'}</button>}
   {!active?<div className="mt-5 grid gap-3 md:grid-cols-2">{sources.map(s=><div key={s.code} className="rounded-xl border border-white/10 bg-white/[.02] p-4">
    <span className="text-xs font-bold text-emerald-300">{s.board} · {s.contest} · Tipo {s.book_type}</span>
    <h3 className="mt-2 font-bold leading-6 text-white">{s.role}</h3><p className="mt-1 text-xs text-slate-400">{s.focus} · {s.live_count} questões prontas</p>
    {s.diagnostic&&<p className="mt-2 text-xs leading-5 text-slate-400">{s.diagnostic}</p>}
-   <div className="mt-4 flex flex-wrap gap-2"><button className="btn btn-secondary text-xs" disabled={!!busy} onClick={()=>refresh(s.code)}><RefreshCw size={14}/>{busy===s.code?'Baixando e conferindo...':s.live_count?'Atualizar por botão':'Buscar e importar'}</button>
-    {s.live_count>0&&<button className="btn btn-primary text-xs" onClick={()=>openExam(s.code)} disabled={!!busy}>Resolver prova <ArrowRight size={14}/></button>}</div>
-   <p className="mt-3 text-xs"><a href={s.source_url} target="_blank" rel="noopener noreferrer" className="text-sky-300 underline">PDF oficial</a> · <a href={s.answer_url} target="_blank" rel="noopener noreferrer" className="text-sky-300 underline">Gabarito definitivo</a></p>
+   <div className="mt-4 flex flex-wrap gap-2">
+    {s.live_count>0?<button className="btn btn-primary text-xs" onClick={()=>openExam(s.code)} disabled={!!busy}>Resolver {s.live_count} questões <ArrowRight size={14}/></button>:<button className="btn btn-primary text-xs" disabled={!!busy} onClick={()=>refresh(s.code)}><RefreshCw size={14}/> Importar esta prova</button>}
+   </div>
+   <details className="mt-4 rounded-xl border border-white/10 p-3 text-xs text-slate-300">
+    <summary className="cursor-pointer font-semibold">Fonte oficial e opções de atualização</summary>
+    <div className="mt-3 flex flex-wrap items-center gap-3">
+     <a href={s.source_url} target="_blank" rel="noopener noreferrer" className="text-sky-300 underline">Caderno PDF</a>
+     <a href={s.answer_url} target="_blank" rel="noopener noreferrer" className="text-sky-300 underline">Gabarito definitivo</a>
+     <button className="btn btn-outline text-xs" disabled={!!busy} onClick={()=>refresh(s.code)}><RefreshCw size={14}/>{busy===s.code?'Verificando...':'Atualizar só esta prova'}</button>
+    </div>
+   </details>
   </div>)}</div>:<div className="mt-5">
    <button className="btn btn-outline text-xs" onClick={()=>{setActive('');setPack(null);setResult(null);setError('')}}><ArrowLeft size={14}/> Todas as provas</button>
    <h3 className="mt-5 text-lg font-bold text-white">{pack?.role}</h3><p className="mt-2 text-sm text-slate-300">{pack?.total} questões verificadas · {answered} respondidas. {pack?.complete?'Prova completa.':'Questões com extração incerta ou anuladas não estão disponíveis.'}</p>
@@ -88,6 +96,6 @@ export default function OfficialExams(){
    {result&&<div className="mt-5 space-y-3"><div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-5"><h3 className="text-xl font-bold">{result.correct}/{result.total} acertos · {Math.round(result.correct/result.total*100)}%</h3><p className="mt-2 text-sm text-slate-300">Tentativa armazenada no seu banco.</p><button className="btn btn-primary mt-4" onClick={()=>{setIndex(0);setSelected({});setResult(null);setStarted(Date.now())}}>Refazer prova</button></div>
    {result.results.map(x=><div key={x.number} className="rounded-xl border border-white/10 p-4"><b>Questão {x.number} — {x.correct?'Correta':'Incorreta'}</b><p className="mt-2 text-sm text-slate-300">Sua resposta: {'ABCDE'[x.your_choice]} · Gabarito: {'ABCDE'[x.correct_index]}</p><p className="mt-2 text-xs text-slate-400">{x.explanation}</p>{!x.correct&&<div className="mt-3"><button onClick={()=>saveCard(x.number)} disabled={!!saved[x.number]} className="btn btn-secondary text-xs">Salvar erro nos flashcards</button>{saved[x.number]&&<p className="mt-2 text-xs text-emerald-300">{saved[x.number]}</p>}</div>}</div>)}</div>}
   </div>}
-  {!active&&<p className="mt-5 text-xs leading-6 text-slate-400">O importador não inventa respostas: cruza número da questão com a tabela do gabarito definitivo e bloqueia anuladas, imagens e textos ambíguos. As demais provas catalogadas continuam disponíveis por link oficial até haver extrator adequado.</p>}
+  {!active&&<p className="mt-5 text-xs leading-6 text-slate-400">A conferência automática cruza o número da questão com o gabarito oficial e bloqueia itens com texto incompleto. Ainda não garante correção editorial de 100% das questões. Outras bancas só serão disponibilizadas quando seus cadernos puderem ser extraídos e corrigidos com segurança.</p>}
  </section>
 }
