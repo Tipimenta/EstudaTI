@@ -39,7 +39,7 @@ export default function PriorExams(){
  const [focus,setFocus]=useState('')
  const [onlyAvailable,setOnlyAvailable]=useState(false)
  const [groupBy,setGroupBy]=useState<'concurso'|'banca'>('concurso')
- const [openGroups,setOpenGroups]=useState<Record<string,boolean>>({Birigui:true,UFMS:true,Dataprev:true})
+ const [openGroups,setOpenGroups]=useState<Record<string,boolean>>({Birigui:true})
  const banks=useMemo(()=>[...new Set(PRIOR_EXAMS.map(x=>x.board))].sort((a,b)=>a.localeCompare(b,'pt-BR')) ,[])
  const profiles=useMemo(()=>[...new Set(PRIOR_EXAMS.map(x=>x.focus))].sort((a,b)=>a.localeCompare(b,'pt-BR')),[])
  const filtered=PRIOR_EXAMS.filter(x=>{
@@ -70,7 +70,7 @@ export default function PriorExams(){
   </div>
   <p className="mt-3 text-xs text-slate-400">{filtered.length} registro(s) correspondente(s). A ordenação prioriza os concursos pesquisados originalmente; não representa classificação do cargo ou disponibilidade de vaga.</p>
   <div className="mt-5 space-y-3">{groups.map(({group,entries})=>{
-    const open=Object.prototype.hasOwnProperty.call(openGroups,group)?openGroups[group]:true
+    const open=Object.prototype.hasOwnProperty.call(openGroups,group)?openGroups[group]:false
     return <div key={group} className="overflow-hidden rounded-2xl border border-white/10">
      <button onClick={()=>setOpenGroups(x=>({...x,[group]:!open}))} className="flex w-full items-center gap-3 bg-[#182538] px-4 py-4 text-left sm:px-5">
       <span className="min-w-0 flex-1 font-bold text-white">{group}</span>
