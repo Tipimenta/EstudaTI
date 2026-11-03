@@ -377,7 +377,7 @@ export const completedGOV:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Uma clínica usa metas de disponibilidade dos sistemas e métricas de recuperação para demonstrar valor e risco controlado.\n\n**Questão:** Qual domínio COBIT está especialmente associado à governança?\n\n**Resposta:** EDM.\n\n**Explicação:** EDM reúne avaliação, direção e monitoramento na camada de governança.\n\n**Cuidado:** COBIT não é ferramenta de firewall nem sinônimo de ITIL."
+        "body": "Uma clínica usa metas de disponibilidade dos sistemas e métricas de recuperação para demonstrar valor e risco controlado.\n\n**Um segundo cenário para entender:** No COBIT, a liderança define limites de risco e avalia resultados, enquanto TI executa plano de controles. Qual alternativa descreve os papéis?\n\n**A regra aplicada:** Governança avalia, direciona e monitora; gestão executa planejamento e operações.\n\n**Resultado explicado:** Governança direciona; gestão executa.\n\n**Cuidado:** COBIT não é ferramenta de firewall nem sinônimo de ITIL."
       }
     ],
     "worked": {
@@ -415,7 +415,7 @@ export const completedGOV:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Se uma secretaria solicita novo sistema, a análise deve considerar valor, integração, segurança, custo e capacidade de sustentação, não apenas a urgência percebida.\n\n**Questão:** Qual é o principal objetivo de um PDTI?\n\n**Resposta:** Alinhar necessidades de TI aos objetivos institucionais.\n\n**Explicação:** PDTI orienta decisões e recursos de tecnologia a partir das prioridades do órgão.\n\n**Cuidado:** Plano de compras não equivale sozinho a estratégia de TI; projetos precisam de justificativa e métricas."
+        "body": "Se uma secretaria solicita novo sistema, a análise deve considerar valor, integração, segurança, custo e capacidade de sustentação, não apenas a urgência percebida.\n\n**Um segundo cenário para entender:** Um PDTI prioriza digitalização para reduzir espera. Qual indicador está mais próximo do benefício para o usuário?\n\n**A regra aplicada:** Tempo de espera mede resultado associado à necessidade declarada.\n\n**Resultado explicado:** Tempo médio de espera para atendimento.\n\n**Cuidado:** Plano de compras não equivale sozinho a estratégia de TI; projetos precisam de justificativa e métricas."
       }
     ],
     "worked": {
@@ -453,7 +453,7 @@ export const completedGOV:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Se a disponibilidade alvo é 99,9% em 30 dias, o orçamento aproximado de indisponibilidade é 43,2 minutos (30×24×60×0,001).\n\n**Questão:** Em período de 30 dias, 99,9% de disponibilidade permite aproximadamente quantos minutos de falha?\n\n**Resposta:** 43,2 minutos.\n\n**Explicação:** 30 dias são 43.200 minutos; 0,1% equivale a 43,2.\n\n**Cuidado:** Não defina disponibilidade sem delimitar serviço, janela e exclusões acordadas."
+        "body": "Se a disponibilidade alvo é 99,9% em 30 dias, o orçamento aproximado de indisponibilidade é 43,2 minutos (30×24×60×0,001).\n\n**Um segundo cenário para entender:** Uma equipe mediu disponibilidade em 99,5%, definiu meta de 99,9% e possui contrato que estabelece compromissos e consequências. Quais termos correspondem aos três elementos?\n\n**A regra aplicada:** O observado é SLI, a meta é SLO e o compromisso é SLA.\n\n**Resultado explicado:** SLI, SLO, SLA.\n\n**Cuidado:** Não defina disponibilidade sem delimitar serviço, janela e exclusões acordadas."
       }
     ],
     "worked": {
