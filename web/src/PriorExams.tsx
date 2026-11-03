@@ -38,6 +38,7 @@ export default function PriorExams(){
  const [board,setBoard]=useState('')
  const [focus,setFocus]=useState('')
  const [onlyAvailable,setOnlyAvailable]=useState(false)
+ const [groupBy,setGroupBy]=useState<'concurso'|'banca'>('concurso')
  const [openGroups,setOpenGroups]=useState<Record<string,boolean>>({Birigui:true,UFMS:true,Dataprev:true})
  const banks=useMemo(()=>[...new Set(PRIOR_EXAMS.map(x=>x.board))].sort((a,b)=>a.localeCompare(b,'pt-BR')) ,[])
  const profiles=useMemo(()=>[...new Set(PRIOR_EXAMS.map(x=>x.focus))].sort((a,b)=>a.localeCompare(b,'pt-BR')),[])
@@ -45,7 +46,7 @@ export default function PriorExams(){
    const text=[x.group,x.organization,x.board,x.role,x.exam,x.focus,x.year].join(' ').toLowerCase()
    return (!term||text.includes(term.toLowerCase()))&&(!board||x.board===board)&&(!focus||x.focus===focus)&&(!onlyAvailable||x.availability!=='edital')
  })
- const groups=order.map(group=>({group,entries:filtered.filter(x=>x.group===group)})).filter(x=>x.entries.length)
+ const groups=(groupBy==='concurso'?order:banks).map(group=>({group,entries:filtered.filter(x=>groupBy==='concurso'?x.group===group:x.board===group)})).filter(x=>x.entries.length)
  const countAvailable=PRIOR_EXAMS.filter(x=>x.availability!=='edital').length
  return <section id="provas-por-concurso" className="panel p-5 sm:p-7">
   <div className="flex items-start gap-3"><BookOpen className="mt-1 shrink-0 text-emerald-300" size={24}/><div>
@@ -55,6 +56,11 @@ export default function PriorExams(){
   </div></div>
   <div className="mt-5 rounded-xl border border-sky-400/15 bg-sky-400/5 p-4 text-xs leading-6 text-slate-300">
    <ShieldCheck size={15} className="mr-2 inline text-sky-300"/> <strong className="text-white">Links, não questões importadas.</strong> O banco interativo ainda contém questões autorais; para praticar uma prova oficial dentro do EstudaTI é preciso importar o caderno com permissão, conferir a versão definitiva do gabarito e revisar cada questão. Provas futuras e referências de outra instituição estão identificadas.
+  </div>
+  <div className="mt-5 flex flex-wrap items-center gap-2">
+   <span className="mr-1 text-xs font-semibold text-slate-400">Organizar:</span>
+   <button onClick={()=>setGroupBy('concurso')} className={groupBy==='concurso'?'rounded-lg bg-emerald-400/15 px-3 py-2 text-xs font-bold text-emerald-200':'rounded-lg border border-white/10 px-3 py-2 text-xs text-slate-300'}>Por concurso</button>
+   <button onClick={()=>setGroupBy('banca')} className={groupBy==='banca'?'rounded-lg bg-emerald-400/15 px-3 py-2 text-xs font-bold text-emerald-200':'rounded-lg border border-white/10 px-3 py-2 text-xs text-slate-300'}>Por banca</button>
   </div>
   <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
    <label className="relative block xl:col-span-1"><span className="sr-only">Buscar concurso ou cargo</span><Search size={16} className="absolute left-3 top-3.5 text-slate-400"/><input className="field w-full pl-10" value={term} onChange={e=>setTerm(e.target.value)} placeholder="Concurso, cargo, ano..."/></label>
