@@ -393,5 +393,47 @@ export const PRIOR_EXAMS:PriorExam[]=[
     "url": "https://conhecimento.fgv.br/cpnu2",
     "notes": "Prova comum ao Bloco 3, não um caderno exclusivo INSS; edital contemplou etapa discursiva, apesar de seu foco apenas em objetivas.",
     "source": "Oficial"
+  },
+  {
+    "id": "ibge16support",
+    "group": "IBGE / CPNU",
+    "organization": "IBGE — concurso efetivo de nível superior",
+    "board": "FGV",
+    "year": 2016,
+    "role": "Analista — Análise de Sistemas / Suporte Operacional",
+    "focus": "Infraestrutura / Suporte",
+    "exam": "IBGE 2016",
+    "availability": "prova_definitiva",
+    "url": "https://conhecimento.fgv.br/concursos/ibge/nivelsuperior",
+    "notes": "Página oficial da FGV com Prova Objetiva por tipo e Gabarito Oficial Definitivo. Material especialmente pertinente a suporte e infraestrutura.",
+    "source": "Oficial"
+  },
+  {
+    "id": "ibge16dev",
+    "group": "IBGE / CPNU",
+    "organization": "IBGE — concurso efetivo de nível superior",
+    "board": "FGV",
+    "year": 2016,
+    "role": "Analista — Análise de Sistemas / Desenvolvimento de Sistemas",
+    "focus": "Desenvolvimento",
+    "exam": "IBGE 2016",
+    "availability": "prova_definitiva",
+    "url": "https://conhecimento.fgv.br/concursos/ibge/nivelsuperior",
+    "notes": "Prova objetiva e gabarito definitivo na página oficial. Esse cargo teve prova discursiva; estude as questões objetivas conforme seu foco.",
+    "source": "Oficial"
+  },
+  {
+    "id": "inss14",
+    "group": "INSS / CPNU",
+    "organization": "Instituto Nacional do Seguro Social",
+    "board": "FUNRIO",
+    "year": 2014,
+    "role": "Analista do Seguro Social — Tecnologia da Informação",
+    "focus": "Analista de TI",
+    "exam": "INSS 2013/2014",
+    "availability": "acervo",
+    "url": "https://jcconcursos.uol.com.br/provas/prova-inss-superior-2014-37945",
+    "notes": "Prova de TI aplicada em 09/02/2014, com caderno e gabarito em acervo externo. Banca FUNRIO; concurso do edital de 2013 com aplicação em 2014.",
+    "source": "Acervo externo"
   }
 ];
