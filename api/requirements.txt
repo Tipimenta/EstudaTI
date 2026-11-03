@@ -7,3 +7,6 @@ python-multipart>=0.0.12,<1
 
 # Banco PostgreSQL opcional (Neon Free); SQLite local continua integrado ao Python
 psycopg[binary]>=3.2,<4
+
+# Leitura fiel das colunas de provas e tabelas de gabaritos oficiais
+PyMuPDF>=1.24,<2
