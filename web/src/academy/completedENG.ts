@@ -339,7 +339,7 @@ export const completedENG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Um teste de API pode validar que importar questões preserva histórico. Uma jornada ponta a ponta verifica login, aula, questão e resultado no navegador.\n\n**Questão:** Um teste verifica o método 'calcularDesconto' isolando dependências externas com mocks. Em geral, trata-se de:\n\n**Resposta:** Teste de unidade.\n\n**Explicação:** Teste de unidade verifica comportamento de unidade pequena isolando dependências conforme escopo.\n\n**Cuidado:** Cobertura de linhas alta não garante ausência de defeitos de regra de negócio."
+        "body": "Um teste de API pode validar que importar questões preserva histórico. Uma jornada ponta a ponta verifica login, aula, questão e resultado no navegador.\n\n**Um segundo cenário para entender:** Um teste verifica que um usuário consegue concluir o agendamento conforme critérios aprovados pelo negócio. Qual foco está presente?\n\n**A regra aplicada:** A aceitação avalia se critérios funcionais de negócio são atendidos.\n\n**Resultado explicado:** Teste de aceitação dos requisitos acordados.\n\n**Cuidado:** Cobertura de linhas alta não garante ausência de defeitos de regra de negócio."
       }
     ],
     "worked": {
@@ -377,7 +377,7 @@ export const completedENG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Repetir PUT /preferencias/42 com o mesmo corpo deve convergir para mesmo estado, enquanto repetir POST /pedidos pode criar duplicatas se não houver mecanismo específico.\n\n**Questão:** Uma API expõe PATCH para alterar parte de recurso. Qual afirmação é correta?\n\n**Resposta:** PATCH não é necessariamente idempotente; depende da semântica da operação.\n\n**Explicação:** PATCH aplica alterações parciais e a idempotência depende do formato e operação; diferentemente de PUT, não é uma garantia geral.\n\n**Cuidado:** Idempotência não significa ausência de qualquer efeito e não implica segurança contra ataques."
+        "body": "Repetir PUT /preferencias/42 com o mesmo corpo deve convergir para mesmo estado, enquanto repetir POST /pedidos pode criar duplicatas se não houver mecanismo específico.\n\n**Um segundo cenário para entender:** Uma API recebe DELETE /arquivos/5 duas vezes. Na primeira remove o recurso; na segunda responde 404. Qual afirmação sobre idempotência é adequada?\n\n**A regra aplicada:** Idempotência trata efeito pretendido de requisições repetidas, não igualdade byte a byte de respostas.\n\n**Resultado explicado:** DELETE pode ser idempotente quanto ao efeito pretendido mesmo com respostas diferentes.\n\n**Cuidado:** Idempotência não significa ausência de qualquer efeito e não implica segurança contra ataques."
       }
     ],
     "worked": {
@@ -415,7 +415,7 @@ export const completedENG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Ao atualizar EstudaTI, use branch de versão, testes e tag de release antes de copiar arquivos para produção.\n\n**Questão:** Duas pessoas alteram a mesma linha de um arquivo em branches diferentes. Que situação pode surgir ao mesclar?\n\n**Resposta:** Conflito de merge a resolver.\n\n**Explicação:** Alterações concorrentes incompatíveis podem exigir resolução manual de conflitos ao integrar branches.\n\n**Cuidado:** Git não substitui backup do banco de dados nem guarda dados que não foram adicionados ao repositório."
+        "body": "Ao atualizar EstudaTI, use branch de versão, testes e tag de release antes de copiar arquivos para produção.\n\n**Um segundo cenário para entender:** Após alterações em branches diferentes, o Git informa conflito de merge no mesmo arquivo. Qual procedimento é adequado?\n\n**A regra aplicada:** Resolver exige compreender os trechos em conflito e validar a integração.\n\n**Resultado explicado:** Examinar as alterações incompatíveis, resolver conflito e testar.\n\n**Cuidado:** Git não substitui backup do banco de dados nem guarda dados que não foram adicionados ao repositório."
       }
     ],
     "worked": {
