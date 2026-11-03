@@ -28,9 +28,10 @@ function readCsv(text:string):Record<string,string>[] {
  return rows.filter(r=>r.some(c=>c.trim())).map(row=>Object.fromEntries(header.map((key,i)=>[key,row[i]||''])))
 }
 
-export default function QuestionBank(){
+export default function QuestionBank({onGoProvas}:{onGoProvas:()=>void}){
  const [catalog,setCatalog]=useState<Catalog|null>(null)
  const [meta,setMeta]=useState<Meta|null>(null)
+ const [officialCount,setOfficialCount]=useState(0)
  const [subjects,setSubjects]=useState<Subject[]>([])
  const [query,setQuery]=useState('');const [subject,setSubject]=useState('');const [status,setStatus]=useState('');const [origin,setOrigin]=useState('');const [board,setBoard]=useState('');const [page,setPage]=useState(1)
  const [qualityOpen,setQualityOpen]=useState<number|null>(null)
@@ -42,6 +43,7 @@ export default function QuestionBank(){
   try{const [catalog,metadata,subs]=await Promise.all([api<Catalog>('/questions/list?'+params),api<Meta>('/questions/meta'),api<Subject[]>('/subjects')]);setCatalog(catalog);setMeta(metadata);setSubjects(subs)}catch(e){setError((e as Error).message)}
  }
  useEffect(()=>{load(1);setPage(1)},[query,origin,status,board,subject])
+ useEffect(()=>{api<{items:{live_count:number}[]}>('/provas/oficiais').then(r=>setOfficialCount(r.items.reduce((a,x)=>a+x.live_count,0))).catch(()=>{})},[])
  async function chooseFile(file:File|undefined){
   if(!file)return;setError('');setMessage('');setPreview([]);setFileName(file.name)
   try{
@@ -61,17 +63,20 @@ export default function QuestionBank(){
  async function card(item:QuestionItem){try{const r=await post<{duplicate:boolean}>(`/questions/${item.id}/flashcard`,{});setMessage(r.duplicate?'Este flashcard já existe.':'Flashcard criado; ele aparecerá nas revisões.')}catch(e){setError((e as Error).message)}}
  const count=(o:string,s:string)=>meta?.counts?.find(x=>x.origin===o&&x.review_status===s)?.total??0
  return <div className="fade">
-  <p className="mb-2 text-xs font-bold uppercase tracking-[.20em] text-emerald-300">Biblioteca de provas anteriores</p>
+  <p className="mb-2 text-xs font-bold uppercase tracking-[.20em] text-emerald-300">Prática e treino por matéria</p>
   <h1 className="text-3xl font-bold text-white sm:text-4xl">Banco de questões</h1>
-  <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">Importe questões de provas que você tem autorização para utilizar. Registre banca, ano, concurso, caderno e fonte. Questões oficiais entram como <b>rascunho</b> até você conferir o gabarito definitivo.</p>
+  <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">Aqui ficam os exercícios de estudo e as revisões por assunto. As provas reais, organizadas por concurso e banca, estão na seção própria e podem ser resolvidas diretamente no EstudaTI.</p>
   {error&&<div className="my-4 rounded-xl border border-rose-400/30 bg-rose-400/10 p-4 text-sm text-rose-100"><AlertCircle size={16} className="mr-2 inline"/>{error}</div>}
   {message&&<div className="my-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-sm text-emerald-100">{message}</div>}
+  <button onClick={onGoProvas} className="btn btn-outline mt-5 w-full sm:w-auto"><BookOpen size={16}/> Resolver provas anteriores já importadas</button>
   <div className="my-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
    <div className="panel p-4"><div className="text-xs muted">Questões autorais</div><div className="mt-2 text-2xl font-extrabold">{count('autoral','revisada')}</div></div>
-   <div className="panel p-4"><div className="text-xs muted">Oficiais revisadas</div><div className="mt-2 text-2xl font-extrabold">{count('oficial','revisada')}</div></div>
+   <div className="panel p-4"><div className="text-xs muted">Questões de provas anteriores</div><div className="mt-2 text-2xl font-extrabold">{officialCount}</div></div>
    <div className="panel p-4"><div className="text-xs muted">Aguardando revisão</div><div className="mt-2 text-2xl font-extrabold">{meta?.counts.filter(x=>x.review_status==='rascunho').reduce((n,x)=>n+x.total,0)??0}</div></div>
    <div className="panel p-4"><div className="text-xs muted">Questões já erradas</div><div className="mt-2 text-2xl font-extrabold">{meta?.wrong_count??0}</div></div>
   </div>
+  <details className="mb-7 rounded-xl border border-white/10 bg-white/[.02] p-4 sm:p-5">
+   <summary className="cursor-pointer text-sm font-semibold text-slate-300">Importação manual CSV/JSON (opcional)</summary>
   <div className="panel mb-7 p-6">
    <div className="flex items-center gap-3"><CloudUpload className="text-emerald-300" size={22}/><h2 className="text-lg font-bold">Importar questões CSV ou JSON</h2></div>
    <p className="mt-2 text-sm leading-6 muted">Exemplo de planilha no pacote: <b>examples/questoes_modelo.csv</b>. Selecione seu arquivo com até 500 questões; confira tudo antes de liberar para os simulados. O sistema bloqueia duplicatas de enunciado e alternativas mesmo reordenadas, <b>avisa sobre enunciados parecidos</b> e não coleta automaticamente sites comerciais.</p>
@@ -82,15 +87,16 @@ export default function QuestionBank(){
    {preview.length>0&&<div className="mt-4 rounded-xl bg-slate-900/70 p-4"><p className="text-sm text-slate-200">{fileName}: {preview.length} questões carregadas</p><p className="my-3 text-xs muted">Prévia: {String(preview[0].question||'sem enunciado').slice(0,220)}</p><button disabled={busy} onClick={upload} className="btn btn-primary"><Check size={16}/> {busy?'Importando...':'Importar como rascunho'}</button></div>}
    <p className="mt-4 text-xs text-amber-200/90"><ShieldCheck className="mr-1 inline" size={14}/> Use apenas material autorizado. Questões oficiais exigem concurso, banca, ano e link de origem; respeite direitos e termos das bancas.</p>
   </div>
+  </details>
   <div className="panel p-5">
-   <div className="mb-4 flex items-center gap-2"><Filter size={17} className="text-emerald-300"/><h2 className="font-bold text-white">Catálogo e conferência</h2><button onClick={()=>load()} className="ml-auto text-xs text-emerald-300"><RefreshCw size={15}/></button></div>
+   <div className="mb-4 flex items-center gap-2"><Filter size={17} className="text-emerald-300"/><h2 className="font-bold text-white">Questões do banco de estudos</h2><button onClick={()=>load()} className="ml-auto text-xs text-emerald-300"><RefreshCw size={15}/></button></div>
    <div className="mb-5 grid gap-3 md:grid-cols-6">
     <div className="relative md:col-span-2"><Search size={16} className="absolute left-3 top-3 text-slate-400"/><input className="field pl-10" placeholder="Buscar enunciado" value={query} onChange={e=>setQuery(e.target.value)}/></div>
     <select className="field text-sm" value={subject} onChange={e=>setSubject(e.target.value)}><option value="">Todas as matérias</option>{subjects.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}</select>
     <select className="field text-sm" value={origin} onChange={e=>setOrigin(e.target.value)}><option value="">Todas as origens</option><option value="oficial">Oficial</option><option value="autoral">Autoral</option><option value="adaptada">Adaptada</option></select>
     <select className="field text-sm" value={status} onChange={e=>setStatus(e.target.value)}><option value="">Todos os estados</option><option value="rascunho">A revisar</option><option value="revisada">Revisada</option><option value="anulada">Anulada</option><option value="arquivada">Arquivada (duplicata)</option></select><select className="field text-sm" value={board} onChange={e=>setBoard(e.target.value)}><option value="">Todas as bancas</option>{meta?.boards.map(x=><option key={x} value={x}>{x}</option>)}</select>
    </div>
-   <p className="mb-3 text-xs muted">{catalog?.total??0} questão(ões) · Questões oficiais precisam de conferência separada do enunciado e do gabarito definitivo.</p>
+   <p className="mb-3 text-xs muted">{catalog?.total??0} questão(ões) neste banco. As provas oficiais baixadas automaticamente ficam em Provas anteriores, com histórico separado.</p>
    <div className="space-y-3">{catalog?.items.map(item=><article key={item.id} className="rounded-xl border border-white/10 bg-slate-900/35 p-4">
     <div className="mb-2 flex flex-wrap gap-2 text-[11px]"><span className="badge bg-slate-700/50 text-slate-300">{item.subject}</span><span className="badge bg-slate-700/50 text-slate-300">{item.origin}</span><span className={`badge ${item.review_status==='revisada'?'bg-emerald-500/10 text-emerald-200':item.review_status==='anulada'?'bg-rose-500/10 text-rose-200':'bg-amber-500/10 text-amber-200'}`}>{item.review_status}</span>{item.board&&<span className="text-slate-300">{item.board} · {item.year} · {item.exam}</span>}</div>
     <p className="whitespace-pre-wrap text-sm font-semibold leading-6 text-white">{item.question}</p>
