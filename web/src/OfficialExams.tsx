@@ -13,6 +13,7 @@ export default function OfficialExams(){
  const [index,setIndex]=useState(0)
  const [result,setResult]=useState<Result|null>(null)
  const [busy,setBusy]=useState('')
+ const [progress,setProgress]=useState('')
  const [error,setError]=useState('')
  const [message,setMessage]=useState('')
  const [saved,setSaved]=useState<Record<number,string>>({})
@@ -25,6 +26,22 @@ export default function OfficialExams(){
    if(!r.ok)setError('A importação não foi liberada: '+r.message)
    await load()
   }catch(e){setError((e as Error).message)}finally{setBusy('')}
+ }
+ async function refreshAll(){
+  if(busy||!sources.length)return
+  setBusy('all');setError('');setMessage('')
+  let imported=0;let failed=0;let blocked=0
+  for(let i=0;i<sources.length;i++){
+    setProgress('Conferindo '+(i+1)+' de '+sources.length+': '+sources[i].role)
+    try{
+      const r=await post<{ok:boolean;imported:number;blocked:number|null;message:string}>('/provas/oficiais/'+sources[i].code+'/atualizar',{})
+      if(r.ok){imported+=r.imported;blocked+=r.blocked||0}else{failed++}
+    }catch(e){failed++}
+  }
+  await load()
+  setMessage('Atualização concluída. '+imported+' questões verificadas; '+blocked+' bloqueadas; '+failed+' fontes não processadas. As provas já importadas permanecem disponíveis.')
+  if(failed)setError('Uma ou mais fontes não puderam ser importadas. Cada prova mostra o último diagnóstico; tente atualizá-la individualmente.')
+  setProgress('');setBusy('')
  }
  async function openExam(code:string){setBusy(code);setError('')
   try{const p=await api<Pack>('/provas/oficiais/'+code+'/questoes');if(!p.items.length)throw Error('Esta prova ainda não possui questões confirmadas.')
@@ -50,6 +67,7 @@ export default function OfficialExams(){
   <div className="flex items-start gap-3"><BookOpen size={24} className="mt-1 text-emerald-300"/><div><h2 className="text-xl font-bold">Importar e resolver provas da banca</h2><p className="mt-2 text-sm leading-6 text-slate-300">A busca acontece <strong>somente ao apertar o botão</strong>, sem agendamentos nem serviços pagos. Nesta primeira versão, Dataprev 2024 (FGV), caderno tipo 1 e gabarito definitivo.</p></div></div>
   {error&&<div role="alert" className="mt-4 rounded-lg border border-rose-400/20 bg-rose-400/10 p-4 text-sm text-rose-200">{error}</div>}
   {message&&<p className="mt-4 rounded-lg bg-emerald-400/10 p-4 text-sm leading-6 text-emerald-100">{message}</p>}
+  {!active&&<button onClick={refreshAll} disabled={!!busy||!sources.length} className="btn btn-primary mt-5 w-full sm:w-auto"><RefreshCw size={16}/>{busy==='all'?progress:'Buscar e importar todas as 4 provas FGV disponíveis'}</button>}
   {!active?<div className="mt-5 grid gap-3 md:grid-cols-2">{sources.map(s=><div key={s.code} className="rounded-xl border border-white/10 bg-white/[.02] p-4">
    <span className="text-xs font-bold text-emerald-300">{s.board} · {s.contest} · Tipo {s.book_type}</span>
    <h3 className="mt-2 font-bold leading-6 text-white">{s.role}</h3><p className="mt-1 text-xs text-slate-400">{s.focus} · {s.live_count} questões prontas</p>
