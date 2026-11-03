@@ -339,7 +339,7 @@ export const completedLOG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Se “Todo servidor do grupo A possui acesso B” e alguém não possui acesso B, pode-se concluir que não está no grupo A, respeitando a premissa.\n\n**Questão:** Qual fórmula é equivalente a P→Q?\n\n**Resposta:** ¬Q→¬P.\n\n**Explicação:** Contrapositiva preserva a tabela-verdade da condicional.\n\n**Cuidado:** Não inferir P a partir de Q é evitar a falácia de afirmar o consequente."
+        "body": "Se “Todo servidor do grupo A possui acesso B” e alguém não possui acesso B, pode-se concluir que não está no grupo A, respeitando a premissa.\n\n**Um segundo cenário para entender:** A proposição P→Q é verdadeira. Qual outra proposição é logicamente equivalente?\n\n**A regra aplicada:** A contrapositiva preserva a mesma tabela-verdade.\n\n**Resultado explicado:** ¬Q→¬P.\n\n**Cuidado:** Não inferir P a partir de Q é evitar a falácia de afirmar o consequente."
       }
     ],
     "worked": {
@@ -377,7 +377,7 @@ export const completedLOG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Negar “o sistema está atualizado ou está monitorado” exige afirmar simultaneamente que não está atualizado e que não está monitorado.\n\n**Questão:** Qual negação de P∨Q?\n\n**Resposta:** ¬P∧¬Q.\n\n**Explicação:** Lei de De Morgan: negue os termos e inverta o conectivo.\n\n**Cuidado:** A troca entre e/ou é indispensável ao negar expressões compostas."
+        "body": "Negar “o sistema está atualizado ou está monitorado” exige afirmar simultaneamente que não está atualizado e que não está monitorado.\n\n**Um segundo cenário para entender:** Qual é a negação correta de 'Ana estuda ou Bruno trabalha', considerando OU inclusivo?\n\n**A regra aplicada:** De Morgan: ¬(P∨Q)=¬P∧¬Q.\n\n**Resultado explicado:** Ana não estuda e Bruno não trabalha.\n\n**Cuidado:** A troca entre e/ou é indispensável ao negar expressões compostas."
       }
     ],
     "worked": {
@@ -453,7 +453,7 @@ export const completedLOG:PedagogicalLesson[]=[
       },
       {
         "title": "Aplique a ideia em outra situação",
-        "body": "Uma senha de três caracteres escolhidos entre dez símbolos com repetição permitida tem 10³ combinações ordenadas possíveis.\n\n**Questão:** Quatro pessoas disputarão primeiro e segundo lugar. Quantos pares ordenados de vencedores são possíveis?\n\n**Resposta:** 12.\n\n**Explicação:** Escolhas ordenadas sem repetição: 4 opções para 1º e 3 para 2º, resultando 4×3=12.\n\n**Cuidado:** Comissão sem cargo e sequência de cargos não são o mesmo problema."
+        "body": "Uma senha de três caracteres escolhidos entre dez símbolos com repetição permitida tem 10³ combinações ordenadas possíveis.\n\n**Um segundo cenário para entender:** Se seis candidatos disputarão presidente e vice sem acumular posições, quantos resultados ordenados podem ocorrer?\n\n**A regra aplicada:** Há seis escolhas para presidente e cinco restantes para vice: 6×5=30.\n\n**Resultado explicado:** 30.\n\n**Cuidado:** Comissão sem cargo e sequência de cargos não são o mesmo problema."
       }
     ],
     "worked": {
