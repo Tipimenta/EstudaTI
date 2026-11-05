@@ -115,4 +115,41 @@ html[data-theme="paper"] .reader :is(h2,h3,h4){color:#1e504c}
 html[data-theme="paper"] [class*="hover:bg-white/"]:hover{background-color:#dce8dd}
 html[data-theme="paper"] .theme-switch{background-color:#e5ebe3}
 html[data-theme="paper"] .theme-switch:hover{background-color:#d9e4dc}
+
+/* Navegação v1.5: hierarquia visível sem listas que ficam abertas e ocupam a tela. */
+.study-nav-group{color:var(--app-muted)}
+.study-nav-item{color:var(--app-ink);border:1px solid transparent}
+.study-nav-idle{opacity:.84}
+.study-nav-idle:hover{background:var(--app-subtle);opacity:1}
+.study-nav-active{background:rgba(37,131,115,.13);border-color:rgba(37,131,115,.20);color:var(--app-accent);font-weight:750}
+.study-nav-active:hover{background:rgba(37,131,115,.17)}
+.mobile-nav-idle{color:var(--app-muted)}
+.mobile-nav-active{background:rgba(37,131,115,.12);color:var(--app-accent)}
+.study-tool-card{border-color:var(--app-border);background:var(--app-surface)}
+.study-tool-card:hover,.study-tool-card:focus-visible{border-color:var(--app-accent);background:var(--app-subtle)}
+.study-footer{border-color:var(--app-border)}
+.study-main :is(h1,h2){letter-spacing:-.027em}
+.study-main>div.fade>header,.study-main .fade>header{max-width:1100px}
+.study-main .fade>header h1{line-height:1.15}
+.study-main .fade>header p{line-height:1.7}
+.study-main :is(.panel,.glass){min-width:0}
+.study-main :is(input,select,textarea){max-width:100%;font-size:clamp(14px,1rem,16px)}
+.study-main .panel>h2,.study-main .panel>h3{line-height:1.35}
+.study-main [class*="grid-cols-2"]>*{min-width:0}
+.study-main details>summary{list-style:none}
+.study-main details>summary::-webkit-details-marker{display:none}
+.study-main details>summary::after{content:"⌄";float:right;margin-left:.7rem;opacity:.65}
+.study-main details[open]>summary::after{transform:rotate(180deg)}
+.study-main .badge{letter-spacing:normal}
+.study-main button,.study-main a{touch-action:manipulation}
+@media(max-width:640px){
+  .study-main .fade>header h1{font-size:1.65rem}
+  .study-main .panel{border-radius:16px}
+  .study-main .fade>header{margin-bottom:1.4rem}
+  .study-main .panel.p-6{padding:1.15rem}
+}
+@media(min-width:1024px){
+  .study-main{padding-right:2rem;padding-left:2rem}
+}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
