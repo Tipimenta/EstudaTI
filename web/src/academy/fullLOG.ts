@@ -112,11 +112,11 @@ export const fullLOG=buildChapters([
       ],
       [
         "Quanto vale 5!?",
-        "120, produto de 5×4×3×2×1."
+        "120, pois o fatorial de cinco multiplica as cinco possibilidades decrescentes: 5×4×3×2×1."
       ],
       [
         "Quantas combinações de 5 pessoas tomadas 3 a 3?",
-        "10, pois 5×4×3 / 3! = 10."
+        "10 grupos possíveis, pois 5×4×3=60 escolhas ordenadas e cada grupo aparece em 3!=6 ordens; 60/6=10."
       ]
     ]
   },
@@ -316,7 +316,7 @@ export const fullLOG=buildChapters([
       ],
       [
         "Como resolver x+y=10, x−y=2?",
-        "Somando, 2x=12, x=6; logo y=4."
+        "Somando as duas equações, y se elimina e resulta 2x=12; assim x=6 e, por substituição, y=4."
       ]
     ]
   },
@@ -476,7 +476,7 @@ export const fullLOG=buildChapters([
       ],
       [
         "Quanto é P(6) de elementos distintos?",
-        "720, o fatorial 6!=6×5×4×3×2×1."
+        "720 permutações, pois ordenamos os seis objetos distintos: 6!=6×5×4×3×2×1."
       ]
     ]
   },
