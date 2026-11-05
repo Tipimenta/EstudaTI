@@ -143,15 +143,15 @@ export const fullGOV=buildChapters([
     ],
     "cards": [
       [
-        "O que é SLI?",
+        "O que um SLI mede no desempenho de um serviço?",
         "Indicador mensurável do nível de serviço observado, como proporção de respostas satisfatórias."
       ],
       [
-        "O que é SLO?",
+        "O que um SLO estabelece para o serviço?",
         "Objetivo ou meta para determinado indicador de serviço em período/condições definidos."
       ],
       [
-        "O que é SLA?",
+        "O que um SLA formaliza entre as partes?",
         "Acordo de nível de serviço que estabelece compromissos e condições entre partes."
       ],
       [
@@ -343,7 +343,7 @@ export const fullGOV=buildChapters([
     ],
     "cards": [
       [
-        "O que é WIP?",
+        "O que WIP representa no fluxo Kanban?",
         "Quantidade de trabalhos em andamento em determinado momento ou etapa do fluxo."
       ],
       [
@@ -503,15 +503,15 @@ export const fullGOV=buildChapters([
     ],
     "cards": [
       [
-        "O que é SLI?",
+        "Como definir um SLI em gestão de serviços?",
         "Indicador quantitativo observado do comportamento do serviço."
       ],
       [
-        "O que é SLO?",
+        "Qual é a função de um SLO mensurável?",
         "Objetivo ou meta para determinado indicador, com período e condições definidos."
       ],
       [
-        "O que é SLA?",
+        "Qual compromisso um SLA pode registrar?",
         "Acordo que formaliza compromissos de serviço, responsabilidades e condições."
       ],
       [
