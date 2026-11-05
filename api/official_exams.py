@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 
 from official_exam_parser import extract_exam, extract_definitive_key, fingerprint
 from official_exam_quality import check_question, quarantine_existing
+from official_extra_sources import EXTRA_EXAMS
 
 SOURCE_PAGE = "https://conhecimento.fgv.br/concursos/dataprev24"
 KEY_URL = "https://conhecimento.fgv.br/sites/default/files/concursos/dataprev_gabarito_definitivo-1.pdf"
@@ -45,6 +46,7 @@ EXAMS = [
      "filename": "ati-desenvolvimento-de-software-cns003-tipo-01.pdf",
      "focus": "Desenvolvimento", "subject": "ENG"},
 ]
+EXAMS.extend(EXTRA_EXAMS)
 BY_CODE = {ex["code"]: ex for ex in EXAMS}
 ALLOWED_HOST = "conhecimento.fgv.br"
 
@@ -98,7 +100,7 @@ def setup(db):
           (code,board,contest,role,year,book_type,source_url,answer_url)
           VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(code) DO NOTHING""",
           (e["code"], e["board"], e["contest"], e["role"], e["year"],
-           1, PDF_ROOT + e["filename"], KEY_URL))
+           1, PDF_ROOT + e["filename"], e.get("key_url", KEY_URL)))
     quarantine_existing(db, datetime.now().astimezone().isoformat(timespec='seconds'))
 
 
@@ -127,17 +129,19 @@ def _download(url: str, binary: bool = True):
 
 def _discover(exam):
     """Scraping só quando o usuário clica: confirmar links presentes na página."""
-    html = _download(SOURCE_PAGE, binary=False).decode("utf-8", "replace")
-    links = [urljoin(SOURCE_PAGE, unescape(u)) for u in re.findall(
+    page = exam.get("source_page", SOURCE_PAGE)
+    html = _download(page, binary=False).decode("utf-8", "replace")
+    links = [urljoin(page, unescape(u)) for u in re.findall(
         r"href\s*=\s*[\"']([^\"']+)[\"']", html, re.I)]
     expected = exam["filename"]
     pdf = next((u for u in links if urlparse(u).path.endswith("/" + expected)
                 and urlparse(u).hostname == ALLOWED_HOST), None)
-    key = next((u for u in links if "dataprev_gabarito_definitivo-1.pdf" in urlparse(u).path
+    filename_key = urlparse(exam.get("key_url", KEY_URL)).path.rsplit("/", 1)[-1]
+    key = next((u for u in links if filename_key in urlparse(u).path
                 and urlparse(u).hostname == ALLOWED_HOST), None)
     # A página pode mudar a estrutura HTML, mas os URLs conhecidos permanecem
     # candidatos: o download final precisa validar PDF, cargo e gabarito.
-    return pdf or PDF_ROOT + expected, key or KEY_URL, bool(pdf), bool(key)
+    return pdf or PDF_ROOT + expected, key or exam.get("key_url",KEY_URL), bool(pdf), bool(key)
 
 
 def _record_failure(conn, code, nowstr, message):
@@ -154,14 +158,15 @@ def refresh_one(exam, conn, nowstr):
         except (ValueError, requests.RequestException):
             # A página HTML pode estar indisponível mesmo com os PDFs oficiais
             # acessíveis. Usar somente as URLs previamente confirmadas.
-            pdf_url, key_url, linked_pdf, linked_key = PDF_ROOT + exam["filename"], KEY_URL, False, False
+            pdf_url, key_url, linked_pdf, linked_key = PDF_ROOT + exam["filename"], exam.get("key_url",KEY_URL), False, False
         pdf_data = _download(pdf_url)
         key_data = _download(key_url)
-        key = extract_definitive_key(key_data, exam["fragment"], 1)
-        parsed = extract_exam(pdf_data)
+        n_expected=exam.get("total_questions",70)
+        key = extract_definitive_key(key_data, exam["fragment"], 1, n_expected)
+        parsed = extract_exam(pdf_data,n_expected)
         present = [q["number"] for q in parsed]
-        if present != list(range(1,71)):
-            raise ValueError("A sequência de 70 questões não foi identificada integralmente; nenhum item liberado.")
+        if present != list(range(1,n_expected+1)):
+            raise ValueError(f"A sequência de {n_expected} questões não foi identificada integralmente; nenhum item liberado.")
         rows = []
         blocked_numbers = []
         for q in parsed:
@@ -220,16 +225,16 @@ def refresh_one(exam, conn, nowstr):
 
 
 class Answer(BaseModel):
-    number: int = Field(ge=1, le=70)
+    number: int = Field(ge=1, le=100)
     choice_index: int = Field(ge=0, le=4)
 
 
 class CardRequest(BaseModel):
-    number:int=Field(ge=1,le=70)
+    number:int=Field(ge=1,le=100)
 
 
 class Submission(BaseModel):
-    answers: list[Answer] = Field(min_length=1, max_length=70)
+    answers: list[Answer] = Field(min_length=1, max_length=100)
     duration_sec: int = Field(default=0, ge=0, le=18000)
 
 
@@ -243,7 +248,8 @@ def register(app, authorized, conn, nowstr):
                FROM official_exam_sources s ORDER BY year DESC,role""")]
         for row in rows:
             row["focus"] = BY_CODE[row["code"]]["focus"]
-            row["source_page"] = SOURCE_PAGE
+            row["source_page"] = BY_CODE[row["code"]].get("source_page",SOURCE_PAGE)
+            row["total_questions"] = BY_CODE[row["code"]].get("total_questions",70)
         return {"items":rows,"mode":"manual", "note":"Sem busca agendada; use Atualizar somente quando desejar."}
 
     @app.post("/api/provas/oficiais/{code}/atualizar")
@@ -263,7 +269,7 @@ def register(app, authorized, conn, nowstr):
         for row in rows:
             row["choices"]=json.loads(row.pop("choices_json"))
         return {"exam_code":code,"role":BY_CODE[code]["role"],
-                "total":len(rows),"complete":len(rows)==70,"items":rows}
+                "total":len(rows),"complete":len(rows)==BY_CODE[code].get("total_questions",70),"items":rows}
 
     @app.post("/api/provas/oficiais/{code}/corrigir")
     def submit(code:str, payload:Submission,_:None=Depends(authorized)):
@@ -311,6 +317,8 @@ def register(app, authorized, conn, nowstr):
             # Os blocos comuns não pertencem à especialidade técnica.
             # Não classificar Inglês como Redes/Segurança/Desenvolvimento.
             number=payload.number
+            if not code.startswith("dp24"):
+                raise HTTPException(409,"Flashcards por disciplina desta prova ainda dependem da classificação editorial dos blocos do edital.")
             if number<=12:area="POR"
             elif 13<=number<=24:
                 raise HTTPException(409,"Revisão de Inglês ainda não tem disciplina própria no EstudaTI.")
