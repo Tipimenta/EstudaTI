@@ -144,15 +144,15 @@ export const beginnerCrossB:Record<number,Partial<PedagogicalLesson>>={
       },
       {
         "ask": "Quando 'P e Q' é verdadeira?",
-        "answer": "Quando P e Q são ambas verdadeiras."
+        "answer": "Quando P e Q são ambas verdadeiras, pois a conjunção exige que as duas condições sejam atendidas."
       },
       {
         "ask": "Quando 'P ou Q' inclusivo é falso?",
-        "answer": "Quando P e Q são ambas falsas."
+        "answer": "Quando P e Q são ambas falsas, porque o 'ou' inclusivo fica verdadeiro se ao menos uma delas ocorrer."
       },
       {
         "ask": "Qual é o único caso falso de 'se P, então Q'?",
-        "answer": "P verdadeira e Q falsa."
+        "answer": "Quando a condição P ocorre e a consequência Q não ocorre, contrariando a promessa feita pela condicional."
       }
     ],
     "extra": ""
