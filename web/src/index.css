@@ -152,4 +152,25 @@ html[data-theme="paper"] .theme-switch:hover{background-color:#d9e4dc}
   .study-main{padding-right:2rem;padding-left:2rem}
 }
 
+
+/* Provas e exercícios: uma ação primária, filtros visíveis e tipografia confortável. */
+.exam-stat{background:var(--app-surface);border:1px solid var(--app-border);border-radius:16px;padding:1rem 1.2rem;box-shadow:0 3px 12px #1b31320b}
+.exam-source-card{background:var(--app-surface);border-color:var(--app-border);transition:border .15s,box-shadow .15s}
+.exam-source-card:hover{border-color:rgba(32,111,101,.45);box-shadow:0 9px 24px #142f2712}
+.exam-pill-ready{background:rgba(27,124,101,.12);color:var(--app-accent)}
+.exam-pill-pending{background:var(--app-subtle);color:var(--app-muted)}
+.exam-filter-tab{padding:.55rem .9rem;border:1px solid transparent;border-radius:10px;font-size:.84rem;font-weight:700;color:var(--app-muted);background:var(--app-subtle)}
+.exam-filter-tab:hover{color:var(--app-ink)}
+.exam-filter-tab-active{background:rgba(34,127,104,.13);color:var(--app-accent);border-color:rgba(34,127,104,.24)}
+.exam-tab-count{display:inline-block;margin-left:.3rem;opacity:.68;font-size:.75rem}
+.exam-choice{border-color:var(--app-border);background:var(--app-surface);color:var(--app-ink);transition:background .15s,border-color .15s}
+.exam-choice:hover{background:var(--app-subtle);border-color:var(--app-accent)}
+.exam-choice-active{border-color:var(--app-accent)!important;background:rgba(34,127,104,.12)!important}
+.exam-option-letter{background:var(--app-subtle);color:var(--app-ink)}
+.exam-choice-active .exam-option-letter{background:var(--app-primary);color:var(--app-primary-text)}
+.exam-number{border-color:var(--app-border);background:var(--app-surface);color:var(--app-muted)}
+.exam-number:hover{border-color:var(--app-accent);color:var(--app-ink)}
+.exam-number-current{background:var(--app-primary);color:var(--app-primary-text);border-color:var(--app-primary)}
+.exam-number-answered:not(.exam-number-current){background:rgba(32,111,101,.13);border-color:rgba(32,111,101,.4);color:var(--app-accent)}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
