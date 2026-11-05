@@ -92,8 +92,9 @@ def test_app_loads_all_revisions():
     for name in FULL:
         assert ("import {"+name+"} from './"+name+"'") in text
         assert name+"[lesson.id]" in text
-    assert "pedagogicalBoosts[lesson.id]" in text
-    assert "const more=patch?undefined:" in text
+    assert "pedagogicalBoosts" not in text
+    assert "recallSupplement" not in text
+    assert "return [base.id,base]" in text
 
 def test_middle_lessons_remain_intact():
     ids={24,31,41,49,56,64,68,78,87}
