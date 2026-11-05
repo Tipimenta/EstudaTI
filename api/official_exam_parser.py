@@ -56,7 +56,7 @@ def _question_parts(doc):
                 yield page_no + 1, line
 
 
-def extract_exam(raw: bytes):
+def extract_exam(raw: bytes, total_questions: int = 70):
     doc = pdf_open(raw)
     try:
         lines = list(_question_parts(doc))
@@ -64,7 +64,7 @@ def extract_exam(raw: bytes):
         current = None
         for page, line in lines:
             match = _NUM.match(line)
-            if match and 1 <= int(match.group(1)) <= 70:
+            if match and 1 <= int(match.group(1)) <= total_questions:
                 num = int(match.group(1))
                 # Só aceitar números crescentes; não confundir lista ou código com questão.
                 if current is None and num != 1:
@@ -124,8 +124,11 @@ def _word_lines(words):
     return groups
 
 
-def extract_definitive_key(raw: bytes, role_fragment: str, book_type: int = 1):
-    """Extrai a sequência 1..70 apenas da tabela que possui cargo+tipo exigidos."""
+def extract_definitive_key(raw: bytes, role_fragment: str, book_type: int = 1,
+                           total_questions: int = 70):
+    """Extrai 1..N apenas da tabela do cargo e do tipo, nunca por aproximação."""
+    if total_questions not in (60,70,80,100):
+        raise ValueError("Tamanho de caderno não previsto no extrator.")
     doc = pdf_open(raw, max_pages=40)
     try:
         found = []
@@ -149,7 +152,7 @@ def extract_definitive_key(raw: bytes, role_fragment: str, book_type: int = 1):
             if not headings:
                 continue
             for y in headings:
-                clip = fitz.Rect(25, y + 4, pg.rect.width - 25, min(h - 10, y + 280))
+                clip = fitz.Rect(25, y + 4, pg.rect.width - 25, min(h - 10, y + 355))
                 lines = _word_lines(pg.get_text("words", clip=clip))
                 answer_map = {}
                 for i, tokens in enumerate(lines[:-1]):
@@ -157,9 +160,9 @@ def extract_definitive_key(raw: bytes, role_fragment: str, book_type: int = 1):
                     if len(numbers) not in (10, 20) or not numbers:
                         continue
                     start = numbers[0]
-                    if start not in (1, 21, 41, 61):
+                    if start not in range(1, total_questions+1, 20):
                         continue
-                    expected = min(20, 71 - start)
+                    expected = min(20, total_questions + 1 - start)
                     if len(numbers) != expected or numbers != list(range(start, start + expected)):
                         continue
                     for successor in lines[i+1:i+4]:
@@ -167,10 +170,10 @@ def extract_definitive_key(raw: bytes, role_fragment: str, book_type: int = 1):
                         if len(letters) == expected:
                             answer_map.update(zip(numbers, letters))
                             break
-                if len(answer_map) == 70 and set(answer_map) == set(range(1, 71)):
+                if len(answer_map) == total_questions and set(answer_map) == set(range(1, total_questions+1)):
                     found.append(answer_map)
         if len(found) != 1:
-            raise ValueError("Não foi possível conferir automaticamente o gabarito de 70 questões, cargo e tipo. Nada será liberado.")
+            raise ValueError(f"Não foi possível conferir o gabarito de {total_questions} questões para o cargo e tipo exatos. Nada será liberado.")
         return found[0]
     finally:
         doc.close()
