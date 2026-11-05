@@ -74,7 +74,7 @@
     "correct_index": 3,
     "explanation": "O acesso por IP já demonstra conectividade até o serviço naquele teste; a diferença é a resolução do nome pelo DNS.",
     "choice_rationales": {
-      "A": "DHCP não remove MAC do roteador.",
+      "A": "DHCP distribui parâmetros como endereço IP e DNS, mas não remove o endereço MAC do roteador ou de suas interfaces.",
       "B": "IPv4 sempre possui quatro octetos; há conectividade por IP no cenário.",
       "C": "Falha física total é incompatível com o acesso por IP demonstrado.",
       "D": "O acesso por IP já demonstra conectividade até o serviço naquele teste; a diferença é a resolução do nome pelo DNS."
@@ -137,7 +137,7 @@
     "correct_index": 2,
     "explanation": "A VLAN separa comunicação local; VPN oferece um caminho lógico protegido sobre outra rede, mas não elimina regras e rotas.",
     "choice_rationales": {
-      "A": "VLAN não implica criptografia de credenciais.",
+      "A": "VLAN separa segmentos lógicos locais e não implica, por si só, criptografia de senhas de usuários.",
       "B": "São tecnologias, não formatos de endereço IP ou MAC.",
       "C": "A VLAN separa comunicação local; VPN oferece um caminho lógico protegido sobre outra rede, mas não elimina regras e rotas.",
       "D": "A VPN permanece sujeita a roteamento, acesso e políticas."
@@ -158,7 +158,7 @@
     "correct_index": 1,
     "explanation": "A identidade foi validada, mas o sistema concedeu acesso indevido. Isso envolve autorização inadequada e risco à confidencialidade.",
     "choice_rationales": {
-      "A": "O sintoma não é de indisponibilidade.",
+      "A": "O serviço está acessível; o problema é ter permitido visualizar dados sem autorização, não uma interrupção de serviço.",
       "B": "A identidade foi validada, mas o sistema concedeu acesso indevido. Isso envolve autorização inadequada e risco à confidencialidade.",
       "C": "Não há alteração de dados descrita para concluir perda de integridade.",
       "D": "O login funcionou; o problema está no privilégio aplicado depois."
@@ -179,7 +179,7 @@
     "correct_index": 3,
     "explanation": "Ter software instalado não garante uma instância em execução. Serviços e processos são estados/entidades diferentes.",
     "choice_rationales": {
-      "A": "Arquivo instalado não implica execução atual.",
+      "A": "Ter os arquivos da aplicação instalados em disco não confirma que exista um processo ativo executando o programa.",
       "B": "Processo é software em execução, não hardware.",
       "C": "Sistemas operacionais gerenciam inicialização e estado de serviços.",
       "D": "Ter software instalado não garante uma instância em execução. Serviços e processos são estados/entidades diferentes."
@@ -200,7 +200,7 @@
     "correct_index": 2,
     "explanation": "Alguns indica ao menos um, sem autorizar uma afirmação universal sobre todos os postos.",
     "choice_rationales": {
-      "A": "A frase não permite generalização para todos.",
+      "A": "O texto afirma que alguns postos melhoraram; concluir que todos melhoraram generalizaria além do que foi escrito.",
       "B": "O texto afirma ocorrência de redução em parte do conjunto.",
       "C": "Alguns indica ao menos um, sem autorizar uma afirmação universal sobre todos os postos.",
       "D": "Não reduzir não implica necessariamente piorar; pode permanecer igual."
@@ -263,7 +263,7 @@
     "correct_index": 1,
     "explanation": "Uma característica não funcional de desempenho precisa de critério mensurável e condições de teste.",
     "choice_rationales": {
-      "A": "Mudar o adjetivo mantém a ambiguidade.",
+      "A": "Substituir o adjetivo 'rápido' por 'muito rápido' continua sem definir uma métrica verificável para o teste.",
       "B": "Uma característica não funcional de desempenho precisa de critério mensurável e condições de teste.",
       "C": "Linguagem isolada não determina desempenho nem define critério de aceite.",
       "D": "Commit registra alterações, não transforma uma exigência vaga em mensurável."
