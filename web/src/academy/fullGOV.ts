@@ -312,7 +312,7 @@ export const fullGOV=buildChapters([
       ],
       [
         "Qual domínio se relaciona à operação e suporte?",
-        "DSS — entrega, serviços e suporte."
+        "DSS — domínio de gestão voltado à entrega operacional, ao atendimento de serviços e ao suporte aos usuários."
       ],
       [
         "Por que ligar PDTI à governança?",
