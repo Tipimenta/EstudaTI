@@ -73,3 +73,15 @@ Esses 11 capítulos têm exemplos resolvidos, armadilhas e revisões. Foram incl
 - Conferir SHA do deployment Vercel como READY para afirmar que a experiência nova está ativa.
 - Nunca apagar o progresso do usuário, questões antigas, tentativas e flashcards durante uma reescrita.
 - Não usar IA para presumir gabarito oficial de concurso. Material autoral e material oficial permanecem identificados separadamente.
+
+## Revisão do currículo completo — 05/11/2026
+
+Foram reescritas individualmente as **131 aulas que ainda estavam pendentes**, somadas às **38 aulas anteriormente reconstruídas**. Cobertura editorial: **169/169 aulas, em nove matérias**, preservando os mesmos IDs e, portanto, os vínculos de progresso, anotações e questões.
+
+Os 131 capítulos desta etapa encontram-se em `web/src/academy/fullRED.ts`, `fullSEG.ts`, `fullSO.ts`, `fullPOR.ts`, `fullGOV.ts`, `fullBD.ts`, `fullENG.ts`, `fullLOG.ts` e `fullLEG.ts`. Cada capítulo tem objetivos específicos, contextualização que introduz o problema, explicação do funcionamento, conexão com conhecimento anterior, aplicação à prova, estudo de caso resolvido em quatro passos, quatro pegadinhas e quatro cartões de recuperação. Não são anexos genéricos: substituem a aula exibida. O componente `editorialBuilder.ts` é apenas um modelo comum de apresentação; o conteúdo de cada tema é escrito especificamente.
+
+A renderização em `academy/index.ts` foi simplificada para usar apenas a redação própria de cada aula, **sem os antigos `pedagogicalBoosts` e `recallSupplement` genéricos**. Os registros e tentativas do banco permanecem intactos.
+
+A validação `api/tests/test_complete_course_20261105.py` confere unicidade dos IDs, cobertura integral de 169, presença de todas as partes didáticas e quatro flashcards distintos por capítulo. Isso **não equivale a uma certificação de precisão científica ou eficácia de aprendizagem**: conceitos legais e tecnologias sujeitos a revisão exigem manutenção editorial e monitoramento de editais. A quantidade de caracteres, sozinha, não demonstra qualidade pedagógica.
+
+As questões históricas e o algoritmo de revisão espaçada não foram integralmente reescritos nesta etapa; as novas perguntas de revisão aparecem diretamente nas páginas das aulas. A expansão de itens autorais no banco e a incorporação dos novos cartões ao agendamento espaçado são tarefas separadas, para evitar duplicações ou perda do histórico.
