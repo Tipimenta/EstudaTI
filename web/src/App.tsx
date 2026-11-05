@@ -160,7 +160,7 @@ export default function App(){
      {page==='flashcards'&&<FlashcardPage/>}
      {page==='simulados'&&<QuizPage go={go}/>}
      {page==='discursivas'&&<DiscursivePage/>}
-     {page==='banco'&&<QuestionBank onGoProvas={()=>go('fontes')}/>}
+     {page==='banco'&&<QuestionBank onGoProvas={()=>go('fontes')} onGoPractice={()=>go('simulados')}/>}
      {page==='fontes'&&<StudyLibrary/>}
      {page==='dominio'&&<MasteryMap/>}
      {page==='editais'&&<EditalReader/>}
