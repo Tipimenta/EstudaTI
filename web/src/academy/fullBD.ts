@@ -231,7 +231,7 @@ export const fullBD=buildChapters([
         "Cópia apropriada das estruturas físicas do banco e dependências necessárias à recuperação."
       ],
       [
-        "O que é PITR?",
+        "O que significa PITR na recuperação do banco de dados?",
         "Recuperação do banco a ponto específico no tempo usando backup e histórico adequado de transações."
       ],
       [
