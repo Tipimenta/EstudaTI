@@ -27,9 +27,12 @@ class MultiContestSources(unittest.TestCase):
   with con:
    setup(con)
    self.assertEqual(con.execute('SELECT COUNT(*) FROM official_exam_sources').fetchone()[0],11)
-   con.execute("UPDATE official_exam_sources SET ready_count=42 WHERE code='dp24infra'")
+   con.execute("UPDATE official_exam_sources SET state='parcial',diagnostic='Caderno importado' WHERE code='dp24infra'")
    setup(con)
-   self.assertEqual(con.execute("SELECT ready_count FROM official_exam_sources WHERE code='dp24infra'").fetchone()[0],42)
+   actual=con.execute("SELECT state,diagnostic,ready_count FROM official_exam_sources WHERE code='dp24infra'").fetchone()
+   self.assertEqual(actual["state"],'parcial')
+   self.assertEqual(actual["diagnostic"],'Caderno importado')
+   self.assertEqual(actual["ready_count"],0)  # Sem itens reais, a auditoria recalcula a contagem; não aceita número artificial.
   con.close()
 
  @staticmethod
