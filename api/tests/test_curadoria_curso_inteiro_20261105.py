@@ -30,7 +30,7 @@ SUBJECTS={
 
 def read_module(name):
     text=(ACADEMY/(name+".ts")).read_text(encoding="utf-8")
-    m=re.search(r"\s*=\s*([\[{])",text)
+    m=re.search(r"export const\s+"+re.escape(name)+r"\s*:[^\n]*=\s*([\[{])",text)
     assert m, f"Não encontrado array ou objeto JSON em {name}"
     payload=json.loads(text[m.start(1):].strip().rstrip(";"))
     return payload if isinstance(payload,list) else list(payload.values())
