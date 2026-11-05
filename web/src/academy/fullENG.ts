@@ -23,7 +23,7 @@ export const fullENG=buildChapters([
     ],
     "cards": [
       [
-        "O que é API?",
+        "O que é uma API na integração entre programas?",
         "Interface com operações e formatos definidos para que programas acessem capacidades de outro sistema."
       ],
       [
@@ -183,7 +183,7 @@ export const fullENG=buildChapters([
     ],
     "cards": [
       [
-        "O que é CI?",
+        "O que CI automatiza no processo de desenvolvimento?",
         "Prática de integrar mudanças frequentes acompanhadas de validação automatizada, como builds e testes."
       ],
       [
