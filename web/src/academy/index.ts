@@ -29,11 +29,14 @@ import {beginnerNetwork} from './beginnerNetwork'
 import {beginnerNetworkNext} from './beginnerNetworkNext'
 import {beginnerCrossA} from './beginnerCrossA'
 import {beginnerCrossB} from './beginnerCrossB'
+import {middleExplainedA} from './middleExplainedA'
+import {middleExplainedB} from './middleExplainedB'
+import {middleExplainedC} from './middleExplainedC'
 import type {PedagogicalLesson} from './intro1'
 
 export type {PedagogicalLesson} from './intro1'
 export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>{
- const patch=beginnerNetwork[lesson.id]||beginnerNetworkNext[lesson.id]||beginnerCrossA[lesson.id]||beginnerCrossB[lesson.id]||rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]
+ const patch=beginnerNetwork[lesson.id]||beginnerNetworkNext[lesson.id]||beginnerCrossA[lesson.id]||beginnerCrossB[lesson.id]||middleExplainedA[lesson.id]||middleExplainedB[lesson.id]||middleExplainedC[lesson.id]||rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]
  const base={...lesson,...patch}
  const more=patch?undefined:pedagogicalBoosts[lesson.id]
  const card=patch?undefined:recallSupplement[lesson.id]
