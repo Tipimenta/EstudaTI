@@ -108,7 +108,7 @@ export const fullSO=buildChapters([
       ],
       [
         "Qual é o modo octal de rwxr-x---?",
-        "750: dono 7, grupo 5 e outros 0."
+        "750: dono possui leitura, escrita e execução (7); grupo possui leitura e execução (5); outros não têm acesso (0)."
       ],
       [
         "O que significa x em um diretório?",
