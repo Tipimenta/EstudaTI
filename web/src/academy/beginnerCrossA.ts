@@ -40,7 +40,7 @@ export const beginnerCrossA:Record<number,Partial<PedagogicalLesson>>={
       },
       {
         "ask": "O servidor caiu e ninguém consegue consultar exames. Qual propriedade?",
-        "answer": "Disponibilidade."
+        "answer": "Disponibilidade, porque o serviço deixou de estar acessível às pessoas quando elas precisavam consultar os exames."
       },
       {
         "ask": "Qual a diferença entre ameaça e vulnerabilidade?",
@@ -140,7 +140,7 @@ export const beginnerCrossA:Record<number,Partial<PedagogicalLesson>>={
     "review": [
       {
         "ask": "O que é informação explícita?",
-        "answer": "A informação afirmada diretamente pelo texto."
+        "answer": "É a informação que o autor afirma diretamente, sem o leitor precisar concluir algo que não foi escrito."
       },
       {
         "ask": "Qual a diferença entre tema e ideia central?",
