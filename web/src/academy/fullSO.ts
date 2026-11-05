@@ -151,7 +151,7 @@ export const fullSO=buildChapters([
         "Tipo 1 opera diretamente sobre infraestrutura host no modelo comum; tipo 2 usa sistema operacional hospedeiro."
       ],
       [
-        "O que é P2V?",
+        "O que significa P2V na migração de um servidor?",
         "Migração de um sistema físico para execução em máquina virtual."
       ],
       [
