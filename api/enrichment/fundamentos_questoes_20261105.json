@@ -1,0 +1,317 @@
+[
+  {
+    "topic_id": 1,
+    "question": "Por que um pacote IP enviado a um servidor em outra rede pode usar o MAC do gateway no primeiro quadro Ethernet?",
+    "choices": [
+      "Porque o MAC do gateway é sempre o IP final do servidor.",
+      "Porque o quadro é entregue inicialmente ao próximo equipamento local, enquanto o IP continua indicando o destino da comunicação.",
+      "Porque o DNS troca automaticamente o endereço IP do servidor pelo MAC do roteador.",
+      "Porque a porta TCP 443 é uma interface física do gateway."
+    ],
+    "correct_index": 1,
+    "explanation": "O endereço MAC no quadro atende à entrega do próximo enlace local; o endereço IP permite encaminhamento entre redes.",
+    "choice_rationales": {
+      "A": "O MAC não é um endereço IP; são identificações com funções diferentes.",
+      "B": "O endereço MAC no quadro atende à entrega do próximo enlace local; o endereço IP permite encaminhamento entre redes.",
+      "C": "DNS resolve nomes, não substitui IP pelo MAC no pacote.",
+      "D": "443 é uma porta lógica de transporte, não uma porta física Ethernet."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-001-0",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 1,
+    "question": "O modelo OSI atribui à camada de sessão funções como organização do diálogo e sincronização. Qual interpretação está correta para a Internet atual?",
+    "choices": [
+      "Todo site tem obrigatoriamente um protocolo físico separado de sessão na camada 5.",
+      "Uma sessão de login HTTP prova que a camada 5 atua isoladamente, com seu próprio cabo.",
+      "A camada de sessão é uma função conceitual; mecanismos de diálogo e de login podem estar implementados nos protocolos e na aplicação, sem um protocolo separado obrigatório.",
+      "A sessão substitui os endereços IP quando a conexão dura mais de um minuto."
+    ],
+    "correct_index": 2,
+    "explanation": "O OSI descreve responsabilidades; a arquitetura da Internet não exige camadas 5 e 6 implementadas separadamente.",
+    "choice_rationales": {
+      "A": "O modelo não exige um protocolo físico de sessão para toda aplicação.",
+      "B": "Sessão de login é tipicamente função da aplicação, não prova de camada isolada.",
+      "C": "O OSI descreve responsabilidades; a arquitetura da Internet não exige camadas 5 e 6 implementadas separadamente.",
+      "D": "Organização de diálogo não substitui endereçamento IP."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-001-1",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 1,
+    "question": "Um programa exibe caracteres incorretos porque interpreta bytes de UTF-8 como outra codificação. Qual função conceitual do OSI ajuda a compreender o problema?",
+    "choices": [
+      "Apresentação: representação e interpretação de dados.",
+      "Rede: escolha de rota do pacote.",
+      "Física: instalação obrigatória de um cabo novo.",
+      "Transporte: identificação da porta de switch."
+    ],
+    "correct_index": 0,
+    "explanation": "Uma codificação define como bytes representam caracteres; a falha é de representação, função associada conceitualmente à apresentação.",
+    "choice_rationales": {
+      "A": "Uma codificação define como bytes representam caracteres; a falha é de representação, função associada conceitualmente à apresentação.",
+      "B": "O roteamento IP pode funcionar mesmo quando os caracteres são interpretados incorretamente.",
+      "C": "Um cabo novo não corrige uma codificação incompatível.",
+      "D": "Portas de transporte são números lógicos, não interfaces físicas de switch."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-001-2",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 2,
+    "question": "Um computador recebeu IP e gateway automaticamente, acessa o servidor por IP, mas não consegue abrir o nome interno desse servidor. Qual hipótese é mais diretamente relacionada ao sintoma?",
+    "choices": [
+      "O roteador deixou de ter endereço MAC porque o DHCP foi instalado.",
+      "O computador não possui octetos em seu endereço IPv4.",
+      "A porta do switch está obrigatoriamente queimada.",
+      "O servidor DNS configurado não conhece o nome interno ou não responde à consulta."
+    ],
+    "correct_index": 3,
+    "explanation": "O acesso por IP já demonstra conectividade até o serviço naquele teste; a diferença é a resolução do nome pelo DNS.",
+    "choice_rationales": {
+      "A": "DHCP não remove MAC do roteador.",
+      "B": "IPv4 sempre possui quatro octetos; há conectividade por IP no cenário.",
+      "C": "Falha física total é incompatível com o acesso por IP demonstrado.",
+      "D": "O acesso por IP já demonstra conectividade até o serviço naquele teste; a diferença é a resolução do nome pelo DNS."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-002-3",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 2,
+    "question": "Em uma rede IPv4, o que representa o número 24 de 192.168.10.70/24?",
+    "choices": [
+      "A porta TCP utilizada pelo servidor.",
+      "A quantidade de bits iniciais reservados à parte de rede do endereço.",
+      "A quantidade de computadores atualmente conectados ao switch.",
+      "O número de octetos do endereço."
+    ],
+    "correct_index": 1,
+    "explanation": "/24 é um prefixo: os primeiros 24 dos 32 bits de IPv4 identificam a parte de rede.",
+    "choice_rationales": {
+      "A": "Portas TCP identificam comunicações entre processos e são independentes do prefixo.",
+      "B": "/24 é um prefixo: os primeiros 24 dos 32 bits de IPv4 identificam a parte de rede.",
+      "C": "O prefixo não conta quantos equipamentos estão ligados.",
+      "D": "IPv4 possui quatro octetos independentemente de /24."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-002-4",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 3,
+    "question": "Uma empresa utiliza VLAN 10 para recepção e VLAN 30 para servidores. O que normalmente é necessário para permitir tráfego IP entre essas sub-redes?",
+    "choices": [
+      "Roteamento entre as sub-redes, com políticas permitindo o tráfego necessário.",
+      "Somente uma porta trunk: ela elimina a necessidade de qualquer decisão IP.",
+      "Transformar todas as VLANs em VPNs de Internet.",
+      "Permitir login de qualquer usuário sem autenticação."
+    ],
+    "correct_index": 0,
+    "explanation": "VLANs separam domínios de enlace; a comunicação IP entre sub-redes normalmente exige roteamento e regras adequadas.",
+    "choice_rationales": {
+      "A": "VLANs separam domínios de enlace; a comunicação IP entre sub-redes normalmente exige roteamento e regras adequadas.",
+      "B": "Trunk transporta VLANs entre equipamentos, mas não é, por si, o roteamento inter-VLAN.",
+      "C": "VPN tem outra finalidade, como comunicação protegida sobre redes intermediárias.",
+      "D": "Autenticação é distinta da conectividade entre sub-redes."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-003-5",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 3,
+    "question": "Qual diferença essencial entre VLAN e VPN?",
+    "choices": [
+      "Ambas servem exclusivamente para criptografar senhas de usuários.",
+      "VLAN é um tipo de endereço IP; VPN é um tipo de endereço MAC.",
+      "VLAN organiza segmentos lógicos locais; VPN cria comunicação protegida através de uma rede intermediária conforme protocolo usado.",
+      "VPN elimina a necessidade de firewall e rotas."
+    ],
+    "correct_index": 2,
+    "explanation": "A VLAN separa comunicação local; VPN oferece um caminho lógico protegido sobre outra rede, mas não elimina regras e rotas.",
+    "choice_rationales": {
+      "A": "VLAN não implica criptografia de credenciais.",
+      "B": "São tecnologias, não formatos de endereço IP ou MAC.",
+      "C": "A VLAN separa comunicação local; VPN oferece um caminho lógico protegido sobre outra rede, mas não elimina regras e rotas.",
+      "D": "A VPN permanece sujeita a roteamento, acesso e políticas."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-003-6",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 4,
+    "question": "Um funcionário entra corretamente no sistema, mas consegue visualizar um laudo de outro setor sem permissão. O principal problema descrito é de qual natureza?",
+    "choices": [
+      "Disponibilidade, porque o sistema está acessível.",
+      "Autorização e confidencialidade, pois o acesso ao registro é indevidamente permitido.",
+      "Integridade, porque o laudo foi obrigatoriamente alterado.",
+      "Autenticação, porque o login foi obrigatoriamente recusado."
+    ],
+    "correct_index": 1,
+    "explanation": "A identidade foi validada, mas o sistema concedeu acesso indevido. Isso envolve autorização inadequada e risco à confidencialidade.",
+    "choice_rationales": {
+      "A": "O sintoma não é de indisponibilidade.",
+      "B": "A identidade foi validada, mas o sistema concedeu acesso indevido. Isso envolve autorização inadequada e risco à confidencialidade.",
+      "C": "Não há alteração de dados descrita para concluir perda de integridade.",
+      "D": "O login funcionou; o problema está no privilégio aplicado depois."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-004-7",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 6,
+    "question": "Um programa está instalado no Linux, mas seu serviço não está ativo. Qual explicação distingue corretamente os conceitos?",
+    "choices": [
+      "O arquivo instalado prova que há processo em execução.",
+      "Todo processo em segundo plano é um componente físico.",
+      "O sistema operacional não possui mecanismos para iniciar serviços.",
+      "Instalação significa que os arquivos estão presentes; execução significa que existe um processo ativo, que pode ser consultado pelos mecanismos de serviço."
+    ],
+    "correct_index": 3,
+    "explanation": "Ter software instalado não garante uma instância em execução. Serviços e processos são estados/entidades diferentes.",
+    "choice_rationales": {
+      "A": "Arquivo instalado não implica execução atual.",
+      "B": "Processo é software em execução, não hardware.",
+      "C": "Sistemas operacionais gerenciam inicialização e estado de serviços.",
+      "D": "Ter software instalado não garante uma instância em execução. Serviços e processos são estados/entidades diferentes."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-006-8",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 8,
+    "question": "Um texto afirma 'Alguns postos reduziram o tempo de atendimento'. Qual alternativa respeita a informação disponível?",
+    "choices": [
+      "Todos os postos reduziram o tempo.",
+      "Nenhum posto reduziu o tempo.",
+      "Pelo menos um posto reduziu o tempo; não é possível concluir que foram todos.",
+      "Os postos que não reduziram o tempo necessariamente pioraram."
+    ],
+    "correct_index": 2,
+    "explanation": "Alguns indica ao menos um, sem autorizar uma afirmação universal sobre todos os postos.",
+    "choice_rationales": {
+      "A": "A frase não permite generalização para todos.",
+      "B": "O texto afirma ocorrência de redução em parte do conjunto.",
+      "C": "Alguns indica ao menos um, sem autorizar uma afirmação universal sobre todos os postos.",
+      "D": "Não reduzir não implica necessariamente piorar; pode permanecer igual."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-008-9",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 10,
+    "question": "Uma equipe reinicia diariamente um serviço que volta a falhar no dia seguinte. Qual atividade busca explicar a recorrência e eliminar a causa?",
+    "choices": [
+      "Gerenciamento de problemas, porque investiga causas ou causas potenciais de incidentes.",
+      "Gerenciamento de incidentes, porque garante que um reinício eliminou definitivamente a causa.",
+      "Gerenciamento de mudanças, porque toda reinicialização já é um projeto de atualização permanente.",
+      "Encerramento do serviço sem análise, pois a falha é repetitiva."
+    ],
+    "correct_index": 0,
+    "explanation": "Incidente procura restaurar serviço; problemas investigam causas recorrentes e soluções duradouras.",
+    "choice_rationales": {
+      "A": "Incidente procura restaurar serviço; problemas investigam causas recorrentes e soluções duradouras.",
+      "B": "Restaurar com reinício não garante que a causa desapareceu.",
+      "C": "Mudanças executam alterações controladas; o foco da pergunta é investigar a causa.",
+      "D": "Encerrar sem análise não aborda a recorrência."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-010-10",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 12,
+    "question": "Em duas tabelas, Pedidos(cliente_id) e Clientes(id, nome), qual conceito permite obter o nome do cliente que realizou determinado pedido?",
+    "choices": [
+      "ORDER BY para trocar a chave estrangeira pela data.",
+      "COMMIT para somar os IDs dos clientes.",
+      "Um loop de rede para descobrir o MAC do cliente.",
+      "JOIN relacionando Pedidos.cliente_id a Clientes.id."
+    ],
+    "correct_index": 3,
+    "explanation": "JOIN permite combinar linhas de tabelas relacionadas por uma condição, como uma chave estrangeira e a chave referenciada.",
+    "choice_rationales": {
+      "A": "ORDER BY ordena o resultado; não combina tabelas.",
+      "B": "COMMIT confirma transações, não associa registros.",
+      "C": "MAC é conceito de rede local, não de consultas SQL.",
+      "D": "JOIN permite combinar linhas de tabelas relacionadas por uma condição, como uma chave estrangeira e a chave referenciada."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-012-11",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 14,
+    "question": "Um gerente afirma 'o sistema deve ser rápido'. O que torna a exigência adequada para verificação por teste?",
+    "choices": [
+      "Trocar 'rápido' por 'muito rápido', sem outros detalhes.",
+      "Definir tempo máximo de resposta sob uma carga e condição mensuráveis.",
+      "Escolher uma linguagem de programação considerada veloz.",
+      "Criar um commit com a palavra 'performance'."
+    ],
+    "correct_index": 1,
+    "explanation": "Uma característica não funcional de desempenho precisa de critério mensurável e condições de teste.",
+    "choice_rationales": {
+      "A": "Mudar o adjetivo mantém a ambiguidade.",
+      "B": "Uma característica não funcional de desempenho precisa de critério mensurável e condições de teste.",
+      "C": "Linguagem isolada não determina desempenho nem define critério de aceite.",
+      "D": "Commit registra alterações, não transforma uma exigência vaga em mensurável."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-014-12",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 16,
+    "question": "Considere a condicional lógica 'Se P, então Q'. Qual situação a torna falsa?",
+    "choices": [
+      "P falsa e Q falsa.",
+      "P falsa e Q verdadeira.",
+      "P verdadeira e Q falsa.",
+      "P verdadeira e Q verdadeira."
+    ],
+    "correct_index": 2,
+    "explanation": "Na lógica proposicional clássica, a condicional só falha quando o antecedente ocorre e a consequência não.",
+    "choice_rationales": {
+      "A": "Quando P é falsa, a condicional não é contrariada pelo caso.",
+      "B": "Quando P é falsa, a condicional continua verdadeira pela tabela-verdade clássica.",
+      "C": "Na lógica proposicional clássica, a condicional só falha quando o antecedente ocorre e a consequência não.",
+      "D": "Quando P e Q são verdadeiras, a condição foi satisfeita."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-016-13",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 17,
+    "question": "Uma instituição solicita muitos dados para um comprovante simples sem explicar a necessidade de cada campo. Qual princípio da LGPD ajuda a avaliar se o volume coletado é adequado?",
+    "choices": [
+      "Necessidade, que orienta limitar o tratamento ao mínimo pertinente às finalidades.",
+      "Portabilidade, porque toda informação pode ser vendida a terceiros.",
+      "Autenticação, porque substitui a análise de finalidade.",
+      "Durabilidade, porque garante retenção eterna de qualquer dado."
+    ],
+    "correct_index": 0,
+    "explanation": "O princípio da necessidade exige pertinência, proporcionalidade e limitação ao mínimo necessário para a finalidade.",
+    "choice_rationales": {
+      "A": "O princípio da necessidade exige pertinência, proporcionalidade e limitação ao mínimo necessário para a finalidade.",
+      "B": "Portabilidade não justifica excesso de coleta.",
+      "C": "Autenticação é controle de identidade; não substitui a adequação da coleta.",
+      "D": "Durabilidade é propriedade transacional, não permissão para retenção ilimitada."
+    },
+    "fingerprint": "estudati-fundamentos-explicados-20261105-017-14",
+    "origin": "autoral",
+    "review_status": "revisada"
+  }
+]
