@@ -58,17 +58,17 @@ Esses 11 capítulos têm exemplos resolvidos, armadilhas e revisões. Foram incl
 | Raciocínio Lógico | 78 | Probabilidade, complemento e independência |
 | Legislação | 87 | Modalidades de licitação e critérios de julgamento |
 
-**Importante:** a meta de curadoria é o conjunto das **169 aulas**, e não apenas a primeira ou o bloco introdutório. O teste automático `test_curadoria_curso_inteiro_20261105.py` confirma IDs, total revisado e pendências; não pretende certificar didática por tamanho de texto.
+**Importante:** as **169 aulas** foram contempladas, e não apenas a primeira ou o bloco introdutório. O teste automático `test_curadoria_curso_inteiro_20261105.py` confere a cobertura individual e a estrutura; não pretende certificar didática apenas por tamanho de texto.
 
 **18 capítulos adicionais** haviam sido reescritos editorialmente na revisão anterior (duas aulas por disciplina), sem duplicar os IDs acima.
 
 ### Limite real
 
-**38 de 169 capítulos** receberam reconstrução editorial individual (18 da rodada anterior + 11 fundamentos + 9 intermediários). Os demais **131 capítulos** precisam de revisão individual, inclusive definição de todos os termos no contexto, progressão, aplicação e correção de questões. A existência de um texto maior não significa que a aula foi ensinada adequadamente.
+**169 de 169 capítulos** agora possuem conteúdo editorial individual na experiência de aulas: 18 revisões anteriores, 11 fundamentos, 9 intermediários e **131 capítulos adicionais criados nesta rodada**, com explicação de conceitos, conexão com conteúdo anterior, caso resolvido em quatro etapas, armadilhas e quatro cartões de revisão por aula. Foram mantidos os IDs do curso, suas questões já existentes e os registros de progresso.\n\nO teste automatizado verifica que todos os IDs estão cobertos por um único capítulo revisado e que há as seções, casos e cartões esperados. **Ele não comprova que nenhuma explicação tenha erro factual ou que todo aluno aprenderá sem dúvidas**; revisões e correções futuras continuam necessárias, especialmente quando normas e editais mudarem. O objetivo foi substituir conteúdo fragmentado, não acrescentar textos genéricos ao fim de cada aula.
 
 ## Regras de publicação
 
-- Não anunciar 'as 169 aulas agora explicam tudo' até que as 169 sejam inspecionadas individualmente.
+- Não anunciar ausência absoluta de erros ou que o curso dispensa todas as outras fontes de estudo; a revisão editorial cobre todos os 169 IDs e deve continuar aberta a correções pontuais.
 - Executar testes de conteúdo, frontend, API e compatibilidade de banco antes da publicação.
 - Conferir SHA do deployment Vercel como READY para afirmar que a experiência nova está ativa.
 - Nunca apagar o progresso do usuário, questões antigas, tentativas e flashcards durante uma reescrita.
