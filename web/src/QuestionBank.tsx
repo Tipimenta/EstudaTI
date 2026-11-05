@@ -28,7 +28,7 @@ function readCsv(text:string):Record<string,string>[] {
  return rows.filter(r=>r.some(c=>c.trim())).map(row=>Object.fromEntries(header.map((key,i)=>[key,row[i]||''])))
 }
 
-export default function QuestionBank({onGoProvas}:{onGoProvas:()=>void}){
+export default function QuestionBank({onGoProvas,onGoPractice}:{onGoProvas:()=>void;onGoPractice:()=>void}){
  const [catalog,setCatalog]=useState<Catalog|null>(null)
  const [meta,setMeta]=useState<Meta|null>(null)
  const [officialCount,setOfficialCount]=useState(0)
@@ -65,14 +65,13 @@ export default function QuestionBank({onGoProvas}:{onGoProvas:()=>void}){
  return <div className="fade">
   <p className="mb-2 text-xs font-bold uppercase tracking-[.20em] text-emerald-300">Prática e treino por matéria</p>
   <h1 className="text-3xl font-bold text-white sm:text-4xl">Banco de questões</h1>
-  <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">Aqui ficam os exercícios de estudo e as revisões por assunto. As provas reais, organizadas por concurso e banca, estão na seção própria e podem ser resolvidas diretamente no EstudaTI.</p>
+  <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">Escolha como quer praticar. A correção registra seus acertos e erros; depois você pode revisar os assuntos que precisam de reforço.</p>
   {error&&<div className="my-4 rounded-xl border border-rose-400/30 bg-rose-400/10 p-4 text-sm text-rose-100"><AlertCircle size={16} className="mr-2 inline"/>{error}</div>}
   {message&&<div className="my-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-sm text-emerald-100">{message}</div>}
-  <button onClick={onGoProvas} className="btn btn-outline mt-5 w-full sm:w-auto"><BookOpen size={16}/> Resolver provas anteriores já importadas</button>
-  <div className="my-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+  <div className="mt-6 flex flex-wrap gap-3"><button onClick={onGoPractice} className="btn btn-primary"><Check size={16}/> Começar treino de questões</button><button onClick={onGoProvas} className="btn btn-outline"><BookOpen size={16}/> Resolver provas oficiais</button></div>
+  <div className="my-6 grid gap-3 sm:grid-cols-3">
    <div className="panel p-4"><div className="text-xs muted">Questões autorais</div><div className="mt-2 text-2xl font-extrabold">{count('autoral','revisada')}</div></div>
    <div className="panel p-4"><div className="text-xs muted">Questões de provas anteriores</div><div className="mt-2 text-2xl font-extrabold">{officialCount}</div></div>
-   <div className="panel p-4"><div className="text-xs muted">Aguardando revisão</div><div className="mt-2 text-2xl font-extrabold">{meta?.counts.filter(x=>x.review_status==='rascunho').reduce((n,x)=>n+x.total,0)??0}</div></div>
    <div className="panel p-4"><div className="text-xs muted">Questões já erradas</div><div className="mt-2 text-2xl font-extrabold">{meta?.wrong_count??0}</div></div>
   </div>
   <details className="mb-7 rounded-xl border border-white/10 bg-white/[.02] p-4 sm:p-5">
@@ -88,7 +87,8 @@ export default function QuestionBank({onGoProvas}:{onGoProvas:()=>void}){
    <p className="mt-4 text-xs text-amber-200/90"><ShieldCheck className="mr-1 inline" size={14}/> Use apenas material autorizado. Questões oficiais exigem concurso, banca, ano e link de origem; respeite direitos e termos das bancas.</p>
   </div>
   </details>
-  <div className="panel p-5">
+  <details className="rounded-2xl border p-4 sm:p-5" style={{borderColor:"var(--app-border)"}}><summary className="cursor-pointer text-sm font-bold text-white">Consultar e organizar o banco de questões</summary>
+  <div className="panel mt-4 p-4 sm:p-5">
    <div className="mb-4 flex items-center gap-2"><Filter size={17} className="text-emerald-300"/><h2 className="font-bold text-white">Questões do banco de estudos</h2><button onClick={()=>load()} className="ml-auto text-xs text-emerald-300"><RefreshCw size={15}/></button></div>
    <div className="mb-5 grid gap-3 md:grid-cols-6">
     <div className="relative md:col-span-2"><Search size={16} className="absolute left-3 top-3 text-slate-400"/><input className="field pl-10" placeholder="Buscar enunciado" value={query} onChange={e=>setQuery(e.target.value)}/></div>
@@ -107,5 +107,6 @@ export default function QuestionBank({onGoProvas}:{onGoProvas:()=>void}){
    {catalog&&catalog.total>20&&<div className="mt-5 flex items-center justify-between"><button className="btn btn-secondary text-xs" disabled={page===1} onClick={()=>{setPage(page-1);load(page-1)}}>Anterior</button><span className="text-xs muted">Página {page}</span><button className="btn btn-secondary text-xs" disabled={page*20>=catalog.total} onClick={()=>{setPage(page+1);load(page+1)}}>Próxima</button></div>}
    {catalog?.total===0&&<p className="text-sm muted">Nenhuma questão encontrada para os filtros atuais.</p>}
   </div>
+  </details>
  </div>
 }
