@@ -1,0 +1,191 @@
+[
+  {
+    "topic_id": 24,
+    "question": "Uma estação IPv6 possui somente endereço fe80:: e não alcança um servidor em outra rede. Qual avaliação inicial é coerente?",
+    "choices": [
+      "O endereço fe80:: garante que já possui rota para a Internet.",
+      "Deve trocar DNS porque nenhum IPv6 tem gateway.",
+      "O endereço link-local permite comunicação no enlace, mas não comprova endereço nem rota para redes distantes.",
+      "SLAAC sempre exige DHCPv6 para atribuir o endereço."
+    ],
+    "correct_index": 2,
+    "explanation": "Um endereço IPv6 link-local é limitado ao enlace e não basta para afirmar conectividade roteada. É necessário verificar endereçamento e anúncios/rotas apropriados.",
+    "choice_rationales": {
+      "A": "Link-local não demonstra rota global.",
+      "B": "O problema indicado é de conectividade por endereço, não necessariamente de nomes.",
+      "C": "Um endereço IPv6 link-local é limitado ao enlace e não basta para afirmar conectividade roteada. É necessário verificar endereçamento e anúncios/rotas apropriados.",
+      "D": "SLAAC pode funcionar com anúncios de roteador sem atribuição via servidor DHCPv6."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-24",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 31,
+    "question": "O monitoramento indica possível ransomware num servidor. Qual conduta combina contenção e preservação de evidências?",
+    "choices": [
+      "Investigar o alcance, preservar registros relevantes e isolar o sistema de forma proporcional e coordenada.",
+      "Apagar imediatamente todos os logs para liberar espaço.",
+      "Restaurar qualquer backup no servidor ainda potencialmente comprometido sem análise.",
+      "Ignorar o alerta até todos os arquivos estarem indisponíveis."
+    ],
+    "correct_index": 0,
+    "explanation": "A resposta deve analisar sinais, limitar danos e preservar evidências, sem prejudicar desnecessariamente serviços críticos.",
+    "choice_rationales": {
+      "A": "A resposta deve analisar sinais, limitar danos e preservar evidências, sem prejudicar desnecessariamente serviços críticos.",
+      "B": "Apagar logs pode destruir evidências de investigação.",
+      "C": "Recuperar em ambiente comprometido pode reinfectar dados e serviços.",
+      "D": "Alertas graves justificam triagem rápida e não espera passiva."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-31",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 41,
+    "question": "Um RAID 5 contém três discos iguais de 1 TB. Qual conclusão sobre capacidade e proteção está correta?",
+    "choices": [
+      "Disponibiliza 3 TB úteis e tolera duas falhas simultâneas.",
+      "Disponibiliza cerca de 2 TB úteis, tolera convencionalmente uma falha de disco e ainda exige backups.",
+      "Disponibiliza apenas 1 TB útil porque espelha todos os dados.",
+      "Protege integralmente contra a exclusão acidental de arquivos."
+    ],
+    "correct_index": 1,
+    "explanation": "RAID 5 distribui dados e paridade; o equivalente a um disco é consumido na redundância e o arranjo tolera uma falha convencional.",
+    "choice_rationales": {
+      "A": "A capacidade útil não é 3 TB e duas falhas não são toleradas num RAID 5 convencional.",
+      "B": "RAID 5 distribui dados e paridade; o equivalente a um disco é consumido na redundância e o arranjo tolera uma falha convencional.",
+      "C": "Espelhamento completo descreve RAID 1, não RAID 5.",
+      "D": "Exclusão lógica pode atingir os dados no conjunto RAID."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-41",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 49,
+    "question": "Num relatório, 'a equipe correu contra o relógio' não descreve corrida física. Que interpretação é adequada?",
+    "choices": [
+      "É ambiguidade obrigatória causada por sujeito composto.",
+      "A expressão é denotativa porque inclui o substantivo relógio.",
+      "A frase afirma que todos os técnicos correram fisicamente.",
+      "É uso conotativo, indicando urgência ou pouco tempo disponível."
+    ],
+    "correct_index": 3,
+    "explanation": "A expressão transfere o sentido literal de correr para a ideia de trabalhar sob pressão de tempo.",
+    "choice_rationales": {
+      "A": "O enunciado esclarece o uso figurado, não necessariamente duas leituras ambíguas.",
+      "B": "Relógio é literal isoladamente, mas a expressão como um todo é figurada.",
+      "C": "A interpretação física contraria o contexto informado.",
+      "D": "A expressão transfere o sentido literal de correr para a ideia de trabalhar sob pressão de tempo."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-49",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 56,
+    "question": "Uma equipe tem muitas tarefas iniciadas e poucas concluídas. Qual prática Kanban pode ajudar a melhorar o fluxo?",
+    "choices": [
+      "Criar mais reuniões de Scrum sem avaliar o trabalho.",
+      "Remover toda prioridade e executar itens aleatoriamente.",
+      "Limitar trabalho em andamento (WIP) para favorecer conclusão antes de iniciar novos itens.",
+      "Proibir a conclusão de tarefas durante uma Sprint."
+    ],
+    "correct_index": 2,
+    "explanation": "Limitar WIP ajuda a reduzir acúmulo de itens inacabados e visualizar gargalos no fluxo.",
+    "choice_rationales": {
+      "A": "Eventos Scrum têm finalidades específicas e não substituem análise de fluxo.",
+      "B": "Fluxo exige prioridades e critérios claros.",
+      "C": "Limitar WIP ajuda a reduzir acúmulo de itens inacabados e visualizar gargalos no fluxo.",
+      "D": "Não há motivo para impedir a conclusão; isso pioraria o gargalo."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-56",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 64,
+    "question": "Um banco possui índice em cliente_id, mas escolhe leitura sequencial numa consulta que devolve quase todas as linhas. O que isso pode indicar?",
+    "choices": [
+      "O banco está necessariamente com erro físico no disco.",
+      "O otimizador estimou que a leitura direta custa menos do que acessar grande parte da tabela via índice.",
+      "Um índice obriga o SGBD a usá-lo em todas as consultas.",
+      "Índice é sempre uma cópia independente de backup."
+    ],
+    "correct_index": 1,
+    "explanation": "O plano de execução é escolhido por estimativas de custo, e ler grande proporção da tabela pode favorecer scan sequencial.",
+    "choice_rationales": {
+      "A": "Leitura sequencial pode ser decisão normal do planejador.",
+      "B": "O plano de execução é escolhido por estimativas de custo, e ler grande proporção da tabela pode favorecer scan sequencial.",
+      "C": "Existir índice não obriga sua utilização.",
+      "D": "Índice organiza acessos; não substitui backups."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-64",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 68,
+    "question": "Em um sistema de agendamento, a equipe precisa mostrar a ordem das mensagens entre navegador, API e banco. Qual diagrama UML responde melhor?",
+    "choices": [
+      "Diagrama de sequência.",
+      "Diagrama de classes para listar atributos.",
+      "Diagrama de casos de uso para descrever atores.",
+      "Diagrama de implantação para distribuir servidores."
+    ],
+    "correct_index": 0,
+    "explanation": "Sequência enfatiza participantes e mensagens ao longo do tempo, adequado para demonstrar interação navegador–API–banco.",
+    "choice_rationales": {
+      "A": "Sequência enfatiza participantes e mensagens ao longo do tempo, adequado para demonstrar interação navegador–API–banco.",
+      "B": "Classes enfatizam estrutura estática, não temporalidade das mensagens.",
+      "C": "Casos de uso mostram objetivos e atores, não a ordem de chamadas.",
+      "D": "Implantação descreve distribuição e infraestrutura física/lógica."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-68",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 78,
+    "question": "Uma urna tem duas bolas azuis e duas vermelhas. Duas bolas são retiradas sem reposição. Qual é a probabilidade de ambas serem azuis?",
+    "choices": [
+      "1/4, pois cada retirada tem a mesma chance de azul.",
+      "1/2, pois metade das bolas é azul.",
+      "1/3, pois há três bolas depois da primeira retirada.",
+      "1/6, pois P(azul na primeira)=2/4 e P(azul na segunda | primeira azul)=1/3."
+    ],
+    "correct_index": 3,
+    "explanation": "Sem reposição, a segunda probabilidade depende da primeira: 2/4 × 1/3 = 1/6.",
+    "choice_rationales": {
+      "A": "A segunda retirada não mantém probabilidade 1/2 após a primeira azul.",
+      "B": "Metade azul descreve apenas a primeira retirada.",
+      "C": "1/3 é a probabilidade condicional da segunda azul após a primeira azul, não do evento completo.",
+      "D": "Sem reposição, a segunda probabilidade depende da primeira: 2/4 × 1/3 = 1/6."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-78",
+    "origin": "autoral",
+    "review_status": "revisada"
+  },
+  {
+    "topic_id": 87,
+    "question": "Um órgão organiza seleção de trabalho técnico mediante prêmio previsto no edital. Que modalidade da Lei 14.133 é mais diretamente pertinente?",
+    "choices": [
+      "Pregão, porque toda seleção com edital envolve bens comuns.",
+      "Concurso, modalidade para escolha de trabalho técnico, científico ou artístico mediante prêmio ou remuneração.",
+      "Leilão, porque o órgão pretende vender um bem.",
+      "Diálogo competitivo, porque qualquer trabalho técnico depende de diálogo."
+    ],
+    "correct_index": 1,
+    "explanation": "O art. 28 prevê concurso e a modalidade destina-se à escolha de trabalho técnico, científico ou artístico nas condições legais.",
+    "choice_rationales": {
+      "A": "Pregão é vinculado a bens e serviços comuns, não à finalidade descrita.",
+      "B": "O art. 28 prevê concurso e a modalidade destina-se à escolha de trabalho técnico, científico ou artístico nas condições legais.",
+      "C": "Leilão se relaciona à alienação de bens.",
+      "D": "Diálogo competitivo exige pressupostos próprios de contratação complexa."
+    },
+    "fingerprint": "estudati-intermediarias-explicadas-20261105-87",
+    "origin": "autoral",
+    "review_status": "revisada"
+  }
+]
