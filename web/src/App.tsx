@@ -1,7 +1,8 @@
 import ContestEditor from './ContestEditor'
 import { MiniTimer, FocusTimerPage, useStudyTimer } from './StudyTimer'
 import {lazy,Suspense,useEffect,useMemo,useState,type FormEvent,type ReactNode} from 'react'
-import { Activity, AlertCircle, ArrowRight, BookOpen, Brain, CalendarDays, Check, CheckCircle2, CircleHelp, Clock3, CloudDownload, ExternalLink, FileText, GraduationCap, LayoutDashboard, ListChecks, LockKeyhole, LogOut, Menu, Moon, Sun, Play, RefreshCw, RotateCcw, Save, Settings2, ShieldCheck, Sparkles, Target, Timer, Trophy, X } from 'lucide-react'
+import { AlertCircle, ArrowRight, BookOpen, Brain, CalendarDays, Check, CheckCircle2, CircleHelp, Clock3, CloudDownload, ExternalLink, FileText, GraduationCap, ListChecks, LockKeyhole, Menu, Moon, Sun, Play, RefreshCw, RotateCcw, Save, ShieldCheck, Sparkles, Target, Trophy, X } from 'lucide-react'
+import {StudyNavigation,NAV_LABELS,type Page} from './StudyNavigation'
 import {api,post,patch,type Card,type Contest,type Dashboard,type Plan,type Progress,type QuizQuestion,type QuizResult,type Subject} from './api'
 const QuestionBank=lazy(()=>import('./QuestionBank'))
 const EditalReader=lazy(()=>import('./EditalReader'))
@@ -14,28 +15,6 @@ const TutorHub=lazy(()=>import('./TutorHub'))
 const NetworkLab=lazy(()=>import('./NetworkLab'))
 const DiscursivePage=lazy(()=>import('./DiscursivePage'))
 
-type Page='painel'|'cronograma'|'conteudos'|'flashcards'|'simulados'|'banco'|'editais'|'foco'|'concursos'|'desempenho'|'fontes'|'dominio'|'ajustes'|'inteligencia'|'tutor'|'laboratorio'|'discursivas'|'matriz'
-const PRIMARY_NAV:{id:Page;label:string;icon:typeof LayoutDashboard}[]=[
- {id:'painel',label:'Início',icon:LayoutDashboard},
- {id:'conteudos',label:'Aulas',icon:BookOpen},
- {id:'banco',label:'Questões',icon:ListChecks},
- {id:'flashcards',label:'Revisar',icon:Brain},
- {id:'desempenho',label:'Meu progresso',icon:Activity},
-]
-const EXTRA_NAV:{id:Page;label:string;icon:typeof LayoutDashboard}[]=[
- {id:'fontes',label:'Provas anteriores',icon:BookOpen},
- {id:'simulados',label:'Simulados por matéria',icon:Target},
- {id:'cronograma',label:'Plano de estudos',icon:CalendarDays},
- {id:'concursos',label:'Concursos e editais',icon:Trophy},
-]
-const ADVANCED_NAV:{id:Page;label:string;icon:typeof LayoutDashboard}[]=[
- {id:'inteligencia',label:'Orientador de estudos',icon:Sparkles},
- {id:'tutor',label:'Tutor de estudos',icon:GraduationCap},
- {id:'laboratorio',label:'Laboratório prático',icon:Activity},
- {id:'foco',label:'Cronômetro de estudos',icon:Timer},
- {id:'ajustes',label:'Configurações e backup',icon:Settings2},
-]
-const NAV=[...PRIMARY_NAV,...EXTRA_NAV,...ADVANCED_NAV]
 const todayString=()=>new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})
 const dateBR=(str:string)=>new Date(str.slice(0,10)+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})
 const simpleDate=(str:string)=>new Date(str).toLocaleDateString('pt-BR')
@@ -153,31 +132,46 @@ export default function App(){
  useEffect(()=>{api('/me').then(()=>setAuthenticated(true)).catch(()=>setAuthenticated(false))},[])
  async function logout(){await post('/logout',{});setAuthenticated(false)}
  function go(p:Page){setPage(p);setMobile(false);window.scrollTo({top:0,behavior:'smooth'})}
- const current=useMemo(()=>NAV.find(x=>x.id===page),[page])
+ const currentLabel=NAV_LABELS[page]
  if(authenticated===null)return <div className="flex min-h-screen items-center justify-center text-sm muted">Carregando EstudaTI…</div>
  if(!authenticated)return <Login onLogin={()=>setAuthenticated(true)}/>
- return <div className="app-shell min-h-screen">
- <aside className="app-sidebar fixed bottom-0 left-0 top-0 z-30 hidden w-65 flex-col border-r p-5 md:flex">
-  <button className="mb-8 flex items-center gap-3 text-left" onClick={()=>go('painel')}><div className="rounded-2xl bg-emerald-300 p-2.5 text-emerald-950"><GraduationCap size={26}/></div><div><div className="text-xl font-extrabold tracking-tight text-white">Estuda<span className="text-emerald-300">TI</span></div><div className="text-[10px] font-bold tracking-widest text-slate-400">MINHA ÁREA DE ESTUDOS</div></div></button>
-  <p className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500">Principal</p>
-  <nav className="mt-3 space-y-1" aria-label="Menu principal">{PRIMARY_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className={page===id?'flex w-full items-center gap-3 rounded-xl bg-emerald-400/15 px-3.5 py-3 text-left text-sm font-semibold text-emerald-100':'flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm text-slate-300 hover:bg-white/5'}><Icon size={18}/>{label}</button>)}</nav>
-  <details className="group mt-5 min-h-0 overflow-y-auto border-t border-white/10 pt-3" open={EXTRA_NAV.some(x=>x.id===page)?true:undefined}>
-   <summary className="cursor-pointer rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5">Outras áreas de estudo <span className="float-right text-xs text-emerald-300">▾</span></summary>
-   <nav className="mt-2 space-y-1" aria-label="Ferramentas adicionais">{EXTRA_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className={page===id?'flex w-full items-center gap-3 rounded-xl bg-emerald-400/15 px-3 py-2.5 text-left text-sm text-emerald-100':'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-slate-400 hover:bg-white/5'}><Icon size={17}/>{label}</button>)}</nav>
-  </details>
-  <details className="group mt-2 border-t border-white/10 pt-2" open={ADVANCED_NAV.some(x=>x.id===page)?true:undefined}>
-   <summary className="cursor-pointer rounded-xl px-3 py-3 text-sm font-semibold text-slate-400 hover:bg-white/5">Ferramentas opcionais ▾</summary>
-   <nav className="mt-1 space-y-1" aria-label="Ferramentas avançadas">{ADVANCED_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className={page===id?'flex w-full items-center gap-3 rounded-xl bg-emerald-400/15 px-3 py-2.5 text-left text-sm text-emerald-100':'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-slate-400 hover:bg-white/5'}><Icon size={17}/>{label}</button>)}</nav>
-  </details>
-  <button onClick={logout} className="mt-auto flex items-center gap-2 px-3 py-4 text-xs text-slate-400 hover:text-white"><LogOut size={15}/> Sair da plataforma</button>
- </aside>
- <div className="md:pl-65">
-  <header className="app-topbar sticky top-0 z-20 flex h-[68px] items-center justify-between border-b px-4 backdrop-blur-xl sm:px-8">
-   <div className="flex min-w-0 items-center gap-2"><button aria-label="Abrir menu" className="rounded-xl p-2 text-slate-200 hover:bg-slate-800 md:hidden" onClick={()=>setMobile(!mobile)}><Menu size={23}/></button><h2 className="truncate text-sm font-semibold text-slate-100 sm:text-base">{current?.label}</h2></div>
-   <div className="flex items-center gap-2 sm:gap-3">{themeControl}<MiniTimer timer={timer}/></div>
-  </header>
-  {mobile&&<div className="app-mobile-menu fixed inset-0 z-50 overflow-y-auto p-6 pb-24 md:hidden"><div className="mb-6 flex items-center justify-between text-xl font-bold text-white">EstudaTI<button aria-label="Fechar menu" onClick={()=>setMobile(false)}><X size={24}/></button></div><p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-400">Estudar</p><nav className="space-y-1">{PRIMARY_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className="flex w-full items-center gap-3 rounded-xl p-3.5 text-left text-sm text-slate-200 hover:bg-white/5"><Icon size={19}/>{label}</button>)}</nav><details className="mt-4 border-t border-white/10 pt-4"><summary className="cursor-pointer py-3 text-sm font-bold text-emerald-200">Provas, simulados e planejamento ▾</summary><nav className="space-y-1">{EXTRA_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className="flex w-full items-center gap-3 rounded-xl p-3.5 text-left text-sm text-slate-300 hover:bg-white/5"><Icon size={18}/>{label}</button>)}</nav></details><details className="mt-2 border-t border-white/10 pt-3"><summary className="cursor-pointer py-3 text-sm font-bold text-slate-300">Ferramentas opcionais ▾</summary><nav className="space-y-1">{ADVANCED_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className="flex w-full items-center gap-3 rounded-xl p-3.5 text-left text-sm text-slate-300 hover:bg-white/5"><Icon size={18}/>{label}</button>)}</nav></details><button onClick={logout} className="mt-6 flex items-center gap-2 text-sm text-rose-200"><LogOut size={17}/> Sair</button></div>}
-  <nav aria-label="Navegação rápida" className="app-mobile-tabs fixed inset-x-0 bottom-0 z-30 flex justify-around border-t px-1 pb-[max(6px,env(safe-area-inset-bottom))] pt-2 md:hidden">{PRIMARY_NAV.map(({id,label,icon:Icon})=><button key={id} onClick={()=>go(id)} className={page===id?'flex min-w-0 flex-1 flex-col items-center gap-1 px-1 py-1 text-[10px] font-semibold text-emerald-300':'flex min-w-0 flex-1 flex-col items-center gap-1 px-1 py-1 text-[10px] text-slate-400'}><Icon size={20}/><span className="truncate">{label==='Meu progresso'?'Progresso':label}</span></button>)}</nav>
 
-<main className="mx-auto max-w-[1420px] px-4 pb-28 pt-6 sm:px-8 md:pt-10"><Suspense fallback={<div role="status" className="panel mx-auto max-w-3xl p-7 text-sm muted">Abrindo sua área de estudos...</div>}>{page==='painel'&&<DashboardPage go={go}/ >}{page==='inteligencia'&&<IntelligenceHub go={go}/>}{page==='tutor'&&<TutorHub/>}{page==='laboratorio'&&<NetworkLab/>}{page==='cronograma'&&<PlanPage go={go}/ >}{page==='conteudos'&&<StudyCourse onGoReview={()=>go('flashcards')}/>}{page==='flashcards'&&<FlashcardPage/>}{page==='simulados'&&<QuizPage go={go}/>}{page==='discursivas'&&<DiscursivePage/>}{page==='banco'&&<QuestionBank onGoProvas={()=>go('fontes')}/>}{page==='fontes'&&<StudyLibrary/>}{page==='dominio'&&<MasteryMap/>}{page==='editais'&&<EditalReader/>}{page==='matriz'&&<SyllabusMatrix/>}{page==='foco'&&<FocusTimerPage timer={timer}/>}{page==='concursos'&&<ContestPage go={go}/>}{page==='desempenho'&&<ProgressPage go={go}/>}{page==='ajustes'&&<SettingsPage theme={theme} setTheme={setTheme} readingSize={readingSize} setReadingSize={setReadingSize}/>}</Suspense><footer className="mt-14 border-t border-white/[.06] pt-6 text-xs text-slate-600">EstudaTI • Versão 1.4.0 • Preparação contínua para concursos de Tecnologia da Informação</footer></main></div></div>
+ return <div className="app-shell min-h-screen">
+  <StudyNavigation active={page} mobile={mobile} onMobileChange={setMobile} onNavigate={go} onLogout={logout}/>
+  <div className="md:pl-[248px]">
+   <header className="app-topbar sticky top-0 z-20 flex h-[70px] items-center justify-between gap-3 border-b px-4 backdrop-blur-xl sm:px-7">
+    <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+     <button type="button" onClick={()=>setMobile(true)} aria-label="Abrir menu" className="theme-switch md:hidden"><Menu size={21}/></button>
+     <div className="min-w-0">
+      <p className="hidden text-[10px] font-semibold uppercase tracking-[.14em] muted sm:block">Minha área de estudos</p>
+      <h2 className="truncate text-[15px] font-bold text-white sm:text-base">{currentLabel}</h2>
+     </div>
+    </div>
+    <div className="flex shrink-0 items-center gap-2">{themeControl}<MiniTimer timer={timer}/></div>
+   </header>
+   <main id="conteudo-principal" className="study-main mx-auto max-w-[1360px] px-4 pb-28 pt-7 sm:px-7 md:pb-12 md:pt-8 xl:px-10">
+    <Suspense fallback={<div role="status" className="panel mx-auto max-w-3xl p-7 text-sm muted">Abrindo sua área de estudos...</div>}>
+     {page==='painel'&&<DashboardPage go={go}/>}
+     {page==='inteligencia'&&<IntelligenceHub go={go}/>}
+     {page==='tutor'&&<TutorHub/>}
+     {page==='laboratorio'&&<NetworkLab/>}
+     {page==='cronograma'&&<PlanPage go={go}/>}
+     {page==='conteudos'&&<StudyCourse onGoReview={()=>go('flashcards')}/>}
+     {page==='flashcards'&&<FlashcardPage/>}
+     {page==='simulados'&&<QuizPage go={go}/>}
+     {page==='discursivas'&&<DiscursivePage/>}
+     {page==='banco'&&<QuestionBank onGoProvas={()=>go('fontes')}/>}
+     {page==='fontes'&&<StudyLibrary/>}
+     {page==='dominio'&&<MasteryMap/>}
+     {page==='editais'&&<EditalReader/>}
+     {page==='matriz'&&<SyllabusMatrix/>}
+     {page==='foco'&&<FocusTimerPage timer={timer}/>}
+     {page==='concursos'&&<ContestPage go={go}/>}
+     {page==='desempenho'&&<ProgressPage go={go}/>}
+     {page==='ajustes'&&<SettingsPage theme={theme} setTheme={setTheme} readingSize={readingSize} setReadingSize={setReadingSize}/>}
+    </Suspense>
+    <footer className="study-footer mt-12 border-t pt-5 text-xs muted">EstudaTI · Aprender, praticar e evoluir</footer>
+   </main>
+  </div>
+ </div>
 }
