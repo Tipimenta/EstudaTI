@@ -138,7 +138,35 @@ export default function StudyCourse({onGoReview}:{onGoReview?:()=>void}){
  <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wider text-emerald-300">AULAS DA DISCIPLINA</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">{subject?.name}</h1></div><div className="min-w-[140px] text-xs text-slate-300"><span>{ofSubject.filter(l=>l.completed).length} de {ofSubject.length} concluídas</span><div className="bartrack mt-2"><div className="barfill" style={{width:pct(ofSubject.filter(l=>l.completed).length,ofSubject.length)+'%'}}/></div></div></div>
  {error&&<div role="alert" className="mb-5 rounded-xl bg-rose-400/10 p-3 text-sm text-rose-200">{error}</div>}
  <button onClick={()=>setShowLessonPicker(v=>!v)} className="btn btn-secondary mb-4 w-full justify-between lg:hidden"><span className="flex items-center gap-2"><BookOpen size={17}/> {showLessonPicker?'Ocultar lista de aulas':'Escolher outra aula'}</span><ChevronRight size={16}/></button>
- <div className="grid items-start gap-5 lg:grid-cols-[285px_minmax(0,1fr)]"><aside className={(showLessonPicker?'block ':'hidden lg:block ')+'panel max-h-[60vh] overflow-y-auto p-3 lg:sticky lg:top-24 lg:max-h-[75vh]'}><div className="mb-2 px-3 py-2 text-xs font-bold uppercase tracking-widest text-slate-400">Aulas desta matéria</div>{ofSubject.map((l,i)=><div key={l.id}>{(i===0||moduleForTopic(l.code,l.id)?.title!==moduleForTopic(ofSubject[i-1].code,ofSubject[i-1].id)?.title)&&<h4 className="mb-2 mt-5 border-t border-white/10 px-3 pt-4 text-[11px] font-bold uppercase tracking-wider text-emerald-200">{moduleForTopic(l.code,l.id)?.title||'Outros assuntos'}</h4>}<button onClick={()=>openLesson(l.id)} className={`mb-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left ${l.id===lessonId?'border border-emerald-400/20 bg-emerald-400/10 text-white':'text-slate-300 hover:bg-white/5'}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-xs font-bold ${l.completed?'bg-emerald-400 text-emerald-950':'bg-slate-700/70'}`}>{l.completed?<Check size={15}/>:String(i+1).padStart(2,'0')}</span><div className="min-w-0 flex-1"><p className="text-sm font-medium leading-5">{academyLessons[l.id]?.title||cleanTitle(l.title)}</p><p className="mt-1 text-[11px] text-slate-400">{l.completed?'Concluída':'Pendente'}</p></div>{l.id===lessonId&&<ChevronRight size={15} className="shrink-0 text-emerald-300"/>}</button></div>)}</aside>
+ <div className="grid items-start gap-5 lg:grid-cols-[270px_minmax(0,1fr)]">
+ <aside className={(showLessonPicker?'block ':'hidden lg:block ')+'panel max-h-[70vh] overflow-y-auto p-3 lg:sticky lg:top-24 lg:max-h-[78vh]'}>
+  <div className="mb-2 px-3 py-2 text-xs font-extrabold uppercase tracking-wider muted">Conteúdo da matéria</div>
+  {ofSubject.reduce<{title:string;items:StudyLesson[]}[]>((groups,lesson)=>{
+    const title=moduleForTopic(lesson.code,lesson.id)?.title||'Outros assuntos'
+    let section=groups.find(x=>x.title===title)
+    if(!section){section={title,items:[]};groups.push(section)}
+    section.items.push(lesson)
+    return groups
+   },[]).map((group)=>{
+     const currentGroup=group.items.some(l=>l.id===lessonId)
+     const done=group.items.filter(l=>l.completed).length
+     return <details key={group.title+(currentGroup?'-current':'')} open={currentGroup?true:undefined} className="lesson-module mb-2 rounded-xl border" style={{borderColor:'var(--app-border)'}}>
+      <summary className="cursor-pointer rounded-xl px-3 py-3 text-[12px] font-bold leading-5 text-slate-200">
+       <span className="block pr-3">{group.title}</span>
+       <span className="mt-1 block text-[11px] font-normal muted">{done}/{group.items.length} aulas concluídas</span>
+      </summary>
+      <div className="space-y-1 border-t p-1.5" style={{borderColor:'var(--app-border)'}}>
+      {group.items.map(l=>{
+       const i=ofSubject.findIndex(x=>x.id===l.id)
+       return <button key={l.id} onClick={()=>openLesson(l.id)} aria-current={l.id===lessonId?'page':undefined} className={'flex w-full items-start gap-2.5 rounded-lg px-2.5 py-3 text-left transition-colors '+(l.id===lessonId?'study-nav-active':'study-nav-idle')}>
+        <span className={'grid h-6 w-6 shrink-0 place-items-center rounded-md text-[11px] font-bold '+(l.completed?'bg-emerald-400/20 text-emerald-300':'bg-slate-700/20 text-slate-400')}>{l.completed?<Check size={14}/>:String(i+1).padStart(2,'0')}</span>
+        <span className="min-w-0 flex-1"><span className="block text-[12px] font-semibold leading-[1.5]">{academyLessons[l.id]?.title||cleanTitle(l.title)}</span>{l.completed&&<span className="mt-0.5 block text-[10px] text-emerald-300">Concluída</span>}</span>
+       </button>
+      })}
+      </div>
+     </details>
+    })}
+ </aside>
  <section className="min-w-0">{!detail?<div className="panel p-9 text-sm text-slate-400">Carregando aula...</div>:<><section className="heroGlow rounded-[22px] border border-emerald-300/15 p-6 sm:p-8"><div className="mb-3 flex flex-wrap items-center gap-2"><span className="badge bg-emerald-400/10 text-emerald-200">Aula {currentIndex+1} de {ofSubject.length}</span><span className="badge bg-white/10 text-slate-200"><Clock3 size={12}/> {detail.minutes} min sugeridos</span>{detail.completed>0&&<span className="badge bg-emerald-400/20 text-emerald-200"><Check size={12}/> Concluída</span>}</div><h2 className="text-2xl font-bold text-white sm:text-3xl">{academyLessons[detail.id]?.title||cleanTitle(detail.title)}</h2>{!(academyLessons[detail.id]?.goal&&!academyLessons[detail.id]?.goal.startsWith("Explicar e aplicar:"))&&<p className="mt-3 text-sm leading-7 text-slate-200">{detail.objective}</p>}</section>
  <nav id="estudati-tabs" aria-label="Etapas da aula" className="my-4 grid scroll-mt-28 grid-cols-3 gap-2">{([{id:'teoria',text:'1. Aprender',icon:BookOpen},{id:'pratica',text:'2. Praticar',icon:ListChecks},{id:'revisao',text:'3. Revisar',icon:NotebookPen}] as const).map(({id,text,icon:Icon})=><button key={id} onClick={()=>goToTab(id)} className={tab===id?'flex min-w-0 items-center justify-center gap-2 rounded-xl bg-emerald-400/15 px-2 py-3 text-xs font-bold text-emerald-100 ring-1 ring-emerald-400/40':'flex min-w-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-2 py-3 text-xs font-semibold text-slate-300 hover:bg-white/10'}><Icon size={15} className="hidden sm:block"/>{text}</button>)}</nav>
  <section className="panel min-h-[370px] p-4 sm:p-8">{tab==='teoria'&&<TeachingTheory lesson={detail} onPractice={()=>goToTab('pratica')}/>}
