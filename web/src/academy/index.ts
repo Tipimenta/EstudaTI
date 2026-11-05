@@ -17,8 +17,6 @@ import {completedBD} from './completedBD'
 import {completedENG} from './completedENG'
 import {completedLOG} from './completedLOG'
 import {completedLEG} from './completedLEG'
-import {pedagogicalBoosts} from './pedagogicalBoosts'
-import {recallSupplement} from './recallSupplement'
 import {rewrittenInfrastructure} from './rewrittenInfrastructure'
 import {rewrittenFoundations} from './rewrittenFoundations'
 import {rewrittenPractice} from './rewrittenPractice'
@@ -41,25 +39,12 @@ import {fullBD} from './fullBD'
 import {fullENG} from './fullENG'
 import {fullLOG} from './fullLOG'
 import {fullLEG} from './fullLEG'
-import {fullRED} from './fullRED'
-import {fullSEG} from './fullSEG'
-import {fullSO} from './fullSO'
-import {fullPOR} from './fullPOR'
-import {fullGOV} from './fullGOV'
-import {fullBD} from './fullBD'
-import {fullENG} from './fullENG'
-import {fullLOG} from './fullLOG'
-import {fullLEG} from './fullLEG'
 import type {PedagogicalLesson} from './intro1'
 
 export type {PedagogicalLesson} from './intro1'
 export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>{
- const patch=fullRED[lesson.id]||fullSEG[lesson.id]||fullSO[lesson.id]||fullPOR[lesson.id]||fullGOV[lesson.id]||fullBD[lesson.id]||fullENG[lesson.id]||fullLOG[lesson.id]||fullLEG[lesson.id]||beginnerNetwork[lesson.id]||beginnerNetworkNext[lesson.id]||beginnerCrossA[lesson.id]||beginnerCrossB[lesson.id]||middleExplainedA[lesson.id]||middleExplainedB[lesson.id]||middleExplainedC[lesson.id]||rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]||fullRED[lesson.id]||fullSEG[lesson.id]||fullSO[lesson.id]||fullPOR[lesson.id]||fullGOV[lesson.id]||fullBD[lesson.id]||fullENG[lesson.id]||fullLOG[lesson.id]||fullLEG[lesson.id]
+ const patch=fullRED[lesson.id]||fullSEG[lesson.id]||fullSO[lesson.id]||fullPOR[lesson.id]||fullGOV[lesson.id]||fullBD[lesson.id]||fullENG[lesson.id]||fullLOG[lesson.id]||fullLEG[lesson.id]||beginnerNetwork[lesson.id]||beginnerNetworkNext[lesson.id]||beginnerCrossA[lesson.id]||beginnerCrossB[lesson.id]||middleExplainedA[lesson.id]||middleExplainedB[lesson.id]||middleExplainedC[lesson.id]||rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]
  const base={...lesson,...patch}
- const more=patch?undefined:pedagogicalBoosts[lesson.id]
- const card=patch?undefined:recallSupplement[lesson.id]
- const review=card&&!base.review.some(c=>c.ask===card.ask)?[...base.review,card]:base.review
- const steps=more?base.steps.map((step,i)=>i===1?{...step,body:more+'\n\n'+step.body}:step):base.steps
- return [base.id,{...base,steps,review}]
+ return [base.id,base]
 }))
 export const academyTotal=Object.keys(academyLessons).length
