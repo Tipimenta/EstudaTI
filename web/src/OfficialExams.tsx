@@ -1,6 +1,6 @@
 import {useEffect,useMemo,useState} from 'react'
 import {api,post} from './api'
-import {ArrowLeft,ArrowRight,BookOpen,CheckCircle2,ChevronDown,ExternalLink,FileText,Filter,RefreshCw,Search,ShieldCheck} from 'lucide-react'
+import {ArrowLeft,ArrowRight,BookOpen,CheckCircle2,ExternalLink,Filter,RefreshCw,Search,ShieldCheck} from 'lucide-react'
 
 type Source={code:string;board:string;contest:string;role:string;year:number;book_type:number;total_questions?:number;source_page?:string;source_url:string;answer_url:string;last_checked_at:string|null;state:string;ready_count:number;skipped_count:number;live_count:number;diagnostic:string;focus:string;attempts?:number}
 type Item={number:number;page:number;question:string;choices:string[]}
