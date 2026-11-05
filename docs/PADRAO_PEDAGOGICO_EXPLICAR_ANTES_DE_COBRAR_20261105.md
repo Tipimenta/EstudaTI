@@ -42,13 +42,29 @@ Exemplo que **ensina**:
 - LOG 16 — Proposição, negação, conectivos e condicional
 - LEG 17 — Dado pessoal, dado sensível, tratamento, titular, controlador, finalidade e necessidade
 
-Esses 11 capítulos têm exemplos resolvidos, armadilhas e revisões. Foram incluídas **15 questões de aplicação originais**, cada uma com explicações dos quatro itens. Os IDs existentes foram preservados, assim como anotações, histórico e progresso.
+Esses 11 capítulos têm exemplos resolvidos, armadilhas e revisões. Foram incluídas **15 questões de aplicação originais**, cada uma com explicações dos quatro itens. Em seguida, mais **9 aulas intermediárias** de matérias diferentes foram reescritas com o mesmo critério e receberam **9 questões contextualizadas** adicionais. Os IDs existentes foram preservados, assim como anotações, histórico e progresso.
+
+### Nove capítulos intermediários reconstruídos
+
+| Disciplina | ID | Assunto |
+|---|---:|---|
+| Redes | 24 | IPv6, SLAAC e anúncios de roteador |
+| Segurança | 31 | Incidentes, evidências, contenção e recuperação; NIST SP 800-61 rev. 3 |
+| Sistemas Operacionais | 41 | RAID 1, RAID 5, paridade e por que backup é diferente |
+| Português | 49 | Denotação, conotação, contexto e ambiguidade |
+| Governança | 56 | Scrum, Sprints, Kanban e limites de WIP |
+| Banco de Dados | 64 | Índices, B-tree e custo do plano de execução |
+| Engenharia de Software | 68 | Diagramas UML e o problema respondido por cada um |
+| Raciocínio Lógico | 78 | Probabilidade, complemento e independência |
+| Legislação | 87 | Modalidades de licitação e critérios de julgamento |
+
+**Importante:** a meta de curadoria é o conjunto das **169 aulas**, e não apenas a primeira ou o bloco introdutório. O teste automático `test_curadoria_curso_inteiro_20261105.py` confirma IDs, total revisado e pendências; não pretende certificar didática por tamanho de texto.
 
 **18 capítulos adicionais** haviam sido reescritos editorialmente na revisão anterior (duas aulas por disciplina), sem duplicar os IDs acima.
 
 ### Limite real
 
-**29 de 169 capítulos** tiveram reconstrução editorial individual (18 anteriores + 11 da presente revisão). Os demais **140 capítulos** não podem ser chamados de plenamente reescritos e devem passar por curadoria com esse critério antes de tal afirmação.
+**38 de 169 capítulos** receberam reconstrução editorial individual (18 da rodada anterior + 11 fundamentos + 9 intermediários). Os demais **131 capítulos** precisam de revisão individual, inclusive definição de todos os termos no contexto, progressão, aplicação e correção de questões. A existência de um texto maior não significa que a aula foi ensinada adequadamente.
 
 ## Regras de publicação
 
