@@ -132,7 +132,7 @@ export const fullLOG=buildChapters([
     "caseSteps": [
       "Diferenças 8−5=3 e 11−8=3 indicam PA de razão 3.",
       "Use a1=5 e n=6, portanto existem cinco passos de +3 até o sexto termo.",
-      "Calcule a6=5+5×3=20.",
+      "Calcule o sexto termo: a₆ = 5 + (6−1)×3 = 20; note que há cinco intervalos após o primeiro termo.",
       "Verifique sequência: 5,8,11,14,17,20; não use n×3, que acrescentaria passo extra."
     ],
     "pitfalls": [
