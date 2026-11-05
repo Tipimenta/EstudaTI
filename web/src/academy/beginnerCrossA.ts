@@ -172,7 +172,7 @@ export const beginnerCrossA:Record<number,Partial<PedagogicalLesson>>={
       },
       {
         "title": "3. Problema: por que o incidente continua voltando?",
-        "body": "Agora imagine que o totem volta a funcionar sempre que é reiniciado, mas falha novamente todas as manhãs. Cada interrupção é um **incidente**. A pergunta 'qual é a causa ou a possível causa dessas falhas?' entra no gerenciamento de **problemas**.\n\nO trabalho aqui é investigar padrões, dependências e causas. Talvez o serviço fique sem memória, a conexão caia depois de determinado evento ou uma rotina agendada cause conflito. A causa encontrada pode exigir uma correção permanente.\n\nUm incidente pode ser restaurado com um contorno, enquanto o problema permanece em investigação. Isso explica por que ITIL não usa as duas palavras como sinônimos."
+        "body": "Agora imagine que o totem volta a funcionar sempre que é reiniciado, mas falha novamente todas as manhãs. Cada interrupção é um **incidente**. A pergunta 'qual é a causa ou a possível causa dessas falhas?' entra no gerenciamento de **problemas**.\n\nO trabalho aqui é investigar padrões, dependências e causas. Talvez o serviço fique sem memória, a conexão caia depois de determinado evento ou uma rotina agendada cause conflito. A causa encontrada pode exigir uma correção permanente.\n\nUm incidente pode ser restaurado com um contorno, enquanto o problema permanece em investigação. Isso explica por que ITIL não usa as duas palavras como sinônimos. Uma prioridade alta exige atenção imediata porque o impacto pode atingir muitos usuários."
       },
       {
         "title": "4. Mudança: como corrigir sem criar outro problema?",
