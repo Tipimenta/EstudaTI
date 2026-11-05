@@ -25,11 +25,12 @@ import {rewrittenPractice} from './rewrittenPractice'
 import {rewrittenOps} from './rewrittenOps'
 import {rewrittenPlanning} from './rewrittenPlanning'
 import {rewrittenIntegration} from './rewrittenIntegration'
+import {beginnerNetwork} from './beginnerNetwork'
 import type {PedagogicalLesson} from './intro1'
 
 export type {PedagogicalLesson} from './intro1'
 export const academyLessons:Record<number,PedagogicalLesson>=Object.fromEntries([...intro1,...intro2,...intro3,...core1a,...core1b,...advancedNetworks,...nineCore,...coreExpansion1,...coreExpansion2,...coreExpansion3,...completedRED,...completedSEG,...completedSO,...completedPOR,...completedGOV,...completedBD,...completedENG,...completedLOG,...completedLEG].map(lesson=>{
- const patch=rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]
+ const patch=beginnerNetwork[lesson.id]||rewrittenInfrastructure[lesson.id]||rewrittenFoundations[lesson.id]||rewrittenPractice[lesson.id]||rewrittenOps[lesson.id]||rewrittenPlanning[lesson.id]||rewrittenIntegration[lesson.id]
  const base={...lesson,...patch}
  const more=patch?undefined:pedagogicalBoosts[lesson.id]
  const card=patch?undefined:recallSupplement[lesson.id]
