@@ -28,7 +28,7 @@ Conteúdo gerado por IA fica marcado como tal para o aluno. Ao editar uma aula g
 
 ## Rodar no seu computador
 
-A interface já vem compilada em `frontend/dist`, então basta ter o Python 3.11 ou mais novo.
+A interface já vem compilada em `web/dist`, então basta ter o Python 3.11 ou mais novo.
 
 No Windows, dê dois cliques em `INICIAR_WINDOWS.bat`. No Mac ou Linux, rode `./INICIAR_MAC_LINUX.sh`. Na primeira vez ele prepara o ambiente (leva um ou dois minutos); depois abre `http://localhost:8000`. Crie sua conta: ela será a de administrador.
 
@@ -38,7 +38,7 @@ Com Docker: `docker compose up -d --build` e acesse `http://localhost:8000`.
 
 ## Publicar na internet de graça
 
-**Já usa o Render do EstudaTI?** Siga `docs/PUBLICAR_NO_RENDER.md`, feito para a estrutura atual (GitHub + Render + Neon + Vercel).
+**Já usa o Render e a Vercel do EstudaTI?** Siga `docs/PUBLICAR_NO_RENDER.md`: o fluxo de envio do ZIP continua o mesmo.
 
 Para uma instalação do zero:
 
@@ -67,7 +67,7 @@ Provas e gabaritos costumam ser publicados pelas bancas e órgãos, mas confira 
 ## Estrutura do projeto
 
 ```text
-backend/            API em Flask (Python)
+api/            API em Flask (Python)
   app.py            início do servidor, login e entrega da interface
   api_study.py      rotas do aluno: plano do dia, trilha, questões, revisão, simulados, desempenho
   api_admin.py      rotas do administrador: concursos, edital, conteúdo, provas, usuários
@@ -76,9 +76,9 @@ backend/            API em Flask (Python)
   srs.py            repetição espaçada (estilo SM-2)
   importers.py      leitura de PDF, CSV e JSON
   schema.py, db.py  banco de dados (SQLite ou PostgreSQL)
-  seed/packs/       pacotes de conteúdo carregados no primeiro início
+  conteudo/packs/       pacotes de conteúdo carregados no primeiro início
   tests/            testes automatizados
-frontend/           interface em React + TypeScript (Vite)
+web/           interface em React + TypeScript (Vite)
   src/pages/        telas
   dist/             interface já compilada
 scripts/            conversor do conteúdo do EstudaTI antigo
@@ -87,9 +87,9 @@ docs/               guia de migração e formato dos pacotes
 
 ## Desenvolvimento
 
-Backend: `cd backend && pip install -r requirements.txt && python app.py`. Testes: `cd backend && python -m pytest -q`.
+Backend: `cd api && pip install -r requirements.txt && python app.py`. Testes: `cd api && python -m pytest -q testes_estuda`.
 
-Interface: `cd frontend && npm install && npm run dev` abre em `http://localhost:5173` com recarga automática, usando o backend da porta 8000. Para gerar a versão final: `npm run build`.
+Interface: `cd web && npm install && npm run dev` abre em `http://localhost:5173` com recarga automática, usando o backend da porta 8000. Para gerar a versão final: `npm run build`.
 
 Variável útil nos testes: `AI_PROVIDER=fake` devolve respostas de IA previsíveis, sem custo.
 

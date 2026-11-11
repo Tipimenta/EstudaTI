@@ -12,7 +12,7 @@ O EstudaTI era um app pessoal, para uma pessoa e um concurso de TI, instalado co
 
 ## O que foi trazido
 
-Todo o conteúdo autoral do EstudaTI está no pacote `backend/seed/packs/ti_birigui.json` e entra automaticamente no primeiro início:
+Todo o conteúdo autoral do EstudaTI está no pacote `api/conteudo/packs/ti_birigui.json` e entra automaticamente no primeiro início:
 
 - 169 aulas nas versões pedagógicas completas (as da pasta `web/src/academy`), na ordem do currículo;
 - 321 questões revisadas, com as justificativas por alternativa quando existiam;
@@ -32,7 +32,7 @@ Só é necessário se você alterar o conteúdo no EstudaTI antigo. O script `sc
 
 ## Formato dos pacotes de conteúdo
 
-Pacotes são arquivos JSON em `backend/seed/packs/`, carregados quando o banco está vazio (lista em `SEED_PACKS`). Estrutura:
+Pacotes são arquivos JSON em `api/conteudo/packs/`, carregados quando o banco está vazio (lista em `SEED_PACKS`). Estrutura:
 
 ```json
 {

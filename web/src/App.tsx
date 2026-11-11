@@ -1,177 +1,106 @@
-import ContestEditor from './ContestEditor'
-import { MiniTimer, FocusTimerPage, useStudyTimer } from './StudyTimer'
-import {lazy,Suspense,useEffect,useState,type FormEvent,type ReactNode} from 'react'
-import { AlertCircle, ArrowRight, BookOpen, Brain, CalendarDays, Check, CheckCircle2, CircleHelp, Clock3, CloudDownload, ExternalLink, FileText, GraduationCap, ListChecks, LockKeyhole, Menu, Moon, Sun, Play, RefreshCw, RotateCcw, Save, ShieldCheck, Sparkles, Target, Trophy, X } from 'lucide-react'
-import {StudyNavigation,NAV_LABELS,type Page} from './StudyNavigation'
-import {api,post,patch,type Card,type Contest,type Dashboard,type Plan,type Progress,type QuizQuestion,type QuizResult,type Subject} from './api'
-const QuestionBank=lazy(()=>import('./QuestionBank'))
-const EditalReader=lazy(()=>import('./EditalReader'))
-const StudyLibrary=lazy(()=>import('./StudyLibrary'))
-const SyllabusMatrix=lazy(()=>import('./SyllabusMatrix'))
-const StudyCourse=lazy(()=>import('./StudyCourse'))
-const MasteryMap=lazy(()=>import('./MasteryMap'))
-const IntelligenceHub=lazy(()=>import('./IntelligenceHub'))
-const TutorHub=lazy(()=>import('./TutorHub'))
-const NetworkLab=lazy(()=>import('./NetworkLab'))
-const DiscursivePage=lazy(()=>import('./DiscursivePage'))
+import { useCallback, useEffect, useState, type ReactNode } from 'react'
+import { api, getToken, go, match, onUnauthorized, queryParam, setToken, useRoute } from './lib'
+import { Icon, PageLoading, ToastProvider } from './components/ui'
+import { AuthPage, ChooseExam, Today, Trail } from './pages/Start'
+import { QuestionsPage, ReviewPage, TopicPage } from './pages/Study'
+import { Account, DiscursivaPage, Discursivas, ExamRun, Simulados, StatsPage } from './pages/Exams'
+import { AdminEdital, AdminHome, AdminProva, AdminQuestions, AdminRole, AdminTopic } from './pages/Admin'
 
-const todayString=()=>new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})
-const dateBR=(str:string)=>new Date(str.slice(0,10)+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})
-const simpleDate=(str:string)=>new Date(str).toLocaleDateString('pt-BR')
-const currency=(n:number|null)=>n==null?'A confirmar':n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})
-const percent=(v:number)=>Math.max(0,Math.min(100,Number.isFinite(v)?v:0))
-const formatSeconds=(seconds:number)=>`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`
+export type Enrollment = { id: number; role_id: number; exam_date: string | null; minutes_per_day: number; active: number; role: string; question_style: string; org: string; exam: string; banca: string }
+export type Me = { user: { id: number; name: string; email: string; is_admin: boolean }; enrollments: Enrollment[]; active: Enrollment | null; ai: { enabled: boolean } }
 
-function ErrorBox({error}:{error:string|null}){return error?<div className="my-4 flex items-center gap-2 rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-200"><AlertCircle size={17}/>{error}</div>:null}
-function Heading({eyebrow,title,subtitle,action}:{eyebrow:string,title:string,subtitle?:string,action?:ReactNode}){
- return <div className="mb-7 flex flex-wrap items-end justify-between gap-4"><div><p className="mb-2 text-xs font-bold uppercase tracking-[.20em] text-emerald-300/85">{eyebrow}</p><h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h1>{subtitle&&<p className="mt-2 max-w-2xl text-sm leading-6 muted">{subtitle}</p>}</div>{action}</div>
-}
-function Login({onLogin}:{onLogin:()=>void}){
- const [password,setPassword]=useState('');const [busy,setBusy]=useState(false);const [error,setError]=useState<string|null>(null)
- async function submit(e:FormEvent){e.preventDefault();setBusy(true);setError(null);try{await post('/login',{password});onLogin()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
- return <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-5"><div className="pointer-events-none absolute left-[-10%] top-[-20%] h-[500px] w-[500px] rounded-full bg-emerald-600/15 blur-[140px]"/><div className="pointer-events-none absolute bottom-[-30%] right-[-10%] h-[500px] w-[500px] rounded-full bg-violet-600/20 blur-[140px]"/><div className="glass relative z-10 w-full max-w-[440px] rounded-[28px] p-8 sm:p-10"><div className="mb-10 flex items-center gap-3"><div className="rounded-2xl bg-emerald-300 p-3 text-emerald-950"><GraduationCap size={26}/></div><div><h1 className="text-2xl font-extrabold text-white">Estuda<span className="text-emerald-300">TI</span></h1><p className="text-xs muted">Seu centro de preparação para concursos</p></div></div><div className="mb-7"><h2 className="text-2xl font-semibold text-white">Bem-vindo de volta 👋</h2><p className="mt-2 text-sm leading-6 muted">Entre para acessar seu plano de estudos, aulas, flashcards e simulados.</p></div><form onSubmit={submit}><label className="mb-2 block text-xs font-semibold text-slate-300">Senha de acesso</label><div className="relative"><LockKeyhole size={17} className="absolute left-4 top-3.5 text-slate-500"/><input value={password} type="password" autoComplete="current-password" required onChange={e=>setPassword(e.target.value)} className="field pl-11" placeholder="Sua senha pessoal"/></div><ErrorBox error={error}/><button disabled={busy||!password} className="btn btn-primary mt-5 w-full py-3.5">{busy?'Entrando...':'Entrar na plataforma'}<ArrowRight size={17}/></button></form><div className="mt-9 flex items-center gap-2 border-t border-white/10 pt-5 text-xs muted"><ShieldCheck size={16} className="text-emerald-300"/> Seus dados ficam no seu servidor.</div></div></div>
-}
-function DashboardPage({go}:{go:(p:Page)=>void}){
- const [data,setData]=useState<Dashboard|null>(null);const [error,setError]=useState<string|null>(null)
- useEffect(()=>{api<Dashboard>('/dashboard').then(setData).catch(e=>setError(e.message))},[])
- return <div className="fade">
-  <div className="mb-7"><p className="text-xs font-semibold uppercase tracking-wider text-emerald-300">{todayString()}</p><h1 className="mt-2 text-3xl font-extrabold text-white">Vamos avançar nos estudos?</h1><p className="mt-2 text-sm leading-6 muted">Continue sua preparação com aulas, prática e revisão em um só lugar.</p></div>
-  <ErrorBox error={error}/>
-  <section className="heroGlow mb-5 rounded-3xl border border-emerald-300/15 p-6 sm:p-8">
-   <span className="badge bg-emerald-400/15 text-emerald-100">PARA COMEÇAR</span>
-   <h2 className="mt-4 text-2xl font-bold text-white">Retome sua próxima aula</h2>
-   <p className="mt-2 max-w-xl text-sm leading-6 text-slate-300">Uma aula de cada vez. Aprenda, pratique e revise — seu avanço fica registrado.</p>
-   <button onClick={()=>go('conteudos')} className="btn btn-primary mt-5 w-full sm:w-auto"><BookOpen size={18}/> Abrir minhas aulas <ArrowRight size={17}/></button>
-  </section>
-  <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-   <button onClick={()=>go('banco')} className="panel p-5 text-left transition hover:border-emerald-400/30"><span className="mb-3 inline-flex rounded-xl bg-sky-400/10 p-3 text-sky-300"><ListChecks size={22}/></span><h3 className="font-bold text-white">Resolver questões</h3><p className="mt-1 text-sm leading-6 muted">Pratique por matéria e assunto.</p><span className="mt-4 flex items-center gap-2 text-sm font-semibold text-emerald-300">Começar <ArrowRight size={15}/></span></button>
-   <button onClick={()=>go('cronograma')} className="panel p-5 text-left transition hover:border-emerald-400/30"><span className="mb-3 inline-flex rounded-xl bg-sky-400/10 p-3 text-sky-300"><CalendarDays size={22}/></span><h3 className="font-bold text-white">Meu plano</h3><p className="mt-1 text-sm leading-6 muted">Veja o que estudar nos próximos dias.</p><span className="mt-4 flex items-center gap-2 text-sm font-semibold text-emerald-300">Ver plano <ArrowRight size={15}/></span></button>
-   <button onClick={()=>go('flashcards')} className="panel p-5 text-left transition hover:border-emerald-400/30"><span className="mb-3 inline-flex rounded-xl bg-amber-400/10 p-3 text-amber-300"><Brain size={22}/></span><h3 className="font-bold text-white">Revisar flashcards</h3><p className="mt-1 text-sm leading-6 muted">{data?.cards_due??'—'} cartões aguardando revisão.</p><span className="mt-4 flex items-center gap-2 text-sm font-semibold text-emerald-300">Revisar <ArrowRight size={15}/></span></button>
-  <button onClick={()=>go('fontes')} className="panel flex flex-col p-4 text-left transition hover:border-emerald-400/30 sm:p-5"><span className="mb-3 inline-flex w-fit rounded-xl bg-emerald-400/10 p-3 text-emerald-300"><BookOpen size={22}/></span><h3 className="font-bold text-white">Provas reais</h3><p className="mt-1 text-xs leading-5 muted sm:text-sm">Resolva por concurso e banca.</p><span className="mt-auto flex items-center gap-2 pt-4 text-sm font-semibold text-emerald-300">Abrir <ArrowRight size={15}/></span></button>
-  </div>
-  <section className="panel mt-5 p-5 sm:p-6"><div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-bold text-white">Seu ritmo de estudo</h3><button onClick={()=>go('desempenho')} className="text-sm font-semibold text-emerald-300">Ver meu progresso →</button></div><div className="mt-4 grid grid-cols-3 gap-3 border-t border-white/10 pt-4"><div><p className="text-xs muted">Hoje</p><p className="mt-1 text-lg font-bold">{data?.minutes_today??'—'} min</p></div><div><p className="text-xs muted">Simulados</p><p className="mt-1 text-lg font-bold">{data?.quizzes_completed??'—'}</p></div><div><p className="text-xs muted">Meta diária</p><p className="mt-1 text-lg font-bold">{data?.daily_goal??'—'} min</p></div></div></section>
- </div>
-}
-function PlanPage({go}:{go:(p:Page)=>void}){
- const [items,setItems]=useState<Plan[]>([]);const [daily,setDaily]=useState(90);const [error,setError]=useState<string|null>(null);const [busy,setBusy]=useState(false)
- async function load(){try{const [data,settings]=await Promise.all([api<Plan[]>('/plan'),api<{daily_minutes:number}>('/settings')]);setItems(data);setDaily(settings.daily_minutes)}catch(e){setError((e as Error).message)}}
- useEffect(()=>{load()},[])
- async function toggle(p:Plan){try{await patch(`/plan/${p.id}`,{completed:!p.completed});await load()}catch(e){setError((e as Error).message)}}
- async function regenerate(){setBusy(true);try{await patch('/settings',{daily_minutes:daily});await post('/plan/regenerate',{});await load()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
- const completed=items.filter(i=>i.completed).length
- return <div className="fade"><Heading eyebrow="Planejamento inteligente" title="Seu cronograma" subtitle="Um roteiro flexível de 14 dias. O rodízio prioriza matérias com menor desempenho quando você realiza simulados." action={<button onClick={regenerate} disabled={busy} className="btn btn-secondary"><RefreshCw size={16}/>{busy?'Atualizando':'Reorganizar plano'}</button>}/><ErrorBox error={error}/>
- <div className="panel mb-5 flex flex-wrap items-center justify-between gap-5 p-5"><div className="flex items-center gap-4"><div className="rounded-2xl bg-emerald-400/10 p-3 text-emerald-300"><CalendarDays size={22}/></div><div><p className="text-sm font-semibold text-white">{completed} de {items.length} sessões concluídas</p><p className="text-xs muted">Marque cada dia após concluir sua atividade</p></div></div><div className="flex items-center gap-3"><label className="text-xs font-medium muted" htmlFor="goal">Meta diária</label><select id="goal" value={daily} onChange={e=>setDaily(Number(e.target.value))} className="field w-auto text-sm"><option value={30}>30 min</option><option value={60}>60 min</option><option value={90}>90 min</option><option value={120}>120 min</option><option value={180}>180 min</option></select></div><div className="w-full"><div className="bartrack"><div className="barfill" style={{width:`${items.length?100*completed/items.length:0}%`}}/></div></div></div>
- <div className="grid gap-3 md:grid-cols-2">{items.map(p=><div key={p.id} className={`panel flex items-center gap-4 p-4 transition ${p.completed?'opacity-60':''}`}><button onClick={()=>toggle(p)} aria-label={p.completed?'Desmarcar':'Marcar como concluído'} className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${p.completed?'border-emerald-400 bg-emerald-400 text-emerald-950':'border-slate-600 bg-slate-700/40 text-slate-400'}`}>{p.completed?<Check size={22}/>:<span className="text-lg">○</span>}</button><div className="min-w-0 flex-1"><div className="mb-1 flex items-center gap-2"><span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-300">{dateBR(p.study_date)}</span>{p.activity&&<span className="badge bg-emerald-400/10 text-emerald-200">{p.activity}</span>}<span className="text-[11px] muted">· {p.minutes} min</span></div><h3 className="truncate text-sm font-semibold text-slate-100">{p.title}</h3><p className="mt-1 truncate text-xs muted">{p.subject}</p></div><button aria-label="Abrir aulas" onClick={()=>go('conteudos')} className="rounded-xl bg-slate-700/40 p-2 text-slate-300 hover:bg-slate-600/60"><ArrowRight size={17}/></button></div>)}</div><p className="mt-5 text-xs leading-5 muted">A conclusão do plano não contabiliza automaticamente minutos estudados. Utilize o modo foco para registrar seu tempo real.</p></div>
-}
-function FlashcardPage(){
- const [cards,setCards]=useState<Card[]>([]);const [index,setIndex]=useState(0);const [shown,setShown]=useState(false);const [reviewed,setReviewed]=useState(0);const [error,setError]=useState<string|null>(null);const [loading,setLoading]=useState(true)
- async function load(){setLoading(true);setError(null);try{const data=await api<Card[]>('/flashcards/due?limit=15');setCards(data);setIndex(0);setReviewed(0);setShown(false)}catch(e){setError((e as Error).message)}finally{setLoading(false)}}
- useEffect(()=>{load()},[])
- const card=cards[index]
- async function grade(quality:number){if(!card)return;try{await post(`/flashcards/${card.id}/review`,{quality});setReviewed(x=>x+1);setShown(false);setIndex(x=>x+1)}catch(e){setError((e as Error).message)}}
- return <div className="fade"><Heading eyebrow="Memorização com repetição espaçada" title="Revisão de hoje" subtitle="São apenas 15 cartões por rodada. Primeiro tente responder de memória; depois revele e avalie sua resposta para programar a revisão."/><ErrorBox error={error}/><div className="mx-auto max-w-2xl"><div className="mb-5 flex justify-between text-sm"><span className="muted">{loading?'Carregando...':`${Math.max(0,cards.length-index)} cartões nesta rodada`}</span><span className="font-semibold text-emerald-300">{reviewed} revisados</span></div>{card?<><button onClick={()=>setShown(!shown)} className="heroGlow flex min-h-[340px] w-full flex-col items-center justify-center rounded-[28px] border border-emerald-400/20 px-7 py-10 text-center shadow-2xl shadow-black/20"><span className="badge mb-6 bg-emerald-400/10 text-emerald-200">{card.subject} • {card.title}</span><div className="mb-5 text-xs font-semibold uppercase tracking-widest text-slate-400">{shown?'Resposta':'Pergunta'}</div><div className="max-w-lg text-xl font-semibold leading-relaxed text-white sm:text-2xl">{shown?card.back:card.front}</div><div className="mt-10 flex items-center gap-2 text-xs text-emerald-200"><RotateCcw size={15}/>{shown?'Toque para ver a pergunta':'Toque para revelar a resposta'}</div></button>{shown?<div className="mt-6 grid grid-cols-3 gap-3"><button onClick={()=>grade(2)} className="btn bg-rose-500/15 text-rose-200 hover:bg-rose-500/25">Errei</button><button onClick={()=>grade(3)} className="btn bg-amber-500/15 text-amber-100 hover:bg-amber-500/25">Bom</button><button onClick={()=>grade(5)} className="btn bg-emerald-500/20 text-emerald-200 hover:bg-emerald-500/30">Fácil</button></div>:<p className="mt-6 text-center text-xs muted">Recupere a resposta de memória antes de avaliar.</p>}</>:!loading&&<div className="panel flex flex-col items-center justify-center p-12 text-center"><div className="mb-4 rounded-full bg-emerald-400/15 p-5 text-emerald-300"><CheckCircle2 size={33}/></div><h3 className="text-xl font-bold text-white">{reviewed?'Rodada concluída!':'Sem cartões vencidos agora'}</h3><p className="mt-2 text-sm muted">{reviewed?`Você revisou ${reviewed} cartões. Pode fazer outra rodada ou retornar às aulas.`:'Os próximos cartões aparecerão quando a revisão espaçada estiver programada.'}</p><button onClick={load} className="btn btn-secondary mt-6"><RefreshCw size={16}/> {reviewed?'Revisar mais 15':'Atualizar'}</button></div>}</div></div>
-}
-function QuizPage({go}:{go:(p:Page)=>void}){
- const [subjects,setSubjects]=useState<Subject[]>([]);const [sub,setSub]=useState(0);const [count,setCount]=useState(10);const [questions,setQuestions]=useState<QuizQuestion[]>([]);const [answers,setAnswers]=useState<Record<number,number>>({});const [started,setStarted]=useState(0);const [seconds,setSeconds]=useState(0);const [result,setResult]=useState<QuizResult|null>(null);const [error,setError]=useState<string|null>(null);const [busy,setBusy]=useState(false)
- const [adaptive,setAdaptive]=useState(false);const [origin,setOrigin]=useState('');const [board,setBoard]=useState('');const [wrong,setWrong]=useState(false);const [unseen,setUnseen]=useState(false)
- const [metadata,setMetadata]=useState<{boards:string[],years:number[]}|null>(null)
- useEffect(()=>{api<Subject[]>('/subjects').then(setSubjects).catch(e=>setError(e.message));api<{boards:string[],years:number[]}>('/questions/meta').then(setMetadata).catch(()=>{})},[])
- useEffect(()=>{if(!started||result)return;const handle=setInterval(()=>setSeconds(Math.floor((Date.now()-started)/1000)),1000);return()=>clearInterval(handle)},[started,result])
- async function start(){setBusy(true);setError(null);try{const q=await api<QuizQuestion[]>(adaptive?`/intelligence/quiz?limit=${count}${sub?`&subject_id=${sub}`:''}`:`/quiz/questions?limit=${count}${sub?`&subject_id=${sub}`:''}${origin?`&origin=${origin}`:''}${board?`&board=${encodeURIComponent(board)}`:''}${wrong?'&only_wrong=true':''}${unseen?'&unseen=true':''}`);if(!q.length)throw new Error('Nenhuma questão revisada encontrada com esses filtros. Importe e revise questões no Banco.');setQuestions(q);setAnswers({});setResult(null);setStarted(Date.now());setSeconds(0)}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
- async function submit(){setBusy(true);try{const res=await post<QuizResult>('/quiz/submit',{answers:questions.map(q=>({question_id:q.id,choice_index:answers[q.id]??-1})),duration_sec:seconds});setResult(res)}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
- const answered=Object.keys(answers).length
- if(result)return <div className="fade"><Heading eyebrow="Resultado do simulado" title="Muito bem por praticar!" subtitle="Reveja os comentários das questões antes de começar a próxima sessão."/><div className="heroGlow mx-auto mb-6 max-w-3xl rounded-[26px] border border-white/10 p-8 text-center"><Trophy className="mx-auto mb-4 text-emerald-300" size={40}/><div className="text-6xl font-extrabold text-white">{Math.round(result.correct*100/result.total)}%</div><p className="mt-2 text-sm text-slate-300">{result.correct} acertos em {result.total} questões · {formatSeconds(seconds)}</p><button onClick={()=>{setQuestions([]);setResult(null);setStarted(0)}} className="btn btn-primary mt-6"><RotateCcw size={16}/> Novo simulado</button></div><div className="mx-auto max-w-3xl space-y-3">{result.results.map((r,i)=><div key={r.question_id} className="panel p-5"><div className="flex items-start gap-3"><span className={`rounded-lg p-2 ${r.correct?'bg-emerald-400/15 text-emerald-300':'bg-rose-400/15 text-rose-300'}`}>{r.correct?<CheckCircle2 size={18}/>:<X size={18}/>}</span><div className="flex-1"><p className="text-sm font-semibold leading-6 text-white">{i+1}. {r.question}</p><p className="mt-2 text-xs muted">Sua resposta: {r.your_choice>=0?r.choices[r.your_choice]:'Não respondida'}</p><p className="mt-1 text-xs font-semibold text-emerald-300">Correta: {r.choices[r.correct_index]}</p><p className="mt-3 rounded-xl bg-slate-900/40 p-3 text-sm leading-6 text-slate-300">{r.explanation}</p>{Object.entries(r.choice_rationales||{}).length>0&&<div className="mt-3 space-y-2 rounded-xl border border-emerald-300/15 bg-emerald-300/5 p-3"><p className="text-xs font-bold text-emerald-200">Por que cada alternativa está correta ou incorreta</p>{Object.entries(r.choice_rationales).map(([letter,reason])=><p key={letter} className="text-xs leading-5 text-slate-300"><b className="text-emerald-300">{letter}.</b> {reason}</p>)}</div>}<button className="btn btn-outline mt-3 text-xs" onClick={async()=>{try{await post(`/questions/${r.question_id}/flashcard`,{});alert('Card criado ou já existente; confira sua revisão.')}catch(e){alert((e as Error).message)}}}><Brain size={14}/> Criar flashcard</button></div></div></div>)}</div></div>
- if(!questions.length)return <div className="fade"><Heading eyebrow="Prática por matéria" title="Simulados de estudo" subtitle="Treine com o banco de questões autorais, acompanhe seu tempo e identifique os assuntos que precisam de revisão."/><ErrorBox error={error}/><button onClick={()=>go("fontes")} className="btn btn-outline mb-5 w-full sm:w-auto"><BookOpen size={16}/> Resolver uma prova oficial anterior <ArrowRight size={16}/></button><details className="mb-5 max-w-2xl rounded-xl border border-white/10 p-4 text-xs text-slate-300"><summary className="cursor-pointer font-semibold">Outros tipos de treino (opcional)</summary><button className="btn btn-outline mt-3 text-xs" onClick={()=>go('discursivas')}><FileText size={15}/> Prática de questões discursivas</button></details><div className="mx-auto max-w-2xl panel p-7 sm:p-9"><div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-400/10 text-amber-300"><ListChecks size={28}/></div><h2 className="text-2xl font-bold text-white">Preparar simulado</h2><p className="mt-2 text-sm leading-6 muted">Este simulado reúne as questões do banco de estudos, com filtros por matéria e histórico. Para resolver um caderno oficial completo por cargo e banca, use Provas anteriores.</p><div className="mt-7 grid gap-5 sm:grid-cols-2"><label className="block text-xs font-semibold text-slate-300">Quantidade<select className="field mt-2" value={count} onChange={e=>setCount(Number(e.target.value))}><option value={5}>5 questões</option><option value={10}>10 questões</option><option value={20}>20 questões</option><option value={40}>Até 40 questões</option></select></label><label className="block text-xs font-semibold text-slate-300">Matéria<select className="field mt-2" value={sub} onChange={e=>setSub(Number(e.target.value))}><option value={0}>Todas as matérias</option>{subjects.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}</select></label>
- <label className="block text-xs font-semibold text-slate-300">Origem<select className="field mt-2" value={origin} onChange={e=>setOrigin(e.target.value)}><option value="">Todas as revisadas</option><option value="oficial">Somente oficiais</option><option value="autoral">Somente autorais</option><option value="adaptada">Somente adaptadas</option></select></label>
- <label className="block text-xs font-semibold text-slate-300">Banca<select className="field mt-2" value={board} onChange={e=>setBoard(e.target.value)}><option value="">Todas as bancas</option>{metadata?.boards.map(x=><option key={x} value={x}>{x}</option>)}</select></label>
- </div><div className="mt-5 flex flex-wrap gap-5 text-xs text-slate-200"><label className="flex items-center gap-2"><input type="checkbox" checked={wrong} onChange={e=>{setWrong(e.target.checked);if(e.target.checked)setUnseen(false)}}/> Caderno de erros</label><label className="flex items-center gap-2"><input type="checkbox" checked={unseen} onChange={e=>{setUnseen(e.target.checked);if(e.target.checked)setWrong(false)}}/> Apenas inéditas</label></div><label className="mb-4 flex items-center gap-2 text-sm text-emerald-300"><input type="checkbox" checked={adaptive} onChange={e=>setAdaptive(e.target.checked)}/> Priorizar revisões e questões inéditas</label><button className="btn btn-primary mt-7 w-full py-3" disabled={busy} onClick={start}><Play size={17}/> {busy?'Preparando...':'Iniciar simulado'}</button></div></div>
- return <div className="fade"><Heading eyebrow="Simulado em andamento" title="Hora de praticar" subtitle="Responda às questões com calma. O tempo é registrado para seu histórico."/><ErrorBox error={error}/><div className="mx-auto max-w-3xl"><div className="panel sticky top-3 z-10 mb-5 flex items-center justify-between gap-3 p-4"><div><p className="text-xs muted">Questões respondidas</p><p className="font-bold text-white">{answered} / {questions.length}</p></div><div className="hidden flex-1 px-6 sm:block"><div className="bartrack"><div className="barfill" style={{width:`${100*answered/questions.length}%`}}/></div></div><div className="flex items-center gap-2 rounded-xl bg-slate-800 px-3 py-2 font-mono text-lg font-bold text-emerald-300"><Clock3 size={17}/>{formatSeconds(seconds)}</div></div><div className="space-y-5">{questions.map((q,i)=><div className="panel p-5 sm:p-6" key={q.id}><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><span className="text-xs font-semibold uppercase tracking-wider text-emerald-300">Questão {i+1}</span><span className="text-xs muted">{q.subject} · {q.title}</span></div><div className="mb-2 text-xs text-emerald-300">{q.origin==='oficial'?`Oficial · ${q.board} · ${q.year} · ${q.exam}`:'Questão autoral de treino'}</div><h3 className="mb-5 whitespace-pre-wrap text-base font-semibold leading-7 text-white">{q.question}</h3><div className="space-y-2">{q.choices.map((option,j)=><button key={j} onClick={()=>setAnswers(a=>({...a,[q.id]:j}))} className={`flex w-full gap-3 rounded-xl border p-3.5 text-left text-sm transition ${answers[q.id]===j?'border-emerald-400/60 bg-emerald-400/10 text-white':'border-white/10 bg-white/[.015] text-slate-300 hover:bg-slate-700/50'}`}><span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-bold ${answers[q.id]===j?'bg-emerald-400 text-emerald-950':'bg-slate-700 text-slate-300'}`}>{'ABCDE'[j]}</span><span className="leading-6">{option}</span></button>)}</div></div>)}</div><button className="btn btn-primary my-7 w-full py-3.5" onClick={submit} disabled={busy}>{busy?'Corrigindo...':'Finalizar e corrigir simulado'}<ArrowRight size={17}/></button></div></div>
-}
-function ContestPage({go}:{go:(p:Page)=>void}){
- const [items,setItems]=useState<Contest[]>([]);const [checking,setChecking]=useState<number|null>(null);const [error,setError]=useState<string|null>(null);const [message,setMessage]=useState<string|null>(null)
- async function load(){try{setItems(await api<Contest[]>('/contests'))}catch(e){setError((e as Error).message)}}
- useEffect(()=>{load()},[])
- async function check(id:number){setChecking(id);setError(null);setMessage(null);try{const r=await post<{ok:boolean,changed?:boolean,first_check?:boolean,error?:string}>(`/contests/${id}/check`,{});setMessage(r.ok?(r.changed?'Alteração detectada: revise o edital oficial.':r.first_check?'Primeira verificação: referência salva.':'Nenhuma mudança detectada.'):`Verificação não concluída: ${r.error}`);await load()}catch(e){setError((e as Error).message)}finally{setChecking(null)}}
- async function ack(id:number){await post(`/contests/${id}/ack`,{});await load()}
- return <div className="fade"><Heading eyebrow="Concursos e editais" title="Meus concursos" subtitle="Gerencie os concursos que realmente fazem parte do seu objetivo. Utilize a fonte oficial para conferir vagas, prazos e requisitos."/><div className="mb-5 flex flex-wrap gap-2"><button onClick={()=>go('editais')} className="btn btn-outline text-xs"><FileText size={15}/> Analisar um edital em PDF</button><button onClick={()=>go('matriz')} className="btn btn-outline text-xs"><ListChecks size={15}/> Conferir conteúdos do edital</button></div><ErrorBox error={error}/>{message&&<div className="mb-4 rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-sm text-emerald-100">{message}</div>}<details className="mb-5 rounded-xl border p-4 text-xs leading-6 muted" style={{borderColor:"var(--app-border)"}}><summary className="cursor-pointer font-bold">Sobre a atualização de editais e informações</summary><p className="mt-3">Datas e salários podem mudar. O verificador detecta alterações na página cadastrada, mas não confirma inscrições nem substitui a leitura do edital oficial.</p></details><details className="panel mb-6 p-4 sm:p-5"><summary className="cursor-pointer text-sm font-bold text-white">Cadastrar ou editar concursos</summary><div className="mt-5"><ContestEditor items={items} onSaved={load}/></div></details><div className="grid gap-4 lg:grid-cols-2">{items.map(c=><div key={c.id} className="panel p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><span className="text-lg font-bold text-white">{c.name}</span>{c.changed===1&&<span className="badge bg-amber-400/20 text-amber-200"><AlertCircle size={12}/> Mudou!</span>}</div><p className="mt-1 text-sm text-slate-300">{c.position}</p></div><span className="badge bg-slate-700/60 text-slate-300">{c.location}</span>{c.active===0&&<span className="badge bg-slate-700 text-amber-200">Pausado</span>}</div><div className="mt-5 flex flex-wrap gap-4 text-sm"><div><div className="text-xs muted">Salário-base</div><div className="mt-1 font-semibold text-white">{currency(c.salary)}</div></div>{c.registration_deadline&&<div><div className="text-xs muted">Inscrições (edital base)</div><div className="mt-1 font-semibold text-white">{dateBR(c.registration_deadline)}</div></div>}</div><p className="mt-4 text-xs leading-5 muted">{c.notes}</p><div className="mt-4 text-xs muted">{c.last_checked_at?`Última verificação: ${simpleDate(c.last_checked_at)}`:'Fonte ainda não verificada'} {c.last_error&&<span className="text-rose-300"> · {c.last_error}</span>}</div><div className="mt-5 flex flex-wrap gap-2 border-t border-white/10 pt-4"><a href={c.url} target="_blank" rel="noreferrer" className="btn btn-secondary text-xs"><ExternalLink size={14}/> Fonte</a><button onClick={()=>check(c.id)} disabled={checking===c.id} className="btn btn-outline text-xs"><RefreshCw className={checking===c.id?'animate-spin':''} size={14}/>{checking===c.id?'Verificando...':'Verificar agora'}</button>{c.changed===1&&<button onClick={()=>ack(c.id)} className="btn btn-primary text-xs"><Check size={14}/> Revisado</button>}</div></div>)}</div></div>
-}
-function ProgressPage({go}:{go:(p:Page)=>void}){
- const [data,setData]=useState<Progress|null>(null);const [error,setError]=useState<string|null>(null)
- useEffect(()=>{api<Progress>('/progress').then(setData).catch(e=>setError(e.message))},[])
- const maxMinutes=Math.max(60,...(data?.days||[]).map(x=>x.minutes))
- return <div className="fade"><Heading eyebrow="Evolução baseada em dados" title="Meu desempenho" subtitle="Encontre seus pontos fortes e saiba o que revisar a seguir."/><div className="mb-5 flex flex-wrap gap-2"><button onClick={()=>go('dominio')} className="btn btn-outline text-xs"><Target size={15}/> Ver progresso por assunto</button><button onClick={()=>go('inteligencia')} className="btn btn-outline text-xs"><Sparkles size={15}/> Sugestões para estudar</button></div><ErrorBox error={error}/><section className="panel mb-5 p-5 sm:p-6"><div className="flex flex-wrap items-center justify-between gap-3"><div><h3 className="font-bold text-white">Provas anteriores resolvidas</h3><p className="mt-1 text-xs text-slate-400">Resultados dos cadernos oficiais importados (separados dos exercícios autorais).</p></div><button onClick={()=>go("fontes")} className="btn btn-outline text-xs">Abrir provas anteriores <ArrowRight size={14}/></button></div><div className="mt-4 grid grid-cols-3 gap-3"><div><p className="text-xs muted">Tentativas</p><b className="text-xl text-white">{data?.official_exams?.attempts??0}</b></div><div><p className="text-xs muted">Respondidas</p><b className="text-xl text-white">{data?.official_exams?.answered??0}</b></div><div><p className="text-xs muted">Acertos</p><b className="text-xl text-emerald-200">{data?.official_exams?.answered?`${data.official_exams.accuracy}%`:"—"}</b></div></div></section><div className="grid gap-5 lg:grid-cols-[1fr_1fr]"><section className="panel p-6"><h3 className="text-lg font-bold text-white">Desempenho por disciplina</h3><p className="mt-1 text-xs muted">Acertos nos exercícios do banco de estudos. Provas oficiais aparecem no quadro acima.</p><div className="mt-6 space-y-5">{data?.subjects.map(s=><div key={s.id}><div className="mb-2 flex items-center justify-between gap-3"><span className="text-sm text-slate-200">{s.name}</span><span className="shrink-0 text-xs font-semibold text-emerald-300">{s.answers?`${s.accuracy}%`:'Sem dados'}</span></div><div className="bartrack"><div className="barfill" style={{width:`${percent(s.accuracy)}%`}}/></div><p className="mt-1 text-[11px] muted">{s.answers} resposta(s) · {s.minutes} min de estudo</p></div>)}</div></section><section className="panel p-6"><h3 className="text-lg font-bold text-white">Tempo registrado</h3><p className="mt-1 text-xs muted">Últimos 14 dias com atividade</p><div className="mt-7 flex h-64 items-end gap-2 border-b border-white/10 pb-1">{(data?.days||[]).slice().reverse().map(d=><div key={d.day} className="group flex h-full min-w-0 flex-1 flex-col justify-end text-center"><div className="mb-2 text-[10px] text-slate-400 opacity-0 transition group-hover:opacity-100">{d.minutes}m</div><div className="min-h-[3px] w-full rounded-t-lg bg-gradient-to-t from-emerald-700 to-emerald-300" style={{height:`${Math.max(3,100*d.minutes/maxMinutes)}%`}}/><div className="mt-2 text-[10px] text-slate-500">{d.day.slice(8)}</div></div>)}{!data?.days.length&&<div className="flex h-full w-full items-center justify-center text-sm muted">Registre sessões no modo foco para visualizar seu gráfico.</div>}</div><div className="mt-5 rounded-xl border border-blue-400/10 bg-blue-400/5 p-4 text-xs leading-5 text-slate-300"><CircleHelp className="mr-2 inline text-blue-300" size={16}/> O cronograma se reorganiza levando em conta acertos por disciplina, preservando um rodízio entre as matérias.</div></section></div></div>
-}
-function SettingsPage({theme,setTheme,readingSize,setReadingSize}:{theme:'paper'|'dark';setTheme:(t:'paper'|'dark')=>void;readingSize:'standard'|'large';setReadingSize:(s:'standard'|'large')=>void}){
- const [daily,setDaily]=useState(90);const [message,setMessage]=useState<string|null>(null);const [error,setError]=useState<string|null>(null)
- useEffect(()=>{api<{daily_minutes:number}>('/settings').then(x=>setDaily(x.daily_minutes)).catch(e=>setError(e.message))},[])
- async function save(){try{await patch('/settings',{daily_minutes:daily});setMessage('Meta diária atualizada. Reorganize seu plano para aplicar o novo tempo.')}catch(e){setError((e as Error).message)}}
- async function exportData(){try{const data=await api<unknown>('/export');const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`estudati-backup-${new Date().toISOString().slice(0,10)}.json`;link.click();URL.revokeObjectURL(link.href)}catch(e){setError((e as Error).message)}}
- return <div className="fade"><Heading eyebrow="Personalize a experiência" title="Configurações" subtitle="Defina sua meta diária e exporte seus dados para manter uma cópia pessoal."/><ErrorBox error={error}/>{message&&<div className="mb-5 rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4 text-sm text-emerald-200">{message}</div>}<section className="panel mb-5 p-5 sm:p-6"><h3 className="text-lg font-bold text-white">Aparência e conforto de leitura</h3><p className="mt-2 text-sm leading-6 muted">Use fundo areia suave para estudar durante o dia, ou o escuro à noite. A escolha fica salva neste aparelho.</p>
- <div className="mt-4 flex flex-wrap gap-3">
- <button className={theme==='paper'?'btn btn-primary':'btn btn-outline'} onClick={()=>setTheme('paper')}><Sun size={16}/> Papel suave</button>
- <button className={theme==='dark'?'btn btn-primary':'btn btn-outline'} onClick={()=>setTheme('dark')}><Moon size={16}/> Escuro</button>
- </div>
- <div className="mt-6 border-t border-white/10 pt-5"><p className="text-sm font-semibold text-white">Tamanho do texto nas aulas</p><div className="mt-3 flex gap-2"><button className={readingSize==='standard'?'btn btn-primary':'btn btn-outline'} onClick={()=>setReadingSize('standard')}>Normal</button><button className={readingSize==='large'?'btn btn-primary':'btn btn-outline'} onClick={()=>setReadingSize('large')}>Ampliado</button></div></div>
- </section>
- <div className="grid gap-5 lg:grid-cols-2"><div className="panel p-6"><div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-emerald-400/10 p-3 text-emerald-300"><Clock3 size={20}/></div><div><h3 className="font-semibold text-white">Meta de estudos</h3><p className="text-xs muted">Quantidade planejada por dia</p></div></div><label className="text-xs text-slate-300">Minutos por dia</label><input type="number" min={15} max={360} className="field mt-2" value={daily} onChange={e=>setDaily(Number(e.target.value))}/><button onClick={save} className="btn btn-primary mt-5"><Save size={16}/> Salvar meta</button></div><div className="panel p-6"><div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-blue-400/10 p-3 text-blue-300"><CloudDownload size={20}/></div><div><h3 className="font-semibold text-white">Backup dos estudos</h3><p className="text-xs muted">Exportação em JSON, incluindo histórico e respostas</p></div></div><p className="text-sm leading-6 muted">Na versão online, seus dados ficam no Neon PostgreSQL; no Docker local, no banco da instalação. Exporte seu progresso, questões, revisões e histórico de provas para manter uma cópia pessoal.</p><button onClick={exportData} className="btn btn-secondary mt-5"><CloudDownload size={16}/> Exportar dados (.json)</button></div></div></div>
-}
-export default function App(){
- const [theme,setTheme]=useState<'paper'|'dark'>(()=>{
-  try{return localStorage.getItem('estudati-theme')==='dark'?'dark':'paper'}catch{return 'paper'}
- })
- const [readingSize,setReadingSize]=useState<'standard'|'large'>(()=>{
-  try{return localStorage.getItem('estudati-reading-size')==='large'?'large':'standard'}catch{return 'standard'}
- })
- const [authenticated,setAuthenticated]=useState<boolean|null>(null);const [page,setPage]=useState<Page>('painel');const [mobile,setMobile]=useState(false);const timer=useStudyTimer(authenticated===true)
- useEffect(()=>{document.documentElement.dataset.theme=theme;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',theme==='paper'?'#f1efe8':'#091120');try{localStorage.setItem('estudati-theme',theme)}catch{}},[theme])
- useEffect(()=>{document.documentElement.dataset.readingSize=readingSize;try{localStorage.setItem('estudati-reading-size',readingSize)}catch{}},[readingSize])
- function switchTheme(){setTheme(t=>t==='paper'?'dark':'paper')}
- const themeControl=<button type="button" onClick={switchTheme} className="theme-switch" aria-label={theme==='paper'?'Ativar modo escuro':'Ativar modo papel suave'} title={theme==='paper'?'Alternar para o modo escuro':'Alternar para papel suave'}>
-  {theme==='paper'?<Moon size={18}/>:<Sun size={18}/>}<span className="hidden sm:inline">{theme==='paper'?'Escuro':'Papel suave'}</span>
- </button>
- useEffect(()=>{api('/me').then(()=>setAuthenticated(true)).catch(()=>setAuthenticated(false))},[])
- async function logout(){await post('/logout',{});setAuthenticated(false)}
- function go(p:Page){setPage(p);setMobile(false);window.scrollTo({top:0,behavior:'smooth'})}
- const currentLabel=NAV_LABELS[page]
- if(authenticated===null)return <div className="flex min-h-screen items-center justify-center text-sm muted">Carregando EstudaTI…</div>
- if(!authenticated)return <Login onLogin={()=>setAuthenticated(true)}/>
+const NAV: [string, string, string][] = [
+  ['/hoje', 'Hoje', 'hoje'], ['/trilha', 'Trilha', 'trilha'], ['/questoes', 'Questões', 'questoes'],
+  ['/simulados', 'Simulados', 'simulados'], ['/desempenho', 'Desempenho', 'desempenho'],
+]
 
- return <div className="app-shell min-h-screen">
-  <StudyNavigation active={page} mobile={mobile} onMobileChange={setMobile} onNavigate={go} onLogout={logout}/>
-  <div className="md:pl-[248px]">
-   <header className="app-topbar sticky top-0 z-20 flex h-[70px] items-center justify-between gap-3 border-b px-4 backdrop-blur-xl sm:px-7">
-    <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-     <button type="button" onClick={()=>setMobile(true)} aria-label="Abrir menu" className="theme-switch md:hidden"><Menu size={21}/></button>
-     <div className="min-w-0">
-      <p className="hidden text-[10px] font-semibold uppercase tracking-[.14em] muted sm:block">Minha área de estudos</p>
-      <h2 className="truncate text-[15px] font-bold text-white sm:text-base">{currentLabel}</h2>
-     </div>
+export default function App() {
+  return <ToastProvider><Root /></ToastProvider>
+}
+
+function Root() {
+  const path = useRoute()
+  const [me, setMe] = useState<Me | null>(null)
+  const [config, setConfig] = useState<{ has_users: boolean; signup: boolean } | null>(null)
+  const [booting, setBooting] = useState(true)
+  const [reviews, setReviews] = useState(0)
+
+  const loadMe = useCallback(async () => {
+    if (!getToken()) { setMe(null); setBooting(false); return }
+    try { setMe(await api<Me>('/me')) } catch { setMe(null) } finally { setBooting(false) }
+  }, [])
+  useEffect(() => {
+    api('/config').then(setConfig).catch(() => setConfig({ has_users: true, signup: true }))
+    loadMe()
+    return onUnauthorized(() => { setToken(''); setMe(null) })
+  }, [loadMe])
+  useEffect(() => {
+    if (!me?.active) return
+    api<{ reviews?: { total: number } }>('/today').then(d => setReviews(d.reviews?.total || 0)).catch(() => {})
+  }, [me, path])
+
+  if (booting) return <div className="main"><PageLoading /></div>
+  if (!me) return <AuthPage config={config} onLogin={() => { setBooting(true); loadMe().then(() => go('/hoje')) }} />
+
+  const needsExam = !me.active && !path.startsWith('/admin') && path !== '/conta'
+  let page: ReactNode
+  let m: Record<string, string> | null
+  if (needsExam || path === '/concurso') page = <ChooseExam me={me} onDone={loadMe} />
+  else if (path === '/' || path === '/hoje') page = <Today me={me} />
+  else if (path === '/trilha') page = <Trail />
+  else if ((m = match('/topico/:id', path))) page = <TopicPage key={m.id} id={Number(m.id)} />
+  else if (path.startsWith('/questoes')) page = <QuestionsPage aiEnabled={me.ai.enabled} />
+  else if (path === '/revisao') page = <ReviewPage aiEnabled={me.ai.enabled} />
+  else if (path === '/simulados') page = <Simulados me={me} />
+  else if ((m = match('/simulado/:id', path))) page = <ExamRun key={m.id} id={Number(m.id)} />
+  else if (path === '/desempenho') page = <StatsPage />
+  else if (path === '/discursivas') page = <Discursivas />
+  else if ((m = match('/discursiva/:id', path))) page = <DiscursivaPage key={m.id} id={Number(m.id)} />
+  else if (path === '/conta') page = <Account me={me} onChange={loadMe} />
+  else if (me.user.is_admin && path === '/admin') page = <AdminHome />
+  else if (me.user.is_admin && path === '/admin/edital') page = <AdminEdital />
+  else if (me.user.is_admin && path === '/admin/prova') page = <AdminProva />
+  else if (me.user.is_admin && path.startsWith('/admin/questoes')) page = <AdminQuestions key={path} prova={queryParam('prova')} />
+  else if (me.user.is_admin && (m = match('/admin/cargo/:id', path))) page = <AdminRole key={m.id} id={Number(m.id)} />
+  else if (me.user.is_admin && (m = match('/admin/topico/:id', path))) page = <AdminTopic key={m.id} id={Number(m.id)} />
+  else page = <div className="page"><h1>Página não encontrada</h1><p style={{ marginTop: 12 }}><a href="#/hoje">Voltar para Hoje</a></p></div>
+
+  const focus = path.startsWith('/simulado/')
+  const current = (h: string) => (path === h || (h === '/hoje' && path === '/') || (h === '/trilha' && path.startsWith('/topico')) ? 'page' : undefined)
+  return (
+    <div className="shell" style={focus ? { gridTemplateColumns: '1fr' } : undefined}>
+      {!focus && (
+        <nav className="rail" aria-label="Principal">
+          <a className="brand" href="#/hoje"><span className="brand-mark" />Estuda</a>
+          {NAV.map(([h, l, i]) => <a key={h} className="nav-link" href={`#${h}`} aria-current={current(h)}><Icon name={i} />{l}</a>)}
+          <a className="nav-link" href="#/revisao" aria-current={current('/revisao')}><Icon name="revisao" />Revisão{reviews > 0 && <span className="count">{reviews}</span>}</a>
+          <a className="nav-link" href="#/discursivas" aria-current={current('/discursivas')}><Icon name="discursivas" />Discursivas</a>
+          {me.user.is_admin && <><div className="rail-sep" /><a className="nav-link" href="#/admin" aria-current={path.startsWith('/admin') ? 'page' : undefined}><Icon name="admin" />Administração</a></>}
+          <div className="rail-foot">
+            <a href="#/conta" className="rail-goal" style={{ textDecoration: 'none', display: 'block' }}>
+              <strong>{me.active?.role || 'Escolha um concurso'}</strong>{me.active?.org}
+            </a>
+          </div>
+        </nav>
+      )}
+      <main className="main" id="conteudo">
+        {!focus && (
+          <div className="mobile-top">
+            <a className="brand" href="#/hoje" style={{ padding: 0 }}><span className="brand-mark" />Estuda</a>
+            <div className="row" style={{ gap: 4 }}>
+              <a className="btn btn-ghost btn-sm" href="#/revisao" aria-label="Revisão"><Icon name="revisao" />{reviews > 0 && reviews}</a>
+              {me.user.is_admin && <a className="btn btn-ghost btn-sm" href="#/admin" aria-label="Administração"><Icon name="admin" /></a>}
+              <a className="btn btn-ghost btn-sm" href="#/conta" aria-label="Conta"><Icon name="user" /></a>
+            </div>
+          </div>
+        )}
+        {page}
+      </main>
+      {!focus && (
+        <nav className="tabbar" aria-label="Principal">
+          {NAV.map(([h, l, i]) => <a key={h} href={`#${h}`} aria-current={current(h)}><Icon name={i} />{l}</a>)}
+        </nav>
+      )}
     </div>
-    <div className="flex shrink-0 items-center gap-2">{themeControl}<MiniTimer timer={timer}/></div>
-   </header>
-   <main id="conteudo-principal" className="study-main mx-auto max-w-[1360px] px-4 pb-28 pt-7 sm:px-7 md:pb-12 md:pt-8 xl:px-10">
-    <Suspense fallback={<div role="status" className="panel mx-auto max-w-3xl p-7 text-sm muted">Abrindo sua área de estudos...</div>}>
-     {page==='painel'&&<DashboardPage go={go}/>}
-     {page==='inteligencia'&&<IntelligenceHub go={go}/>}
-     {page==='tutor'&&<TutorHub/>}
-     {page==='laboratorio'&&<NetworkLab/>}
-     {page==='cronograma'&&<PlanPage go={go}/>}
-     {page==='conteudos'&&<StudyCourse onGoReview={()=>go('flashcards')}/>}
-     {page==='flashcards'&&<FlashcardPage/>}
-     {page==='simulados'&&<QuizPage go={go}/>}
-     {page==='discursivas'&&<DiscursivePage/>}
-     {page==='banco'&&<QuestionBank onGoProvas={()=>go('fontes')} onGoPractice={()=>go('simulados')}/>}
-     {page==='fontes'&&<StudyLibrary/>}
-     {page==='dominio'&&<MasteryMap/>}
-     {page==='editais'&&<EditalReader/>}
-     {page==='matriz'&&<SyllabusMatrix/>}
-     {page==='foco'&&<FocusTimerPage timer={timer}/>}
-     {page==='concursos'&&<ContestPage go={go}/>}
-     {page==='desempenho'&&<ProgressPage go={go}/>}
-     {page==='ajustes'&&<SettingsPage theme={theme} setTheme={setTheme} readingSize={readingSize} setReadingSize={setReadingSize}/>}
-    </Suspense>
-    <footer className="study-footer mt-12 border-t pt-5 text-xs muted">EstudaTI · Aprender, praticar e evoluir</footer>
-   </main>
-  </div>
- </div>
+  )
 }

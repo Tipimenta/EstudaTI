@@ -1,14 +1,14 @@
 @echo off
 chcp 65001 >nul
-cd /d "%~dp0backend"
+cd /d "%~dp0api"
 where python >nul 2>nul || (echo Instale o Python 3.11+ em python.org e marque "Add to PATH". & pause & exit /b 1)
-if not exist .venv (
+if not exist .venv-estuda (
   echo Preparando o ambiente pela primeira vez...
-  python -m venv .venv || (pause & exit /b 1)
-  call .venv\Scripts\activate.bat
-  pip install -r requirements.txt || (pause & exit /b 1)
+  python -m venv .venv-estuda || (pause & exit /b 1)
+  call .venv-estuda\Scripts\activate.bat
+  pip install -r requirements-estuda.txt || (pause & exit /b 1)
 ) else (
-  call .venv\Scripts\activate.bat
+  call .venv-estuda\Scripts\activate.bat
 )
 if exist ..\.env for /f "usebackq eol=# tokens=1,* delims==" %%a in ("..\.env") do if not "%%b"=="" set "%%a=%%b"
 echo.

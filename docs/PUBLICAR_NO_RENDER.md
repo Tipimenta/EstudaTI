@@ -1,68 +1,56 @@
-# Publicar o Estuda 2.0 na infraestrutura que já existe
+# Publicar o Estuda 2.0 sem mudar a configuração da Vercel nem do Render
 
-Este guia usa os serviços que o EstudaTI já tinha, todos no plano gratuito, sem cartão e sem upgrade:
+Esta versão usa as mesmas pastas do EstudaTI:
 
-- **GitHub** `Tipimenta/EstudaTI`, com a automação que importa ZIPs enviados para `pacotes/`;
-- **Render** com o serviço `estudati-api` (https://estudati-api.onrender.com);
-- **Neon** com o banco PostgreSQL;
-- **Vercel** com a interface antiga.
+- `web/` tem a interface. A **Vercel** já compila essa pasta e encaminha `/api` para o Render.
+- `api/` tem o servidor. O **Render** (`estudati-api`) já usa o `api/Dockerfile`.
 
-No Estuda 2.0 o servidor do Render entrega a interface **e** a API juntas. A Vercel passa a ser opcional.
+Assim, o fluxo continua o mesmo de antes: enviar o ZIP para `pacotes/` e esperar a Action ficar verde.
 
-## 1. Enviar o código para o GitHub
+## 1. Enviar o ZIP
 
-1. Abra https://github.com/Tipimenta/EstudaTI/tree/master/pacotes (no celular, ative "Site para computador").
-2. **Add file → Upload files**, envie `EstudaTI_V2.0_PRONTO_PARA_GITHUB.zip` sem extrair e confirme na branch `master`.
-3. Acompanhe em https://github.com/Tipimenta/EstudaTI/actions a execução **Importar pacote EstudaTI** até ficar verde.
+1. Abra https://github.com/Tipimenta/EstudaTI/tree/master/pacotes
+2. **Add file → Upload files**, envie `EstudaTI_V2.0_PRONTO_PARA_GITHUB.zip` sem extrair e confirme na `master`. Como o nome é igual ao do envio anterior, ele substitui o arquivo antigo.
+3. Espere **Importar pacote EstudaTI** ficar verde em https://github.com/Tipimenta/EstudaTI/actions
 
-Os arquivos novos entram na raiz do repositório (`backend/`, `frontend/`, `Dockerfile`...). As pastas antigas (`api/`, `web/`, `materials/`, `tests/`) continuam lá e não atrapalham. Não apague `api/` e `web/` ainda: a automação de importação atual depende delas. Quando quiser fazer a limpeza, primeiro troque a automação pela versão nova em `docs/github/importar-estudati.yml` (instruções no topo do arquivo).
+A Vercel publica a interface nova sozinha depois desse commit, como já fazia.
 
-## 2. Criar um banco novo no Neon
+## 2. Variáveis no Render (uma vez só)
 
-Use um banco **separado**: o Estuda 2.0 tem tabelas diferentes das do EstudaTI, e assim nada antigo é tocado.
+No serviço `estudati-api`, em **Environment**, confira:
 
-- Opção recomendada: crie um **novo projeto** no Neon na região **AWS US East 1 (N. Virginia)**, a mesma região do Render. Isso deixa cada página bem mais rápida, porque hoje o banco está em São Paulo e o servidor nos EUA.
-- Se o plano gratuito não deixar criar outro projeto, crie um **novo banco** chamado `estuda` no projeto atual (Databases → New database).
-
-Depois clique em **Connect** e copie a *connection string* (começa com `postgresql://`). Não cole essa string no chat nem no GitHub.
-
-## 3. Ajustar o serviço no Render
-
-No painel do serviço `estudati-api`:
-
-**Settings → Build & Deploy**
-- Root Directory: deixe **vazio** (raiz do repositório).
-- Dockerfile Path: `./Dockerfile`
-- Docker Build Context Directory: `.`
-- Health Check Path: `/api/health`
-
-**Environment** (variáveis)
-- `DATABASE_URL`: a string do banco novo do Neon.
-- `APP_SECRET`: mantenha a que já existe se tiver 32+ caracteres. Se não tiver, gere uma nova.
-- `ADMIN_EMAIL`: o seu e-mail. Só ele vira administrador ao criar a conta, então ninguém consegue "pegar" o site antes de você.
+- `DATABASE_URL`: a string do Neon (começa com `postgresql://`). Pode ser o mesmo banco de antes: o Estuda 2.0 cria as tabelas dele num esquema separado chamado `estuda` e não mexe nas tabelas antigas.
+- `APP_SECRET`: 32 ou mais caracteres aleatórios. Se já existir, mantenha.
+- `ADMIN_EMAIL`: o seu e-mail. Só ele vira administrador ao criar a conta.
 - `ALLOW_SIGNUP`: `1` para outras pessoas poderem criar conta, `0` para só você.
-- IA gratuita (opcional): `AI_PROVIDER=gemini` e `AI_API_KEY` com uma chave criada em https://aistudio.google.com (camada gratuita, sem cartão, com limites diários). No plano gratuito o Google pode usar os dados enviados para melhorar os produtos dele; não envie dados pessoais nas perguntas.
-- Pode apagar `APP_PASSWORD`, `COOKIE_SECURE`, `ENABLE_MONITOR` e `DATABASE_PATH`: o Estuda 2.0 não usa.
+- IA gratuita (opcional): `AI_PROVIDER=gemini` e `AI_API_KEY` com a chave do Google AI Studio (https://aistudio.google.com). No plano gratuito o Google pode usar os dados enviados para melhorar os produtos dele.
 
-Depois clique em **Manual Deploy → Deploy latest commit** (o deploy automático está desligado). O primeiro deploy leva alguns minutos porque compila a interface; o primeiro início carrega todo o conteúdo no banco.
+As variáveis antigas (`APP_PASSWORD`, `COOKIE_SECURE`, `ENABLE_MONITOR`, `APP_TIMEZONE`, `DATABASE_PATH`) não atrapalham; pode apagar se quiser.
 
-## 4. Testar
+Depois clique em **Manual Deploy → Deploy latest commit** (o deploy automático estava desligado). Se preferir, ligue o **Auto-Deploy** em Settings para não precisar fazer isso nas próximas atualizações.
 
-1. Abra https://estudati-api.onrender.com/api/health: deve aparecer `{"ok": true}`.
-2. Abra https://estudati-api.onrender.com e crie a conta com o e-mail de `ADMIN_EMAIL`.
-3. Escolha um concurso, conclua uma aula, responda questões, faça um simulado curto.
-4. No Render, faça outro **Manual Deploy** e confirme que o progresso continua lá. Só considere publicado depois disso.
+## 3. Testar
 
-No plano gratuito o serviço dorme após 15 minutos sem uso e leva cerca de um minuto para acordar no primeiro acesso.
+1. Abra https://estudati-api.onrender.com/api/health: deve mostrar `{"ok": true}`. Se o serviço estava dormindo, leva cerca de um minuto.
+2. Abra o endereço da Vercel. A tela nova se chama **Estuda**, é azul e tem o menu Hoje, Trilha, Questões, Simulados e Desempenho.
+3. Crie a conta com o e-mail de `ADMIN_EMAIL`, escolha um concurso e use um pouco.
+4. Faça outro Manual Deploy no Render e confirme que o progresso continua salvo.
 
-## 5. Vercel (opcional)
+Se a Vercel ainda mostrar a tela antiga, recarregue com Ctrl+F5 ou abra numa aba anônima.
 
-Se quiser manter o endereço da Vercel, em **Settings → Build and Deployment** troque **Root Directory** de `web` para `frontend` (framework Vite) e faça um **Redeploy**. O arquivo `frontend/vercel.json` já encaminha `/api` para o Render.
+## Tarefas longas
 
-Para tarefas longas de administração (gerar conteúdo em lote, importar provas e editais), prefira o endereço do Render: pedidos que passam pela Vercel podem ser cortados se demorarem demais.
+Gerar conteúdo em lote e importar provas ou editais com IA pode levar mais de um minuto por pedido. Se der erro de tempo pela Vercel, faça essas tarefas pelo endereço direto do Render, que também responde à API.
+
+## Limpeza opcional do repositório
+
+Do envio anterior ficaram na raiz as pastas `backend/` e `frontend/` e uma cópia do ZIP fora da pasta `pacotes`. Eles não são mais usados e podem ser apagados pelo GitHub (abra a pasta, menu "…", **Delete directory**). Apagar arquivos fora de `pacotes/` não dispara a importação.
+
+Os arquivos antigos do EstudaTI (`api/main.py`, `web/src/StudyCourse.tsx` etc.) ficam no repositório sem uso. Não apague as pastas `api/` e `web/`: elas agora contêm a versão nova.
 
 ## Se algo der errado
 
-- **Deploy falhou no Render:** abra **Logs** e copie as últimas linhas (sem segredos) para analisarmos.
-- **"Algo deu errado no servidor":** geralmente é a `DATABASE_URL`. Confira se foi copiada inteira, com `?sslmode=require` no fim.
+- **Action vermelha:** abra a execução, toque na etapa com X e mande o texto do erro.
+- **Deploy falhou no Render:** abra **Logs** e copie as últimas linhas, sem senhas.
+- **Erro ao entrar ou "Algo deu errado no servidor":** confira a `DATABASE_URL` inteira, com `?sslmode=require` no fim.
 - **Todo mundo sai da conta depois de um deploy:** falta `APP_SECRET`.

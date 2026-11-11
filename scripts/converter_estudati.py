@@ -5,7 +5,7 @@ Entradas (geradas a partir do repositório antigo):
   --academy      JSON com as aulas pedagógicas (web/src/academy exportado)
   --curriculum   JSON com a ordem dos módulos (web/src/academy/curriculum.ts exportado)
 Saída:
-  backend/seed/packs/ti_birigui.json
+  api/conteudo/packs/ti_birigui.json
 
 Uso: python scripts/converter_estudati.py --db old.sqlite3 --academy academy.json --curriculum curriculum.json
 """
@@ -77,7 +77,7 @@ def main():
     ap.add_argument("--db", required=True)
     ap.add_argument("--academy", required=True)
     ap.add_argument("--curriculum", required=True)
-    ap.add_argument("--out", default=str(Path(__file__).resolve().parents[1] / "backend/seed/packs/ti_birigui.json"))
+    ap.add_argument("--out", default=str(Path(__file__).resolve().parents[1] / "api/conteudo/packs/ti_birigui.json"))
     args = ap.parse_args()
 
     db = sqlite3.connect(args.db)
