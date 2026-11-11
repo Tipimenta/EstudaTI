@@ -1,125 +1,101 @@
-# EstudaTI V1.3.0 — Revisão de provas e matriz de editais
+# Estuda: preparação para concursos com IA
 
-> **Nova versão 02/11/2026:** confira [COMECE_AQUI_V13_GITHUB.md](COMECE_AQUI_V13_GITHUB.md) para publicar no repositório privado e [docs/EVOLUCAO_V13_E_PROVAS.md](docs/EVOLUCAO_V13_E_PROVAS.md) para o resumo técnico de funcionalidades, limitações e testes.
->
-> Esta atualização mantém todo o material e o histórico da V1.2.1, adiciona 18 questões originais com justificativas por alternativa (321 questões ativas), conferência de provas oficiais com registro de auditoria e a matriz manual de cobertura do edital.
->
-> **Não é uma versão pronta para nuvem:** exige backend e banco persistentes antes de publicar na Vercel. A versão Docker local permanece funcional.
+Plataforma de estudo para concursos públicos. O aluno escolhe o concurso e o cargo, e recebe a trilha pronta com todas as matérias do edital: aulas didáticas, questões com correção na hora, flashcards com revisão espaçada, simulados com provas anteriores e acompanhamento de desempenho. A IA gera o conteúdo que faltar, lê editais e transforma PDFs de provas em simulados digitais.
 
----
+Esta é a versão 2.0, sucessora do EstudaTI. Todo o conteúdo do EstudaTI (169 aulas, 321 questões, 604 flashcards e 27 discursivas) vem incluído no concurso da Prefeitura de Birigui.
 
-# EstudaTI V1.2.1 — Ambiente pessoal de preparação para concursos de TI
+## Como funciona para o aluno
 
-**Versão integrada com React 19, Tailwind CSS 4, FastAPI, SQLite e Docker Compose.**
+O aluno cria a conta, escolhe o cargo (por exemplo, Escrivão de Polícia da PC-SP), informa a data da prova e quanto tempo tem por dia. A partir daí, a tela **Hoje** diz exatamente o que fazer: revisões que estão vencendo, reforço dos tópicos em que está errando, a próxima aula e as questões dela. O plano alterna entre as matérias conforme o peso de cada uma no edital, para avançar em todas ao mesmo tempo.
 
-> Este é um produto de uso pessoal, com 9 disciplinas, 151 aulas, 268 questões **autorais** comentadas, 374 flashcards, importação assistida de provas, dashboard, simulados, cronômetro global, revisão de questões, priorização por tema, tutoria guiada/IA opcional e laboratório IPv4. É uma base útil e extensível, não um equivalente em escala ao Gran Cursos ou a outras plataformas comerciais. Os conteúdos não são exaustivos para todos os concursos.
+Cada tópico tem a aula, as questões, os flashcards e um espaço de anotações. Quando a IA está ligada, o botão **Tirar dúvida** abre um professor que responde com base na aula, e cada questão tem o botão **Não entendi, explica?**. Tópicos sem aula mostram o botão para gerar aula, questões e flashcards na hora.
 
-## Novo na V1.2.1 — mais questões sem repetição desnecessária
+Um tópico conta como **dominado** quando o aluno leu a aula e acerta 70% ou mais das últimas respostas em pelo menos 5 questões. Se acertar menos de 50%, ele entra em **reforço** e aparece no plano do dia. O mapa do edital na tela Hoje mostra um círculo por tópico, como um cartão-resposta sendo preenchido.
 
-- O Banco de questões aceita CSV/JSON (até 500 itens e 2 MB por arquivo) e a Biblioteca oferece importação assistida de PDF.
-- Na importação, bloqueia duplicatas exatas mesmo que as alternativas estejam reordenadas ou a pontuação varie.
-- **Possíveis duplicatas semânticas ficam como rascunho com aviso**, sem exclusão automática: enunciados parecidos podem ter gabaritos diferentes.
-- Os simulados comuns passam a preferir perguntas inéditas e, depois, as menos recentemente respondidas, evitando enunciados muito semelhantes no mesmo teste quando há variedade suficiente.
-- O modo inteligente continua priorizando revisões vencidas e questões inéditas; revisões são intencionais, não um defeito de repetição.
-- Leia `docs/QUESTOES_SEM_REPETICAO_V121.md`. Esta atualização é aditiva: não altera nem exclui históricos existentes.
+Os **simulados** podem ser personalizados (questões sorteadas com o peso de cada matéria, dando preferência às que o aluno nunca fez) ou de provas anteriores. Têm cronômetro, cartão-resposta, salvamento automático e correção com nota por matéria. Em provas de certo ou errado, a nota líquida desconta um acerto por erro, como no Cebraspe.
 
-## Novo na V1.2 — oficinas de aplicação das nove disciplinas
+## Como funciona para o administrador
 
-Foram incluídas 18 oficinas autorais de prova (2 por disciplina), 36 questões objetivas novas e 36 flashcards. Na tela Matérias e aulas, a Trilha recomendada separa aprofundamento conceitual e aplicação. A atualização é aditiva e preserva registros antigos. Veja `docs/REVISAO_PEDAGOGICA_V12.md` e `COMECE_AQUI_V12.md`.
+A primeira conta criada vira administradora. No menu **Administração** ela pode:
 
-## Novo na V1.1 — Questões dissertativas e escrita formal
+- **Importar edital.** Envie o PDF (ou cole o conteúdo programático). A IA identifica matérias, tópicos, número de questões, banca e data. Você confere, ajusta e cria a trilha. Matérias que já existem em outro concurso são reaproveitadas com as aulas que já tiverem: Português feito para um concurso serve para todos.
+- **Gerar o que falta.** Na tela de um cargo, um botão gera com IA, em sequência, aula, questões e flashcards de todos os tópicos incompletos. Dá para pausar e continuar.
+- **Importar prova anterior.** Envie o PDF da prova e o do gabarito (ou digite o gabarito). A IA separa as questões, casa com o gabarito e sugere a matéria de cada uma. Você revisa numa tela só e publica como simulado. Sem IA, um leitor local funciona em provas bem formatadas.
+- **Importar questões** de arquivos CSV ou JSON (inclusive os formatos do EstudaTI antigo), com bloqueio de repetidas mesmo com alternativas em outra ordem.
+- **Editar qualquer conteúdo**: aula em Markdown com prévia, questões, flashcards, pesos das matérias e tópicos.
 
-- **Módulo separado “Discursivas com correção”**, com 27 questões autorais (três por disciplina), espelho editorial e rubricas por critério.
-- **Diagnóstico local**: indicadores mecânicos de conteúdo/registro formal, sem atribuir nota.
-- **Correção assistida por IA opcional**: avalia conteúdo técnico e a linguagem separadamente, com nota orientativa, justificativas e sugestões de reescrita.
-- **RAG lexical local**: recupera trechos das aulas da mesma disciplina antes de solicitar a correção. Não é uma busca vetorial nem substitui referências oficiais.
-- **Evolução da escrita**: versões, histórico, sugestões trecho a trecho, resposta revisada apenas na linguagem e resposta técnica ampliada.
-- Consulte `docs/DISCURSIVAS_E_CORRECAO_DE_LINGUAGEM.md` para o passo a passo e limites.
+Conteúdo gerado por IA fica marcado como tal para o aluno. Ao editar uma aula gerada, ela passa a constar como revisada.
 
-## O que é novo na V1
+## Rodar no seu computador
 
-- **Orientador inteligente**: mede progresso por questões distintas (última resposta), utiliza priorização transparente e avisa sobre amostras pequenas. Permite pesos individuais por disciplina.
-- **Revisão de questões**: questões respondidas entram em intervalos iniciais de revisão de 1, 3 e dias crescentes conforme acertos; erros retornam em 1 dia. Algoritmo próprio inspirado em repetição espaçada, **não é FSRS** e não estima aprovação.
-- **Simulado prioritário**: opção que prefere revisões vencidas, depois questões inéditas e por fim repetidas, com limite de três por tópico quando há diversidade.
-- **Professor com método Feynman**: sem API externa funciona com trechos da aula; com chave OpenAI API pessoal, permite explicações, exercícios sem gabarito, exemplos, resumos e perguntas. IA pode errar e pode gerar custos.
-- **Recuperação ativa**: espaço para explicar o conceito sem olhar, registrar dúvidas e autoavaliar o entendimento.
-- **Laboratório IPv4**: endereçamento CIDR, máscara, rede, broadcast, quantidade de endereços e desafio interativo.
-- **34 novas aulas autorais complementares** em temas cobrados em TI, acrescentando 34 questões e 68 cartões. As 117 aulas da versão anterior continuam disponíveis.
-- **Mais referências públicas** com links externos de Microsoft Learn, Linux Foundation, ENAP, MDN, NIST e RFC.
+A interface já vem compilada em `frontend/dist`, então basta ter o Python 3.11 ou mais novo.
 
-## Revisão de qualidade V1.1.1
+No Windows, dê dois cliques em `INICIAR_WINDOWS.bat`. No Mac ou Linux, rode `./INICIAR_MAC_LINUX.sh`. Na primeira vez ele prepara o ambiente (leva um ou dois minutos); depois abre `http://localhost:8000`. Crie sua conta: ela será a de administrador.
 
-Esta revisão corrige um erro de importação no React que poderia bloquear o build, impede sobreposição de rascunhos entre discursivas, ajusta a contagem de progresso nas matérias, permite abrir os capítulos listados na trilha aprofundada e arquiva cópias literais de questões autorais sem excluir respostas. Também normaliza nomes de apostilas e marca o roadmap antigo como histórico. Consulte `docs/AUDITORIA_V1.1.1.md` para achados, limites e testes.
+Para ligar a IA, copie `.env.example` para `.env` e preencha `AI_PROVIDER` e `AI_API_KEY` (as instruções estão no próprio arquivo). Feche e abra de novo.
 
-## Estrutura
+Com Docker: `docker compose up -d --build` e acesse `http://localhost:8000`.
+
+## Publicar na internet de graça
+
+**Já usa o Render do EstudaTI?** Siga `docs/PUBLICAR_NO_RENDER.md`, feito para a estrutura atual (GitHub + Render + Neon + Vercel).
+
+Para uma instalação do zero:
+
+O caminho mais simples usa dois serviços com plano gratuito: o **Render** roda o site e o **Supabase** ou o **Neon** guardam o banco de dados (o disco do plano gratuito do Render é apagado a cada atualização, por isso o banco fica fora).
+
+1. Crie um banco PostgreSQL no Supabase ou no Neon e copie a *connection string* (começa com `postgresql://`).
+2. Suba esta pasta para o seu repositório no GitHub (sem o arquivo `.env`).
+3. No Render, escolha **New > Blueprint** e aponte para o repositório. O arquivo `render.yaml` já configura tudo.
+4. Preencha `DATABASE_URL` com a string do banco e, se quiser IA, `AI_PROVIDER` e `AI_API_KEY`.
+5. Abra o endereço que o Render mostrar e crie a sua conta antes de divulgar o link.
+
+O primeiro início no banco vazio carrega os pacotes de conteúdo e pode levar um minuto. No plano gratuito do Render o site "dorme" após um tempo parado e demora alguns segundos para acordar no primeiro acesso.
+
+Se não quiser que qualquer pessoa crie conta, use `ALLOW_SIGNUP=0`. Defina também `ADMIN_EMAIL` com o seu e-mail: assim só você vira administrador.
+
+## Custos de IA
+
+A plataforma funciona sem IA com o conteúdo já incluído. A IA é paga por uso ao provedor escolhido (a assinatura do ChatGPT ou do Claude não cobre uso de API). Para reduzir custo, use um modelo mais barato em `AI_MODEL` (por exemplo `claude-haiku-5-5`) ou o Gemini, que tem camada gratuita com limites. Com `AI_PROVIDER=openai` e `AI_BASE_URL`, também dá para usar Groq, OpenRouter ou um modelo local pelo Ollama. Confira nomes de modelos e preços na documentação do provedor, porque mudam com o tempo.
+
+Cada aluno tem um limite diário de pedidos à IA (`AI_DAILY_LIMIT`, padrão 40). Administradores não têm limite. O conteúdo gerado fica salvo e é compartilhado: um tópico gerado uma vez serve para todos os alunos.
+
+## Direitos sobre o conteúdo
+
+Provas e gabaritos costumam ser publicados pelas bancas e órgãos, mas confira as condições de uso de cada um. Não copie aulas, comentários ou questões comentadas de plataformas comerciais. Questões geradas por IA são marcadas como tal e não devem ser apresentadas como oficiais.
+
+## Estrutura do projeto
 
 ```text
-EstudaTI/
-├── api/                  FastAPI, conteúdos, inteligência e integração IA opcional
-├── web/                  React/TS, Tailwind e Nginx
-├── materials/            apostilas e catálogos autorais
-├── docs/                 fontes, matriz do edital, limitações e método de estudo
-├── tests/                testes de integração da API
-├── tools/                ferramentas de exportação e PDF
-├── examples/             formatos de importação de questões
-├── compose.yaml          dois serviços e volume persistente
-├── .env.example          exemplo de configuração
-├── INSTALAR_E_ABRIR_WINDOWS.bat
-├── BACKUP_DADOS_WINDOWS.bat
-└── ATUALIZAR_ESTUDATI_WINDOWS.bat
+backend/            API em Flask (Python)
+  app.py            início do servidor, login e entrega da interface
+  api_study.py      rotas do aluno: plano do dia, trilha, questões, revisão, simulados, desempenho
+  api_admin.py      rotas do administrador: concursos, edital, conteúdo, provas, usuários
+  ai.py             integração com os provedores de IA e os prompts pedagógicos
+  planner.py        progresso por tópico e montagem do plano do dia
+  srs.py            repetição espaçada (estilo SM-2)
+  importers.py      leitura de PDF, CSV e JSON
+  schema.py, db.py  banco de dados (SQLite ou PostgreSQL)
+  seed/packs/       pacotes de conteúdo carregados no primeiro início
+  tests/            testes automatizados
+frontend/           interface em React + TypeScript (Vite)
+  src/pages/        telas
+  dist/             interface já compilada
+scripts/            conversor do conteúdo do EstudaTI antigo
+docs/               guia de migração e formato dos pacotes
 ```
 
-## Instalar no Windows pela primeira vez
+## Desenvolvimento
 
-1. Abra o Docker Desktop e mantenha-o em execução.
-2. Extraia **a pasta EstudaTI** do ZIP para `C:\Projetos\EstudaTI`.
-3. Execute `INSTALAR_E_ABRIR_WINDOWS.bat` nessa pasta e configure uma senha pessoal de pelo menos 12 caracteres.
-4. Acesse `http://localhost:8088`. O primeiro build exige acesso à internet para baixar dependências e imagens.
-5. Não abra a porta 8088 diretamente para a internet. O padrão é acesso apenas no próprio PC.
+Backend: `cd backend && pip install -r requirements.txt && python app.py`. Testes: `cd backend && python -m pytest -q`.
 
-## Atualizar a V0.5 que já está instalada
+Interface: `cd frontend && npm install && npm run dev` abre em `http://localhost:5173` com recarga automática, usando o backend da porta 8000. Para gerar a versão final: `npm run build`.
 
-1. **Com o Docker funcionando**, execute `BACKUP_DADOS_WINDOWS.bat` da versão atual e confira o arquivo em `backups`.
-2. Extraia o novo ZIP. **Copie os arquivos da pasta EstudaTI do ZIP para a instalação existente** `C:\Projetos\EstudaTI`, substituindo o código. Não substitua nem apague seu `.env`, a pasta `backups` e o volume Docker.
-3. Execute `ATUALIZAR_ESTUDATI_WINDOWS.bat` (faz outro backup e executa `docker compose up -d --build`).
-4. Acesse `http://localhost:8088` e force recarga com Ctrl+F5.
-5. Nunca execute `docker compose down -v`: o parâmetro `-v` remove o volume de dados.
+Variável útil nos testes: `AI_PROVIDER=fake` devolve respostas de IA previsíveis, sem custo.
 
-Comandos de diagnóstico:
+## Telas
 
-```powershell
-docker compose ps
-docker compose logs --tail=100
-docker compose logs --tail=100 api
-docker compose logs --tail=100 web
-```
-
-## Professor com IA — opcional
-
-Se quiser usar a integração, abra `.env` no seu PC e acrescente:
-
-```dotenv
-OPENAI_API_KEY=sua_chave_de_api_pessoal
-OPENAI_MODEL=gpt-5-mini
-```
-
-Depois execute `ATUALIZAR_ESTUDATI_WINDOWS.bat`. A chave é enviada como variável de ambiente somente ao backend e não é disponibilizada ao frontend. **A assinatura ChatGPT não paga o uso da API**: pode gerar cobranças independentes. O modelo escolhido precisa estar disponível na sua conta. Sem chave, a plataforma continua funcionando em modo guiado local sem resposta generativa. As perguntas e o trecho de aula selecionada são enviados ao provedor quando a IA estiver ativada.
-
-## Questões oficiais e direitos de uso
-
-O ZIP **não redistribui** cadernos comerciais de questões. O sistema oferece links para as bancas, importadores CSV/JSON e extração *assistida* de texto de PDF que você obtiver legalmente. Gabaritos, anulações, tipo de caderno, autorização e correção de OCR devem ser verificados **antes** de marcar como `revisada`. Não represente questões autorais ou adaptadas como questões oficiais.
-
-## Testes e limites
-
-Os testes Python podem ser executados após instalar dependências de `api/requirements.txt`:
-
-```powershell
-$env:PYTHONPATH="api"
-python -m pytest -q
-```
-
-A validação automatizada da API foi realizada neste ambiente. A instalação dos pacotes do frontend por npm e a execução real do Docker **não puderam ser concluídas aqui**, devido à indisponibilidade de acesso ao registro npm e do Docker. Portanto, a interface nova exige validação final no seu PC.
-
-## Preservação dos outros projetos
-
-O EstudaTI não altera repositórios, dados ou deploys do CiberInsight e do CMO.
+![Hoje](docs/telas/hoje.png)
+![Aula](docs/telas/aula.png)
+![Simulado](docs/telas/simulado.png)
+![Administração](docs/telas/admin.png)
