@@ -234,16 +234,5 @@ if len(SUPPLEMENTS) != 169:
 
 
 
-def apply_supplement(subject: str, topic: str, lesson: dict | None) -> dict | None:
-    """Acrescenta conteúdo na resposta da API sem gravar nem reindexar o banco."""
-    if lesson is None or not lesson.get("body"):
-        return lesson
-    extra = SUPPLEMENTS.get((subject, topic))
-    if not extra or lesson.get("origin") not in ("autoral", "importado"):
-        return lesson
-    updated = dict(lesson)
-    marker = extra.strip().splitlines()[0]
-    if marker not in updated["body"]:
-        updated["body"] = updated["body"].rstrip() + "\n\n---\n" + extra.strip()
-    updated["editorial_revision"] = REVISION
-    return updated
+# Este arquivo é somente a fonte versionada da migração única para lessons.body.
+# A leitura da API e a edição na Administração consultam apenas o banco.
