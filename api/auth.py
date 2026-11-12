@@ -28,7 +28,9 @@ class ApiError(Exception):
 def secret_key() -> str:
     key = os.getenv("APP_SECRET", "")
     if len(key) < APP_SECRET_MIN_LENGTH:
-        # Em desenvolvimento gera uma chave por processo; em produção, defina APP_SECRET.
+        if key:
+            raise ValueError(f"APP_SECRET deve ter pelo menos {APP_SECRET_MIN_LENGTH} caracteres.")
+        # Desenvolvimento local: cria chave de 64 caracteres.
         key = os.environ.setdefault("APP_SECRET", secrets.token_hex(32))
     return key
 
