@@ -534,10 +534,12 @@ def explain(qid: int):
             if excerpt and not excerpt.startswith("Não encontrei"):
                 parts.append("### Reforce o conceito na aula\n\n" + excerpt)
         return {"explanation": "\n\n".join(parts), "source": "editorial", "ai_used": False}
-    if not ai.status()["enabled"]:
-        return {"explanation": "A questão ainda não possui justificativa detalhada cadastrada. Revise a explicação da aula e os conceitos do enunciado; não vamos inventar uma explicação.", "source": "pending", "ai_used": False}
-    use_ai_quota(g.user)
-    return {"explanation": ai.explain_answer({**q, "options": options}, chosen), "source": "ai", "ai_used": True}
+    # Sem opt-in explícito de IA, jamais consuma créditos. Esta rota pode
+    # ser usada por alunos cujo provedor está configurado mas não contratado.
+    return {
+        "explanation": "Esta questão ainda não possui justificativa detalhada cadastrada. Consulte a aula e os flashcards do tópico; nenhuma chamada à IA foi realizada.",
+        "source": "pending", "ai_used": False,
+    }
 
 
 # ---------------------------------------------------------------------------
