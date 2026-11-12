@@ -579,6 +579,99 @@ def test_estuda_curriculo_extensivo_instalacao_independente_de_contas():
                       (), 0) >= 160
 
 
+
+def test_estuda_pdf_remoto_bloqueia_ssrf_interno(monkeypatch):
+    import remote_pdf
+    import socket
+    from auth import ApiError
+
+    for url in (
+        "http://site.example/edital.pdf",
+        "https://localhost/edital.pdf",
+        "https://127.0.0.1/edital.pdf",
+        "https://169.254.169.254/latest/meta-data",
+        "https://user:secret@public.example/file.pdf",
+        "https://public.example:8080/file.pdf",
+        "https://private.internal/edital.pdf",
+    ):
+        try:
+            remote_pdf.download_public_pdf(url)
+            raise AssertionError("URL perigosa permitida: " + url)
+        except ApiError as exc:
+            assert exc.status in (400, 502)
+
+    def poisoned_dns(host, port, type=0):
+        return [
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("8.8.8.8", 443)),
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("10.0.0.5", 443)),
+        ]
+    monkeypatch.setattr(remote_pdf.socket, "getaddrinfo", poisoned_dns)
+    try:
+        remote_pdf.download_public_pdf("https://www.public.example/edital.pdf")
+        raise AssertionError("DNS com IP privado deveria ser recusado")
+    except ApiError as exc:
+        assert exc.status == 400
+
+
+def test_estuda_pdf_remoto_pina_ip_e_revalida_redirecionamento(monkeypatch):
+    import remote_pdf
+    from auth import ApiError
+    calls = []
+    class FakeResponse:
+        status = 302
+        headers = {"Location": "http://127.0.0.1/segredo"}
+        def release_conn(self):
+            pass
+    class FakePool:
+        def __init__(self, host, **kwargs):
+            calls.append((host, kwargs))
+        def request(self, *args, **kwargs):
+            assert kwargs["redirect"] is False
+            assert kwargs["headers"]["Host"] == "public.example"
+            return FakeResponse()
+        def close(self):
+            pass
+    monkeypatch.setattr(remote_pdf, "_public_ip_addresses", lambda host: ["8.8.8.8"])
+    monkeypatch.setattr(remote_pdf.urllib3, "HTTPSConnectionPool", FakePool)
+    try:
+        remote_pdf.download_public_pdf("https://public.example/edital.pdf")
+        raise AssertionError("Redirect privado não deve funcionar")
+    except ApiError as exc:
+        assert exc.status == 400
+    assert calls[0][0] == "8.8.8.8"
+    assert calls[0][1]["server_hostname"] == "public.example"
+    assert calls[0][1]["assert_hostname"] == "public.example"
+
+
+def test_estuda_link_edital_so_analisa_antes_de_aplicar(monkeypatch):
+    import api_admin
+    from db import tx
+    from auth import ApiError
+    url = "https://concursos.exemplo.gov.br/edital.pdf"
+    monkeypatch.setattr(api_admin, "download_public_pdf", lambda u: b"%PDF-1.7\nmock")
+    monkeypatch.setattr(api_admin, "pdf_text", lambda data, max_pages: "edital " * 100)
+    monkeypatch.setattr(api_admin.ai, "parse_edital",
+                        lambda text, hint: {
+                            "org": "Órgão de teste", "role": "Analista TI",
+                            "banca": "", "exam_date": "", "style": "multipla",
+                            "subjects": [{"name": "Língua Portuguesa", "questions": 5,
+                                          "weight": 1, "topics": ["Interpretação de texto"]}]
+                        })
+    with tx() as db:
+        before = db.val("SELECT COUNT(*) FROM exams", (), 0)
+    assert c.post("/api/admin/edital/parse-url", json={"url": url}, headers=ALUNO).status_code == 403
+    response = c.post("/api/admin/edital/parse-url",
+                      headers=ADMIN, json={"url": url, "role_hint": "Analista"})
+    assert response.status_code == 200, response.get_json()
+    data = response.get_json()
+    assert data["requires_review"] is True
+    assert data["saved"] is False
+    assert data["source_url"] == url
+    assert data["subjects"][0]["existing_id"] is not None
+    with tx() as db:
+        assert db.val("SELECT COUNT(*) FROM exams", (), 0) == before
+
+
 if __name__ == "__main__":
     import inspect
 
