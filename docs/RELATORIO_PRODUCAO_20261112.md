@@ -126,3 +126,10 @@ PDF de teste: https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dumm
 Validação sem falhas nas verificações executadas.
 
 ```
+
+## Teste real de PDF com texto selecionável
+
+PDF público de demonstração do PDF.js (Mozilla): https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf
+
+- Download público HTTPS: **OK** (1016315 bytes).
+- Extração de texto: **OK** (82380 caracteres).
