@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "api" / "conteudo" / "packs"
 sys.path.insert(0, str(ROOT / "api"))
-from conteudo.aprofundamentos import SUPPLEMENTS, apply_supplement  # noqa: E402
+from conteudo.aprofundamentos import SUPPLEMENTS  # noqa: E402
 
 
 def audit() -> dict:
@@ -31,8 +31,8 @@ def audit() -> dict:
             for topic in subject.get("topics", []):
                 label = f"{subject['name']} / {topic['name']}"
                 lesson = topic.get("lesson") or {}
-                expanded = apply_supplement(subject["name"], topic["name"], lesson)
-                body = (expanded or lesson).get("body") or ""
+                extra = SUPPLEMENTS.get((subject["name"], topic["name"]), "")
+                body = (lesson.get("body") or "") + ("\n\n" + extra if extra else "")
                 questions = topic.get("questions") or []
                 rationales = sum(bool(q.get("rationales")) for q in questions)
                 if not body.strip():
