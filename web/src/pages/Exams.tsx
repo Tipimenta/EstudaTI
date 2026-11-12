@@ -379,6 +379,7 @@ export function DiscursivaPage({ id }: { id: number }) {
 // ---------------------------------------------------------------------------
 export function Account({ me, onChange }: { me: Me; onChange: () => void }) {
   const toast = useToast()
+  const [exporting, setExporting] = useState(false)
   const a = me.active
   const [date, setDate] = useState(a?.exam_date || '')
   const [minutes, setMinutes] = useState(a?.minutes_per_day || 90)
@@ -396,6 +397,26 @@ export function Account({ me, onChange }: { me: Me; onChange: () => void }) {
   async function activate(id: number) {
     try { await api(`/enrollments/${id}`, { method: 'PATCH', body: { active: true } }); toast('Concurso trocado.'); onChange(); go('/hoje') }
     catch (e) { toast((e as Error).message, true) }
+  }
+  async function exportHistory() {
+    setExporting(true)
+    try {
+      const content = await api<Record<string, unknown>>('/account/export')
+      const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `estuda-historico-${new Date().toISOString().slice(0, 10)}.json`
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      URL.revokeObjectURL(url)
+      toast('Cópia dos seus estudos gerada. Guarde o arquivo em local seguro.')
+    } catch (e) {
+      toast((e as Error).message, true)
+    } finally {
+      setExporting(false)
+    }
   }
   return (
     <div className="page narrow stack-lg">
@@ -419,6 +440,15 @@ export function Account({ me, onChange }: { me: Me; onChange: () => void }) {
           ))}
         </section>
       )}
+      <section className="panel pad-lg stack">
+        <h3>Proteja seu histórico</h3>
+        <p className="small muted">Exporte suas aulas concluídas, anotações, respostas, revisões e simulados.
+          A cópia é individual, não altera sua conta e não inclui senhas. O arquivo pode conter
+          informações pessoais: guarde-o com segurança.</p>
+        <div><button className="btn btn-primary" onClick={exportHistory} disabled={exporting}>
+          {exporting ? 'Gerando cópia…' : 'Exportar meus estudos (JSON)'}
+        </button></div>
+      </section>
       <section className="panel pad-lg stack">
         <h3>Aparência</h3>
         <div className="seg" role="group" aria-label="Tema">{[['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Escuro']].map(([v, l]) => <button key={v} aria-pressed={theme === v} onClick={() => applyTheme(v)}>{l}</button>)}</div>
