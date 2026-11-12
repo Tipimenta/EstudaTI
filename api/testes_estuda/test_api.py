@@ -179,6 +179,96 @@ def test_spa_fallback_and_api_404():
     assert c.get("/api/nao-existe").status_code == 404
 
 
+
+def test_estuda_dominio_nao_depende_de_cinco_questoes():
+    """Questões escassas não devem tornar o status Dominado impossível."""
+    from db import tx
+    headers = auth("dominio-2dias@teste.local", "Retenção")
+    enroll(headers)
+    tid = next(
+        t["id"] for sub in c.get("/api/trail", headers=headers).get_json()["subjects"]
+        for t in sub["topics"] if t["name"] == "Modelo OSI e TCP/IP"
+    )
+    uid = c.get("/api/me", headers=headers).get_json()["user"]["id"]
+    with tx() as db:
+        qs = db.q("SELECT id, answer FROM questions WHERE topic_id=? ORDER BY id LIMIT 2", (tid,))
+    assert len(qs) == 2
+    assert c.post(f"/api/topics/{tid}/done", headers=headers).status_code == 200
+    with tx() as db:
+        for q in qs:
+            db.insert("answers", {"user_id": uid, "question_id": q["id"],
+                                  "chosen": q["answer"], "correct": 1,
+                                  "context": "treino", "seconds": 30,
+                                  "created_at": "2026-11-10T12:00:00+00:00"})
+    first = c.get(f"/api/topics/{tid}", headers=headers).get_json()["stats"]
+    assert first["status"] == "estudando"
+    assert first["study_days"] == 1
+    with tx() as db:
+        for q in qs:
+            db.insert("answers", {"user_id": uid, "question_id": q["id"],
+                                  "chosen": q["answer"], "correct": 1,
+                                  "context": "revisao", "seconds": 20,
+                                  "created_at": "2026-11-11T12:00:00+00:00"})
+    final = c.get(f"/api/topics/{tid}", headers=headers).get_json()["stats"]
+    assert final["status"] == "dominado"
+    assert final["study_days"] == 2 and final["attempts"] == 4
+    assert final["accuracy"] == 1.0
+
+
+def test_estuda_conclusao_repetida_nao_inflaciona_atividade():
+    headers = auth("conclusao-unica@teste.local", "Conclusão")
+    enroll(headers)
+    tid = next(
+        t["id"] for s in c.get("/api/trail", headers=headers).get_json()["subjects"]
+        for t in s["topics"] if t.get("has_lesson")
+    )
+    before = c.get("/api/today", headers=headers).get_json()["today"]
+    first = c.post(f"/api/topics/{tid}/done", headers=headers).get_json()
+    once = c.get("/api/today", headers=headers).get_json()["today"]
+    again = c.post(f"/api/topics/{tid}/done", headers=headers).get_json()
+    twice = c.get("/api/today", headers=headers).get_json()["today"]
+    assert first["newly_completed"] is True
+    assert again["newly_completed"] is False
+    assert once["items"] == before["items"] + 1
+    assert twice["items"] == once["items"] and twice["minutes"] == once["minutes"]
+
+
+def test_estuda_guias_especificos_existentes_em_todos_os_grupos():
+    from conteudo.aprofundamentos import SUPPLEMENTS, apply_supplement
+    import json
+    from pathlib import Path
+    file = Path(HERE) / "conteudo" / "packs" / "ti_birigui.json"
+    pack = json.loads(file.read_text(encoding="utf-8"))
+    real = {(sub["name"], topic["name"]):
+            topic["lesson"] for sub in pack["subjects"] for topic in sub["topics"]}
+    assert len(SUPPLEMENTS) >= 36
+    assert not (set(SUPPLEMENTS) - set(real))
+    for key in SUPPLEMENTS:
+        res = apply_supplement(key[0], key[1], real[key])
+        assert len(res["body"]) > len(real[key]["body"])
+        assert "## Aprofundamento" in res["body"]
+        assert res["editorial_revision"].startswith("2.2-")
+        # A composição deve ser idempotente, sem duplicar a revisão.
+        second = apply_supplement(key[0], key[1], res)
+        assert second["body"] == res["body"]
+
+
+def test_estuda_tutor_exige_modo_valido():
+    headers = auth("tutor-modos@teste.local", "Tutor")
+    enroll(headers)
+    tid = next(
+        t["id"] for s in c.get("/api/trail", headers=headers).get_json()["subjects"]
+        for t in s["topics"] if t.get("has_lesson")
+    )
+    assert c.post("/api/tutor", json={"topic_id": tid, "mode": "invalido",
+                                      "question": "Explique"}, headers=headers).status_code == 400
+    r = c.post("/api/tutor", json={"topic_id": tid, "mode": "do_zero",
+                                   "question": "Explique o assunto do zero."},
+               headers=headers)
+    assert r.status_code == 200
+    assert r.get_json()["mode"] == "do_zero"
+    assert r.get_json()["answer"]
+
 if __name__ == "__main__":
     import inspect
 
