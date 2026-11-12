@@ -13,6 +13,7 @@ import planner
 import srs
 from auth import ApiError, login_required
 from db import dumps, fingerprint, loads, now, today, tx
+from conteudo.aprofundamentos import apply_supplement
 
 bp = Blueprint("study", __name__, url_prefix="/api")
 _ai_usage: dict[tuple[int, str], int] = {}
@@ -191,7 +192,7 @@ def topic(tid: int):
                 nav["next"] = ordered[i + 1] if i + 1 < len(ordered) else None
                 nav["index"], nav["total"] = i + 1, len(ordered)
     return {"id": t["id"], "name": t["name"], "subject": t["subject"], "subject_id": t["subject_id"],
-            "lesson": lesson, "done": bool(prog and prog["done_at"]), "notes": (prog or {}).get("notes", ""), "stats": stats,
+            "lesson": apply_supplement(t["subject"], t["name"], lesson), "done": bool(prog and prog["done_at"]), "notes": (prog or {}).get("notes", ""), "stats": stats,
             "n_questions": n_q, "n_cards": n_f, "nav": nav, "ai": ai.status()["enabled"]}
 
 
@@ -232,8 +233,8 @@ def topic_context(db, topic_id: int, user_id: int | None = None) -> dict:
                       JOIN exams x ON x.id=r.exam_id WHERE e.user_id=? AND e.active=1""", (user_id,))
         if r:
             role, banca, style = f"{r['name']} ({r['org']})", r["banca"], r["question_style"]
-    lesson = db.one("SELECT body FROM lessons WHERE topic_id=?", (topic_id,))
-    return {**t, "role": role, "banca": banca, "style": style, "lesson_body": (lesson or {}).get("body", "")}
+    lesson = db.one("SELECT body, origin FROM lessons WHERE topic_id=?", (topic_id,))
+    return {**t, "role": role, "banca": banca, "style": style, "lesson_body": (apply_supplement(t["subject"], t["name"], lesson) or {}).get("body", "")}
 
 
 def generate_for_topic(topic_id: int, parts: list[str], user_id: int | None, n_questions: int = 8) -> dict:
