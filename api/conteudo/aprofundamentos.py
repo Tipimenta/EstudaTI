@@ -7,7 +7,7 @@ A revisão do currículo completo permanece incremental, nunca presumida conclu�
 from __future__ import annotations
 
 
-REVISION = "2.2-editorial-01"
+REVISION = "2.2-editorial-02"
 
 SUPPLEMENTS: dict[tuple[str, str], str] = {
     ("Redes de Computadores", "Modelo OSI e TCP/IP"): """
@@ -191,6 +191,15 @@ Requisito "somente médico autorizado vê o laudo" → critério de aceite "API 
 """,
 }
 
+# Guias editoriais específicos — complementam, sem substituir, os nove originais.
+from .guias_tecnicos import TECH_GUIDES
+from .guias_gerais import GENERAL_GUIDES
+if set(SUPPLEMENTS).intersection(TECH_GUIDES) or set(SUPPLEMENTS).intersection(GENERAL_GUIDES) or set(TECH_GUIDES).intersection(GENERAL_GUIDES):
+    raise ValueError("Aprofundamento editorial duplicado")
+SUPPLEMENTS.update(TECH_GUIDES)
+SUPPLEMENTS.update(GENERAL_GUIDES)
+
+
 
 def apply_supplement(subject: str, topic: str, lesson: dict | None) -> dict | None:
     """Acrescenta conteúdo na resposta da API sem gravar nem reindexar o banco."""
@@ -200,7 +209,7 @@ def apply_supplement(subject: str, topic: str, lesson: dict | None) -> dict | No
     if not extra or lesson.get("origin") not in ("autoral", "importado"):
         return lesson
     updated = dict(lesson)
-    marker = "## Aprofundamento 2.2"
+    marker = extra.strip().splitlines()[0]
     if marker not in updated["body"]:
         updated["body"] = updated["body"].rstrip() + "\n\n---\n" + extra.strip()
     updated["editorial_revision"] = REVISION
