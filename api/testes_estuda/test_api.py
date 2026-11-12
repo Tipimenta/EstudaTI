@@ -241,9 +241,14 @@ def test_estuda_guias_especificos_existentes_em_todos_os_grupos():
     pack = json.loads(file.read_text(encoding="utf-8"))
     real = {(sub["name"], topic["name"]):
             topic["lesson"] for sub in pack["subjects"] for topic in sub["topics"]}
-    assert len(SUPPLEMENTS) >= 36
-    assert not (set(SUPPLEMENTS) - set(real))
+    assert len(SUPPLEMENTS) == 169
+    assert set(SUPPLEMENTS) == set(real)
+    unique_material = set()
     for key in SUPPLEMENTS:
+        text = SUPPLEMENTS[key].strip()
+        assert len(text.split()) >= 85, f"Material insuficiente: {key}"
+        assert text not in unique_material, f"Complemento repetido: {key}"
+        unique_material.add(text)
         res = apply_supplement(key[0], key[1], real[key])
         assert len(res["body"]) > len(real[key]["body"])
         assert "## Aprofundamento" in res["body"]
@@ -251,6 +256,28 @@ def test_estuda_guias_especificos_existentes_em_todos_os_grupos():
         # A composição deve ser idempotente, sem duplicar a revisão.
         second = apply_supplement(key[0], key[1], res)
         assert second["body"] == res["body"]
+
+
+def test_estuda_feedback_gratuito_usa_trecho_especifico_de_aula():
+    headers = auth("feedback-material@teste.local", "Treino de explicação")
+    enroll(headers)
+    tr = c.get("/api/trail", headers=headers).get_json()
+    t = next(t for s in tr["subjects"] for t in s["topics"]
+             if t["name"] == "Modelo OSI e TCP/IP")
+    qs = c.get(f"/api/practice?topic_id={t['id']}&limit=5", headers=headers).get_json()["questions"]
+    assert qs
+    q = qs[0]
+    correct = c.post(f"/api/questions/{q['id']}/answer",
+                     headers=headers, json={"chosen": "A", "context": "treino", "seconds": 5})
+    assert correct.status_code == 200
+    explain = c.post(f"/api/questions/{q['id']}/explain",
+                     headers=headers, json={"chosen": "A"})
+    assert explain.status_code == 200
+    result = explain.get_json()
+    assert result["source"] == "editorial"
+    assert result["ai_used"] is False
+    assert "Reforce o conceito na aula" in result["explanation"]
+    assert "Modo gratuito, sem IA" in result["explanation"]
 
 
 def test_estuda_tutor_exige_modo_valido():
