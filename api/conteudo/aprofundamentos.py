@@ -7,7 +7,7 @@ A revisão do currículo completo permanece incremental, nunca presumida conclu�
 from __future__ import annotations
 
 
-REVISION = "2.2-editorial-02"
+REVISION = "2.2-editorial-03"
 
 SUPPLEMENTS: dict[tuple[str, str], str] = {
     ("Redes de Computadores", "Modelo OSI e TCP/IP"): """
@@ -198,6 +198,39 @@ if set(SUPPLEMENTS).intersection(TECH_GUIDES) or set(SUPPLEMENTS).intersection(G
     raise ValueError("Aprofundamento editorial duplicado")
 SUPPLEMENTS.update(TECH_GUIDES)
 SUPPLEMENTS.update(GENERAL_GUIDES)
+
+from .restantes_portugues import GUIDES as EXTRA_PORTUGUES, SUBJECT as SUBJECT_PORTUGUES
+from .restantes_logica import GUIDES as EXTRA_LOGICA, SUBJECT as SUBJECT_LOGICA
+from .restantes_legislacao import GUIDES as EXTRA_LEGISLACAO, SUBJECT as SUBJECT_LEGISLACAO
+from .restantes_governanca import GUIDES as EXTRA_GOVERNANCA, SUBJECT as SUBJECT_GOVERNANCA
+from .restantes_redes import GUIDES as EXTRA_REDES, SUBJECT as SUBJECT_REDES
+from .restantes_sistemas import GUIDES as EXTRA_SISTEMAS, SUBJECT as SUBJECT_SISTEMAS
+from .restantes_seguranca import GUIDES as EXTRA_SEGURANCA, SUBJECT as SUBJECT_SEGURANCA
+from .restantes_banco import GUIDES as EXTRA_BANCO, SUBJECT as SUBJECT_BANCO
+from .restantes_engenharia import GUIDES as EXTRA_ENGENHARIA, SUBJECT as SUBJECT_ENGENHARIA
+
+for subject, guides in [
+    (SUBJECT_PORTUGUES, EXTRA_PORTUGUES),
+    (SUBJECT_LOGICA, EXTRA_LOGICA),
+    (SUBJECT_LEGISLACAO, EXTRA_LEGISLACAO),
+    (SUBJECT_GOVERNANCA, EXTRA_GOVERNANCA),
+    (SUBJECT_REDES, EXTRA_REDES),
+    (SUBJECT_SISTEMAS, EXTRA_SISTEMAS),
+    (SUBJECT_SEGURANCA, EXTRA_SEGURANCA),
+    (SUBJECT_BANCO, EXTRA_BANCO),
+    (SUBJECT_ENGENHARIA, EXTRA_ENGENHARIA),
+]:
+    for topic, material in guides.items():
+        key = (subject, topic)
+        if key in SUPPLEMENTS:
+            raise ValueError(f"Aprofundamento duplicado em {subject}: {topic}")
+        if not material.strip() or len(material.split()) < 85:
+            raise ValueError(f"Complemento insuficiente: {subject}: {topic}")
+        SUPPLEMENTS[key] = f"## Aprofundamento focal — {topic}\n\n{material.strip()}"
+
+if len(SUPPLEMENTS) != 169:
+    raise ValueError(f"Cobertura editorial incompleta: {len(SUPPLEMENTS)} de 169 tópicos")
+
 
 
 
