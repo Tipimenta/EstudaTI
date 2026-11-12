@@ -125,3 +125,44 @@ def seed_expansion_once() -> dict:
         db.x("INSERT INTO schema_migrations(version, applied_at) VALUES (?,?)",
              (EXPANSION_KEY, now()))
         return {"installed": True, **stats}
+
+EXTENSIVE_KEY = "content_estuda_curriculo_extensivo_v1"
+
+
+def seed_extensive_once() -> dict:
+    """Instala as aulas originais em uma única transação, sem sobrescrever nada.
+
+    Apenas trilhas preparatórias genéricas recebem as novas aulas automaticamente;
+    a seleção das disciplinas de um edital REAL deve ser feita pelo administrador
+    após conferência do documento oficial.
+    """
+    from .curso_extensivo import build_pack, stats
+    with tx() as db:
+        if db.one("SELECT version FROM schema_migrations WHERE version=?", (EXTENSIVE_KEY,)):
+            return {"installed": False, "reason": "already_installed"}
+        pack = build_pack()
+        result = load_pack(db, pack)
+        # Atualiza somente trilhas-modelo marcadas como pré-edital. Não altera
+        # matrícula, estudo, prioridades individuais nem cargos de editais reais.
+        models = db.q("""
+            SELECT r.id AS role_id, rs.subject_id
+            FROM roles r JOIN exams e ON e.id=r.exam_id
+            JOIN role_subjects rs ON rs.role_id=r.id
+            WHERE e.notes LIKE '%ESTUDA_TEMPLATE_V1%'
+        """)
+        links = []
+        for m in models:
+            for row in db.q(
+                "SELECT id FROM topics WHERE subject_id=? ORDER BY position,id",
+                (m["subject_id"],)
+            ):
+                links.append((m["role_id"], row["id"]))
+        db.many(
+            "INSERT INTO role_topics(role_id,topic_id) VALUES (?,?) "
+            "ON CONFLICT(role_id,topic_id) DO NOTHING", links
+        )
+        db.x(
+            "INSERT INTO schema_migrations(version,applied_at) VALUES (?,?)",
+            (EXTENSIVE_KEY, now())
+        )
+        return {"installed": True, **result, "matrix": stats(), "linked": len(links)}
