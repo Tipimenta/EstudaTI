@@ -267,7 +267,15 @@ def test_estuda_tutor_exige_modo_valido():
                headers=headers)
     assert r.status_code == 200
     assert r.get_json()["mode"] == "do_zero"
+    assert r.get_json()["source"] == "material"
+    assert r.get_json()["ai_used"] is False
     assert r.get_json()["answer"]
+    assert "Modo gratuito, sem IA" in r.get_json()["answer"]
+    r2 = c.post("/api/tutor", json={"topic_id": tid, "mode": "exemplo",
+                                    "question": "Explique com um caso real.",
+                                    "use_ai": True}, headers=headers)
+    assert r2.status_code == 200
+    assert r2.get_json()["source"] == "ai" and r2.get_json()["ai_used"] is True
 
 if __name__ == "__main__":
     import inspect
