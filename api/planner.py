@@ -43,8 +43,8 @@ def topic_stats(db: DB, user_id: int, topic_ids: list[int]) -> dict[int, dict]:
         return {}
     marks = ",".join("?" for _ in topic_ids)
     stats = {tid: {"read": False, "answered": 0, "correct": 0} for tid in topic_ids}
-    for r in db.q(f"SELECT topic_id FROM lesson_progress WHERE user_id=? AND topic_id IN ({marks})", (user_id, *topic_ids)):
-        stats[r["topic_id"]]["read"] = True
+    for r in db.q(f"SELECT topic_id, done_at FROM lesson_progress WHERE user_id=? AND topic_id IN ({marks})", (user_id, *topic_ids)):
+        stats[r["topic_id"]]["read"] = bool(r["done_at"])
     # Última resposta de cada questão (o que conta é o desempenho atual, não o histórico inteiro)
     rows = db.q(
         f"""SELECT q.topic_id, a.question_id, a.correct, a.id
