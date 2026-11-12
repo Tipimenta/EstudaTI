@@ -412,8 +412,13 @@ def test_anotacao_nao_conclui_aula():
 def test_explicacao_sem_credito_ia_e_sem_gabarito_antecipado():
     headers = auth("explicacao-regressao@teste.local", "Explicação")
     enroll(headers)
-    qs = c.get("/api/practice?limit=10", headers=headers).get_json()["questions"]
-    qid = next(q["id"] for q in qs if q["kind"] == "multipla")
+    from db import tx
+    with tx() as db:
+        qid = db.val(
+            "SELECT id FROM questions WHERE status='publicada' AND kind='multipla' "
+            "AND LENGTH(TRIM(explanation))>0 ORDER BY id LIMIT 1"
+        )
+    assert qid is not None
     # Antes de responder não deve ser possível revelar o gabarito por esta rota.
     early = c.post(f"/api/questions/{qid}/explain", json={"chosen": "A"}, headers=headers)
     assert early.status_code == 409
