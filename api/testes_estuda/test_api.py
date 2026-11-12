@@ -240,29 +240,34 @@ def test_estuda_conclusao_repetida_nao_inflaciona_atividade():
     assert twice["items"] == once["items"] and twice["minutes"] == once["minutes"]
 
 
-def test_estuda_guias_especificos_existentes_em_todos_os_grupos():
-    from conteudo.aprofundamentos import SUPPLEMENTS, apply_supplement
-    import json
-    from pathlib import Path
-    file = Path(HERE) / "conteudo" / "packs" / "ti_birigui.json"
-    pack = json.loads(file.read_text(encoding="utf-8"))
-    real = {(sub["name"], topic["name"]):
-            topic["lesson"] for sub in pack["subjects"] for topic in sub["topics"]}
+def test_estuda_guias_especificos_persistidos_no_banco():
+    from conteudo.aprofundamentos import SUPPLEMENTS
+    from conteudo.migracao_editorial import migrate_editorial_once, EDITORIAL_MIGRATION
+    from db import tx
     assert len(SUPPLEMENTS) == 169
-    assert set(SUPPLEMENTS) == set(real)
-    unique_material = set()
-    for key in SUPPLEMENTS:
-        text = SUPPLEMENTS[key].strip()
-        assert len(text.split()) >= 85, f"Material insuficiente: {key}"
-        assert text not in unique_material, f"Complemento repetido: {key}"
-        unique_material.add(text)
-        res = apply_supplement(key[0], key[1], real[key])
-        assert len(res["body"]) > len(real[key]["body"])
-        assert "## Aprofundamento" in res["body"]
-        assert res["editorial_revision"].startswith("2.2-")
-        # A composição deve ser idempotente, sem duplicar a revisão.
-        second = apply_supplement(key[0], key[1], res)
-        assert second["body"] == res["body"]
+    with tx() as db:
+        rows = db.q("""
+            SELECT s.name AS subject, t.name AS topic, l.body
+            FROM lessons l JOIN topics t ON t.id=l.topic_id
+            JOIN subjects s ON s.id=t.subject_id
+        """)
+        by_topic = {(r["subject"], r["topic"]): r["body"] for r in rows}
+        assert db.val("SELECT COUNT(*) FROM schema_migrations WHERE version=?",
+                      (EDITORIAL_MIGRATION,), 0) == 1
+    for key, extra in SUPPLEMENTS.items():
+        assert key in by_topic
+        body = by_topic[key]
+        assert body.count(extra.strip().splitlines()[0]) == 1, key
+        assert extra.strip() in body, key
+    # A execução repetida não regrava textos possivelmente editados pelo admin.
+    assert migrate_editorial_once()["installed"] is False
+    with tx() as db:
+        for key in list(SUPPLEMENTS)[:3]:
+            assert db.one("""
+                SELECT l.body FROM lessons l JOIN topics t ON t.id=l.topic_id
+                JOIN subjects s ON s.id=t.subject_id
+                WHERE s.name=? AND t.name=?
+            """, key)["body"] == by_topic[key]
 
 
 def test_estuda_feedback_gratuito_usa_trecho_especifico_de_aula():
