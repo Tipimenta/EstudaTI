@@ -2,15 +2,15 @@
 
 Plataforma de estudo para concursos públicos. O aluno escolhe o concurso e o cargo, e recebe a trilha pronta com todas as matérias do edital: aulas didáticas, questões com correção na hora, flashcards com revisão espaçada, simulados com provas anteriores e acompanhamento de desempenho. A IA gera o conteúdo que faltar, lê editais e transforma PDFs de provas em simulados digitais.
 
-Esta é a versão 2.0, sucessora do EstudaTI. Todo o conteúdo do EstudaTI (169 aulas, 321 questões, 604 flashcards e 27 discursivas) vem incluído no concurso da Prefeitura de Birigui.
+Esta é a versão **Estuda 2.2**. O repositório mantém o identificador técnico legado `Tipimenta/EstudaTI` para não quebrar as integrações. O currículo inicial tem 169 aulas, 321 questões, 604 flashcards e 27 propostas discursivas. **Todas as 169 aulas receberam complementos editoriais focais**, somados ao texto original e sem redefinir o histórico dos estudantes. A cobertura de conteúdo não garante que todas as questões estejam suficientemente comentadas; o painel Administração → Qualidade identifica as lacunas.
 
 ## Como funciona para o aluno
 
 O aluno cria a conta, escolhe o cargo (por exemplo, Escrivão de Polícia da PC-SP), informa a data da prova e quanto tempo tem por dia. A partir daí, a tela **Hoje** diz exatamente o que fazer: revisões que estão vencendo, reforço dos tópicos em que está errando, a próxima aula e as questões dela. O plano alterna entre as matérias conforme o peso de cada uma no edital, para avançar em todas ao mesmo tempo.
 
-Cada tópico tem a aula, as questões, os flashcards e um espaço de anotações. Quando a IA está ligada, o botão **Tirar dúvida** abre um professor que responde com base na aula, e cada questão tem o botão **Não entendi, explica?**. Tópicos sem aula mostram o botão para gerar aula, questões e flashcards na hora.
+Cada tópico tem a aula, as questões, os flashcards e um espaço de anotações. O botão **Guia de dúvidas** disponibiliza consulta gratuita ao texto da aula e aos flashcards. Se houver provedor configurado, o aluno pode optar por explicação adaptativa com IA (modos do zero, mecanismo, exemplos, comparação e exercício). A opção **Não entendi** recupera justificativas e trechos da aula gratuitamente; a explicação por IA das alternativas é uma escolha separada que pode consumir créditos. Tópicos sem aula mostram o botão para gerar aula, questões e flashcards na hora.
 
-Um tópico conta como **dominado** quando o aluno leu a aula e acerta 70% ou mais das últimas respostas em pelo menos 5 questões. Se acertar menos de 50%, ele entra em **reforço** e aparece no plano do dia. O mapa do edital na tela Hoje mostra um círculo por tópico, como um cartão-resposta sendo preenchido.
+Um tópico conta como **dominado** quando há conclusão da aula e evidência de desempenho em revisões distribuídas por pelo menos dois dias (taxa de acerto suficiente, quatro tentativas e diversidade mínima de questões ou flashcards estabilizados). Isso evita impossibilidade de domínio em tópicos com somente uma ou duas questões. Se acertar menos de 50%, ele entra em **reforço** e aparece no plano do dia. O mapa do edital na tela Hoje mostra um círculo por tópico, como um cartão-resposta sendo preenchido.
 
 Os **simulados** podem ser personalizados (questões sorteadas com o peso de cada matéria, dando preferência às que o aluno nunca fez) ou de provas anteriores. Têm cronômetro, cartão-resposta, salvamento automático e correção com nota por matéria. Em provas de certo ou errado, a nota líquida desconta um acerto por erro, como no Cebraspe.
 
@@ -35,6 +35,16 @@ No Windows, dê dois cliques em `INICIAR_WINDOWS.bat`. No Mac ou Linux, rode `./
 Para ligar a IA, copie `.env.example` para `.env` e preencha `AI_PROVIDER` e `AI_API_KEY` (as instruções estão no próprio arquivo). Feche e abra de novo.
 
 Com Docker: `docker compose up -d --build` e acesse `http://localhost:8000`.
+
+## Qualidade editorial, privacidade e testes (2.2)
+
+- **169 de 169 tópicos** têm complementos específicos de explicação, exemplos e armadilhas, compostos em leitura pela API sem alteração de linhas do banco e sem alterar os IDs. A precisão das explicações continua sujeita a avaliação humana independente, especialmente em legislação e normas atualizáveis.
+- **Administração → Qualidade** é um painel somente leitura que distingue cobertura editorial de lacunas de exercícios, comentários por alternativa e extensão do material.
+- **Conta → Exportar meus estudos (JSON)** gera uma cópia pessoal autenticada de progresso, notas, tentativas e revisões. Não é importação automática; o arquivo pode conter dados pessoais e deve ser protegido.
+- **API**: o Docker executa testes automatizados em banco SQLite temporário (sem `DATABASE_URL` do Neon) antes de publicar. Isso não dispensa teste integrado com Neon nem inspeção pós-publicação. Vercel valida TypeScript no build.
+- **Custos**: consulta a material existente funciona sem IA; qualquer chamada generativa é opcional. Os serviços atuais conservam os planos gratuitos, sujeitos aos limites dos respectivos provedores.
+- **Diagnóstico**: `python scripts/verificar_producao.py` consulta saúde do Render e da Vercel. O teste com `--email` solicita senha no terminal local e deve ser realizado somente pelo titular.
+
 
 ## Publicar na internet de graça
 
