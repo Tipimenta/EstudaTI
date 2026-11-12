@@ -15,6 +15,10 @@ import json
 import sys
 import urllib.error
 import urllib.request
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "api"))
+from version import VERSION, EDITORIAL_REVISION  # noqa: E402
 
 DEFAULT_RENDER = "https://estudati-api.onrender.com"
 DEFAULT_VERCEL = "https://estudati.vercel.app"
@@ -56,7 +60,7 @@ def main():
 
     status, health = request_json(args.render, "/api/health")
     verify(status == 200 and health.get("ok") is True, "Render responde", str(status))
-    verify(health.get("version") == "2.2", "Versão 2.2", str(health.get("version")))
+    verify(health.get("version") == VERSION, f"Versão {VERSION}", str(health.get("version")))
     verify(health.get("database") == "postgres", "Banco PostgreSQL", str(health.get("database")))
     verify(health.get("schema") == "estuda", "Esquema isolado", str(health.get("schema")))
     verify(health.get("secret_ok") is True, "APP_SECRET configurado")
@@ -66,8 +70,10 @@ def main():
     editorial = health.get("editorial") or {}
     verify(editorial.get("supplements") == 169, "Aprofundamentos em todos os tópicos",
            str(editorial.get("supplements")))
-    verify(str(editorial.get("revision", "")).startswith("2.2-editorial-"),
+    verify(editorial.get("revision") == EDITORIAL_REVISION,
            "Revisão editorial do Estuda 2.2", str(editorial.get("revision")))
+    verify(editorial.get("storage") == "database" and editorial.get("migration_applied") is True,
+           "Textos editoriais persistidos em lessons.body")
     print("   Contagens (não são dados pessoais):", {
         key: c.get(key, 0) for key in ("roles", "topics", "lessons", "questions", "flashcards")
     })
