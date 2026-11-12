@@ -400,7 +400,12 @@ def subject_topics(sid: int):
 def _analyze_edital(text: str, role_hint: str, source_url: str = "") -> dict:
     if len(text.strip()) < 100:
         raise ApiError(400, "O PDF não contém texto programático suficiente. Envie as páginas do cargo.")
-    proposal = ai.parse_edital(text, role_hint[:140])
+    if ai.status()["enabled"]:
+        proposal = ai.parse_edital(text, role_hint[:140])
+        proposal["analysis_method"] = "ia"
+    else:
+        from local_edital import parse_edital_local
+        proposal = parse_edital_local(text, role_hint[:140])
     if not isinstance(proposal, dict) or not isinstance(proposal.get("subjects"), list):
         raise ApiError(502, "Não foi possível reconhecer matérias; revise o PDF e tente novamente.")
     # Consulta SOMENTE leitura; não cria concurso antes da aprovação humana.
