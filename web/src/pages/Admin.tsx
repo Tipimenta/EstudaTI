@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { api, go, LETTERS, plural, useApi } from '../lib'
+import { api, go, LETTERS, plural, queryParam, useApi } from '../lib'
 import { Empty, ErrorBox, Icon, Markdown, Meter, PageLoading, Spinner, useToast } from '../components/ui'
 
 const AdminNav = ({ here }: { here: string }) => (
@@ -306,13 +306,14 @@ export function AdminTopic({ id }: { id: number }) {
 // ---------------------------------------------------------------------------
 // Importar edital
 // ---------------------------------------------------------------------------
-type Proposal = { org: string; banca: string; role: string; exam_date: string; style: string; subjects: { name: string; questions: number; weight: number; topics: string[]; existing_id: number | null; existing_topics?: number }[] }
+type Proposal = { org: string; banca: string; role: string; exam_date: string; style: string; source_url?: string; requires_review?: boolean; subjects: { name: string; questions: number; weight: number; topics: string[]; existing_id: number | null; existing_topics?: number }[] }
 
 export function AdminEdital() {
   const toast = useToast()
   const [file, setFile] = useState<File | null>(null)
   const [text, setText] = useState('')
-  const [hint, setHint] = useState('')
+  const [hint, setHint] = useState(() => queryParam('role'))
+  const [pdfUrl, setPdfUrl] = useState(() => queryParam('pdf'))
   const [busy, setBusy] = useState(false)
   const [p, setP] = useState<Proposal | null>(null)
   const [target, setTarget] = useState<'novo' | 'existente'>('novo')
@@ -322,18 +323,29 @@ export function AdminEdital() {
 
   async function parse() {
     setBusy(true)
-    const form = new FormData()
-    if (file) form.append('file', file)
-    form.append('text', text)
-    form.append('role_hint', hint)
-    try { setP(await api<Proposal>('/admin/edital/parse', { form })) } catch (e) { toast((e as Error).message, true) } finally { setBusy(false) }
+    try {
+      let result: Proposal
+      if (pdfUrl.trim() && !file && text.trim().length < 100) {
+        result = await api<Proposal>('/admin/edital/parse-url', {
+          body: { url: pdfUrl.trim(), role_hint: hint.trim() },
+        })
+      } else {
+        const form = new FormData()
+        if (file) form.append('file', file)
+        form.append('text', text)
+        form.append('role_hint', hint)
+        result = await api<Proposal>('/admin/edital/parse', { form })
+      }
+      setP(result)
+      toast('Conteúdo programático extraído. Revise todas as matérias antes de criar a trilha.')
+    } catch (e) { toast((e as Error).message, true) } finally { setBusy(false) }
   }
   async function apply() {
     if (!p) return
     setBusy(true)
     try {
       const body = target === 'existente' ? { role_id: Number(roleId), subjects: p.subjects }
-        : { exam: { org: p.org, banca: p.banca, name: p.org }, role: { name: p.role, exam_date: p.exam_date || null, question_style: p.style }, subjects: p.subjects }
+        : { exam: { org: p.org, banca: p.banca, name: p.org, edital_url: p.source_url || '' }, role: { name: p.role, exam_date: p.exam_date || null, question_style: p.style }, subjects: p.subjects }
       const r = await api<{ role_id: number; topics: number }>('/admin/edital/apply', { body })
       toast(`Edital aplicado: ${r.topics} tópicos.`)
       go(`/admin/cargo/${r.role_id}`)
@@ -348,14 +360,27 @@ export function AdminEdital() {
       {ov.data && !ov.data.ai.enabled && <div className="notice bad" style={{ marginBottom: 20 }}>Esta função precisa da IA configurada no servidor.</div>}
       {!p ? (
         <div className="panel pad-lg stack-lg" style={{ maxWidth: 720 }}>
-          <label className="field"><span>PDF do edital</span><input className="input" type="file" accept=".pdf,.txt" onChange={e => setFile(e.target.files?.[0] || null)} />
+          <label className="field"><span>Link HTTPS direto do PDF do edital (órgão ou banca)</span>
+            <input className="input" type="url" value={pdfUrl} onChange={e => setPdfUrl(e.target.value)}
+              placeholder="https://www.orgao.gov.br/concursos/edital.pdf" />
+            <small>O servidor verifica IP público, certificado HTTPS e tamanho máximo de 8 MiB.
+              A análise é somente leitura até você aprovar o conteúdo programático.</small></label>
+          <label className="field"><span>Ou envie o PDF do edital</span><input className="input" type="file" accept=".pdf,.txt" onChange={e => setFile(e.target.files?.[0] || null)} />
             <small>Editais grandes funcionam melhor enviando só as páginas do cargo e do conteúdo programático.</small></label>
           <label className="field"><span>Ou cole o texto do conteúdo programático</span><textarea className="textarea" value={text} onChange={e => setText(e.target.value)} /></label>
           <label className="field"><span>Cargo de interesse</span><input className="input" placeholder="Ex.: Escrivão de Polícia" value={hint} onChange={e => setHint(e.target.value)} /><small>Ajuda quando o edital tem vários cargos.</small></label>
-          <button className="btn btn-primary btn-lg" disabled={busy || (!file && text.trim().length < 100)} onClick={parse}>{busy ? <Spinner label="Lendo o edital…" /> : 'Ler edital'}</button>
+          <button className="btn btn-primary btn-lg" disabled={busy || (!file && !pdfUrl.trim() && text.trim().length < 100)} onClick={parse}>{busy ? <Spinner label="Lendo o edital…" /> : 'Ler edital'}</button>
         </div>
       ) : (
         <div className="stack-lg">
+          <div className="notice">
+            <strong>Prévia para conferência:</strong> nada foi cadastrado ainda.
+            Confirme órgão, cargo, banca, matérias, pesos e assuntos diretamente no edital
+            antes de selecionar “Criar trilha”.
+            {p.source_url && <div style={{ marginTop: 8 }}>
+              <a href={p.source_url} target="_blank" rel="noopener noreferrer">Abrir o PDF de origem para conferir ↗</a>
+            </div>}
+          </div>
           <section className="panel pad-lg stack">
             <h2>Concurso</h2>
             <div className="seg"><button aria-pressed={target === 'novo'} onClick={() => setTarget('novo')}>Criar concurso e cargo</button><button aria-pressed={target === 'existente'} onClick={() => setTarget('existente')}>Atualizar cargo existente</button></div>
