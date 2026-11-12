@@ -6,6 +6,7 @@ import { QuestionsPage, ReviewPage, TopicPage } from './pages/Study'
 import { Account, DiscursivaPage, Discursivas, ExamRun, Simulados, StatsPage } from './pages/Exams'
 import { AdminEdital, AdminHome, AdminProva, AdminQuestions, AdminRole, AdminTopic } from './pages/Admin'
 import { ContentQualityPage } from './pages/Quality'
+import { DiscoveryPage } from './pages/Discovery'
 
 export type Enrollment = { id: number; role_id: number; exam_date: string | null; minutes_per_day: number; active: number; role: string; question_style: string; org: string; exam: string; banca: string }
 export type Me = { user: { id: number; name: string; email: string; is_admin: boolean }; enrollments: Enrollment[]; active: Enrollment | null; ai: { enabled: boolean } }
@@ -43,10 +44,11 @@ function Root() {
   if (booting) return <div className="main"><PageLoading /></div>
   if (!me) return <AuthPage config={config} onLogin={() => { setBooting(true); loadMe().then(() => go('/hoje')) }} />
 
-  const needsExam = !me.active && !path.startsWith('/admin') && path !== '/conta'
+  const needsExam = !me.active && !path.startsWith('/admin') && path !== '/conta' && path !== '/descobrir'
   let page: ReactNode
   let m: Record<string, string> | null
   if (needsExam || path === '/concurso') page = <ChooseExam me={me} onDone={loadMe} />
+  else if (path === '/descobrir') page = <DiscoveryPage me={me} />
   else if (path === '/' || path === '/hoje') page = <Today me={me} />
   else if (path === '/trilha') page = <Trail />
   else if ((m = match('/topico/:id', path))) page = <TopicPage key={m.id} id={Number(m.id)} />
@@ -75,6 +77,7 @@ function Root() {
         <nav className="rail" aria-label="Principal">
           <a className="brand" href="#/hoje"><span className="brand-mark" />Estuda</a>
           {NAV.map(([h, l, i]) => <a key={h} className="nav-link" href={`#${h}`} aria-current={current(h)}><Icon name={i} />{l}</a>)}
+          <a className="nav-link" href="#/descobrir" aria-current={current('/descobrir')}><Icon name="questoes" />Buscar concursos</a>
           <a className="nav-link" href="#/revisao" aria-current={current('/revisao')}><Icon name="revisao" />Revisão{reviews > 0 && <span className="count">{reviews}</span>}</a>
           <a className="nav-link" href="#/discursivas" aria-current={current('/discursivas')}><Icon name="discursivas" />Discursivas</a>
           {me.user.is_admin && <><div className="rail-sep" /><a className="nav-link" href="#/admin" aria-current={path.startsWith('/admin') ? 'page' : undefined}><Icon name="admin" />Administração</a></>}
@@ -90,6 +93,7 @@ function Root() {
           <div className="mobile-top">
             <a className="brand" href="#/hoje" style={{ padding: 0 }}><span className="brand-mark" />Estuda</a>
             <div className="row" style={{ gap: 4 }}>
+              <a className="btn btn-ghost btn-sm" href="#/descobrir" aria-label="Buscar concursos"><Icon name="questoes" /></a>
               <a className="btn btn-ghost btn-sm" href="#/revisao" aria-label="Revisão"><Icon name="revisao" />{reviews > 0 && reviews}</a>
               {me.user.is_admin && <a className="btn btn-ghost btn-sm" href="#/admin" aria-label="Administração"><Icon name="admin" /></a>}
               <a className="btn btn-ghost btn-sm" href="#/conta" aria-label="Conta"><Icon name="user" /></a>
