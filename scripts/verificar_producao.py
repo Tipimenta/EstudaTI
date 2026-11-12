@@ -63,13 +63,18 @@ def main():
     c = health.get("counts") or {}
     verify(c.get("roles", 0) >= 2, "Cargos carregados", str(c.get("roles", 0)))
     verify(c.get("lessons", 0) >= 169, "Aulas cadastradas", str(c.get("lessons", 0)))
+    editorial = health.get("editorial") or {}
+    verify(editorial.get("supplements") == 169, "Aprofundamentos em todos os tópicos",
+           str(editorial.get("supplements")))
+    verify(str(editorial.get("revision", "")).startswith("2.2-editorial-"),
+           "Revisão editorial do Estuda 2.2", str(editorial.get("revision")))
     print("   Contagens (não são dados pessoais):", {
         key: c.get(key, 0) for key in ("roles", "topics", "lessons", "questions", "flashcards")
     })
 
     v_status, v_health = request_json(args.vercel, "/api/health")
     verify(v_status == 200 and v_health.get("ok") is True, "Vercel encaminha /api/", str(v_status))
-    for key in ("version", "database", "schema", "secret_ok", "counts"):
+    for key in ("version", "database", "schema", "secret_ok", "counts", "editorial"):
         verify(v_health.get(key) == health.get(key),
                "Vercel e Render concordam em " + key)
 
