@@ -675,6 +675,35 @@ def test_estuda_link_edital_so_analisa_antes_de_aplicar(monkeypatch):
         assert db.val("SELECT COUNT(*) FROM exams", (), 0) == before
 
 
+
+def test_estuda_edital_sem_ia_retorna_previa_sem_inventar_banca(monkeypatch):
+    import api_admin
+    from local_edital import parse_edital_local
+    from db import tx
+    text = ("CONTEÚDO PROGRAMÁTICO\n"
+            "LÍNGUA PORTUGUESA:\n"
+            "1. Interpretação de textos e inferência.\n"
+            "2. Concordância verbal e nominal.\n"
+            "DIREITO ADMINISTRATIVO:\n"
+            "1. Atos administrativos e poderes.\n"
+            "2. Agentes públicos e licitações.\n")
+    p = parse_edital_local(text, "Analista de TI")
+    assert p["analysis_method"] == "local_sem_ia"
+    assert p["banca"] == "" and p["org"] == ""
+    assert len(p["subjects"]) == 2
+    assert len(p["subjects"][0]["topics"]) == 2
+    monkeypatch.setattr(api_admin.ai, "status", lambda: {"enabled": False})
+    with tx() as db:
+        before = db.val("SELECT COUNT(*) FROM exams", (), 0)
+    r = c.post("/api/admin/edital/parse", headers=ADMIN,
+               data={"text": text, "role_hint": "Analista de TI"})
+    assert r.status_code == 200, r.get_json()
+    assert r.get_json()["analysis_method"] == "local_sem_ia"
+    assert r.get_json()["requires_review"] is True
+    with tx() as db:
+        assert db.val("SELECT COUNT(*) FROM exams", (), 0) == before
+
+
 if __name__ == "__main__":
     import inspect
 
