@@ -12,6 +12,7 @@ from flask import g, request
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
 from db import tx
+from version import APP_SECRET_MIN_LENGTH
 
 TOKEN_DAYS = 30
 _attempts: dict[str, list[float]] = {}
@@ -26,7 +27,7 @@ class ApiError(Exception):
 
 def secret_key() -> str:
     key = os.getenv("APP_SECRET", "")
-    if len(key) < 32:
+    if len(key) < APP_SECRET_MIN_LENGTH:
         # Em desenvolvimento gera uma chave por processo; em produção, defina APP_SECRET.
         key = os.environ.setdefault("APP_SECRET", secrets.token_hex(32))
     return key
