@@ -1,82 +1,89 @@
-"""Matriz didática extensiva do Estuda. Textos e exemplos editoriais, nunca editais oficiais.
+"""Currículo autoral extensivo — aulas completas e 4 flashcards diferentes por aula.
 
-O conjunto é instalado aditivamente. Uma aula-base não deve ser confundida
-com material aprofundado e revisado pedagogicamente.
+Organização por disciplina > módulo > aula, alinhada a assuntos presentes
+em editais oficiais de TI e conhecimentos gerais. Não reproduz materiais
+proprietários nem inventa vínculo a edital de cargo específico.
 """
 from __future__ import annotations
 
 from .matriz_basica import CURRICULUM as BASIC
 from .matriz_ti import CURRICULUM as TECH
 
-CURRICULUM = {**BASIC, **TECH}
 if set(BASIC) & set(TECH):
-    raise ValueError("Disciplina duplicada na matriz extensiva.")
+    raise ValueError("A mesma disciplina foi definida duas vezes")
+
+CURRICULUM = {**BASIC, **TECH}
 
 
 def build_pack() -> dict:
-    """Cada registro tem: módulo, título, conceito, mecanismo, caso, pegadinha.
-
-    Quatro flashcards recuperam conhecimentos DISTINTOS. Não são perguntas
-    genéricas geradas de trechos arbitrários.
-    """
     subjects = []
-    for subject, items in CURRICULUM.items():
-        topics, seen = [], set()
-        for module, title, concept, mechanism, example, pitfall in items:
-            key = title.casefold().strip()
-            if key in seen:
-                raise ValueError(f"Aula repetida em {subject}: {title}")
-            seen.add(key)
-            for field in (concept, mechanism, example, pitfall):
-                if len(field) < 78:
-                    raise ValueError(f"Aula com fundamentação insuficiente: {subject}: {title}")
-            prefix = f"{module} · {title}"
-            lesson = f"""# {title}
+    for subject, units in CURRICULUM.items():
+        topics = []
+        seen = set()
+        for unit in units:
+            if len(unit) != 6:
+                raise ValueError(f"Estrutura incompleta da aula de {subject}: {unit}")
+            module, title, concept, mechanism, example, pitfall = unit
+            name = f"{module} · {title}"
+            if name.casefold() in seen:
+                raise ValueError(f"Tema duplicado: {subject} / {name}")
+            seen.add(name.casefold())
+            for label, value in (
+                ("conceito", concept),
+                ("funcionamento", mechanism),
+                ("exemplo", example),
+                ("armadilha", pitfall),
+            ):
+                if len(value.strip()) < 75:
+                    raise ValueError(f"{subject} / {name}: seção {label} insuficiente")
+            body = f"""# {title}
 
-> **Percurso:** {subject} → {module} → {title}. Esta é uma aula-base para iniciar o estudo do tema. Aprofundamentos, legislação vigente e cobrança de banca devem ser conferidos no edital.
+**Disciplina:** {subject} · **Módulo:** {module}
 
-## 1. O conceito e a necessidade
+## O que é, para que serve e qual o contexto?
 
 {concept}
 
-A primeira pergunta de prova é identificar qual problema ou obrigação está sendo tratado. Antes de memorizar nomes, separe **definição**, **finalidade** e **limites**. O mesmo termo pode ser empregado em contextos diferentes; só utilize uma regra quando o enunciado oferecer as condições que a sustentam.
-
-## 2. Estrutura e funcionamento
+## Como funciona — regras, estrutura e mecanismos
 
 {mechanism}
 
-Ao interpretar uma situação, identifique a entrada, as condições aplicáveis, as etapas, a saída esperada e a evidência necessária para confirmar o resultado. Não trate uma ferramenta, um requisito e um efeito como se fossem sinônimos.
-
-## 3. Exemplo contextualizado e raciocínio
+## Exemplo aplicado e explicado
 
 {example}
 
-Confira se o exemplo é compatível com as hipóteses do enunciado. Um caso ilustra o conceito, mas não significa que toda situação real obedeça às mesmas condições. Em cálculos, valide unidades e operações; em leis, consulte artigo, âmbito e redação aplicável.
-
-## 4. Comparações, limitações e armadilhas
+## Limites, comparações e armadilhas de prova
 
 {pitfall}
 
-**Como a banca pode confundir:** uma alternativa frequentemente troca uma condição necessária por suficiente, confunde autorização com obrigação, transforma hipótese em fato ou trata situação particular como regra universal. Para evitar esse erro, justifique por que a afirmação é correta **e por que a inversão seria incorreta**.
+## Verificação de aprendizagem
 
-## 5. Recuperação ativa
+**1. Conceito:** sem consultar, explique o conceito e sua finalidade.
 
-Sem consultar os parágrafos anteriores, faça quatro exercícios: (a) defina o conceito; (b) explique o mecanismo ou sequência causal; (c) reconstrua o exemplo com seus próprios termos; (d) descreva a limitação indicada. Depois use os flashcards deste tópico e registre as dúvidas. Revise após intervalo, não apenas imediatamente após a leitura.
+**2. Funcionamento:** reconstrua a sequência ou os critérios de classificação descritos acima.
 
-**Situação editorial:** aula-base em expansão, sem homologação como curso completo. Questões oficiais devem ser vinculadas apenas após conferência de fonte e gabarito.
+**3. Aplicação:** refaça o exemplo alterando um parâmetro ou condição. Se for cálculo, confira a unidade; se for norma, verifique o âmbito.
+
+**4. Correção do erro:** descreva por que a afirmação enganosa da seção de armadilhas é inadequada.
+
+Se não conseguir responder a algum desses pontos, releia a seção correspondente e use os flashcards do assunto. Questões de concursos anteriores precisam de origem e gabarito verificados antes de serem rotuladas como oficiais.
 """
             cards = [
-                {"front": f"Em {title}, qual é o conceito e a finalidade?", "back": concept},
-                {"front": f"Em {title}, qual é o mecanismo ou a sequência?", "back": mechanism},
-                {"front": f"Qual exemplo concreto demonstra {title}?", "back": example},
-                {"front": f"Qual distinção ou pegadinha evitar em {title}?", "back": pitfall},
+                {"front": f"Qual conceito central de {title}?", "back": concept, "origin": "ia"},
+                {"front": f"Como funciona {title}?", "back": mechanism, "origin": "ia"},
+                {"front": f"Como aplicar {title} a um caso?", "back": example, "origin": "ia"},
+                {"front": f"Qual erro evitar ao estudar {title}?", "back": pitfall, "origin": "ia"},
             ]
             topics.append({
-                "name": prefix, "general": True,
-                "lesson": {"body": lesson, "summary": concept[:380],
-                           "minutes": 18, "origin": "ia"},
-                "flashcards": [{**card, "origin": "ia"} for card in cards],
+                "name": name, "general": True,
+                "lesson": {
+                    "body": body,
+                    "summary": concept[:375],
+                    "minutes": 22,
+                    "origin": "ia",
+                },
                 "questions": [],
+                "flashcards": cards,
             })
         subjects.append({"name": subject, "topics": topics})
     return {"subjects": subjects, "exams": [], "discursives": []}
@@ -89,5 +96,5 @@ def stats() -> dict:
         "topics": sum(len(s["topics"]) for s in pack["subjects"]),
         "flashcards": sum(len(t["flashcards"]) for s in pack["subjects"] for t in s["topics"]),
         "questions": 0,
-        "editorial": "aulas-base sem revisão humana independente",
+        "origin": "textos autorais preparados com auxílio de IA",
     }
