@@ -459,7 +459,7 @@ def answer(qid: int):
             valid = "CE"
         else:
             raise ApiError(422, "Tipo de questão desconhecido.")
-        if chosen not in valid:
+        if not chosen or chosen not in valid:
             raise ApiError(400, "Escolha uma alternativa válida antes de responder.")
         correct = 1 if chosen == q["answer"] else 0
         if q["answer"] == "X":  # anulada: qualquer resposta conta como certa
