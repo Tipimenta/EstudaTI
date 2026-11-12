@@ -277,6 +277,39 @@ def test_estuda_tutor_exige_modo_valido():
     assert r2.status_code == 200
     assert r2.get_json()["source"] == "ai" and r2.get_json()["ai_used"] is True
 
+
+def test_estuda_exportacao_privada_nao_vaza_hash_ou_dados_de_outra_conta():
+    first = auth("export-privado-1@teste.local", "Exportação A")
+    second = auth("export-privado-2@teste.local", "Exportação B")
+    enroll(first)
+    enroll(second)
+    assert c.get("/api/account/export").status_code == 401
+    result = c.get("/api/account/export", headers=first)
+    assert result.status_code == 200
+    payload = result.get_json()
+    assert payload["format"] == "estuda-study-export-v1"
+    assert payload["profile"]["email"] == "export-privado-1@teste.local"
+    assert "password_hash" not in payload["profile"]
+    assert "token" not in payload
+    assert "lesson_progress" in payload["data"]
+    assert "reviews" in payload["data"]
+    assert "answers" in payload["data"]
+    assert all(e["user_id"] == payload["profile"]["id"] for e in payload["data"]["enrollments"])
+
+
+def test_estuda_auditoria_pedagogica_so_para_admin_e_sem_dados_pessoais():
+    student = auth("auditoria-aluno@teste.local", "Estudante")
+    assert c.get("/api/admin/content-quality", headers=student).status_code == 403
+    result = c.get("/api/admin/content-quality", headers=ADMIN)
+    assert result.status_code == 200
+    audit = result.get_json()
+    assert audit["with_lesson"] >= 169
+    assert audit["deepened"] >= 36
+    assert audit["topics"]
+    assert "issues" in audit["topics"][0]
+    assert "body" not in audit["topics"][0]
+    assert "email" not in audit["topics"][0]
+
 if __name__ == "__main__":
     import inspect
 
