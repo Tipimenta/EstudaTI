@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "api" / "conteudo" / "packs"
 sys.path.insert(0, str(ROOT / "api"))
-from conteudo.aprofundamentos import SUPPLEMENTS  # noqa: E402
+from conteudo.aprofundamentos import SUPPLEMENTS, apply_supplement  # noqa: E402
 
 
 def audit() -> dict:
@@ -31,11 +31,14 @@ def audit() -> dict:
             for topic in subject.get("topics", []):
                 label = f"{subject['name']} / {topic['name']}"
                 lesson = topic.get("lesson") or {}
-                body = lesson.get("body") or ""
+                expanded = apply_supplement(subject["name"], topic["name"], lesson)
+                body = (expanded or lesson).get("body") or ""
                 questions = topic.get("questions") or []
                 rationales = sum(bool(q.get("rationales")) for q in questions)
                 if not body.strip():
                     issues.append(f"{file.name}: aula vazia em {label}")
+                if (subject["name"], topic["name"]) not in SUPPLEMENTS:
+                    issues.append(f"{file.name}: sem aprofundamento editorial em {label}")
                 for q in questions:
                     if not q.get("statement") or not q.get("explanation"):
                         issues.append(f"{file.name}: questão sem enunciado/explicação em {label}")
