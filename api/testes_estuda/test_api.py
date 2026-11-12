@@ -337,6 +337,42 @@ def test_estuda_auditoria_pedagogica_so_para_admin_e_sem_dados_pessoais():
     assert "body" not in audit["topics"][0]
     assert "email" not in audit["topics"][0]
 
+
+def test_estuda_nao_registra_resposta_vazia_e_nao_expoe_rascunho():
+    from db import tx
+    headers = auth("seguranca-questoes@teste.local", "Proteger respostas")
+    enroll(headers)
+    q = c.get("/api/practice?limit=4", headers=headers).get_json()["questions"][0]
+    qid = q["id"]
+    for chosen in ("", "Z", "?"):
+        r = c.post(f"/api/questions/{qid}/answer",
+                   headers=headers, json={"chosen": chosen, "context": "treino"})
+        assert r.status_code == 400
+    uid = c.get("/api/me", headers=headers).get_json()["user"]["id"]
+    with tx() as db:
+        assert db.val("SELECT COUNT(*) FROM answers WHERE user_id=? AND question_id=?",
+                      (uid, qid), 0) == 0
+        db.x("UPDATE questions SET status='rascunho' WHERE id=?", (qid,))
+    try:
+        r = c.post(f"/api/questions/{qid}/answer",
+                   headers=headers, json={"chosen": "A"})
+        assert r.status_code == 404
+        r2 = c.post(f"/api/questions/{qid}/explain",
+                    headers=headers, json={"chosen": "A"})
+        assert r2.status_code == 404
+    finally:
+        with tx() as db:
+            db.x("UPDATE questions SET status='publicada' WHERE id=?", (qid,))
+
+
+def test_estuda_rejeita_revisao_de_flashcard_inexistente():
+    headers = auth("cartao-inexistente@teste.local", "Cartão")
+    enroll(headers)
+    r = c.post("/api/flashcards/999999999/grade",
+               headers=headers, json={"grade": 3})
+    assert r.status_code == 404
+
+
 if __name__ == "__main__":
     import inspect
 
