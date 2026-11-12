@@ -10,7 +10,7 @@ from api_study import Q_SELECT, generate_for_topic, q_reveal
 from auth import ApiError, admin_required
 from db import dumps, fingerprint, loads, now, slugify, tx
 from importers import extract_exam_local, parse_questions_file, read_upload_text
-from conteudo.aprofundamentos import SUPPLEMENTS, apply_supplement
+
 
 bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 
@@ -77,10 +77,9 @@ def content_quality():
         )}
     topics = []
     for row in rows:
-        key = (row["subject"], row["topic"])
-        base = {"body": row["body"], "origin": row["origin"]} if row["body"] else None
-        expanded = apply_supplement(*key, base)
-        words = len((expanded or {}).get("body", "").split())
+        text = row["body"] or ""
+        deepened = "## Aprofundamento" in text
+        words = len(text.split())
         qs = qdata.get(row["id"], {})
         n_q = int(qs.get("total") or 0)
         n_rat = int(qs.get("reasoned") or 0)
@@ -93,13 +92,13 @@ def content_quality():
             problems.append("Menos de 3 questões")
         if n_q and n_rat < n_q:
             problems.append("Alternativas sem justificativas completas")
-        if key not in SUPPLEMENTS and row["body"]:
+        if not deepened and row["body"]:
             problems.append("Sem aprofundamento editorial adicional")
         topics.append({
             "id": row["id"], "subject": row["subject"], "topic": row["topic"],
             "words": words, "questions": n_q, "with_rationales": n_rat,
             "flashcards": int(fdata.get(row["id"], 0)),
-            "deepened": key in SUPPLEMENTS and bool(row["body"]),
+            "deepened": deepened,
             "issues": problems, "pending": bool(problems),
         })
     topics.sort(key=lambda x: (-len(x["issues"]), x["subject"], x["topic"]))
