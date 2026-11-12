@@ -1,1 +1,0 @@
-export type LessonGuide={id:number;code:string;title:string;objective:string;theory:string;practical:string;warning:string;recall:{front:string;back:string}[];source_kind:'brief'|'detailed';ready:boolean}
