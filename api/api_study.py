@@ -13,7 +13,7 @@ import planner
 import srs
 from auth import ApiError, login_required
 from db import dumps, fingerprint, loads, now, today, tx
-from conteudo.aprofundamentos import apply_supplement
+from version import VERSION
 from conteudo.consulta_guiada import answer_from_material
 
 bp = Blueprint("study", __name__, url_prefix="/api")
@@ -204,7 +204,7 @@ def export_my_study():
                 "FROM discursive_answers WHERE user_id=? ORDER BY id", (uid,)
             ),
         }
-    return {"format": "estuda-study-export-v1", "version": "2.2",
+    return {"format": "estuda-study-export-v1", "version": VERSION,
             "exported_at": now(), "profile": profile, "data": collections,
             "note": "Cópia individual; não é restauração automática. Guarde em local seguro."}
 
@@ -239,7 +239,7 @@ def topic(tid: int):
                 nav["next"] = ordered[i + 1] if i + 1 < len(ordered) else None
                 nav["index"], nav["total"] = i + 1, len(ordered)
     return {"id": t["id"], "name": t["name"], "subject": t["subject"], "subject_id": t["subject_id"],
-            "lesson": apply_supplement(t["subject"], t["name"], lesson), "done": bool(prog and prog["done_at"]), "notes": (prog or {}).get("notes", ""), "stats": stats,
+            "lesson": lesson, "done": bool(prog and prog["done_at"]), "notes": (prog or {}).get("notes", ""), "stats": stats,
             "n_questions": n_q, "n_cards": n_f, "nav": nav, "ai": ai.status()["enabled"]}
 
 
