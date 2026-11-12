@@ -160,6 +160,59 @@ def list_exams():
     return {"exams": exams}
 
 
+@bp.post("/discovered-draft")
+@admin_required
+def discovered_draft():
+    """Cria rascunho a partir de notícia, SEM afirmar existência de edital.
+
+    O administrador confirma órgão/cargo e decide depois se publica.
+    Copiar uma trilha preparatória é opcional e não altera a trilha original.
+    """
+    from urllib.parse import urlparse
+    b = body()
+    org = str(b.get("org") or "").strip()[:120]
+    role_name = str(b.get("role") or "").strip()[:140]
+    headline = str(b.get("headline") or "").strip()[:240]
+    source = str(b.get("source_url") or "").strip()[:700]
+    copy_from = b.get("copy_from")
+    if not org or not role_name or not headline:
+        raise ApiError(400, "Informe órgão, cargo e título da publicação.")
+    u = urlparse(source)
+    if u.scheme != "https" or not u.netloc:
+        raise ApiError(400, "A fonte precisa ser um link HTTPS.")
+    with tx() as db:
+        template = None
+        if copy_from:
+            try:
+                copy_id = int(copy_from)
+            except (ValueError, TypeError):
+                raise ApiError(400, "Modelo de trilha inválido.")
+            template = db.one("SELECT id FROM roles WHERE id=?", (copy_id,))
+            if not template:
+                raise ApiError(404, "Trilha de referência não encontrada.")
+        eid = db.insert("exams", {
+            "org": org, "name": "Rascunho — " + headline[:140],
+            "banca": "", "year": None, "edital_url": "",
+            "notes": "RASCUNHO NÃO CONFIRMADO. Fonte de notícia (não é edital): " +
+                     source + "\\nPublicação: " + headline,
+            "published": 0, "created_at": now(),
+        })
+        rid = db.insert("roles", {
+            "exam_id": eid, "name": role_name, "level": "",
+            "exam_date": None, "question_style": "multipla",
+            "description": "Trilha em revisão. Confirmar edital, banca, regime, fases, "
+                           "prazo, data de prova, peso e matérias antes da publicação.",
+            "created_at": now(),
+        })
+        if template:
+            for subj in db.q("SELECT subject_id, weight, questions FROM role_subjects WHERE role_id=?",
+                             (copy_id,)):
+                link_subject(db, rid, subj["subject_id"], subj["weight"], subj["questions"])
+            for topic in db.q("SELECT topic_id FROM role_topics WHERE role_id=?", (copy_id,)):
+                link_topic(db, rid, topic["topic_id"])
+    return {"exam_id": eid, "role_id": rid, "published": False}
+
+
 @bp.post("/exams")
 @admin_required
 def create_exam():
