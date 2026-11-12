@@ -39,9 +39,11 @@ def create_app() -> Flask:
 
     from api_admin import bp as admin_bp
     from api_study import bp as study_bp
+    from api_discovery import bp as discovery_bp
 
     app.register_blueprint(study_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(discovery_bp)
 
     @app.errorhandler(ApiError)
     def api_error(e: ApiError):
