@@ -29,9 +29,12 @@ def create_app() -> Flask:
     with tx() as db:
         migrate(db)
     if os.getenv("SEED_ON_START", "1") == "1":
-        from conteudo.loader import seed_if_empty
+        from conteudo.loader import seed_if_empty, seed_expansion_once
 
         seed_if_empty()
+        # Trilha extra usa o schema estuda já configurado e somente insere
+        # o que falta. A transação é revertida por inteiro se ocorrer erro.
+        seed_expansion_once()
     close_cached()  # com --preload, o processo principal não deve repassar a conexão aos workers
 
     from api_admin import bp as admin_bp
