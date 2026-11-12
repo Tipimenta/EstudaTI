@@ -191,7 +191,7 @@ def topic(tid: int):
                 nav["next"] = ordered[i + 1] if i + 1 < len(ordered) else None
                 nav["index"], nav["total"] = i + 1, len(ordered)
     return {"id": t["id"], "name": t["name"], "subject": t["subject"], "subject_id": t["subject_id"],
-            "lesson": lesson, "done": bool(prog), "notes": (prog or {}).get("notes", ""), "stats": stats,
+            "lesson": lesson, "done": bool(prog and prog["done_at"]), "notes": (prog or {}).get("notes", ""), "stats": stats,
             "n_questions": n_q, "n_cards": n_f, "nav": nav, "ai": ai.status()["enabled"]}
 
 
@@ -392,11 +392,40 @@ def answer(qid: int):
 @login_required
 def explain(qid: int):
     with tx() as db:
-        q = db.one("SELECT * FROM questions WHERE id=?", (qid,))
+        q = db.one("SELECT * FROM questions WHERE id=? AND status='publicada'", (qid,))
+        already_answered = bool(db.val(
+            "SELECT COUNT(*) FROM answers WHERE user_id=? AND question_id=?",
+            (g.user["id"], qid), 0)) if q else False
     if not q:
         raise ApiError(404, "Questão não encontrada.")
+    if not already_answered:
+        raise ApiError(409, "Responda à questão antes de consultar a explicação.")
+    chosen = str(body().get("chosen", "")).strip().upper()[:1]
+    # As justificativas publicadas são gratuitas: IA só é consumida quando
+    # não há explicação autoral disponível e o provedor está configurado.
+    rationales = loads(q.get("rationales"), [])
+    options = loads(q.get("options"), [])
+    parts = []
+    if q.get("explanation"):
+        parts.append(q["explanation"])
+    if q["kind"] == "multipla":
+        if chosen and chosen in "ABCDE":
+            i = ord(chosen) - ord("A")
+            if i < len(rationales) and rationales[i]:
+                parts.append("**Sobre a alternativa " + chosen + ":** " + rationales[i])
+        right = str(q["answer"]).upper()
+        if right in "ABCDE":
+            i = ord(right) - ord("A")
+            if i < len(rationales) and rationales[i] and (not chosen or chosen != right):
+                parts.append("**Por que a alternativa " + right + " está correta:** " + rationales[i])
+    elif rationales and any(rationales):
+        parts.extend(x for x in rationales if x)
+    if parts:
+        return {"explanation": "\n\n".join(parts), "source": "editorial", "ai_used": False}
+    if not ai.status()["enabled"]:
+        return {"explanation": "A questão ainda não possui justificativa detalhada cadastrada. Revise a explicação da aula e os conceitos do enunciado; não vamos inventar uma explicação.", "source": "pending", "ai_used": False}
     use_ai_quota(g.user)
-    return {"explanation": ai.explain_answer({**q, "options": loads(q["options"], [])}, str(body().get("chosen", "")))}
+    return {"explanation": ai.explain_answer({**q, "options": options}, chosen), "source": "ai", "ai_used": True}
 
 
 # ---------------------------------------------------------------------------
