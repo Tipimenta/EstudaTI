@@ -9,7 +9,9 @@ import ai
 from api_study import Q_SELECT, generate_for_topic, q_reveal
 from auth import ApiError, admin_required
 from db import dumps, fingerprint, loads, now, slugify, tx
-from importers import extract_exam_local, parse_questions_file, read_upload_text
+from importers import extract_exam_local, parse_questions_file, read_upload_text, pdf_text
+from remote_pdf import download_public_pdf
+from auth import rate_limit
 
 
 bp = Blueprint("admin", __name__, url_prefix="/api/admin")
@@ -395,24 +397,52 @@ def subject_topics(sid: int):
 # Edital: a IA lê o PDF e propõe matérias e tópicos; o admin confere e aplica
 # ---------------------------------------------------------------------------
 
+def _analyze_edital(text: str, role_hint: str, source_url: str = "") -> dict:
+    if len(text.strip()) < 100:
+        raise ApiError(400, "O PDF não contém texto programático suficiente. Envie as páginas do cargo.")
+    proposal = ai.parse_edital(text, role_hint[:140])
+    if not isinstance(proposal, dict) or not isinstance(proposal.get("subjects"), list):
+        raise ApiError(502, "Não foi possível reconhecer matérias; revise o PDF e tente novamente.")
+    # Consulta SOMENTE leitura; não cria concurso antes da aprovação humana.
+    with tx() as db:
+        known = {r["slug"]: r for r in db.q("SELECT id, name, slug FROM subjects")}
+        for subj in proposal["subjects"]:
+            k = known.get(slugify(str(subj.get("name", ""))))
+            subj["existing_id"] = k["id"] if k else None
+            subj["topics"] = [str(t).strip()[:300] for t in subj.get("topics") or []
+                               if str(t).strip()]
+            if k:
+                existing = {norm(t["name"]) for t in db.q(
+                    "SELECT name FROM topics WHERE subject_id=?", (k["id"],))}
+                subj["existing_topics"] = sum(1 for t in subj["topics"] if norm(t) in existing)
+    proposal["source_url"] = source_url
+    proposal["requires_review"] = True
+    proposal["saved"] = False
+    return proposal
+
+
 @bp.post("/edital/parse")
 @admin_required
 def edital_parse():
     text = request.form.get("text", "")
     if "file" in request.files:
         text = read_upload_text(request.files["file"])
-    if len(text.strip()) < 100:
-        raise ApiError(400, "Envie o PDF do edital ou cole o trecho do conteúdo programático.")
-    proposal = ai.parse_edital(text, request.form.get("role_hint", ""))
-    with tx() as db:
-        known = {r["slug"]: r for r in db.q("SELECT id, name, slug FROM subjects")}
-        for s in proposal.get("subjects", []):
-            k = known.get(slugify(str(s.get("name", ""))))
-            s["existing_id"] = k["id"] if k else None
-            s["topics"] = [str(t).strip() for t in s.get("topics") or [] if str(t).strip()]
-            if k:
-                existing = {norm(t["name"]) for t in db.q("SELECT name FROM topics WHERE subject_id=?", (k["id"],))}
-                s["existing_topics"] = sum(1 for t in s["topics"] if norm(t) in existing)
+    return _analyze_edital(text, request.form.get("role_hint", ""))
+
+
+@bp.post("/edital/parse-url")
+@admin_required
+def edital_parse_url():
+    # Limite por administrador para impedir uso como proxy de download.
+    rate_limit(f"edital-publico:{g.user['id']}", limit=8, window=3600)
+    b = body()
+    url = str(b.get("url") or "").strip()
+    if not url:
+        raise ApiError(400, "Cole o link HTTPS direto do PDF oficial.")
+    raw = download_public_pdf(url)
+    extracted = pdf_text(raw, max_pages=160)
+    proposal = _analyze_edital(extracted, str(b.get("role_hint") or ""), source_url=url)
+    proposal["pdf_bytes"] = len(raw)
     return proposal
 
 
