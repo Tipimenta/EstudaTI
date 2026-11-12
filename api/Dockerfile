@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements-estuda.txt
 COPY . .
 # Detecta erros de sintaxe e falhas nos guias antes do serviço entrar em produção.
 # Não conecta ao Neon nem altera dados durante o build.
-RUN python -m compileall -q . && python -c "from conteudo.aprofundamentos import SUPPLEMENTS; assert len(SUPPLEMENTS) >= 36"
+RUN python -m compileall -q . && python -c "from conteudo.aprofundamentos import SUPPLEMENTS; assert len(SUPPLEMENTS) == 169"
 # Testes usam banco temporário local; DATABASE_URL do Neon fica explicitamente ausente.
 # Se um teste falhar, a construção do contêiner é interrompida antes do deploy.
 RUN env -u DATABASE_URL python -m pytest -q testes_estuda
