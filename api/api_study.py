@@ -199,18 +199,27 @@ def topic(tid: int):
 @bp.post("/topics/<int:tid>/done")
 @login_required
 def topic_done(tid: int):
+    """Conclusão idempotente: não duplica tempo ou contagem de estudo."""
     with tx() as db:
-        minutes = db.val("SELECT minutes FROM lessons WHERE topic_id=?", (tid,), 15)
-        db.x("""INSERT INTO lesson_progress(user_id, topic_id, done_at) VALUES (?,?,?)
-                ON CONFLICT(user_id, topic_id) DO UPDATE SET done_at=excluded.done_at""", (g.user["id"], tid, now()))
-        planner.log_activity(db, g.user["id"], 1, int(minutes))
-        # Os flashcards do tópico entram na revisão a partir de amanhã
-        for f in db.q("SELECT id FROM flashcards WHERE topic_id=? AND status='publicada'", (tid,)):
-            db.x("""INSERT INTO reviews(user_id,item_type,item_id,due) VALUES (?,?,?,?)
-                    ON CONFLICT(user_id,item_type,item_id) DO NOTHING""",
-                 (g.user["id"], "f", f["id"], (date.today() + timedelta(days=1)).isoformat()))
-    return {"ok": True}
-
+        lesson = db.one("SELECT minutes FROM lessons WHERE topic_id=? AND status='publicado'", (tid,))
+        if not lesson:
+            raise ApiError(404, "Aula publicada não encontrada.")
+        current = db.one(
+            "SELECT done_at FROM lesson_progress WHERE user_id=? AND topic_id=?",
+            (g.user["id"], tid),
+        )
+        newly_completed = not current or not current["done_at"]
+        if newly_completed:
+            db.x("""INSERT INTO lesson_progress(user_id, topic_id, done_at) VALUES (?,?,?)
+                    ON CONFLICT(user_id, topic_id) DO UPDATE SET done_at=excluded.done_at""",
+                 (g.user["id"], tid, now()))
+            planner.log_activity(db, g.user["id"], 1, int(lesson["minutes"] or 15))
+            # Preserva agendamentos existentes: não substitui revisões já avaliadas.
+            for f in db.q("SELECT id FROM flashcards WHERE topic_id=? AND status='publicada'", (tid,)):
+                db.x("""INSERT INTO reviews(user_id,item_type,item_id,due) VALUES (?,?,?,?)
+                        ON CONFLICT(user_id,item_type,item_id) DO NOTHING""",
+                     (g.user["id"], "f", f["id"], (date.today() + timedelta(days=1)).isoformat()))
+    return {"ok": True, "newly_completed": newly_completed}
 
 @bp.post("/topics/<int:tid>/notes")
 @login_required
