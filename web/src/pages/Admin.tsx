@@ -306,7 +306,7 @@ export function AdminTopic({ id }: { id: number }) {
 // ---------------------------------------------------------------------------
 // Importar edital
 // ---------------------------------------------------------------------------
-type Proposal = { org: string; banca: string; role: string; exam_date: string; style: string; source_url?: string; requires_review?: boolean; subjects: { name: string; questions: number; weight: number; topics: string[]; existing_id: number | null; existing_topics?: number }[] }
+type Proposal = { org: string; banca: string; role: string; exam_date: string; style: string; source_url?: string; requires_review?: boolean; analysis_method?: string; warning?: string; subjects: { name: string; questions: number; weight: number; topics: string[]; existing_id: number | null; existing_topics?: number }[] }
 
 export function AdminEdital() {
   const toast = useToast()
@@ -357,7 +357,7 @@ export function AdminEdital() {
     <div className="page">
       <div className="page-head"><div><h1>Importar edital</h1><p>Envie o PDF. A IA lê o conteúdo programático e monta matérias e tópicos para você conferir.</p></div></div>
       <AdminNav here="/admin/edital" />
-      {ov.data && !ov.data.ai.enabled && <div className="notice bad" style={{ marginBottom: 20 }}>Esta função precisa da IA configurada no servidor.</div>}
+      {ov.data && !ov.data.ai.enabled && <div className="notice" style={{ marginBottom: 20 }}>A IA não está configurada. O Estuda tentará identificar as matérias localmente, sem custo, mas você precisará conferir a estrutura com especial atenção. Para análise generativa, configure um provedor de IA no Render.</div>}
       {!p ? (
         <div className="panel pad-lg stack-lg" style={{ maxWidth: 720 }}>
           <label className="field"><span>Link HTTPS direto do PDF do edital (órgão ou banca)</span>
@@ -375,6 +375,8 @@ export function AdminEdital() {
         <div className="stack-lg">
           <div className="notice">
             <strong>Prévia para conferência:</strong> nada foi cadastrado ainda.
+            {p.analysis_method === 'local_sem_ia' && <p className="small" style={{ marginTop: 8 }}>Esta análise foi feita sem IA. Confira cada tópico no PDF oficial.</p>}
+            {p.warning && <p className="small" style={{ marginTop: 8 }}>{p.warning}</p>}
             Confirme órgão, cargo, banca, matérias, pesos e assuntos diretamente no edital
             antes de selecionar “Criar trilha”.
             {p.source_url && <div style={{ marginTop: 8 }}>
