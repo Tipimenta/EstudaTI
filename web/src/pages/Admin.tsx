@@ -4,7 +4,7 @@ import { Empty, ErrorBox, Icon, Markdown, Meter, PageLoading, Spinner, useToast 
 
 const AdminNav = ({ here }: { here: string }) => (
   <div className="seg" role="navigation" aria-label="Administração" style={{ marginBottom: 24 }}>
-    {[['/admin', 'Visão geral'], ['/admin/edital', 'Importar edital'], ['/admin/prova', 'Importar prova'], ['/admin/questoes', 'Questões']].map(([h, l]) =>
+    {[['/admin', 'Visão geral'], ['/admin/edital', 'Importar edital'], ['/admin/prova', 'Importar prova'], ['/admin/questoes', 'Questões'], ['/admin/qualidade', 'Qualidade']].map(([h, l]) =>
       <button key={h} aria-pressed={here === h} onClick={() => go(h)}>{l}</button>)}
   </div>
 )
