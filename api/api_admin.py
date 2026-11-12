@@ -194,7 +194,7 @@ def discovered_draft():
             "org": org, "name": "Rascunho — " + headline[:140],
             "banca": "", "year": None, "edital_url": "",
             "notes": "RASCUNHO NÃO CONFIRMADO. Fonte de notícia (não é edital): " +
-                     source + "\\nPublicação: " + headline,
+                     source + "\nPublicação: " + headline,
             "published": 0, "created_at": now(),
         })
         rid = db.insert("roles", {
