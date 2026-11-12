@@ -187,3 +187,53 @@ if __name__ == "__main__":
         f()
         print("ok", n)
     print(f"{len(fns)} testes passaram")
+
+
+def test_anotacao_nao_conclui_aula():
+    """Anotar é diferente de estudar: não deve inflar o progresso."""
+    headers = auth("anotacoes-regressao@teste.local", "Anotações")
+    role = enroll(headers)
+    tr = c.get("/api/trail", headers=headers).get_json()
+    tid = tr["subjects"][0]["topics"][0]["id"]
+    before = c.get(f"/api/topics/{tid}", headers=headers).get_json()
+    assert before["done"] is False and before["stats"]["status"] == "novo"
+    assert c.post(f"/api/topics/{tid}/notes", json={"notes": "Minha dúvida inicial"},
+                  headers=headers).status_code == 200
+    after = c.get(f"/api/topics/{tid}", headers=headers).get_json()
+    assert after["notes"] == "Minha dúvida inicial"
+    assert after["done"] is False
+    assert after["stats"]["status"] == "novo"
+    assert c.post(f"/api/topics/{tid}/done", headers=headers).status_code == 200
+    studied = c.get(f"/api/topics/{tid}", headers=headers).get_json()
+    assert studied["done"] is True and studied["stats"]["status"] == "estudando"
+
+
+def test_explicacao_sem_credito_ia_e_sem_gabarito_antecipado():
+    headers = auth("explicacao-regressao@teste.local", "Explicação")
+    enroll(headers)
+    qs = c.get("/api/practice?limit=10", headers=headers).get_json()["questions"]
+    qid = next(q["id"] for q in qs if q["kind"] == "multipla")
+    # Antes de responder não deve ser possível revelar o gabarito por esta rota.
+    early = c.post(f"/api/questions/{qid}/explain", json={"chosen": "A"}, headers=headers)
+    assert early.status_code == 409
+    response = c.post(f"/api/questions/{qid}/answer", json={"chosen": "A"}, headers=headers)
+    assert response.status_code == 200
+    explanation = c.post(f"/api/questions/{qid}/explain", json={"chosen": "A"}, headers=headers)
+    assert explanation.status_code == 200
+    payload = explanation.get_json()
+    assert payload["explanation"].strip() and payload["source"] == "editorial"
+    assert payload["ai_used"] is False
+
+
+def test_aprofundamento_pedagogico_preserva_dados_do_aluno():
+    headers = auth("aprof-regressao@teste.local", "Aprofundamento")
+    enroll(headers)
+    tr = c.get("/api/trail", headers=headers).get_json()
+    t = next((x for subject in tr["subjects"] for x in subject["topics"] if x["name"] == "Modelo OSI e TCP/IP"), None)
+    assert t is not None
+    response = c.get(f"/api/topics/{t['id']}", headers=headers).get_json()
+    lesson = response["lesson"]
+    assert "Aprofundamento 2.2" in lesson["body"]
+    assert "Bit I/G" in lesson["body"] and "Bit U/L" in lesson["body"]
+    assert lesson["editorial_revision"] == "2.2-editorial-01"
+    assert response["done"] is False
