@@ -380,15 +380,6 @@ def test_estuda_rejeita_revisao_de_flashcard_inexistente():
     assert r.status_code == 404
 
 
-if __name__ == "__main__":
-    import inspect
-
-    fns = [(n, f) for n, f in globals().items() if n.startswith("test_") and inspect.isfunction(f)]
-    for n, f in fns:
-        f()
-        print("ok", n)
-    print(f"{len(fns)} testes passaram")
-
 
 def test_anotacao_nao_conclui_aula():
     """Anotar é diferente de estudar: não deve inflar o progresso."""
@@ -582,3 +573,12 @@ def test_estuda_curriculo_extensivo_instalacao_independente_de_contas():
                       "AND rt.topic_id IN (SELECT id FROM topics WHERE name LIKE '% · %')",
                       (), 0) >= 160
 
+
+if __name__ == "__main__":
+    import inspect
+
+    fns = [(n, f) for n, f in globals().items() if n.startswith("test_") and inspect.isfunction(f)]
+    for n, f in fns:
+        f()
+        print("ok", n)
+    print(f"{len(fns)} testes passaram")
