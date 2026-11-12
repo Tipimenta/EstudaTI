@@ -77,16 +77,16 @@ Substituir "porque" por "portanto" sem reorganizar a frase pode inverter causa e
 ## Aprofundamento técnico — negue o conjunto, não só as palavras
 
 ### 1. Dê nomes às proposições
-Seja P: "o usuário tem login válido" e Q: "o usuário tem permissão para ler o laudo". A afirmação "P **e** Q" usa conjunção \`P ∧ Q\`: só é verdadeira se ambas forem verdadeiras. A afirmação "P **ou** Q" usa disjunção inclusiva \`P ∨ Q\`: é verdadeira quando pelo menos uma é verdadeira.
+Seja P: "o usuário tem login válido" e Q: "o usuário tem permissão para ler o laudo". A afirmação "P **e** Q" usa conjunção `P ∧ Q`: só é verdadeira se ambas forem verdadeiras. A afirmação "P **ou** Q" usa disjunção inclusiva `P ∨ Q`: é verdadeira quando pelo menos uma é verdadeira.
 
 ### 2. Negação de "e"
-Negar \`P ∧ Q\` não significa \`¬P ∧ ¬Q\`. Basta uma das partes falhar: **¬(P ∧ Q) ≡ ¬P ∨ ¬Q**. Em português: "Não é verdade que há login válido e permissão" equivale a "não há login válido **ou** não há permissão".
+Negar `P ∧ Q` não significa `¬P ∧ ¬Q`. Basta uma das partes falhar: **¬(P ∧ Q) ≡ ¬P ∨ ¬Q**. Em português: "Não é verdade que há login válido e permissão" equivale a "não há login válido **ou** não há permissão".
 
 ### 3. Negação de "ou"
 Para "P ou Q" ser falso, **ambas** precisam ser falsas: **¬(P ∨ Q) ≡ ¬P ∧ ¬Q**. Assim: "Não é verdade que o candidato passou em A ou B" equivale, na disjunção inclusiva, a "não passou em A **nem** em B".
 
 ### 4. Teste concreto
-P=verdadeiro, Q=falso. \`P ∧ Q\` é falso, então \`¬(P ∧ Q)\` é verdadeiro. A expressão equivalente \`¬P ∨ ¬Q\` vale falso OU verdadeiro = verdadeiro. Confirmou sem decorar? Agora troque para P=verdadeiro, Q=verdadeiro e repita.
+P=verdadeiro, Q=falso. `P ∧ Q` é falso, então `¬(P ∧ Q)` é verdadeiro. A expressão equivalente `¬P ∨ ¬Q` vale falso OU verdadeiro = verdadeiro. Confirmou sem decorar? Agora troque para P=verdadeiro, Q=verdadeiro e repita.
 
 ### 5. Quantificadores
 A negação de "**todos** os servidores estão online" é "**existe pelo menos um** servidor que não está online". Não é "nenhum servidor está online". A negação de "**algum** candidato acertou" é "**nenhum** candidato acertou". Esses exemplos conectam negação lógica e leitura de texto.
@@ -99,13 +99,13 @@ A negação de "**todos** os servidores estão online" é "**existe pelo menos u
 ## Aprofundamento técnico — por que saber B pode alterar a chance de A?
 
 ### 1. Comece pelo espaço amostral
-**Espaço amostral** é o conjunto dos resultados possíveis de um experimento. Uma carta escolhida de baralho comum de 52 tem chance \`4/52 = 1/13\` de ser um ás, assumindo cartas equiprováveis.
+**Espaço amostral** é o conjunto dos resultados possíveis de um experimento. Uma carta escolhida de baralho comum de 52 tem chance `4/52 = 1/13` de ser um ás, assumindo cartas equiprováveis.
 
 ### 2. Probabilidade condicional
-\`P(A|B)\` lê-se "probabilidade de A **dado que B ocorreu**". Pela definição, quando \`P(B)>0\`, temos \`P(A|B)=P(A∩B)/P(B)\`. Se sabemos que a carta é de copas (13 cartas), só resta um ás de copas. Logo a chance condicional é **1/13**. Se B for "a carta é figura (J, Q, K)", a chance de ás é **0**: a informação recebida alterou a amostra.
+`P(A|B)` lê-se "probabilidade de A **dado que B ocorreu**". Pela definição, quando `P(B)>0`, temos `P(A|B)=P(A∩B)/P(B)`. Se sabemos que a carta é de copas (13 cartas), só resta um ás de copas. Logo a chance condicional é **1/13**. Se B for "a carta é figura (J, Q, K)", a chance de ás é **0**: a informação recebida alterou a amostra.
 
 ### 3. Independência não é exclusão mútua
-Eventos A e B são **independentes** quando saber que B ocorreu não altera a chance de A: \`P(A|B)=P(A)\`, ou \`P(A∩B)=P(A)P(B)\` sob as condições pertinentes. Eventos **mutuamente exclusivos** não acontecem ao mesmo tempo: \`P(A∩B)=0\`. Dois eventos de probabilidade positiva que não podem ocorrer simultaneamente **não** são independentes.
+Eventos A e B são **independentes** quando saber que B ocorreu não altera a chance de A: `P(A|B)=P(A)`, ou `P(A∩B)=P(A)P(B)` sob as condições pertinentes. Eventos **mutuamente exclusivos** não acontecem ao mesmo tempo: `P(A∩B)=0`. Dois eventos de probabilidade positiva que não podem ocorrer simultaneamente **não** são independentes.
 
 ### 4. Exemplo resolvido com duas moedas
 Moedas justas geram HH, HT, TH, TT, cada um com probabilidade 1/4. A="a primeira é cara" → HH/HT, probabilidade 1/2. B="a segunda é cara" → HH/TH, probabilidade 1/2. Interseção HH tem probabilidade 1/4, igual a (1/2)×(1/2): A e B são independentes.
@@ -119,23 +119,23 @@ Moedas justas geram HH, HT, TH, TT, cada um com probabilidade 1/4. A="a primeira
 ## Aprofundamento técnico — pergunte se a ordem cria outro resultado
 
 ### 1. Arranjo, permutação e combinação
-**Permutação** é a ordenação de todos os elementos distintos: 3 pessoas em fila têm \`3! = 3×2×1=6\` ordens. **Arranjo** escolhe e ordena parte: de 5 candidatos, escolher primeiro e segundo colocados produz \`5×4=20\` resultados, porque Ana→Bruno difere de Bruno→Ana. **Combinação** escolhe sem considerar ordem: escolher 2 de 5 dá \`C(5,2)=5!/(2!3!)=10\`.
+**Permutação** é a ordenação de todos os elementos distintos: 3 pessoas em fila têm `3! = 3×2×1=6` ordens. **Arranjo** escolhe e ordena parte: de 5 candidatos, escolher primeiro e segundo colocados produz `5×4=20` resultados, porque Ana→Bruno difere de Bruno→Ana. **Combinação** escolhe sem considerar ordem: escolher 2 de 5 dá `C(5,2)=5!/(2!3!)=10`.
 
 ### 2. Demonstração da combinação
-Ao contar 5×4=20 pares ordenados, cada dupla aparece **duas** vezes: AB e BA. Divida por \`2! = 2\` para obter dez duplas distintas. Em geral \`C(n,k)=n!/[k!(n-k)!]\`, onde fatorial significa produto dos inteiros positivos até aquele número.
+Ao contar 5×4=20 pares ordenados, cada dupla aparece **duas** vezes: AB e BA. Divida por `2! = 2` para obter dez duplas distintas. Em geral `C(n,k)=n!/[k!(n-k)!]`, onde fatorial significa produto dos inteiros positivos até aquele número.
 
 ### 3. Caso comentado
-Uma comissão de 3 servidores deve ser formada entre 6 disponíveis. Se todos possuem mesma função e não há cargos diferentes, a ordem não importa: \`C(6,3)=6!/(3!3!)=20\`. Se é preciso escolher presidente, vice e secretário, os cargos são diferentes; o resultado é \`6×5×4=120\`.
+Uma comissão de 3 servidores deve ser formada entre 6 disponíveis. Se todos possuem mesma função e não há cargos diferentes, a ordem não importa: `C(6,3)=6!/(3!3!)=20`. Se é preciso escolher presidente, vice e secretário, os cargos são diferentes; o resultado é `6×5×4=120`.
 
 ### 4. Condições alteram o cálculo
 Se dois candidatos não podem participar juntos, conte todos os grupos e subtraia os que incluem ambos. Para comissões de 3 entre 6, grupos com A e B juntos escolhem o terceiro entre os 4 restantes: 4 grupos inválidos; 20–4=**16** válidos.
 
 ### 5. Repetição
-Se elementos podem se repetir (senhas, sorteios com reposição), os modelos são diferentes. Uma senha de 3 dígitos de 0 a 9, permitindo repetição, tem \`10^3=1000\` possibilidades; não aplique 10×9×8 sem motivo.
+Se elementos podem se repetir (senhas, sorteios com reposição), os modelos são diferentes. Uma senha de 3 dígitos de 0 a 9, permitindo repetição, tem `10^3=1000` possibilidades; não aplique 10×9×8 sem motivo.
 
 **Pegadinha:** a palavra "selecionar" não define, sozinha, combinação: analise se o enunciado distingue posições.
 
-**Teste:** premiar ouro, prata e bronze entre 7 pessoas, sem repetição, dá \`7×6×5=210\`.
+**Teste:** premiar ouro, prata e bronze entre 7 pessoas, sem repetição, dá `7×6×5=210`.
 """,
 ("Governança e Gestão de TI", "PDTI e planejamento estratégico"): """
 ## Aprofundamento técnico — por que PDTI não é uma lista de compras?
@@ -172,10 +172,10 @@ Um **SLO** (*Service Level Objective*) é um objetivo para o indicador. Por exem
 O **SLA** (*Service Level Agreement*) é acordo de nível de serviço entre partes, incluindo compromissos e consequências conforme o contrato. Ele pode contemplar múltiplos SLOs, responsabilidades, exclusões e condições de medição. Não confunda métrica interna com cláusula contratual.
 
 ### 4. Matemática da indisponibilidade
-Num mês de 30 dias há \`30×24×60=43.200\` minutos. Com disponibilidade alvo de 99,9%, orçamento aproximado de indisponibilidade é \`43.200×0,001 = 43,2\` minutos. Para 99%, é \`43.200×0,01 = 432\` minutos, ou 7h12. Esses cálculos supõem medição contínua e denominador integral; contratos reais podem definir janelas e exclusões.
+Num mês de 30 dias há `30×24×60=43.200` minutos. Com disponibilidade alvo de 99,9%, orçamento aproximado de indisponibilidade é `43.200×0,001 = 43,2` minutos. Para 99%, é `43.200×0,01 = 432` minutos, ou 7h12. Esses cálculos supõem medição contínua e denominador integral; contratos reais podem definir janelas e exclusões.
 
 ### 5. Caso resolvido
-O sistema ficou 20 minutos fora em um mês de 30 dias. Disponibilidade simples = \`(43.200−20)/43.200 ≈ 99,9537%\`. Isso ultrapassa alvo de 99,9%, mas outros indicadores, como latência e erros funcionais, podem ter sido descumpridos. O SLI precisa medir o serviço percebido pelo usuário, não apenas servidor ligado.
+O sistema ficou 20 minutos fora em um mês de 30 dias. Disponibilidade simples = `(43.200−20)/43.200 ≈ 99,9537%`. Isso ultrapassa alvo de 99,9%, mas outros indicadores, como latência e erros funcionais, podem ter sido descumpridos. O SLI precisa medir o serviço percebido pelo usuário, não apenas servidor ligado.
 
 **Pegadinha:** cumprir 99,9% em todos os meses não significa que nenhum atendimento individual sofreu prejuízo.
 
@@ -207,16 +207,16 @@ Uma equipe mantém dez mudanças simultâneas e entrega duas por semana. Limitar
 ## Aprofundamento técnico — uma API é um contrato, não apenas uma URL
 
 ### 1. Recurso e representação
-Numa API orientada a recursos, \`/pedidos/42\` pode identificar um pedido. **GET** solicita representação; **POST** normalmente envia dados para processamento/criação no recurso indicado; **PUT** define ou substitui estado de um recurso conforme contrato; **PATCH** faz alteração parcial; **DELETE** solicita remoção. O corpo pode ser JSON, mas JSON é formato de dados, não protocolo de segurança.
+Numa API orientada a recursos, `/pedidos/42` pode identificar um pedido. **GET** solicita representação; **POST** normalmente envia dados para processamento/criação no recurso indicado; **PUT** define ou substitui estado de um recurso conforme contrato; **PATCH** faz alteração parcial; **DELETE** solicita remoção. O corpo pode ser JSON, mas JSON é formato de dados, não protocolo de segurança.
 
 ### 2. Anatomia de requisição
-Exemplo HTTP/1.1: linha inicial \`GET /pedidos/42 HTTP/1.1\`, cabeçalho \`Host: exemplo.com\`, talvez \`Authorization: Bearer ...\`, linha em branco e corpo quando apropriado. A resposta traz status como **200** (sucesso), **201** (criação), **400** (pedido inválido), **401** (autenticação ausente/inválida), **403** (acesso proibido), **404** (não encontrado) ou **409** (conflito). O significado deve corresponder ao contrato real da API.
+Exemplo HTTP/1.1: linha inicial `GET /pedidos/42 HTTP/1.1`, cabeçalho `Host: exemplo.com`, talvez `Authorization: Bearer ...`, linha em branco e corpo quando apropriado. A resposta traz status como **200** (sucesso), **201** (criação), **400** (pedido inválido), **401** (autenticação ausente/inválida), **403** (acesso proibido), **404** (não encontrado) ou **409** (conflito). O significado deve corresponder ao contrato real da API.
 
 ### 3. Idempotência
 Uma operação é **idempotente** quando repeti-la tem o mesmo efeito pretendido no estado do servidor que executá-la uma vez. GET e PUT possuem semântica idempotente; POST não necessariamente. Imagine cliente enviando POST para cobrar R$ 50, perdendo a resposta e repetindo o pedido: pode haver duas cobranças. Uma **chave de idempotência** implementada corretamente pode associar os reenvios ao mesmo resultado, considerando concorrência e validade temporal.
 
 ### 4. Autenticação e autorização
-Token de acesso prova ou representa credencial autenticada segundo o serviço, mas não deve automaticamente dar acesso a pedidos de outros usuários. O servidor precisa confirmar autorização para o recurso \`42\`. Esconder o botão "Excluir" não bloqueia alguém que chama a API diretamente.
+Token de acesso prova ou representa credencial autenticada segundo o serviço, mas não deve automaticamente dar acesso a pedidos de outros usuários. O servidor precisa confirmar autorização para o recurso `42`. Esconder o botão "Excluir" não bloqueia alguém que chama a API diretamente.
 
 ### 5. Exemplo de teste
 Crie um pedido como usuário A; tente consultar o mesmo ID como usuário B sem permissão. A API deve negar conforme o contrato. Repita POST com mesma chave de idempotência e verifique que não gerou duplicidade.
@@ -227,27 +227,27 @@ Crie um pedido como usuário A; tente consultar o mesmo ID como usuário B sem p
 ## Aprofundamento técnico — o Git armazena snapshots, não pastas duplicadas
 
 ### 1. Três locais que precisam ser distinguidos
-**Working tree** são os arquivos visíveis que você modifica. **Index ou staging area** seleciona exatamente o conteúdo que entrará no próximo commit. **Repositório local** armazena histórico e objetos. \`git add arquivo\` registra a versão do arquivo no stage; \`git commit\` cria registro com snapshot, autor, mensagem e referência ao pai; \`git push\` envia commits e referências ao remoto autorizado.
+**Working tree** são os arquivos visíveis que você modifica. **Index ou staging area** seleciona exatamente o conteúdo que entrará no próximo commit. **Repositório local** armazena histórico e objetos. `git add arquivo` registra a versão do arquivo no stage; `git commit` cria registro com snapshot, autor, mensagem e referência ao pai; `git push` envia commits e referências ao remoto autorizado.
 
 ### 2. Branch é referência
-Uma **branch** é uma referência móvel para um commit. Criar branch não duplica todos os arquivos fisicamente. Ao fazer commits, o nome avança para os novos objetos. A branch \`master\` ou \`main\` costuma ser usada para integração, mas o nome não tem significado técnico especial.
+Uma **branch** é uma referência móvel para um commit. Criar branch não duplica todos os arquivos fisicamente. Ao fazer commits, o nome avança para os novos objetos. A branch `master` ou `main` costuma ser usada para integração, mas o nome não tem significado técnico especial.
 
 ### 3. Merge versus rebase
 **Merge** une históricos, possivelmente por commit com múltiplos pais. **Rebase** reaplica commits sobre outra base, alterando seus hashes e exigindo cuidado em branch já compartilhada. Conflito não é "o Git está quebrado": é um trecho que não pode ser reconciliado automaticamente; o desenvolvedor precisa compreender as mudanças concorrentes.
 
 ### 4. Como desfazer
-\`git revert\` cria novo commit com reversão, preservando histórico. \`git reset\` move uma referência local e, conforme opção, pode modificar index e arquivos; forçar push de histórico reescrito é arriscado. Antes de limpar repositório, confirme backups e se existem commits não enviados.
+`git revert` cria novo commit com reversão, preservando histórico. `git reset` move uma referência local e, conforme opção, pode modificar index e arquivos; forçar push de histórico reescrito é arriscado. Antes de limpar repositório, confirme backups e se existem commits não enviados.
 
 ### 5. Não confunda GitHub com produção
-Código salvo no GitHub não implica publicação na Vercel ou Render. Cada deploy tem commit SHA, build, configurações e estado independente. É possível que \`master\` esteja correto e o site esteja executando um SHA anterior.
+Código salvo no GitHub não implica publicação na Vercel ou Render. Cada deploy tem commit SHA, build, configurações e estado independente. É possível que `master` esteja correto e o site esteja executando um SHA anterior.
 
-**Teste:** você fez \`git add\`, mas não \`commit\`. O histórico já foi atualizado? Não; apenas o stage foi preparado.
+**Teste:** você fez `git add`, mas não `commit`. O histórico já foi atualizado? Não; apenas o stage foi preparado.
 """,
 ("Engenharia de Software", "Testes: unidade, integração e aceitação"): """
 ## Aprofundamento técnico — cada teste verifica uma fronteira diferente
 
 ### 1. Unidade
-Teste de **unidade** verifica uma função ou componente isolado. Exemplo: \`calcularPercentual(80,100)\` deve produzir 80%. A asserção compara resultado esperado com observado. Um teste só com valor normal não cobre divisão por zero ou entradas ausentes: crie casos-limite e negativos.
+Teste de **unidade** verifica uma função ou componente isolado. Exemplo: `calcularPercentual(80,100)` deve produzir 80%. A asserção compara resultado esperado com observado. Um teste só com valor normal não cobre divisão por zero ou entradas ausentes: crie casos-limite e negativos.
 
 ### 2. Integração
 Teste de **integração** verifica colaboração entre componentes, como API Flask, autenticação e banco PostgreSQL. Um teste isolado da função de login pode passar mesmo se a tabela de usuários não existir no esquema correto; integração detecta esse problema.
