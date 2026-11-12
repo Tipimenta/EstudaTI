@@ -6,7 +6,7 @@ import { FlashcardSession, PracticeSession, QuestionCard, type Card, type Questi
 type TopicData = {
   id: number; name: string; subject: string; subject_id: number; done: boolean; notes: string; ai: boolean
   lesson: { body: string; summary: string; minutes: number; origin: string; editorial_revision?: string } | null
-  stats: { status: string; accuracy: number | null; answered: number }
+  stats: { status: string; accuracy: number | null; answered: number; attempts: number; study_days: number; stable_cards: number; next_step: string }
   n_questions: number; n_cards: number
   nav: { prev: { id: number; name: string } | null; next: { id: number; name: string } | null; index?: number; total?: number }
 }
@@ -56,6 +56,11 @@ export function TopicPage({ id }: { id: number }) {
             <button className="btn btn-sm" onClick={() => setTab('questoes')}>Praticar novamente</button>
           </div>
         </div>
+      )}
+      {data.stats.next_step && data.stats.status !== 'dominado' && (
+        <p className="small muted" style={{ marginTop: 12, marginBottom: 6 }}>
+          <strong>Próximo passo:</strong> {data.stats.next_step}
+        </p>
       )}
       <div className="topic-tabs" role="tablist">
         {tabs.map(([k, l]) => <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>)}
@@ -160,28 +165,53 @@ function Notes({ topic }: { topic: TopicData }) {
 function Tutor({ topic, onClose }: { topic: TopicData; onClose: () => void }) {
   const [msgs, setMsgs] = useState<{ me: boolean; text: string }[]>([])
   const [q, setQ] = useState('')
+  const [mode, setMode] = useState('passo_a_passo')
   const [busy, setBusy] = useState(false)
   const end = useRef<HTMLDivElement>(null)
+  const modes: [string, string][] = [
+    ['do_zero', 'Do zero'], ['passo_a_passo', 'Por dentro'],
+    ['exemplo', 'Exemplos'], ['comparar', 'Comparar'],
+    ['exercicio', 'Exercício guiado'],
+  ]
   useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth' }) }, [msgs, busy])
-  async function send() {
-    const text = q.trim()
+  async function send(value?: string) {
+    const text = (value ?? q).trim()
     if (!text || busy) return
+    const history = msgs.slice(-4).map(m => ({ role: m.me ? 'user' : 'assistant', text: m.text }))
     setMsgs(m => [...m, { me: true, text }]); setQ(''); setBusy(true)
     try {
-      const r = await api<{ answer: string }>('/tutor', { body: { topic_id: topic.id, question: text } })
+      const r = await api<{ answer: string }>('/tutor', {
+        body: { topic_id: topic.id, question: text, mode, history },
+      })
       setMsgs(m => [...m, { me: false, text: r.answer }])
-    } catch (e) { setMsgs(m => [...m, { me: false, text: (e as Error).message }]) } finally { setBusy(false) }
+    } catch (e) {
+      setMsgs(m => [...m, { me: false, text: (e as Error).message }])
+    } finally {
+      setBusy(false)
+    }
   }
   return (
-    <Drawer title="Tirar dúvida" onClose={onClose} footer={
+    <Drawer title="Professor do Estuda" onClose={onClose} footer={
       <form className="row" onSubmit={e => { e.preventDefault(); send() }}>
-        <input className="input" autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Ex.: qual a diferença entre dolo eventual e culpa consciente?" aria-label="Sua dúvida" />
+        <input className="input" autoFocus value={q} onChange={e => setQ(e.target.value)}
+          placeholder="Qual parte ficou confusa?" aria-label="Sua dúvida" />
         <button className="btn btn-primary" disabled={busy || !q.trim()}>Enviar</button>
       </form>}>
       <div className="stack">
-        {!msgs.length && <p className="muted small">Pergunte qualquer coisa sobre <strong>{topic.name}</strong>. O professor responde com base na aula.</p>}
-        {msgs.map((m, i) => <div key={i} className={`bubble-chat ${m.me ? 'me' : ''}`}>{m.me ? m.text : <Markdown text={m.text} className="lesson small" />}</div>)}
-        {busy && <Spinner label="Pensando…" />}
+        <p className="muted small">Escolha como prefere aprender <strong>{topic.name}</strong>. A IA é opcional e pode consumir créditos do provedor configurado.</p>
+        <div className="row wrap" role="group" aria-label="Profundidade da explicação">
+          {modes.map(([id, label]) => <button key={id} className="btn btn-sm"
+            aria-pressed={mode === id} onClick={() => setMode(id)}
+            style={mode === id ? { fontWeight: 700, textDecoration: 'underline' } : undefined}>{label}</button>)}
+        </div>
+        {!msgs.length && <div className="row wrap">
+          <button className="btn btn-sm btn-ghost" onClick={() => send('Explique os conceitos e suas partes desde o início, sem pressupor conhecimentos.')}>Explique os fundamentos</button>
+          <button className="btn btn-sm btn-ghost" onClick={() => send('Mostre um caso resolvido passo a passo e as principais exceções.')}>Exemplo resolvido</button>
+        </div>}
+        {msgs.map((m, i) => <div key={i} className={`bubble-chat ${m.me ? 'me' : ''}`}>
+          {m.me ? m.text : <Markdown text={m.text} className="lesson small" />}
+        </div>)}
+        {busy && <Spinner label="Elaborando explicação…" />}
         <div ref={end} />
       </div>
     </Drawer>
