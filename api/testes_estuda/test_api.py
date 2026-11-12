@@ -444,3 +444,89 @@ def test_aprofundamento_pedagogico_preserva_dados_do_aluno():
     from conteudo.aprofundamentos import REVISION
     assert lesson["editorial_revision"] == REVISION
     assert response["done"] is False
+
+
+def test_estuda_expansao_idempotente_sem_apagar_progresso():
+    """Novas matérias e trilhas têm instalação única inclusive em banco já povoado."""
+    from conteudo.loader import seed_expansion_once, EXPANSION_KEY
+    from db import tx
+    headers = auth("novas-materias@teste.local", "Novas matérias")
+    enroll(headers)
+    with tx() as db:
+        before = {
+            "roles": db.val("SELECT COUNT(*) FROM roles", (), 0),
+            "topics": db.val("SELECT COUNT(*) FROM topics", (), 0),
+            "answers": db.val("SELECT COUNT(*) FROM answers", (), 0),
+            "marks": db.val("SELECT COUNT(*) FROM schema_migrations WHERE version=?", (EXPANSION_KEY,), 0),
+        }
+        additional = db.q(
+            "SELECT name FROM subjects WHERE name IN (?,?,?)",
+            ("Direito Constitucional", "Estatística e Análise de Dados", "Nuvem e DevOps"))
+        assert len(additional) == 3
+        assert before["marks"] == 1
+        assert db.val("SELECT COUNT(*) FROM exams WHERE notes LIKE '%ESTUDA_TEMPLATE_V1%'", (), 0) == 1
+        assert db.val("SELECT COUNT(*) FROM roles WHERE name LIKE '%pré-edital%'", (), 0) >= 10
+    assert seed_expansion_once()["installed"] is False
+    with tx() as db:
+        assert db.val("SELECT COUNT(*) FROM roles", (), 0) == before["roles"]
+        assert db.val("SELECT COUNT(*) FROM topics", (), 0) == before["topics"]
+        assert db.val("SELECT COUNT(*) FROM answers", (), 0) == before["answers"]
+    catalog = c.get("/api/catalog?q=pré-edital", headers=headers).get_json()["roles"]
+    assert len(catalog) >= 10
+    assert all(r["preparatory"] for r in catalog if "pré-edital" in r["name"])
+
+
+def test_estuda_busca_externa_sem_confundir_noticia_com_edital(monkeypatch):
+    import api_discovery
+    from email.utils import format_datetime
+    from datetime import datetime, timezone
+    date = format_datetime(datetime.now(timezone.utc))
+    xml = (
+        "<rss><channel><item><title>Concurso público para analista TI - Jornal</title>"
+        "<link>https://news.google.com/rss/articles/xyz</link><pubDate>" + date + "</pubDate>"
+        "<source>Jornal</source></item>"
+        "<item><title>Resultado sem concurso</title>"
+        "<link>http://unsafe.example/x</link><pubDate>" + date + "</pubDate></item>"
+        "</channel></rss>"
+    )
+    monkeypatch.setattr(api_discovery, "_search_online",
+                        lambda term, uf, days: api_discovery._read_feed(xml, days))
+    api_discovery._cache.clear()
+    assert c.get("/api/discover").status_code == 401
+    result = c.get("/api/discover?q=analista+TI&uf=SP&days=30", headers=ALUNO)
+    assert result.status_code == 200
+    payload = result.get_json()
+    assert payload["online"] is True
+    assert len(payload["items"]) == 1
+    assert payload["items"][0]["verified"] is False
+    assert payload["items"][0]["url"].startswith("https://news.google.com/")
+    assert payload["official_sources"]
+    assert "não" in payload["notice"].lower()
+
+
+def test_estuda_noticia_cria_rascunho_restrito_ao_admin():
+    body = {
+        "org": "Órgão de teste",
+        "role": "Analista de TI de teste",
+        "headline": "Notícia de concurso de teste",
+        "source_url": "https://news.google.com/rss/articles/exemplo",
+    }
+    assert c.post("/api/admin/discovered-draft", headers=ALUNO, json=body).status_code == 403
+    assert c.post("/api/admin/discovered-draft", headers=ADMIN,
+                  json={**body, "source_url": "http://exemplo.org"}).status_code == 400
+    catalog = c.get("/api/catalog?q=pré-edital", headers=ALUNO).get_json()["roles"]
+    assert catalog
+    res = c.post("/api/admin/discovered-draft", headers=ADMIN,
+                 json={**body, "copy_from": catalog[0]["id"]})
+    assert res.status_code == 200
+    result = res.get_json()
+    assert result["published"] is False
+    with tx() as db:
+        exam = db.one("SELECT * FROM exams WHERE id=?", (result["exam_id"],))
+        assert exam["published"] == 0
+        assert "RASCUNHO" in exam["notes"]
+        assert db.val("SELECT COUNT(*) FROM role_subjects WHERE role_id=?",
+                      (result["role_id"],), 0) > 0
+    # Não se publica automaticamente nem expõe o cargo no catálogo do aluno.
+    visible = c.get("/api/catalog?q=Analista+de+TI+de+teste", headers=ALUNO).get_json()["roles"]
+    assert all(x["id"] != result["role_id"] for x in visible)
