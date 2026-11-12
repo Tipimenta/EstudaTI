@@ -72,7 +72,9 @@ def create_app() -> Flask:
                 counts = {name: db.val(f"SELECT COUNT(*) FROM {name}", (), 0)
                           for name in ("users", "exams", "roles", "topics", "lessons", "questions", "flashcards")}
             import db as dbmod
+            from conteudo.aprofundamentos import REVISION, SUPPLEMENTS
             return {"ok": True, "version": "2.2",
+                    "editorial": {"revision": REVISION, "supplements": len(SUPPLEMENTS)},
                     "database": "postgres" if dbmod.is_postgres() else "sqlite",
                     "schema": dbmod.pg_schema() if dbmod.is_postgres() else None,
                     "counts": counts, "ai": ai.status()["enabled"],
