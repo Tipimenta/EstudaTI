@@ -313,18 +313,54 @@ incorreto, diga isso com cuidado."""
     return complete(prompt, 1500)
 
 
-def tutor(subject: str, topic: str, lesson: str, question: str) -> str:
-    prompt = f"""{_ctx(subject, topic)}
-Aula que o aluno está lendo (referência):
+def tutor(subject: str, topic: str, lesson: str, question: str,
+          mode: str = "passo_a_passo", history: list[dict] | None = None) -> str:
+    """Professor adaptativo: conceitos antes de siglas, sem inventar fontes ou gabaritos."""
+    instructions = {
+        "do_zero": "Ensine para alguém sem conhecimentos prévios. Comece pela necessidade prática e defina os termos na primeira ocorrência.",
+        "passo_a_passo": "Explique a estrutura interna e cada etapa causal do funcionamento. Mostre o que muda antes, durante e depois.",
+        "exemplo": "Resolva dois exemplos progressivos, com hipóteses explícitas, todas as contas e justificativas.",
+        "comparar": "Compare conceitos frequentemente confundidos. Indique propósito, mecanismo, semelhanças, diferenças e uma exceção.",
+        "exercicio": "Ensine o pré-requisito e proponha uma questão inédita do assunto com pistas, MAS NÃO REVELE o gabarito antes de o aluno responder.",
+    }
+    chosen = instructions.get(mode, instructions["passo_a_passo"])
+    context = []
+    for item in (history or [])[-4:]:
+        if not isinstance(item, dict):
+            continue
+        role = "Aluno" if item.get("role") == "user" else "Professor"
+        msg = str(item.get("text") or "").strip()[:1000]
+        if msg:
+            context.append(role + ": " + msg)
+    conversation = "\n".join(context) if context else "(primeira dúvida)"
+    prompt = f"""DISCIPLINA: {subject}
+ASSUNTO: {topic}
+AULA UTILIZADA COMO REFERÊNCIA (pode estar incompleta):
 ---
-{lesson[:12000]}
+{lesson[:15000]}
 ---
-Pergunta do aluno: {question}
+HISTÓRICO RECENTE:
+{conversation}
+PERGUNTA ATUAL DO ALUNO:
+{question[:1500]}
 
-Responda de forma didática e direta em Markdown (até 300 palavras), usando exemplos. Se a pergunta fugir do tópico,
-responda brevemente e traga de volta ao que cai na prova."""
-    return complete(prompt, 2000)
+MODO DE ENSINO: {mode}
+{chosen}
 
+REGRAS PEDAGÓGICAS OBRIGATÓRIAS:
+1. Não presuma que o aluno conhece siglas ou conceitos; explique cada termo novo.
+2. Além de "o que é", mostre composição/estrutura, por que existe e como funciona em etapas.
+3. Se houver números, bits, máscaras, fórmulas ou regras, DEMONSTRE o cálculo, sem pular passos.
+4. Inclua um exemplo concreto e uma armadilha/limitação, explicando por que o erro é erro.
+5. Faça uma pergunta curta de verificação no final; em modo exercício, espere o aluno tentar.
+6. Distingua fato técnico, exemplo hipotético e interpretação. Não invente norma, artigo,
+   número de lei, questão oficial, citação ou fonte. Se algo exigir dados atualizados,
+   declare a necessidade de conferência em fonte oficial.
+7. Não replique frases inteiras da aula; explique a dúvida por outro ângulo.
+8. Responda em português do Brasil, Markdown legível, sem introduções genéricas.
+   Prefira profundidade real (até aproximadamente 750 palavras), sem repetição.
+"""
+    return complete(prompt, 3400)
 
 def grade_discursive(prompt_text: str, rubric: list, model_answer: str, answer: str) -> dict:
     prompt = f"""Corrija a resposta discursiva de um candidato a concurso.
