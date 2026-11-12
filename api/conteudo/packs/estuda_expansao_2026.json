@@ -1,0 +1,2148 @@
+{
+  "name": "Estuda 2.2 — ampliação preparatória (modelos, não editais)",
+  "subjects": [
+    {
+      "name": "Direito Constitucional",
+      "topics": [
+        {
+          "name": "Princípios fundamentais e organização do Estado",
+          "lesson": {
+            "body": "# Princípios fundamentais e organização do Estado\n\n## Para que serve e o que você precisa saber\nConstituição é norma superior que organiza o Estado, distribui competências e protege direitos. A República Federativa do Brasil é formada pela união indissolúvel dos Estados, Municípios e do Distrito Federal; o art. 1º lista fundamentos e o art. 2º trata dos Poderes da União. Fundamentos, objetivos fundamentais e princípios nas relações internacionais aparecem em dispositivos diferentes (arts. 1º, 3º e 4º).\n\n## Como funciona — mecanismo e etapas\nPara resolver questões, identifique o artigo e a categoria: soberania e cidadania são fundamentos; construir sociedade livre, justa e solidária é objetivo; independência nacional é princípio das relações internacionais. Federação distribui competências e não permite confundir autonomia dos entes com soberania internacional.\n\n## Exemplo resolvido\nUma prefeitura estabelece regras de competência local em seus serviços, mas não pode criar uma legislação que contrarie direitos fundamentais e repartição constitucional de competências. Analise hierarquia e competência, não apenas preferência política.\n\n## Erro comum e limites de aplicação\nPegadinha: Município é ente federativo autônomo, mas não possui soberania separada da República. Controle de constitucionalidade e repartição de competências são temas próprios, não sinônimos.\n\n## Verifique a compreensão\nQual alternativa contém fundamento da República?\n\n**Resposta comentada:** Soberania consta no art. 1º como fundamento, enquanto as outras pertencem a objetivos ou relações internacionais.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Constituição é norma superior que organiza o Estado, distribui competências e protege direitos. A República Federativa do Brasil é formada pela união indissolúvel dos Estados, Municípios e do Distrito Federal; ",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual alternativa contém fundamento da República?",
+              "options": [
+                "Desenvolvimento nacional",
+                "Soberania",
+                "Cooperação entre os povos",
+                "Erradicação da pobreza"
+              ],
+              "answer": "B",
+              "explanation": "Soberania consta no art. 1º como fundamento, enquanto as outras pertencem a objetivos ou relações internacionais.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Soberania consta no art. 1º como fundamento, enquanto as outras pertencem a objetivos ou relações internacionais.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Princípios fundamentais e organização do Estado?",
+              "back": "Constituição é norma superior que organiza o Estado, distribui competências e protege direitos. A República Federativa do Brasil é formada pela união indissolúvel dos Estados, Municípios e do Distrito Federal; o art. 1º lista fundamentos e o art. 2º trata dos Poderes da União. Fundamentos, objetivos fundamentais e princípios nas",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Princípios fundamentais e organização do Estado?",
+              "back": "Uma prefeitura estabelece regras de competência local em seus serviços, mas não pode criar uma legislação que contrarie direitos fundamentais e repartição constitucional de competências. Analise hierarquia e competência, não apenas preferência política.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Direitos e garantias fundamentais",
+          "lesson": {
+            "body": "# Direitos e garantias fundamentais\n\n## Para que serve e o que você precisa saber\nDireitos fundamentais orientam limites e obrigações estatais, mas sua aplicação concreta depende da hipótese constitucional e das leis compatíveis. Direitos individuais e coletivos, direitos sociais, nacionalidade e direitos políticos são conjuntos diferentes do Título II. O art. 5º inicia com igualdade perante a lei e proteção a direitos centrais.\n\n## Como funciona — mecanismo e etapas\nDistinga direito de garantia: direito é o bem ou faculdade protegida; garantia é instrumento para sua tutela. Habeas corpus protege liberdade de locomoção nas hipóteses constitucionais; mandado de segurança tutela direito líquido e certo não amparado por habeas corpus ou habeas data, conforme requisitos. Habeas data trata conhecimento/retificação de informações pessoais em bases governamentais ou públicas, nos termos aplicáveis.\n\n## Exemplo resolvido\nSe um cidadão precisa acessar informações pessoais em determinado cadastro público, antes de escolher instrumento judicial verifique existência de via administrativa e condições do habeas data. Nem toda negativa de informação deve ser tratada como habeas corpus.\n\n## Erro comum e limites de aplicação\nPegadinha: liberdade de expressão e direito à privacidade não são conceitos que eliminam um ao outro; questões exigem circunstâncias, regras e limites. Não decore remédio constitucional sem identificar bem jurídico.\n\n## Verifique a compreensão\nQue remédio constitucional protege a liberdade de locomoção?\n\n**Resposta comentada:** Habeas corpus visa proteger liberdade de locomoção contra ilegalidade ou abuso de poder nas condições constitucionais.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Direitos fundamentais orientam limites e obrigações estatais, mas sua aplicação concreta depende da hipótese constitucional e das leis compatíveis. Direitos individuais e coletivos, direitos sociais, nacionalid",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Que remédio constitucional protege a liberdade de locomoção?",
+              "options": [
+                "Habeas corpus",
+                "Habeas data",
+                "Ação popular",
+                "Mandado de injunção"
+              ],
+              "answer": "A",
+              "explanation": "Habeas corpus visa proteger liberdade de locomoção contra ilegalidade ou abuso de poder nas condições constitucionais.",
+              "origin": "ia",
+              "rationales": [
+                "Correta: Habeas corpus visa proteger liberdade de locomoção contra ilegalidade ou abuso de poder nas condições constitucionais.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Direitos e garantias fundamentais?",
+              "back": "Direitos fundamentais orientam limites e obrigações estatais, mas sua aplicação concreta depende da hipótese constitucional e das leis compatíveis. Direitos individuais e coletivos, direitos sociais, nacionalidade e direitos políticos são conjuntos diferentes do Título II. O art. 5º inicia com igualdade perante a lei e proteção ",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Direitos e garantias fundamentais?",
+              "back": "Se um cidadão precisa acessar informações pessoais em determinado cadastro público, antes de escolher instrumento judicial verifique existência de via administrativa e condições do habeas data. Nem toda negativa de informação deve ser tratada como habeas corpus.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Controle de constitucionalidade e hierarquia normativa",
+          "lesson": {
+            "body": "# Controle de constitucionalidade e hierarquia normativa\n\n## Para que serve e o que você precisa saber\nO controle de constitucionalidade verifica compatibilidade de normas ou atos normativos com a Constituição. No modelo brasileiro coexistem controle difuso em casos concretos e controle concentrado com ações específicas perante órgãos competentes. Inconstitucionalidade não equivale a simples inconveniência administrativa.\n\n## Como funciona — mecanismo e etapas\nNo controle difuso, questão constitucional pode surgir incidentalmente ao julgamento de um caso; no concentrado, ação própria discute constitucionalidade em abstrato conforme legitimados e competência. Lei federal não está automaticamente acima de lei estadual em toda matéria: a repartição constitucional de competências define validade e espaço normativo.\n\n## Exemplo resolvido\nUma norma municipal sobre assunto reservado constitucionalmente à União pode ser questionada por invasão de competência, mesmo que seus objetivos sejam considerados úteis. O raciocínio começa pela competência constitucional e segue para conteúdo e forma.\n\n## Erro comum e limites de aplicação\nPegadinha: decreto regulamentar não pode contrariar lei dentro de limites jurídicos; costume administrativo não supera texto constitucional. Decisões judiciais variam de efeitos conforme tipo de controle e rito.\n\n## Verifique a compreensão\nQual opção descreve controle de constitucionalidade?\n\n**Resposta comentada:** O controle examina validade constitucional da norma, não apenas gestão ou conveniência.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "O controle de constitucionalidade verifica compatibilidade de normas ou atos normativos com a Constituição. No modelo brasileiro coexistem controle difuso em casos concretos e controle concentrado com ações esp",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual opção descreve controle de constitucionalidade?",
+              "options": [
+                "Avaliar preço de contrato",
+                "Verificar adequação de norma à Constituição",
+                "Aprovar orçamento de setor",
+                "Escolher critério de edital"
+              ],
+              "answer": "B",
+              "explanation": "O controle examina validade constitucional da norma, não apenas gestão ou conveniência.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: O controle examina validade constitucional da norma, não apenas gestão ou conveniência.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Controle de constitucionalidade e hierarquia normativa?",
+              "back": "O controle de constitucionalidade verifica compatibilidade de normas ou atos normativos com a Constituição. No modelo brasileiro coexistem controle difuso em casos concretos e controle concentrado com ações específicas perante órgãos competentes. Inconstitucionalidade não equivale a simples inconveniência administrativa.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Controle de constitucionalidade e hierarquia normativa?",
+              "back": "Uma norma municipal sobre assunto reservado constitucionalmente à União pode ser questionada por invasão de competência, mesmo que seus objetivos sejam considerados úteis. O raciocínio começa pela competência constitucional e segue para conteúdo e forma.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Direito Administrativo",
+      "topics": [
+        {
+          "name": "Atos administrativos e seus elementos",
+          "lesson": {
+            "body": "# Atos administrativos e seus elementos\n\n## Para que serve e o que você precisa saber\nUm ato administrativo é manifestação de vontade da Administração, em exercício de função administrativa, capaz de produzir efeitos jurídicos conforme o ordenamento. Em provas, elementos clássicos são competência, finalidade, forma, motivo e objeto. Atributos como presunção de legitimidade, imperatividade e autoexecutoriedade não aparecem necessariamente em todos os atos.\n\n## Como funciona — mecanismo e etapas\nCompetência refere-se a atribuição legal de agir; finalidade deve atender interesse público e exigências pertinentes; forma é exteriorização; motivo são pressupostos de fato e direito; objeto é efeito jurídico. Excesso de poder ocorre quando agente ultrapassa competência; desvio de finalidade quando atua visando fim diferente do previsto.\n\n## Exemplo resolvido\nSe autoridade aplica penalidade sem competência para aquele ato, não basta dizer que pretendia boa gestão: é preciso verificar se a competência pode ser delegada e regras de invalidação. Uma licença vinculada exige requisitos legais; autorização pode ter elementos de discricionariedade, nos termos do regime.\n\n## Erro comum e limites de aplicação\nPegadinha: anulação desfaz ato ilegal e revogação retira ato válido por conveniência/oportunidade quando juridicamente possível; atos vinculados não ficam livremente revogáveis.\n\n## Verifique a compreensão\nQual elemento corresponde à atribuição legal da autoridade?\n\n**Resposta comentada:** Competência delimita quem pode praticar o ato administrativo.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Um ato administrativo é manifestação de vontade da Administração, em exercício de função administrativa, capaz de produzir efeitos jurídicos conforme o ordenamento. Em provas, elementos clássicos são competênci",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual elemento corresponde à atribuição legal da autoridade?",
+              "options": [
+                "Objeto",
+                "Motivo",
+                "Competência",
+                "Forma"
+              ],
+              "answer": "C",
+              "explanation": "Competência delimita quem pode praticar o ato administrativo.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Correta: Competência delimita quem pode praticar o ato administrativo.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Atos administrativos e seus elementos?",
+              "back": "Um ato administrativo é manifestação de vontade da Administração, em exercício de função administrativa, capaz de produzir efeitos jurídicos conforme o ordenamento. Em provas, elementos clássicos são competência, finalidade, forma, motivo e objeto. Atributos como presunção de legitimidade, imperatividade e autoexecutoriedade não",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Atos administrativos e seus elementos?",
+              "back": "Se autoridade aplica penalidade sem competência para aquele ato, não basta dizer que pretendia boa gestão: é preciso verificar se a competência pode ser delegada e regras de invalidação. Uma licença vinculada exige requisitos legais; autorização pode ter elementos de discricionariedade, nos termos do regime.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Poderes administrativos e responsabilidade",
+          "lesson": {
+            "body": "# Poderes administrativos e responsabilidade\n\n## Para que serve e o que você precisa saber\nPoder hierárquico organiza distribuição de funções e supervisão em estrutura administrativa; poder disciplinar permite apuração e sanção de infrações funcionais ou vínculos especiais conforme regime; poder regulamentar viabiliza atos normativos nos limites da lei; poder de polícia condiciona atividades e direitos para interesse público conforme competência legal.\n\n## Como funciona — mecanismo e etapas\nPoder é também dever: omitir fiscalização obrigatória pode ter consequência. Discricionariedade não é atuação arbitrária; escolhas precisam respeitar finalidade, proporcionalidade, motivação e limites normativos. Responsabilidade civil do Estado segue regras constitucionais e legais, com distinções entre condutas e hipóteses.\n\n## Exemplo resolvido\nFiscalização sanitária que verifica requisito legal pode exercer poder de polícia. Chefe que distribui tarefas de servidores atua em esfera hierárquica. Chefe que investiga infração funcional precisa observar devido processo e regime disciplinar.\n\n## Erro comum e limites de aplicação\nPegadinha: hierarquia administrativa não significa que todo poder estatal é subordinado ao Executivo; ramos e entidades possuem estruturas distintas.\n\n## Verifique a compreensão\nQual poder está mais ligado a fiscalização de atividade privada segundo requisitos legais?\n\n**Resposta comentada:** O poder de polícia é usado para limitar ou condicionar atividades particulares nos termos da lei.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Poder hierárquico organiza distribuição de funções e supervisão em estrutura administrativa; poder disciplinar permite apuração e sanção de infrações funcionais ou vínculos especiais conforme regime; poder regu",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual poder está mais ligado a fiscalização de atividade privada segundo requisitos legais?",
+              "options": [
+                "Hierárquico",
+                "Polícia",
+                "Disciplinar",
+                "Constituinte"
+              ],
+              "answer": "B",
+              "explanation": "O poder de polícia é usado para limitar ou condicionar atividades particulares nos termos da lei.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: O poder de polícia é usado para limitar ou condicionar atividades particulares nos termos da lei.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Poderes administrativos e responsabilidade?",
+              "back": "Poder hierárquico organiza distribuição de funções e supervisão em estrutura administrativa; poder disciplinar permite apuração e sanção de infrações funcionais ou vínculos especiais conforme regime; poder regulamentar viabiliza atos normativos nos limites da lei; poder de polícia condiciona atividades e direitos para interesse ",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Poderes administrativos e responsabilidade?",
+              "back": "Fiscalização sanitária que verifica requisito legal pode exercer poder de polícia. Chefe que distribui tarefas de servidores atua em esfera hierárquica. Chefe que investiga infração funcional precisa observar devido processo e regime disciplinar.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Processo administrativo e princípios",
+          "lesson": {
+            "body": "# Processo administrativo e princípios\n\n## Para que serve e o que você precisa saber\nProcesso administrativo estabelece sequência organizada de atos para decisão pública, sujeita a princípios como legalidade, finalidade, motivação, razoabilidade, proporcionalidade, ampla defesa e contraditório nos contextos aplicáveis. Na esfera federal, Lei 9.784/1999 serve como referência de processo administrativo federal; estados e municípios podem ter normas próprias.\n\n## Como funciona — mecanismo e etapas\nMotivação permite compreender fundamentos de fato e direito; publicidade e acesso ao processo podem coexistir com proteção de dados pessoais e sigilos legais. Antes de aplicar sanção, examine competência, notificação, possibilidade de manifestação, produção de prova e recurso cabível conforme legislação.\n\n## Exemplo resolvido\nUm servidor recebe penalidade sem ciência do processo e sem oportunidade de defesa. Em geral há potencial violação de garantias, mas a análise jurídica requer observar procedimento e norma. A Administração não pode usar conveniência como desculpa para eliminar contraditório quando exigido.\n\n## Erro comum e limites de aplicação\nPegadinha: prazo de recurso de determinado procedimento não deve ser memorizado sem identificar lei específica e esfera administrativa.\n\n## Verifique a compreensão\nPor que a motivação importa na decisão administrativa?\n\n**Resposta comentada:** Motivação torna verificáveis os fundamentos da decisão segundo exigências legais.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Processo administrativo estabelece sequência organizada de atos para decisão pública, sujeita a princípios como legalidade, finalidade, motivação, razoabilidade, proporcionalidade, ampla defesa e contraditório ",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Por que a motivação importa na decisão administrativa?",
+              "options": [
+                "Dispensa provas",
+                "Expõe razões de fato e direito",
+                "Substitui competência",
+                "Autoriza sigilo geral"
+              ],
+              "answer": "B",
+              "explanation": "Motivação torna verificáveis os fundamentos da decisão segundo exigências legais.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Motivação torna verificáveis os fundamentos da decisão segundo exigências legais.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Processo administrativo e princípios?",
+              "back": "Processo administrativo estabelece sequência organizada de atos para decisão pública, sujeita a princípios como legalidade, finalidade, motivação, razoabilidade, proporcionalidade, ampla defesa e contraditório nos contextos aplicáveis. Na esfera federal, Lei 9.784/1999 serve como referência de processo administrativo federal; es",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Processo administrativo e princípios?",
+              "back": "Um servidor recebe penalidade sem ciência do processo e sem oportunidade de defesa. Em geral há potencial violação de garantias, mas a análise jurídica requer observar procedimento e norma. A Administração não pode usar conveniência como desculpa para eliminar contraditório quando exigido.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Administração Pública e Gestão",
+      "topics": [
+        {
+          "name": "Planejamento, metas e gestão por resultados",
+          "lesson": {
+            "body": "# Planejamento, metas e gestão por resultados\n\n## Para que serve e o que você precisa saber\nPlanejar significa definir problema, objetivo, alternativas, recursos, responsáveis, prazos e métricas. Objetivo expressa mudança desejada; ação é aquilo que será realizado; indicador mostra evidência de avanço. Plano com atividades executadas não comprova resultado se o problema não foi resolvido.\n\n## Como funciona — mecanismo e etapas\nUse cadeia problema → objetivo → iniciativa → entrega → resultado → indicador. Uma secretaria quer reduzir espera no atendimento. Comprar terminais é ação; instalar terminais é entrega; reduzir tempo médio e variabilidade de espera é resultado. Meça linha de base e compare após intervenção, observando fatores externos.\n\n## Exemplo resolvido\nSe tempo médio era 60 minutos e caiu para 45, redução relativa é (60-45)/60 = 25%. Não afirme que toda pessoa esperou 45 minutos: média não mostra dispersão nem extremos. Indicador precisa de origem dos dados, periodicidade e responsável.\n\n## Erro comum e limites de aplicação\nPegadinha: eficiência relaciona recursos/resultados; eficácia avalia alcance de metas; efetividade aborda impacto real no contexto. Esses termos não são intercambiáveis.\n\n## Verifique a compreensão\nUma meta foi atingida, mas sem impacto relevante na população. Que dimensão merece avaliação?\n\n**Resposta comentada:** Efetividade se relaciona aos efeitos reais produzidos no contexto social.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Planejar significa definir problema, objetivo, alternativas, recursos, responsáveis, prazos e métricas. Objetivo expressa mudança desejada; ação é aquilo que será realizado; indicador mostra evidência de avanço",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Uma meta foi atingida, mas sem impacto relevante na população. Que dimensão merece avaliação?",
+              "options": [
+                "Somente custo de compra",
+                "Efetividade",
+                "Quantidade de atas",
+                "Número de reuniões"
+              ],
+              "answer": "B",
+              "explanation": "Efetividade se relaciona aos efeitos reais produzidos no contexto social.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Efetividade se relaciona aos efeitos reais produzidos no contexto social.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Planejamento, metas e gestão por resultados?",
+              "back": "Planejar significa definir problema, objetivo, alternativas, recursos, responsáveis, prazos e métricas. Objetivo expressa mudança desejada; ação é aquilo que será realizado; indicador mostra evidência de avanço. Plano com atividades executadas não comprova resultado se o problema não foi resolvido.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Planejamento, metas e gestão por resultados?",
+              "back": "Se tempo médio era 60 minutos e caiu para 45, redução relativa é (60-45)/60 = 25%. Não afirme que toda pessoa esperou 45 minutos: média não mostra dispersão nem extremos. Indicador precisa de origem dos dados, periodicidade e responsável.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Gestão de processos e mapeamento",
+          "lesson": {
+            "body": "# Gestão de processos e mapeamento\n\n## Para que serve e o que você precisa saber\nProcesso é conjunto de atividades relacionadas que transforma entradas em saídas para atender necessidade. Mapeamento revela sequência, decisão, responsáveis, retrabalho e gargalos. Fluxograma ou BPMN representam atividades, eventos e gateways, mas desenho não substitui observação real.\n\n## Como funciona — mecanismo e etapas\nEm BPMN, evento de início inicia instância; atividade representa trabalho; gateway pode representar divisão de fluxos. Antes de otimizar, identifique demanda, volume, tempos, erros e pontos de transferência entre setores. Uma melhoria pode reduzir passos mas criar risco se elimina validação obrigatória.\n\n## Exemplo resolvido\nCadastro de paciente passa por coleta, conferência, registro e atendimento. Se CPF é digitado duas vezes, existe retrabalho; integração pode diminuir duplicação, mas depende de regras de privacidade e qualidade dos dados. Meça tempo antes/depois e taxa de erro.\n\n## Erro comum e limites de aplicação\nPegadinha: automatizar um processo ruim não garante eficiência. Gargalo pode migrar de uma etapa a outra depois da automação.\n\n## Verifique a compreensão\nQual vantagem do mapeamento de processos?\n\n**Resposta comentada:** Mapear processos ajuda a revelar etapas, responsáveis, esperas e pontos críticos.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Processo é conjunto de atividades relacionadas que transforma entradas em saídas para atender necessidade. Mapeamento revela sequência, decisão, responsáveis, retrabalho e gargalos. Fluxograma ou BPMN represent",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual vantagem do mapeamento de processos?",
+              "options": [
+                "Garantir ausência de falhas",
+                "Identificar fluxos e gargalos",
+                "Eliminar supervisão",
+                "Substituir políticas de acesso"
+              ],
+              "answer": "B",
+              "explanation": "Mapear processos ajuda a revelar etapas, responsáveis, esperas e pontos críticos.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Mapear processos ajuda a revelar etapas, responsáveis, esperas e pontos críticos.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Gestão de processos e mapeamento?",
+              "back": "Processo é conjunto de atividades relacionadas que transforma entradas em saídas para atender necessidade. Mapeamento revela sequência, decisão, responsáveis, retrabalho e gargalos. Fluxograma ou BPMN representam atividades, eventos e gateways, mas desenho não substitui observação real.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Gestão de processos e mapeamento?",
+              "back": "Cadastro de paciente passa por coleta, conferência, registro e atendimento. Se CPF é digitado duas vezes, existe retrabalho; integração pode diminuir duplicação, mas depende de regras de privacidade e qualidade dos dados. Meça tempo antes/depois e taxa de erro.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Atendimento ao cidadão e gestão da qualidade",
+          "lesson": {
+            "body": "# Atendimento ao cidadão e gestão da qualidade\n\n## Para que serve e o que você precisa saber\nServiço público deve ser orientado a direitos, acessibilidade, tratamento respeitoso e informação clara, respeitadas normas específicas. Qualidade não é apenas rapidez; envolve conformidade, confiabilidade, facilidade de acesso e capacidade de resolver a demanda.\n\n## Como funciona — mecanismo e etapas\nUma carta de serviços informa requisitos, canais e padrões conforme legislação aplicável; indicadores de resolução e satisfação complementam prazos. Calcule taxa de resolução como resolvidos/solicitações elegíveis com definição explícita de período. Avalie também se usuários com dificuldade digital conseguem acessar alternativas apropriadas.\n\n## Exemplo resolvido\nDe 200 solicitações concluídas, 170 tiveram solução na primeira interação: 170/200 = 85%. Essa métrica não prova ausência de erros ou satisfação de todos. Em avaliação qualitativa, compare amostra, taxas de resposta e diferenças entre grupos.\n\n## Erro comum e limites de aplicação\nPegadinha: NPS, satisfação e taxa de resolução são indicadores distintos; melhorar um não garante melhorar todos. Dados pessoais de reclamações exigem proteção.\n\n## Verifique a compreensão\nO indicador resolvidos na primeira interação mede diretamente o quê?\n\n**Resposta comentada:** A definição considera quantas demandas foram resolvidas no primeiro contato.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Serviço público deve ser orientado a direitos, acessibilidade, tratamento respeitoso e informação clara, respeitadas normas específicas. Qualidade não é apenas rapidez; envolve conformidade, confiabilidade, fac",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "O indicador resolvidos na primeira interação mede diretamente o quê?",
+              "options": [
+                "Satisfação subjetiva de todos",
+                "Resolução na primeira interação",
+                "Orçamento anual",
+                "Direito de recurso"
+              ],
+              "answer": "B",
+              "explanation": "A definição considera quantas demandas foram resolvidas no primeiro contato.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: A definição considera quantas demandas foram resolvidas no primeiro contato.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Atendimento ao cidadão e gestão da qualidade?",
+              "back": "Serviço público deve ser orientado a direitos, acessibilidade, tratamento respeitoso e informação clara, respeitadas normas específicas. Qualidade não é apenas rapidez; envolve conformidade, confiabilidade, facilidade de acesso e capacidade de resolver a demanda.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Atendimento ao cidadão e gestão da qualidade?",
+              "back": "De 200 solicitações concluídas, 170 tiveram solução na primeira interação: 170/200 = 85%. Essa métrica não prova ausência de erros ou satisfação de todos. Em avaliação qualitativa, compare amostra, taxas de resposta e diferenças entre grupos.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Matemática Financeira",
+      "topics": [
+        {
+          "name": "Porcentagens sucessivas e razões",
+          "lesson": {
+            "body": "# Porcentagens sucessivas e razões\n\n## Para que serve e o que você precisa saber\nPorcentagem é razão relativa a 100; aumento de 20% multiplica base por 1,20 e desconto de 20% multiplica valor atual por 0,80. A base de cada variação importa. Reverter aumento não é aplicar o mesmo percentual de desconto.\n\n## Como funciona — mecanismo e etapas\nSe um custo de R$ 500 sobe 20%, passa a R$ 600. Se cair 20% em seguida, passa a R$ 480. O fator final é 1,20×0,80=0,96, queda de 4% em relação aos R$ 500 iniciais. Para voltar de 600 a 500, desconto exato é 100/600 = 16,67%.\n\n## Exemplo resolvido\nEm relatório de comparecimento, 790 de 816 pacientes representam 790/816×100 ≈ 96,81%; faltas representam 26/816×100 ≈ 3,19%. Percentuais com mesma base totalizam 100%, salvo arredondamentos. No Excel, formatar 0,968 como percentual exibe 96,8%.\n\n## Erro comum e limites de aplicação\nPegadinha: diferença em pontos percentuais não é variação percentual relativa. De 40% a 50% há +10 p.p., mas crescimento relativo de 25%.\n\n## Verifique a compreensão\nUm valor sobe 10% e cai 10%. Quanto do original permanece?\n\n**Resposta comentada:** 1,10×0,90=0,99, portanto 99%.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Porcentagem é razão relativa a 100; aumento de 20% multiplica base por 1,20 e desconto de 20% multiplica valor atual por 0,80. A base de cada variação importa. Reverter aumento não é aplicar o mesmo percentual ",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Um valor sobe 10% e cai 10%. Quanto do original permanece?",
+              "options": [
+                "100%",
+                "99%",
+                "90%",
+                "110%"
+              ],
+              "answer": "B",
+              "explanation": "1,10×0,90=0,99, portanto 99%.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: 1,10×0,90=0,99, portanto 99%.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Porcentagens sucessivas e razões?",
+              "back": "Porcentagem é razão relativa a 100; aumento de 20% multiplica base por 1,20 e desconto de 20% multiplica valor atual por 0,80. A base de cada variação importa. Reverter aumento não é aplicar o mesmo percentual de desconto.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Porcentagens sucessivas e razões?",
+              "back": "Em relatório de comparecimento, 790 de 816 pacientes representam 790/816×100 ≈ 96,81%; faltas representam 26/816×100 ≈ 3,19%. Percentuais com mesma base totalizam 100%, salvo arredondamentos. No Excel, formatar 0,968 como percentual exibe 96,8%.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Juros simples e juros compostos",
+          "lesson": {
+            "body": "# Juros simples e juros compostos\n\n## Para que serve e o que você precisa saber\nJuro remunera capital ao longo do tempo conforme taxa e regime. Em juros simples, interesse de cada período incide sobre capital inicial: J=C×i×n e montante M=C(1+in). Em juros compostos, juros incorporados à base rendem juros novos: M=C(1+i)^n.\n\n## Como funciona — mecanismo e etapas\nR$ 1.000 a 2% ao mês por três meses: simples M=1000(1+0,02×3)=R$ 1.060. Compostos M=1000×1,02³ = R$ 1.061,208, aproximadamente R$ 1.061,21. A diferença cresce com prazo. A taxa deve estar na mesma unidade temporal de n.\n\n## Exemplo resolvido\nSe taxa mensal é 2%, taxa anual efetiva equivalente no regime composto é (1,02)^12−1 ≈26,82%, não 24%. Se enunciado usa taxa nominal ou efetiva, leia convenção. Não some taxas com bases diferentes sem converter corretamente.\n\n## Erro comum e limites de aplicação\nPegadinha: juros compostos não garantem rendimento de investimento real; impostos, inflação, risco e taxas alteram resultado líquido.\n\n## Verifique a compreensão\nQual fórmula representa montante composto?\n\n**Resposta comentada:** O regime composto capitaliza cada período, formando progressão geométrica.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Juro remunera capital ao longo do tempo conforme taxa e regime. Em juros simples, interesse de cada período incide sobre capital inicial: J=C×i×n e montante M=C(1+in). Em juros compostos, juros incorporados à b",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual fórmula representa montante composto?",
+              "options": [
+                "C×i×n",
+                "C(1+i)^n",
+                "C+n+i",
+                "C/i"
+              ],
+              "answer": "B",
+              "explanation": "O regime composto capitaliza cada período, formando progressão geométrica.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: O regime composto capitaliza cada período, formando progressão geométrica.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Juros simples e juros compostos?",
+              "back": "Juro remunera capital ao longo do tempo conforme taxa e regime. Em juros simples, interesse de cada período incide sobre capital inicial: J=C×i×n e montante M=C(1+in). Em juros compostos, juros incorporados à base rendem juros novos: M=C(1+i)^n.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Juros simples e juros compostos?",
+              "back": "Se taxa mensal é 2%, taxa anual efetiva equivalente no regime composto é (1,02)^12−1 ≈26,82%, não 24%. Se enunciado usa taxa nominal ou efetiva, leia convenção. Não some taxas com bases diferentes sem converter corretamente.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Valor presente e desconto financeiro",
+          "lesson": {
+            "body": "# Valor presente e desconto financeiro\n\n## Para que serve e o que você precisa saber\nValor presente expressa quanto um fluxo futuro representa hoje sob taxa de desconto e premissas. Em capitalização composta, VP=VF/(1+i)^n. Usar uma taxa não prova que fluxo futuro seja certo; avaliação financeira considera risco e outras condições.\n\n## Como funciona — mecanismo e etapas\nUma obrigação de R$ 1.210 daqui a dois períodos, com taxa de 10% por período, tem VP=1210/1,1² = 1210/1,21 = R$ 1.000. Se descontar pela taxa errada ou por prazo em unidade incompatível, o resultado não é comparável.\n\n## Exemplo resolvido\nNa decisão de compra, trazer parcelas a valor presente permite comparar pagamentos em datas diferentes, mas impostos e outros custos devem ser incorporados quando cabíveis. Para fluxos de entrada e saída, valor presente líquido soma valores presentes com sinais apropriados e investimento inicial.\n\n## Erro comum e limites de aplicação\nPegadinha: desconto simples comercial, racional e composto são modelos diferentes. Antes de escolher fórmula, identifique qual regime a questão definiu.\n\n## Verifique a compreensão\nVF de R$ 1.210 em 2 períodos a 10% compostos equivale hoje a:\n\n**Resposta comentada:** 1210 dividido por 1,1² resulta em 1000.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Valor presente expressa quanto um fluxo futuro representa hoje sob taxa de desconto e premissas. Em capitalização composta, VP=VF/(1+i)^n. Usar uma taxa não prova que fluxo futuro seja certo; avaliação financei",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "VF de R$ 1.210 em 2 períodos a 10% compostos equivale hoje a:",
+              "options": [
+                "R$ 1.100",
+                "R$ 1.000",
+                "R$ 1.210",
+                "R$ 990"
+              ],
+              "answer": "B",
+              "explanation": "1210 dividido por 1,1² resulta em 1000.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: 1210 dividido por 1,1² resulta em 1000.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Valor presente e desconto financeiro?",
+              "back": "Valor presente expressa quanto um fluxo futuro representa hoje sob taxa de desconto e premissas. Em capitalização composta, VP=VF/(1+i)^n. Usar uma taxa não prova que fluxo futuro seja certo; avaliação financeira considera risco e outras condições.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Valor presente e desconto financeiro?",
+              "back": "Na decisão de compra, trazer parcelas a valor presente permite comparar pagamentos em datas diferentes, mas impostos e outros custos devem ser incorporados quando cabíveis. Para fluxos de entrada e saída, valor presente líquido soma valores presentes com sinais apropriados e investimento inicial.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Estatística e Análise de Dados",
+      "topics": [
+        {
+          "name": "Média, mediana, moda e valores extremos",
+          "lesson": {
+            "body": "# Média, mediana, moda e valores extremos\n\n## Para que serve e o que você precisa saber\nMédia aritmética soma observações e divide por quantidade. Mediana é valor central após ordenar (ou média dos dois centrais), e moda é valor mais frequente. Elas descrevem aspectos diferentes da distribuição; com dados assimétricos, média pode distorcer percepção do valor típico.\n\n## Como funciona — mecanismo e etapas\nTempos de atendimento em minutos: 10, 12, 12, 15, 51. Média=(10+12+12+15+51)/5=20. Mediana=12 e moda=12. O valor extremo 51 eleva média sem alterar mediana. Em amostras pares, mediana é média das duas observações centrais.\n\n## Exemplo resolvido\nEm relatórios comparando filas, use também percentis e dispersão; dizer que 'a média de espera é 20' não significa que uma pessoa típica esperou 20. Uma distribuição de renda também pode ter valores extremos. Escolha métrica conforme pergunta.\n\n## Erro comum e limites de aplicação\nPegadinha: média ponderada exige pesos e soma de pesos; médias de grupos com tamanhos diferentes não devem ser somadas e divididas por dois indiscriminadamente.\n\n## Verifique a compreensão\nQual mediana de 10,12,12,15,51?\n\n**Resposta comentada:** O valor central da série ordenada de cinco elementos é 12.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Média aritmética soma observações e divide por quantidade. Mediana é valor central após ordenar (ou média dos dois centrais), e moda é valor mais frequente. Elas descrevem aspectos diferentes da distribuição; c",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual mediana de 10,12,12,15,51?",
+              "options": [
+                "12",
+                "20",
+                "15",
+                "51"
+              ],
+              "answer": "A",
+              "explanation": "O valor central da série ordenada de cinco elementos é 12.",
+              "origin": "ia",
+              "rationales": [
+                "Correta: O valor central da série ordenada de cinco elementos é 12.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Média, mediana, moda e valores extremos?",
+              "back": "Média aritmética soma observações e divide por quantidade. Mediana é valor central após ordenar (ou média dos dois centrais), e moda é valor mais frequente. Elas descrevem aspectos diferentes da distribuição; com dados assimétricos, média pode distorcer percepção do valor típico.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Média, mediana, moda e valores extremos?",
+              "back": "Em relatórios comparando filas, use também percentis e dispersão; dizer que 'a média de espera é 20' não significa que uma pessoa típica esperou 20. Uma distribuição de renda também pode ter valores extremos. Escolha métrica conforme pergunta.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Variância, desvio padrão e interpretação",
+          "lesson": {
+            "body": "# Variância, desvio padrão e interpretação\n\n## Para que serve e o que você precisa saber\nVariância mede média dos quadrados dos desvios em relação à média, com denominador n para população e n−1 na variância amostral usual. Desvio padrão é raiz da variância e volta à unidade original. Medidas de dispersão não indicam causalidade nem preveem necessariamente valores futuros.\n\n## Como funciona — mecanismo e etapas\nDados 2,4,6 têm média 4. Desvios −2,0,+2; quadrados 4,0,4; soma 8. Variância populacional=8/3≈2,667; desvio padrão populacional≈1,633. Se dados são amostra para estimar variância populacional, o denominador usual é 2: variância amostral=4, desvio padrão amostral=2.\n\n## Exemplo resolvido\nDois setores podem ter mesma média e variabilidade distinta; o segundo, com cauda alta, pode ter piores casos. Para comparar escalas diferentes, coeficiente de variação é razão de desvio padrão por média quando uso é apropriado e média diferente de zero.\n\n## Erro comum e limites de aplicação\nPegadinha: não confunda variância em unidades ao quadrado com desvio padrão na unidade original. Dados de categorias nominais não comportam média aritmética simples.\n\n## Verifique a compreensão\nQual variância populacional de 2,4,6?\n\n**Resposta comentada:** Quadrados dos desvios somam 8 e dividem-se por 3 em população.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Variância mede média dos quadrados dos desvios em relação à média, com denominador n para população e n−1 na variância amostral usual. Desvio padrão é raiz da variância e volta à unidade original. Medidas de di",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual variância populacional de 2,4,6?",
+              "options": [
+                "2",
+                "8/3",
+                "4",
+                "8"
+              ],
+              "answer": "B",
+              "explanation": "Quadrados dos desvios somam 8 e dividem-se por 3 em população.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Quadrados dos desvios somam 8 e dividem-se por 3 em população.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Variância, desvio padrão e interpretação?",
+              "back": "Variância mede média dos quadrados dos desvios em relação à média, com denominador n para população e n−1 na variância amostral usual. Desvio padrão é raiz da variância e volta à unidade original. Medidas de dispersão não indicam causalidade nem preveem necessariamente valores futuros.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Variância, desvio padrão e interpretação?",
+              "back": "Dois setores podem ter mesma média e variabilidade distinta; o segundo, com cauda alta, pode ter piores casos. Para comparar escalas diferentes, coeficiente de variação é razão de desvio padrão por média quando uso é apropriado e média diferente de zero.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Amostragem, viés e correlação",
+          "lesson": {
+            "body": "# Amostragem, viés e correlação\n\n## Para que serve e o que você precisa saber\nPopulação é conjunto-alvo; amostra é parte observada. Amostragem aleatória busca permitir inferências sob desenho probabilístico apropriado. Seleção por conveniência pode criar viés: entrevistar apenas usuários disponíveis durante manhã não representa automaticamente os que usam serviço à noite.\n\n## Como funciona — mecanismo e etapas\nSe uma pesquisa de satisfação convidou 1.000 pessoas, mas responderam somente 90, tamanho dos convidados não equivale a tamanho de respostas. Não resposta pode criar viés se quem respondeu difere sistematicamente. Margem de erro estatística depende de desenho, confiança e modelo, não de fórmula isolada aplicada indiscriminadamente.\n\n## Exemplo resolvido\nCorrelação positiva entre horas de estudo e notas não prova que estudar mais foi a única causa das notas maiores: motivação, conhecimento prévio e seleção podem influenciar. Para discutir causalidade, examine delineamento, controles e evidências adicionais.\n\n## Erro comum e limites de aplicação\nPegadinha: coeficiente de correlação próximo de 0 não prova ausência de relação não linear. Uma amostra grande com viés pode ser menos representativa que outra menor bem planejada.\n\n## Verifique a compreensão\nCorrelação entre variáveis comprova causa necessariamente?\n\n**Resposta comentada:** Associação estatística não estabelece, por si, causalidade.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "População é conjunto-alvo; amostra é parte observada. Amostragem aleatória busca permitir inferências sob desenho probabilístico apropriado. Seleção por conveniência pode criar viés: entrevistar apenas usuários",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Correlação entre variáveis comprova causa necessariamente?",
+              "options": [
+                "Sim, sempre",
+                "Não, exige análise adicional",
+                "Só com 1000 casos",
+                "Sim, se positiva"
+              ],
+              "answer": "B",
+              "explanation": "Associação estatística não estabelece, por si, causalidade.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Associação estatística não estabelece, por si, causalidade.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Amostragem, viés e correlação?",
+              "back": "População é conjunto-alvo; amostra é parte observada. Amostragem aleatória busca permitir inferências sob desenho probabilístico apropriado. Seleção por conveniência pode criar viés: entrevistar apenas usuários disponíveis durante manhã não representa automaticamente os que usam serviço à noite.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Amostragem, viés e correlação?",
+              "back": "Correlação positiva entre horas de estudo e notas não prova que estudar mais foi a única causa das notas maiores: motivação, conhecimento prévio e seleção podem influenciar. Para discutir causalidade, examine delineamento, controles e evidências adicionais.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Administração Financeira e Orçamentária",
+      "topics": [
+        {
+          "name": "PPA, LDO e LOA",
+          "lesson": {
+            "body": "# PPA, LDO e LOA\n\n## Para que serve e o que você precisa saber\nPlanejamento orçamentário brasileiro articula instrumentos constitucionais: Plano Plurianual (PPA) estabelece diretrizes, objetivos e metas de médio prazo; Lei de Diretrizes Orçamentárias (LDO) orienta elaboração e execução da LOA conforme regras; Lei Orçamentária Anual (LOA) estima receitas e fixa despesas para o exercício.\n\n## Como funciona — mecanismo e etapas\nSe um órgão quer ampliar serviços digitais, programa pode constar do planejamento e ser detalhado em prioridades e dotações orçamentárias. Dotação é autorização orçamentária, não dinheiro automaticamente depositado na conta do órgão nem prova da execução. Regras de alterações orçamentárias podem exigir créditos adicionais.\n\n## Exemplo resolvido\nEm exercício de prova, classifique: qual lei orienta elaboração da LOA? LDO. Qual fixa despesas do exercício? LOA. Qual instrumento planeja objetivos plurianuais? PPA. Verifique particularidades e alterações constitucionais/legais quando o enunciado pede ano específico.\n\n## Erro comum e limites de aplicação\nPegadinha: não confunda autorização de gasto com empenho, liquidação e pagamento. A existência de uma lei não significa que serviço foi contratado.\n\n## Verifique a compreensão\nQual instrumento estima receitas e fixa despesas anuais?\n\n**Resposta comentada:** A LOA é o orçamento anual com previsão de receita e autorização de despesa.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Planejamento orçamentário brasileiro articula instrumentos constitucionais: Plano Plurianual (PPA) estabelece diretrizes, objetivos e metas de médio prazo; Lei de Diretrizes Orçamentárias (LDO) orienta elaboraç",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual instrumento estima receitas e fixa despesas anuais?",
+              "options": [
+                "LDO",
+                "PPA",
+                "LOA",
+                "Edital"
+              ],
+              "answer": "C",
+              "explanation": "A LOA é o orçamento anual com previsão de receita e autorização de despesa.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Correta: A LOA é o orçamento anual com previsão de receita e autorização de despesa.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de PPA, LDO e LOA?",
+              "back": "Planejamento orçamentário brasileiro articula instrumentos constitucionais: Plano Plurianual (PPA) estabelece diretrizes, objetivos e metas de médio prazo; Lei de Diretrizes Orçamentárias (LDO) orienta elaboração e execução da LOA conforme regras; Lei Orçamentária Anual (LOA) estima receitas e fixa despesas para o exercício.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de PPA, LDO e LOA?",
+              "back": "Em exercício de prova, classifique: qual lei orienta elaboração da LOA? LDO. Qual fixa despesas do exercício? LOA. Qual instrumento planeja objetivos plurianuais? PPA. Verifique particularidades e alterações constitucionais/legais quando o enunciado pede ano específico.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Receitas e despesas públicas: estágios",
+          "lesson": {
+            "body": "# Receitas e despesas públicas: estágios\n\n## Para que serve e o que você precisa saber\nEtapas de execução da despesa ajudam a rastrear obrigação estatal: empenho reserva dotação nos termos legais; liquidação verifica direito do credor com base em títulos e documentos; pagamento é quitação segundo regras. Não confunda empenhar serviço com comprovar que foi prestado.\n\n## Como funciona — mecanismo e etapas\nExemplo: contrato de manutenção de computadores tem despesa empenhada. O fornecedor presta serviço e entrega evidências; responsável verifica execução para liquidar a despesa. Só então ocorre pagamento segundo procedimento e prazos pertinentes. Pagamento antes de verificação requer exceção legal específica, não presunção.\n\n## Exemplo resolvido\nPara receita orçamentária, previsão, lançamento (quando aplicável), arrecadação e recolhimento podem aparecer no estudo dos estágios. Regras dependem de espécie de receita; não trate lançamento como obrigatório para toda receita. A prova pode distinguir classificação e execução.\n\n## Erro comum e limites de aplicação\nPegadinha: empenho não cria dinheiro adicional. Verifique restos a pagar e exercício financeiro quando questão envolve tempo da execução.\n\n## Verifique a compreensão\nQual estágio verifica direito do credor após cumprimento?\n\n**Resposta comentada:** Liquidação examina prestação e documentação para reconhecer o direito ao recebimento.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Etapas de execução da despesa ajudam a rastrear obrigação estatal: empenho reserva dotação nos termos legais; liquidação verifica direito do credor com base em títulos e documentos; pagamento é quitação segundo",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual estágio verifica direito do credor após cumprimento?",
+              "options": [
+                "Pagamento",
+                "Liquidação",
+                "Fixação",
+                "Arrecadação"
+              ],
+              "answer": "B",
+              "explanation": "Liquidação examina prestação e documentação para reconhecer o direito ao recebimento.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Liquidação examina prestação e documentação para reconhecer o direito ao recebimento.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Receitas e despesas públicas: estágios?",
+              "back": "Etapas de execução da despesa ajudam a rastrear obrigação estatal: empenho reserva dotação nos termos legais; liquidação verifica direito do credor com base em títulos e documentos; pagamento é quitação segundo regras. Não confunda empenhar serviço com comprovar que foi prestado.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Receitas e despesas públicas: estágios?",
+              "back": "Para receita orçamentária, previsão, lançamento (quando aplicável), arrecadação e recolhimento podem aparecer no estudo dos estágios. Regras dependem de espécie de receita; não trate lançamento como obrigatório para toda receita. A prova pode distinguir classificação e execução.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Créditos adicionais e limites orçamentários",
+          "lesson": {
+            "body": "# Créditos adicionais e limites orçamentários\n\n## Para que serve e o que você precisa saber\nCréditos adicionais modificam autorização de despesas conforme hipótese legal. Os principais são suplementares (reforçam dotação existente), especiais (para despesa sem dotação específica) e extraordinários (urgência/imprevisibilidade nas condições constitucionais e legais). Cada espécie tem regras próprias de autorização e abertura.\n\n## Como funciona — mecanismo e etapas\nSe orçamento prevê R$ 100 mil para manutenção, mas necessita R$ 130 mil, crédito suplementar pode reforçar dotação conforme requisitos, não simples mudança informal de planilha. Se despesa não prevista em dotação específica requer autorização, avalie crédito especial. Se desastre exige despesa urgente, examine condições do extraordinário.\n\n## Exemplo resolvido\nEm provas, diferencie reforço de dotação existente versus criação de dotação e situação extraordinária. Consulte Constituição e Lei 4.320/1964, além de alterações e regras específicas, quando houver pedido de procedimento detalhado.\n\n## Erro comum e limites de aplicação\nPegadinha: limite de autorização e fontes de recursos não podem ser inventados por analogia. Nem toda 'urgência' administrativa basta para crédito extraordinário.\n\n## Verifique a compreensão\nCrédito que reforça dotação já existente é:\n\n**Resposta comentada:** Crédito suplementar reforça autorização de despesa já prevista.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Créditos adicionais modificam autorização de despesas conforme hipótese legal. Os principais são suplementares (reforçam dotação existente), especiais (para despesa sem dotação específica) e extraordinários (ur",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Crédito que reforça dotação já existente é:",
+              "options": [
+                "Especial",
+                "Extraordinário",
+                "Suplementar",
+                "Contingencial"
+              ],
+              "answer": "C",
+              "explanation": "Crédito suplementar reforça autorização de despesa já prevista.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Correta: Crédito suplementar reforça autorização de despesa já prevista.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Créditos adicionais e limites orçamentários?",
+              "back": "Créditos adicionais modificam autorização de despesas conforme hipótese legal. Os principais são suplementares (reforçam dotação existente), especiais (para despesa sem dotação específica) e extraordinários (urgência/imprevisibilidade nas condições constitucionais e legais). Cada espécie tem regras próprias de autorização e aber",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Créditos adicionais e limites orçamentários?",
+              "back": "Em provas, diferencie reforço de dotação existente versus criação de dotação e situação extraordinária. Consulte Constituição e Lei 4.320/1964, além de alterações e regras específicas, quando houver pedido de procedimento detalhado.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arquivologia e Gestão Documental",
+      "topics": [
+        {
+          "name": "Ciclo de vida dos documentos e temporalidade",
+          "lesson": {
+            "body": "# Ciclo de vida dos documentos e temporalidade\n\n## Para que serve e o que você precisa saber\nGestão documental acompanha produção, tramitação, uso, avaliação e destinação de documentos. Teoria das três idades distingue arquivos correntes (uso frequente), intermediários (uso eventual e guarda por razões administrativas/legais) e permanentes (valor secundário que justifica preservação). Prazos de guarda não são escolhidos livremente por conveniência.\n\n## Como funciona — mecanismo e etapas\nTabela de temporalidade relaciona tipo documental, fases, prazo de guarda e destinação, segundo avaliação e normas competentes. Registro de atendimento pode requerer retenção por razões legais; destruir porque deixou de ser usado não é justificativa. Arquivo permanente não significa que se elimina após dez anos.\n\n## Exemplo resolvido\nFluxo exemplo: documento produzido pela recepção permanece corrente enquanto necessário; após reduzir frequência de consulta, passa à guarda intermediária; no prazo determinado, avaliação decide eliminação autorizada ou preservação permanente. Deve haver procedimento formal e rastreabilidade.\n\n## Erro comum e limites de aplicação\nPegadinha: documento digital também está sujeito à gestão de temporalidade, autenticidade e preservação; escanear papel não resolve automaticamente cadeia de custódia e destinação.\n\n## Verifique a compreensão\nArquivo permanente costuma ser preservado por qual motivo?\n\n**Resposta comentada:** Documentos de valor permanente são preservados segundo avaliação arquivística.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Gestão documental acompanha produção, tramitação, uso, avaliação e destinação de documentos. Teoria das três idades distingue arquivos correntes (uso frequente), intermediários (uso eventual e guarda por razões",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Arquivo permanente costuma ser preservado por qual motivo?",
+              "options": [
+                "Uso diário",
+                "Valor secundário e histórico/probatório",
+                "Falta de espaço",
+                "Arquivo ser PDF"
+              ],
+              "answer": "B",
+              "explanation": "Documentos de valor permanente são preservados segundo avaliação arquivística.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Documentos de valor permanente são preservados segundo avaliação arquivística.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Ciclo de vida dos documentos e temporalidade?",
+              "back": "Gestão documental acompanha produção, tramitação, uso, avaliação e destinação de documentos. Teoria das três idades distingue arquivos correntes (uso frequente), intermediários (uso eventual e guarda por razões administrativas/legais) e permanentes (valor secundário que justifica preservação). Prazos de guarda não são escolhidos",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Ciclo de vida dos documentos e temporalidade?",
+              "back": "Fluxo exemplo: documento produzido pela recepção permanece corrente enquanto necessário; após reduzir frequência de consulta, passa à guarda intermediária; no prazo determinado, avaliação decide eliminação autorizada ou preservação permanente. Deve haver procedimento formal e rastreabilidade.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Protocolo, classificação e tramitação",
+          "lesson": {
+            "body": "# Protocolo, classificação e tramitação\n\n## Para que serve e o que você precisa saber\nProtocolo registra recebimento, identificação, encaminhamento e acompanhamento de documentos conforme procedimentos. Classificação agrupa documentos pela função/atividade que os originou, facilitando recuperação e gestão dos prazos. O número de protocolo identifica tramitação, não substitui conteúdo, autor ou autenticidade.\n\n## Como funciona — mecanismo e etapas\nUm pedido chega ao órgão: registro de recebimento com data, remetente e assunto, classificação, vinculação a processo, encaminhamento ao setor competente, despacho e controle de encerramento. Trilha auditável registra ações de alteração e transferência. Informação pessoal sensível exige acesso restrito quando necessário.\n\n## Exemplo resolvido\nClassificação arquivística não é apenas ordenar alfabeticamente nomes: reflete funções e atividades. Um documento de compras pode pertencer a série documental específica e ter temporalidade distinta de comunicado geral.\n\n## Erro comum e limites de aplicação\nPegadinha: protocolo não equivale a autenticação eletrônica; o fato de haver número de protocolo não prova assinatura válida nem versão íntegra.\n\n## Verifique a compreensão\nQual função central do protocolo?\n\n**Resposta comentada:** O protocolo registra e controla fluxo documental.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Protocolo registra recebimento, identificação, encaminhamento e acompanhamento de documentos conforme procedimentos. Classificação agrupa documentos pela função/atividade que os originou, facilitando recuperaçã",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual função central do protocolo?",
+              "options": [
+                "Eliminar documentos",
+                "Registrar entrada e acompanhar tramitação",
+                "Assinar digitalmente tudo",
+                "Definir orçamento"
+              ],
+              "answer": "B",
+              "explanation": "O protocolo registra e controla fluxo documental.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: O protocolo registra e controla fluxo documental.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Protocolo, classificação e tramitação?",
+              "back": "Protocolo registra recebimento, identificação, encaminhamento e acompanhamento de documentos conforme procedimentos. Classificação agrupa documentos pela função/atividade que os originou, facilitando recuperação e gestão dos prazos. O número de protocolo identifica tramitação, não substitui conteúdo, autor ou autenticidade.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Protocolo, classificação e tramitação?",
+              "back": "Classificação arquivística não é apenas ordenar alfabeticamente nomes: reflete funções e atividades. Um documento de compras pode pertencer a série documental específica e ter temporalidade distinta de comunicado geral.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Documentos digitais, autenticidade e preservação",
+          "lesson": {
+            "body": "# Documentos digitais, autenticidade e preservação\n\n## Para que serve e o que você precisa saber\nDocumento arquivístico digital requer manutenção de conteúdo, contexto, identidade, integridade e capacidade de acesso ao longo do tempo. Metadados registram autoria, data, formato, classificação, eventos de preservação e vínculo a processo. Formato PDF não é, sozinho, garantia de autenticidade nem de preservação permanente.\n\n## Como funciona — mecanismo e etapas\nAssinatura digital pode fornecer evidências de integridade e vínculo ao signatário sob requisitos técnicos e legais. Hash compara versões de arquivo, mas não comprova por si só autoria ou que conteúdo original era verdadeiro. Cópias redundantes, migrações de formato e testes de leitura fazem parte de estratégia de preservação.\n\n## Exemplo resolvido\nUm órgão digitaliza uma pasta de contratos: precisa registrar relação com originais, conferência, procedimentos de captura, integridade, acesso e destino dos papéis segundo norma. Copiar os PDFs para pendrive não é política completa de preservação.\n\n## Erro comum e limites de aplicação\nPegadinha: backup serve recuperação de perdas, não substitui classificação, temporalidade, autenticidade e acesso a longo prazo. LGPD e LAI exigem análise de divulgação versus proteção.\n\n## Verifique a compreensão\nUm hash de arquivo prova automaticamente quem o assinou?\n\n**Resposta comentada:** Hash sozinho não estabelece identidade nem autenticidade do signatário.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Documento arquivístico digital requer manutenção de conteúdo, contexto, identidade, integridade e capacidade de acesso ao longo do tempo. Metadados registram autoria, data, formato, classificação, eventos de pr",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Um hash de arquivo prova automaticamente quem o assinou?",
+              "options": [
+                "Sim",
+                "Não; apenas ajuda a verificar integridade da versão comparada",
+                "Sim se PDF",
+                "Sempre que em nuvem"
+              ],
+              "answer": "B",
+              "explanation": "Hash sozinho não estabelece identidade nem autenticidade do signatário.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Hash sozinho não estabelece identidade nem autenticidade do signatário.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Documentos digitais, autenticidade e preservação?",
+              "back": "Documento arquivístico digital requer manutenção de conteúdo, contexto, identidade, integridade e capacidade de acesso ao longo do tempo. Metadados registram autoria, data, formato, classificação, eventos de preservação e vínculo a processo. Formato PDF não é, sozinho, garantia de autenticidade nem de preservação permanente.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Documentos digitais, autenticidade e preservação?",
+              "back": "Um órgão digitaliza uma pasta de contratos: precisa registrar relação com originais, conferência, procedimentos de captura, integridade, acesso e destino dos papéis segundo norma. Copiar os PDFs para pendrive não é política completa de preservação.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Inglês Instrumental para TI",
+      "topics": [
+        {
+          "name": "Leitura técnica: cognatos, conectivos e falso cognatos",
+          "lesson": {
+            "body": "# Leitura técnica: cognatos, conectivos e falso cognatos\n\n## Para que serve e o que você precisa saber\nEm concursos de TI, compreender a estrutura de um parágrafo é mais útil que traduzir palavra por palavra. Procure sujeito, verbo principal, contraste e consequência. Conectivos como however (entretanto), therefore (portanto), although (embora) e unless (a menos que) alteram relações lógicas.\n\n## Como funciona — mecanismo e etapas\nLeia: 'Although the service was available, users could not authenticate'. Há concessão: serviço disponível, porém usuários sem autenticação. Não conclua que servidor estava desligado. Falsos cognatos: actually significa na verdade, não atualmente; eventually significa por fim/em algum momento, não eventualmente no uso de 'talvez'; library em TI significa biblioteca, não livraria.\n\n## Exemplo resolvido\nMonte glossário contextual: deployment=implantação/publicação; issue=problema ou item; branch=ramificação no Git; fault=falha. A mesma palavra pode ter sentido diferente em documento legal e em manual técnico.\n\n## Erro comum e limites de aplicação\nPegadinha: termos técnicos traduzidos literalmente podem mudar função; palavras de negação e quantidade, como hardly, few, most, all, merecem atenção.\n\n## Verifique a compreensão\n'Although' introduz normalmente:\n\n**Resposta comentada:** Although marca contraste/concessão, equivalente a 'embora'.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Em concursos de TI, compreender a estrutura de um parágrafo é mais útil que traduzir palavra por palavra. Procure sujeito, verbo principal, contraste e consequência. Conectivos como however (entretanto), theref",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "'Although' introduz normalmente:",
+              "options": [
+                "Causa",
+                "Concessão",
+                "Conclusão",
+                "Obrigação"
+              ],
+              "answer": "B",
+              "explanation": "Although marca contraste/concessão, equivalente a 'embora'.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Although marca contraste/concessão, equivalente a 'embora'.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Leitura técnica: cognatos, conectivos e falso cognatos?",
+              "back": "Em concursos de TI, compreender a estrutura de um parágrafo é mais útil que traduzir palavra por palavra. Procure sujeito, verbo principal, contraste e consequência. Conectivos como however (entretanto), therefore (portanto), although (embora) e unless (a menos que) alteram relações lógicas.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Leitura técnica: cognatos, conectivos e falso cognatos?",
+              "back": "Monte glossário contextual: deployment=implantação/publicação; issue=problema ou item; branch=ramificação no Git; fault=falha. A mesma palavra pode ter sentido diferente em documento legal e em manual técnico.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Voz passiva em manuais e relatórios",
+          "lesson": {
+            "body": "# Voz passiva em manuais e relatórios\n\n## Para que serve e o que você precisa saber\nVoz passiva enfatiza ação/resultado e frequentemente omite agente. Estrutura básica em inglês: verbo to be na forma temporal pertinente + past participle. 'The data **were encrypted**' significa 'os dados foram criptografados'. Sujeito gramatical recebe ação; não sabemos necessariamente quem executou.\n\n## Como funciona — mecanismo e etapas\nCompare: 'The operator restored the database' (ativa) → 'The database was restored by the operator' (passiva). Tempo passado é preservado e agente pode ser introduzido por by. Em 'The backup has been tested', present perfect passive destaca teste concluído com relevância presente; em 'must be tested', há obrigação/modalidade.\n\n## Exemplo resolvido\nTexto 'The server was not configured' indica configuração não feita; não significa 'o servidor não existe'. Identifique auxiliares, negação e particípio antes de traduzir. A técnica ajuda a distinguir causa de estado resultante.\n\n## Erro comum e limites de aplicação\nPegadinha: 'is running' usa presente contínuo ativo, não passiva; 'is being monitored' é progressivo passivo. Não classifique só por presença de is.\n\n## Verifique a compreensão\n'The file was deleted' está na:\n\n**Resposta comentada:** 'Was' + particípio 'deleted' indica voz passiva no passado.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Voz passiva enfatiza ação/resultado e frequentemente omite agente. Estrutura básica em inglês: verbo to be na forma temporal pertinente + past participle. 'The data **were encrypted**' significa 'os dados foram",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "'The file was deleted' está na:",
+              "options": [
+                "Voz ativa",
+                "Voz passiva",
+                "Forma imperativa",
+                "Questão condicional"
+              ],
+              "answer": "B",
+              "explanation": "'Was' + particípio 'deleted' indica voz passiva no passado.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: 'Was' + particípio 'deleted' indica voz passiva no passado.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Voz passiva em manuais e relatórios?",
+              "back": "Voz passiva enfatiza ação/resultado e frequentemente omite agente. Estrutura básica em inglês: verbo to be na forma temporal pertinente + past participle. 'The data **were encrypted**' significa 'os dados foram criptografados'. Sujeito gramatical recebe ação; não sabemos necessariamente quem executou.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Voz passiva em manuais e relatórios?",
+              "back": "Texto 'The server was not configured' indica configuração não feita; não significa 'o servidor não existe'. Identifique auxiliares, negação e particípio antes de traduzir. A técnica ajuda a distinguir causa de estado resultante.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Condicionais em documentação técnica",
+          "lesson": {
+            "body": "# Condicionais em documentação técnica\n\n## Para que serve e o que você precisa saber\nManuais usam if, when, unless e otherwise para impor condições. 'If the token expires, the client must authenticate again' descreve condição e obrigação; não afirma que token expirou naquele momento. 'Unless the connection fails, retries are unnecessary' equivale aproximadamente a 'se a conexão não falhar, tentativas adicionais são desnecessárias', respeitando contexto.\n\n## Como funciona — mecanismo e etapas\nEm 'If a request times out, retry with the same idempotency key', o verbo de comando orienta comportamento para evitar duplicidade. Diferencie 'may' (possibilidade/permissão), 'must' (obrigação forte no texto) e 'should' (recomendação). Em normas técnicas, termos normativos podem ter definições formais próprias.\n\n## Exemplo resolvido\nLeia 'Only administrators can rotate keys' e compare 'Administrators can rotate keys'. A primeira restringe quem pode, não obriga todo administrador a realizar rotação nem diz que apenas a rotação existe.\n\n## Erro comum e limites de aplicação\nPegadinha: troca de 'may' por 'must' altera força do enunciado e costuma tornar alternativa incorreta. Ao interpretar, sublinhe modal, condicional e negação.\n\n## Verifique a compreensão\n'Must' em procedimento técnico costuma expressar:\n\n**Resposta comentada:** 'Must' comunica obrigação, não mera possibilidade.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Manuais usam if, when, unless e otherwise para impor condições. 'If the token expires, the client must authenticate again' descreve condição e obrigação; não afirma que token expirou naquele momento. 'Unless th",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "'Must' em procedimento técnico costuma expressar:",
+              "options": [
+                "Possibilidade remota",
+                "Obrigação",
+                "Condição passada",
+                "Sinônimo de may"
+              ],
+              "answer": "B",
+              "explanation": "'Must' comunica obrigação, não mera possibilidade.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: 'Must' comunica obrigação, não mera possibilidade.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Condicionais em documentação técnica?",
+              "back": "Manuais usam if, when, unless e otherwise para impor condições. 'If the token expires, the client must authenticate again' descreve condição e obrigação; não afirma que token expirou naquele momento. 'Unless the connection fails, retries are unnecessary' equivale aproximadamente a 'se a conexão não falhar, tentativas adicionais ",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Condicionais em documentação técnica?",
+              "back": "Leia 'Only administrators can rotate keys' e compare 'Administrators can rotate keys'. A primeira restringe quem pode, não obriga todo administrador a realizar rotação nem diz que apenas a rotação existe.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Programação e Algoritmos",
+      "topics": [
+        {
+          "name": "Variáveis, controle de fluxo e funções",
+          "lesson": {
+            "body": "# Variáveis, controle de fluxo e funções\n\n## Para que serve e o que você precisa saber\nAlgoritmo é sequência finita de passos para resolver uma classe de problemas. Variável representa valor que pode mudar durante execução; tipo especifica operações e representação. Condicional escolhe caminho; laço repete enquanto condição ou coleção exigir; função agrupa operação com entradas e saída.\n\n## Como funciona — mecanismo e etapas\nConsidere soma de 1 a n: inicialize total=0; para cada i de 1 a n, atualize total=total+i; retorne total. Com n=4, valores de total são 1,3,6,10. O algoritmo funciona em O(n) operações de soma. Fórmula n(n+1)/2 produz resultado em O(1) operações aritméticas sob modelo de custo unitário, embora valores grandes tenham custos próprios.\n\n## Exemplo resolvido\nEm pseudocódigo, diferencie atribuição de comparação: x ← x+1 não afirma igualdade matemática estática; atualiza estado. Teste casos n=0, n=1 e entradas negativas conforme contrato de função.\n\n## Erro comum e limites de aplicação\nPegadinha: duas passagens independentes por vetor são O(n), não O(n²); laço aninhado com n iterações em cada tende a O(n²).\n\n## Verifique a compreensão\nPara n=4, soma de 1 até n é:\n\n**Resposta comentada:** 1+2+3+4=10 ou n(n+1)/2 = 4×5/2 =10.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Algoritmo é sequência finita de passos para resolver uma classe de problemas. Variável representa valor que pode mudar durante execução; tipo especifica operações e representação. Condicional escolhe caminho; l",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Para n=4, soma de 1 até n é:",
+              "options": [
+                "4",
+                "6",
+                "10",
+                "16"
+              ],
+              "answer": "C",
+              "explanation": "1+2+3+4=10 ou n(n+1)/2 = 4×5/2 =10.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C.",
+                "Correta: 1+2+3+4=10 ou n(n+1)/2 = 4×5/2 =10.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa C."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Variáveis, controle de fluxo e funções?",
+              "back": "Algoritmo é sequência finita de passos para resolver uma classe de problemas. Variável representa valor que pode mudar durante execução; tipo especifica operações e representação. Condicional escolhe caminho; laço repete enquanto condição ou coleção exigir; função agrupa operação com entradas e saída.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Variáveis, controle de fluxo e funções?",
+              "back": "Em pseudocódigo, diferencie atribuição de comparação: x ← x+1 não afirma igualdade matemática estática; atualiza estado. Teste casos n=0, n=1 e entradas negativas conforme contrato de função.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Estruturas de dados: listas, filas, pilhas e mapas",
+          "lesson": {
+            "body": "# Estruturas de dados: listas, filas, pilhas e mapas\n\n## Para que serve e o que você precisa saber\nLista/array guarda sequência com acesso por índice sob representação apropriada; pilha opera LIFO (último a entrar, primeiro a sair); fila opera FIFO (primeiro a entrar, primeiro a sair). Mapa/dicionário relaciona chaves a valores para acesso por chave; implementação por hash ou árvore altera complexidade e ordenação.\n\n## Como funciona — mecanismo e etapas\nHistórico de desfazer em editor pode usar pilha: ações A,B,C são desfeitas C,B,A. Fila de atendimento usa ordem de chegada, sujeita a regras de prioridade explicitadas; a forma simplificada é FIFO. Para encontrar usuário por e-mail, mapa hash costuma oferecer busca média O(1) sob condições, mas colisões e pior caso importam.\n\n## Exemplo resolvido\nEm arrays, inserção no meio pode deslocar elementos (O(n)); acesso direto por índice é tipicamente O(1). Listas encadeadas permitem certas inserções locais eficientes se já existe referência ao nó, mas localizar posição pode custar O(n).\n\n## Erro comum e limites de aplicação\nPegadinha: estrutura certa depende de operações exigidas, não de 'qual é melhor' em abstrato. Pilha não é fila com nome diferente.\n\n## Verifique a compreensão\nQual estrutura geralmente atende processamento FIFO?\n\n**Resposta comentada:** Fila remove primeiro o elemento que entrou, conforme política FIFO.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Lista/array guarda sequência com acesso por índice sob representação apropriada; pilha opera LIFO (último a entrar, primeiro a sair); fila opera FIFO (primeiro a entrar, primeiro a sair). Mapa/dicionário relaci",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual estrutura geralmente atende processamento FIFO?",
+              "options": [
+                "Pilha",
+                "Fila",
+                "Árvore binária",
+                "Recursão"
+              ],
+              "answer": "B",
+              "explanation": "Fila remove primeiro o elemento que entrou, conforme política FIFO.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Fila remove primeiro o elemento que entrou, conforme política FIFO.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Estruturas de dados: listas, filas, pilhas e mapas?",
+              "back": "Lista/array guarda sequência com acesso por índice sob representação apropriada; pilha opera LIFO (último a entrar, primeiro a sair); fila opera FIFO (primeiro a entrar, primeiro a sair). Mapa/dicionário relaciona chaves a valores para acesso por chave; implementação por hash ou árvore altera complexidade e ordenação.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Estruturas de dados: listas, filas, pilhas e mapas?",
+              "back": "Em arrays, inserção no meio pode deslocar elementos (O(n)); acesso direto por índice é tipicamente O(1). Listas encadeadas permitem certas inserções locais eficientes se já existe referência ao nó, mas localizar posição pode custar O(n).",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Orientação a objetos e princípios SOLID",
+          "lesson": {
+            "body": "# Orientação a objetos e princípios SOLID\n\n## Para que serve e o que você precisa saber\nObjeto combina estado e comportamento segundo classe/estrutura. Encapsulamento controla acesso à representação interna; herança permite especialização em certos desenhos; polimorfismo permite comportamento específico através de contrato comum. Composição costuma reduzir acoplamento quando comportamento pode ser montado por componentes.\n\n## Como funciona — mecanismo e etapas\nExemplo: uma aplicação de notificações define interface 'Enviar(mensagem)'; implementações Email e SMS realizam envio de modos diferentes. O serviço de agendamento depende da abstração, não de classe concreta específica, facilitando testes com implementação simulada. Isso ilustra inversão de dependência e polimorfismo sem supor que toda herança é necessária.\n\n## Exemplo resolvido\nOs princípios SOLID são orientações de design; responsabilidade única procura razão coesa para mudar, aberto/fechado busca extensão sem modificar continuamente contrato estável, substituição de Liskov exige implementações respeitarem contrato esperado, segregação evita interfaces desnecessariamente grandes.\n\n## Erro comum e limites de aplicação\nPegadinha: encapsular não significa tornar todo atributo privado sem exceção; deve proteger invariantes e oferecer interface coerente. SOLID não é certificação nem prova de ausência de bugs.\n\n## Verifique a compreensão\nO princípio da responsabilidade única sugere:\n\n**Resposta comentada:** Responsabilidade única visa coesão e limitar razões de mudança.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Objeto combina estado e comportamento segundo classe/estrutura. Encapsulamento controla acesso à representação interna; herança permite especialização em certos desenhos; polimorfismo permite comportamento espe",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "O princípio da responsabilidade única sugere:",
+              "options": [
+                "Uma classe deve ter uma razão coesa para mudar",
+                "Um método para o sistema inteiro",
+                "Nunca criar interface",
+                "Usar herança sempre"
+              ],
+              "answer": "A",
+              "explanation": "Responsabilidade única visa coesão e limitar razões de mudança.",
+              "origin": "ia",
+              "rationales": [
+                "Correta: Responsabilidade única visa coesão e limitar razões de mudança.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Orientação a objetos e princípios SOLID?",
+              "back": "Objeto combina estado e comportamento segundo classe/estrutura. Encapsulamento controla acesso à representação interna; herança permite especialização em certos desenhos; polimorfismo permite comportamento específico através de contrato comum. Composição costuma reduzir acoplamento quando comportamento pode ser montado por compo",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Orientação a objetos e princípios SOLID?",
+              "back": "Os princípios SOLID são orientações de design; responsabilidade única procura razão coesa para mudar, aberto/fechado busca extensão sem modificar continuamente contrato estável, substituição de Liskov exige implementações respeitarem contrato esperado, segregação evita interfaces desnecessariamente grandes.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nuvem e DevOps",
+      "topics": [
+        {
+          "name": "Cloud: IaaS, PaaS, SaaS e responsabilidade compartilhada",
+          "lesson": {
+            "body": "# Cloud: IaaS, PaaS, SaaS e responsabilidade compartilhada\n\n## Para que serve e o que você precisa saber\nModelos de serviço distinguem quem administra diferentes camadas. IaaS oferece infraestrutura virtual gerenciada em parte pelo provedor; cliente geralmente configura SO e aplicação. PaaS administra porções adicionais de runtime; cliente mantém responsabilidades sobre código, configuração e dados. SaaS fornece aplicação pronta, mas cliente continua responsável por identidades, permissões e uso.\n\n## Como funciona — mecanismo e etapas\nAPI Flask numa VM em que a equipe instala Python exemplifica IaaS; publicar serviço num ambiente que faz build e gerencia runtime aproxima-se de PaaS; usar e-mail web gerenciado aproxima-se de SaaS. Para cada arquitetura, faça matriz de quem cuida de updates, backup, rede, aplicação, dados e contas.\n\n## Exemplo resolvido\nImplantação pública/privada/híbrida refere-se ao modelo de implantação, não equivale automaticamente a IaaS/PaaS/SaaS. Serviços grátis têm limites e podem suspender recursos; planejamento de recuperação e monitoramento permanece necessário.\n\n## Erro comum e limites de aplicação\nPegadinha: não conclua que SaaS isenta cliente de LGPD ou que PaaS garante proteção de dados mal autorizados pela aplicação.\n\n## Verifique a compreensão\nUma VM cujo sistema operacional você administra é tipicamente:\n\n**Resposta comentada:** IaaS disponibiliza recursos de infraestrutura, mantendo gestão do SO convidado normalmente com cliente.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Modelos de serviço distinguem quem administra diferentes camadas. IaaS oferece infraestrutura virtual gerenciada em parte pelo provedor; cliente geralmente configura SO e aplicação. PaaS administra porções adic",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Uma VM cujo sistema operacional você administra é tipicamente:",
+              "options": [
+                "IaaS",
+                "SaaS",
+                "Planilha",
+                "Sem infraestrutura"
+              ],
+              "answer": "A",
+              "explanation": "IaaS disponibiliza recursos de infraestrutura, mantendo gestão do SO convidado normalmente com cliente.",
+              "origin": "ia",
+              "rationales": [
+                "Correta: IaaS disponibiliza recursos de infraestrutura, mantendo gestão do SO convidado normalmente com cliente.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa A."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Cloud: IaaS, PaaS, SaaS e responsabilidade compartilhada?",
+              "back": "Modelos de serviço distinguem quem administra diferentes camadas. IaaS oferece infraestrutura virtual gerenciada em parte pelo provedor; cliente geralmente configura SO e aplicação. PaaS administra porções adicionais de runtime; cliente mantém responsabilidades sobre código, configuração e dados. SaaS fornece aplicação pronta, m",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Cloud: IaaS, PaaS, SaaS e responsabilidade compartilhada?",
+              "back": "Implantação pública/privada/híbrida refere-se ao modelo de implantação, não equivale automaticamente a IaaS/PaaS/SaaS. Serviços grátis têm limites e podem suspender recursos; planejamento de recuperação e monitoramento permanece necessário.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Pipelines CI/CD e deploy rastreável",
+          "lesson": {
+            "body": "# Pipelines CI/CD e deploy rastreável\n\n## Para que serve e o que você precisa saber\nCI integra código e executa validação (testes, lint, tipos, build). CD pode significar entrega contínua, disponibilizando artefato pronto, ou implantação contínua, publicando automaticamente sob critérios. Produzir commit não significa que serviço está publicado, especialmente quando backend exige deploy manual.\n\n## Como funciona — mecanismo e etapas\nFluxo recomendado: alteração → revisão → testes de API com banco isolado → TypeScript/build → artefato versionado → deploy em ambiente alvo → health check → teste funcional → promoção/rollback quando necessário. SHA do commit é elo de rastreabilidade; logs e métricas após publicação completam evidência.\n\n## Exemplo resolvido\nSe a Vercel mostra READY no SHA A, mas o Render executa SHA B, funcionalidades dependentes de API nova podem quebrar. Compare revisões e valide contrato de endpoints. Teste SQLite rápido não substitui verificar SQL e esquema no PostgreSQL.\n\n## Erro comum e limites de aplicação\nPegadinha: um pipeline 'verde' prova execução de testes específicos; não prova ausência de falhas nem qualidade do conteúdo didático.\n\n## Verifique a compreensão\nQual verificação ajuda detectar frontend e backend desencontrados?\n\n**Resposta comentada:** Revisões e compatibilidade de contratos precisam ser conferidas conjuntamente.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "CI integra código e executa validação (testes, lint, tipos, build). CD pode significar entrega contínua, disponibilizando artefato pronto, ou implantação contínua, publicando automaticamente sob critérios. Prod",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Qual verificação ajuda detectar frontend e backend desencontrados?",
+              "options": [
+                "Contar linhas de código",
+                "Comparar SHAs e testar contratos de API",
+                "Somente mudar cor da tela",
+                "Limpar cache do navegador sempre"
+              ],
+              "answer": "B",
+              "explanation": "Revisões e compatibilidade de contratos precisam ser conferidas conjuntamente.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Revisões e compatibilidade de contratos precisam ser conferidas conjuntamente.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Pipelines CI/CD e deploy rastreável?",
+              "back": "CI integra código e executa validação (testes, lint, tipos, build). CD pode significar entrega contínua, disponibilizando artefato pronto, ou implantação contínua, publicando automaticamente sob critérios. Produzir commit não significa que serviço está publicado, especialmente quando backend exige deploy manual.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Pipelines CI/CD e deploy rastreável?",
+              "back": "Se a Vercel mostra READY no SHA A, mas o Render executa SHA B, funcionalidades dependentes de API nova podem quebrar. Compare revisões e valide contrato de endpoints. Teste SQLite rápido não substitui verificar SQL e esquema no PostgreSQL.",
+              "origin": "ia"
+            }
+          ]
+        },
+        {
+          "name": "Infraestrutura como código e observabilidade",
+          "lesson": {
+            "body": "# Infraestrutura como código e observabilidade\n\n## Para que serve e o que você precisa saber\nInfraestrutura como código (IaC) define recursos e configuração em arquivos versionados, permitindo revisão, repetição e comparação do estado declarado com ambiente. Ferramentas declarativas descrevem estado desejado; alterações precisam de plano e controle de credenciais. IaC não substitui políticas de acesso nem backups.\n\n## Como funciona — mecanismo e etapas\nObservabilidade emprega métricas (séries quantitativas), logs (registros de eventos) e traces (caminho de uma solicitação distribuída). Se API começa a responder lentamente, métrica mostra latência p95 elevada, trace revela tempo no banco e log ajuda localizar consulta. Uma máquina com CPU baixa pode ter banco congestionado; um sinal isolado não prova causa.\n\n## Exemplo resolvido\nAlertas precisam relacionar sintomas ao impacto de usuário e ter responsáveis. Segredos não devem entrar em repositórios ou outputs de pipeline. Mudança de infraestrutura pode ser revisada em pull request e aplicada em ambiente adequado com rollback previsto.\n\n## Erro comum e limites de aplicação\nPegadinha: health check de processo aberto não significa serviço funcional; teste endpoints e dependências. Infra declarada não garante ausência de drift se houver alterações manuais.\n\n## Verifique a compreensão\nTraces distribuídos ajudam especialmente a:\n\n**Resposta comentada:** Traces permitem acompanhar partes da requisição ao longo de componentes.\n\n**Nota editorial:** material introdutório elaborado com auxílio de IA; confira o edital e normas atuais.",
+            "summary": "Infraestrutura como código (IaC) define recursos e configuração em arquivos versionados, permitindo revisão, repetição e comparação do estado declarado com ambiente. Ferramentas declarativas descrevem estado de",
+            "minutes": 18,
+            "origin": "ia"
+          },
+          "questions": [
+            {
+              "kind": "multipla",
+              "statement": "Traces distribuídos ajudam especialmente a:",
+              "options": [
+                "Trocar senha automaticamente",
+                "Seguir requisição entre serviços",
+                "Garantir zero falhas",
+                "Substituir banco"
+              ],
+              "answer": "B",
+              "explanation": "Traces permitem acompanhar partes da requisição ao longo de componentes.",
+              "origin": "ia",
+              "rationales": [
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Correta: Traces permitem acompanhar partes da requisição ao longo de componentes.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B.",
+                "Incorreta: não expressa a condição central cobrada; revise a justificativa da alternativa B."
+              ]
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Qual é o conceito central de Infraestrutura como código e observabilidade?",
+              "back": "Infraestrutura como código (IaC) define recursos e configuração em arquivos versionados, permitindo revisão, repetição e comparação do estado declarado com ambiente. Ferramentas declarativas descrevem estado desejado; alterações precisam de plano e controle de credenciais. IaC não substitui políticas de acesso nem backups.",
+              "origin": "ia"
+            },
+            {
+              "front": "Como resolver um caso de Infraestrutura como código e observabilidade?",
+              "back": "Alertas precisam relacionar sintomas ao impacto de usuário e ter responsáveis. Segredos não devem entrar em repositórios ou outputs de pipeline. Mudança de infraestrutura pode ser revisada em pull request e aplicada em ambiente adequado com rollback previsto.",
+              "origin": "ia"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exams": [
+    {
+      "org": "Estuda — trilhas preparatórias (NÃO são concursos abertos)",
+      "name": "Modelos de estudo para carreiras públicas",
+      "banca": "",
+      "year": null,
+      "notes": "ESTUDA_TEMPLATE_V1 — Trilhas orientativas para estudo pré-edital. Nenhum edital, abertura, banca, data ou vaga foi confirmado. O usuário deve conferir documentos oficiais e ajustar pesos e conteúdo.",
+      "roles": [
+        {
+          "name": "Analista de TI — tribunais (trilha pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Governança e Gestão de TI",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Engenharia de Software",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Programação e Algoritmos",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Nuvem e DevOps",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Arquivologia e Gestão Documental",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de TI — prefeituras (trilha pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Engenharia de Software",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Programação e Algoritmos",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Nuvem e DevOps",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Matemática Financeira",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de TI — universidades e institutos (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Arquivologia e Gestão Documental",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Engenharia de Software",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Programação e Algoritmos",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Nuvem e DevOps",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Inglês Instrumental para TI",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de Sistemas — órgãos federais (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Engenharia de Software",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Programação e Algoritmos",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Nuvem e DevOps",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Estatística e Análise de Dados",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de Infraestrutura e Redes (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.8,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Nuvem e DevOps",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Governança e Gestão de TI",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de Segurança Cibernética (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Governança e Gestão de TI",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Nuvem e DevOps",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Auditor de Tecnologia e Controle (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Governança e Gestão de TI",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.7,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Financeira e Orçamentária",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Estatística e Análise de Dados",
+              "weight": 1.3,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de Dados e Ciência de Dados (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Estatística e Análise de Dados",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Banco de Dados e SQL",
+              "weight": 2,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Programação e Algoritmos",
+              "weight": 1.8,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Engenharia de Software",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Inglês Instrumental para TI",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Técnico de TI — suporte e redes (pré-edital)",
+          "level": "Médio/técnico (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Redes de Computadores",
+              "weight": 1.8,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Sistemas Operacionais e Virtualização",
+              "weight": 1.8,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Segurança da Informação",
+              "weight": 1.6,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Programação e Algoritmos",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        },
+        {
+          "name": "Analista de Gestão Pública com TI (pré-edital)",
+          "level": "Superior (verificar edital)",
+          "question_style": "multipla",
+          "exam_date": null,
+          "description": "Modelo de trilha de estudo, não um edital oficial. As matérias, pesos e provas variam conforme o concurso real.",
+          "subjects": [
+            {
+              "name": "Língua Portuguesa",
+              "weight": 1.4,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Raciocínio Lógico",
+              "weight": 1.1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Constitucional",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Direito Administrativo",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Legislação e Governo Digital",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Pública e Gestão",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Administração Financeira e Orçamentária",
+              "weight": 1.7,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Arquivologia e Gestão Documental",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Estatística e Análise de Dados",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Governança e Gestão de TI",
+              "weight": 1.5,
+              "questions": 0,
+              "topics": "*"
+            },
+            {
+              "name": "Engenharia de Software",
+              "weight": 1,
+              "questions": 0,
+              "topics": "*"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
