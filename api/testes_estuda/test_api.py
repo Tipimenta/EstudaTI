@@ -65,7 +65,14 @@ def test_study_flow_lesson_questions_review():
     assert c.post(f"/api/topics/{tid}/done", headers=ALUNO).status_code == 200
     qs = c.get(f"/api/practice?topic_id={tid}&limit=5", headers=ALUNO).get_json()["questions"]
     assert qs and "answer" not in qs[0]
-    r = c.post(f"/api/questions/{qs[0]['id']}/answer", json={"chosen": "Z", "seconds": 30}, headers=ALUNO).get_json()
+    # Resposta incorreta precisa ser uma opção existente: letra inválida é erro 400.
+    from db import tx
+    with tx() as db:
+        answer = db.one("SELECT answer,options FROM questions WHERE id=?", (qs[0]["id"],))
+    from db import loads
+    wrong = next(l for l in "ABCDE"[:len(loads(answer["options"], []))] if l != answer["answer"])
+    r = c.post(f"/api/questions/{qs[0]['id']}/answer",
+               json={"chosen": wrong, "seconds": 30}, headers=ALUNO).get_json()
     assert r["correct"] is False and r["answer"] in "ABCDE"
     # questão errada volta na revisão amanhã; a lista de erradas a inclui
     wrong = c.get("/api/practice?mode=erradas", headers=ALUNO).get_json()["questions"]
