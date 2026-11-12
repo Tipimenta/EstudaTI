@@ -73,13 +73,14 @@ def catalog():
         roles = db.q(
             """SELECT r.id, r.name, r.level, r.exam_date, r.question_style, r.description,
                       x.id AS exam_id, x.org, x.name AS exam, x.banca, x.year,
+                      CASE WHEN x.notes LIKE '%ESTUDA_TEMPLATE_V1%' THEN 1 ELSE 0 END AS preparatory,
                       (SELECT COUNT(*) FROM role_subjects rs WHERE rs.role_id=r.id) AS n_subjects,
                       (SELECT COUNT(*) FROM role_topics rt WHERE rt.role_id=r.id) AS n_topics,
                       (SELECT COUNT(*) FROM role_topics rt JOIN lessons l ON l.topic_id=rt.topic_id
                         WHERE rt.role_id=r.id AND l.status='publicado') AS n_lessons
                FROM roles r JOIN exams x ON x.id=r.exam_id
                WHERE x.published=1 AND (LOWER(r.name) LIKE ? OR LOWER(x.org) LIKE ? OR LOWER(x.name) LIKE ? OR LOWER(x.banca) LIKE ?)
-               ORDER BY x.org, r.name""",
+               ORDER BY preparatory ASC, x.org, r.name""",
             (term, term, term, term),
         )
         for r in roles:
