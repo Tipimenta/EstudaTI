@@ -45,7 +45,7 @@ export function TopicPage({ id }: { id: number }) {
         {data.stats.answered > 0 && <span className="chip">{pct(data.stats.accuracy)} de acerto em {data.stats.answered}</span>}
         {data.lesson?.origin === 'ia' && <span className="chip mark">Aula gerada por IA</span>}
         {data.lesson?.editorial_revision && <span className="chip ok" title="Explicação específica acrescentada sem alterar seu progresso">Aprofundamento 2.2</span>}
-        {data.ai && data.lesson && <button className="btn btn-sm" style={{ marginLeft: 'auto' }} onClick={() => setTutor(true)}><Icon name="chat" /> Tirar dúvida</button>}
+        {data.lesson && <button className="btn btn-sm" style={{ marginLeft: 'auto' }} onClick={() => setTutor(true)}><Icon name="chat" /> Guia de dúvidas</button>}
       </div>
       {data.stats.status === 'reforco' && (
         <div className="notice bad" style={{ marginTop: 16, marginBottom: 12 }}>
@@ -92,7 +92,7 @@ export function TopicPage({ id }: { id: number }) {
         {data.nav.prev ? <a className="btn btn-ghost" href={`#/topico/${data.nav.prev.id}`}><Icon name="back" /> Anterior</a> : <span />}
         {data.nav.next && <a className="btn" href={`#/topico/${data.nav.next.id}`}>{data.nav.next.name.length > 40 ? 'Próximo tópico' : data.nav.next.name} <Icon name="chevron" /></a>}
       </nav>
-      {tutor && data.lesson && <Tutor topic={data} onClose={() => setTutor(false)} />}
+      {tutor && data.lesson && <Tutor topic={data} aiEnabled={data.ai} onClose={() => setTutor(false)} />}
     </div>
   )
 }
@@ -162,10 +162,11 @@ function Notes({ topic }: { topic: TopicData }) {
   )
 }
 
-function Tutor({ topic, onClose }: { topic: TopicData; onClose: () => void }) {
+function Tutor({ topic, aiEnabled, onClose }: { topic: TopicData; aiEnabled: boolean; onClose: () => void }) {
   const [msgs, setMsgs] = useState<{ me: boolean; text: string }[]>([])
   const [q, setQ] = useState('')
   const [mode, setMode] = useState('passo_a_passo')
+  const [useAI, setUseAI] = useState(false)
   const [busy, setBusy] = useState(false)
   const end = useRef<HTMLDivElement>(null)
   const modes: [string, string][] = [
@@ -181,7 +182,7 @@ function Tutor({ topic, onClose }: { topic: TopicData; onClose: () => void }) {
     setMsgs(m => [...m, { me: true, text }]); setQ(''); setBusy(true)
     try {
       const r = await api<{ answer: string }>('/tutor', {
-        body: { topic_id: topic.id, question: text, mode, history },
+        body: { topic_id: topic.id, question: text, mode, history, use_ai: useAI },
       })
       setMsgs(m => [...m, { me: false, text: r.answer }])
     } catch (e) {
@@ -198,7 +199,15 @@ function Tutor({ topic, onClose }: { topic: TopicData; onClose: () => void }) {
         <button className="btn btn-primary" disabled={busy || !q.trim()}>Enviar</button>
       </form>}>
       <div className="stack">
-        <p className="muted small">Escolha como prefere aprender <strong>{topic.name}</strong>. A IA é opcional e pode consumir créditos do provedor configurado.</p>
+        <p className="muted small">Escolha como estudar <strong>{topic.name}</strong>. A consulta gratuita recupera material cadastrado; a IA produz explicações novas quando habilitada.</p>
+        <div className="row wrap" role="group" aria-label="Fonte das explicações" style={{ gap: 8 }}>
+          <button className="btn btn-sm" aria-pressed={!useAI} onClick={() => setUseAI(false)}>
+            Material cadastrado (grátis)
+          </button>
+          {aiEnabled && <button className="btn btn-sm" aria-pressed={useAI} onClick={() => setUseAI(true)}>
+            Professor com IA (usa créditos)
+          </button>}
+        </div>
         <div className="row wrap" role="group" aria-label="Profundidade da explicação">
           {modes.map(([id, label]) => <button key={id} className="btn btn-sm"
             aria-pressed={mode === id} onClick={() => setMode(id)}
