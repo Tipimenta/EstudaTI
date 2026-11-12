@@ -421,6 +421,15 @@ def explain(qid: int):
     if not already_answered:
         raise ApiError(409, "Responda à questão antes de consultar a explicação.")
     chosen = str(body().get("chosen", "")).strip().upper()[:1]
+    if body().get("use_ai") is True:
+        if not ai.status()["enabled"]:
+            raise ApiError(503, "A IA não está configurada. A explicação autoral continua disponível.")
+        use_ai_quota(g.user)
+        options = loads(q.get("options"), [])
+        return {
+            "explanation": ai.explain_answer({**q, "options": options}, chosen),
+            "source": "ai", "ai_used": True,
+        }
     # As justificativas publicadas são gratuitas: IA só é consumida quando
     # não há explicação autoral disponível e o provedor está configurado.
     rationales = loads(q.get("rationales"), [])
