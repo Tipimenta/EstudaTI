@@ -5,6 +5,7 @@ import { AuthPage, ChooseExam, Today, Trail } from './pages/Start'
 import { QuestionsPage, ReviewPage, TopicPage } from './pages/Study'
 import { Account, DiscursivaPage, Discursivas, ExamRun, Simulados, StatsPage } from './pages/Exams'
 import { AdminEdital, AdminHome, AdminProva, AdminQuestions, AdminRole, AdminTopic } from './pages/Admin'
+import { ContentQualityPage } from './pages/Quality'
 
 export type Enrollment = { id: number; role_id: number; exam_date: string | null; minutes_per_day: number; active: number; role: string; question_style: string; org: string; exam: string; banca: string }
 export type Me = { user: { id: number; name: string; email: string; is_admin: boolean }; enrollments: Enrollment[]; active: Enrollment | null; ai: { enabled: boolean } }
@@ -58,6 +59,7 @@ function Root() {
   else if ((m = match('/discursiva/:id', path))) page = <DiscursivaPage key={m.id} id={Number(m.id)} />
   else if (path === '/conta') page = <Account me={me} onChange={loadMe} />
   else if (me.user.is_admin && path === '/admin') page = <AdminHome />
+  else if (me.user.is_admin && path === '/admin/qualidade') page = <ContentQualityPage />
   else if (me.user.is_admin && path === '/admin/edital') page = <AdminEdital />
   else if (me.user.is_admin && path === '/admin/prova') page = <AdminProva />
   else if (me.user.is_admin && path.startsWith('/admin/questoes')) page = <AdminQuestions key={path} prova={queryParam('prova')} />
