@@ -148,8 +148,8 @@ def seed_extensive_once() -> dict:
             SELECT r.id AS role_id, rs.subject_id
             FROM roles r JOIN exams e ON e.id=r.exam_id
             JOIN role_subjects rs ON rs.role_id=r.id
-            WHERE e.notes LIKE '%ESTUDA_TEMPLATE_V1%'
-        """)
+            WHERE e.notes LIKE ?
+        """, ("%ESTUDA_TEMPLATE_V1%",))
         links = []
         for m in models:
             for row in db.q(
