@@ -333,5 +333,6 @@ def test_aprofundamento_pedagogico_preserva_dados_do_aluno():
     lesson = response["lesson"]
     assert "Aprofundamento 2.2" in lesson["body"]
     assert "Bit I/G" in lesson["body"] and "Bit U/L" in lesson["body"]
-    assert lesson["editorial_revision"] == "2.2-editorial-01"
+    from conteudo.aprofundamentos import REVISION
+    assert lesson["editorial_revision"] == REVISION
     assert response["done"] is False
