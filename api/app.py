@@ -20,7 +20,8 @@ STATIC_DIR = os.getenv("STATIC_DIR", os.path.join(os.path.dirname(__file__), "..
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder=None)
-    if len(os.getenv("APP_SECRET", "")) < 32:
+    app.config["SECRET_FROM_ENV"] = len(os.getenv("APP_SECRET", "")) >= 40
+    if not app.config["SECRET_FROM_ENV"]:
         print("AVISO: defina APP_SECRET (32+ caracteres). Sem ela, todos saem da conta a cada reinício.", flush=True)
     secret_key()  # gera antes dos workers se APP_SECRET faltar, para todos usarem a mesma chave
     app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_UPLOAD_MB", "40")) * 1024 * 1024
@@ -65,7 +66,21 @@ def create_app() -> Flask:
 
     @app.get("/api/health")
     def health():
-        return {"ok": True}
+        """Verifica conexão, esquema e contagens, sem retornar credenciais."""
+        try:
+            with tx() as db:
+                counts = {name: db.val(f"SELECT COUNT(*) FROM {name}", (), 0)
+                          for name in ("users", "exams", "roles", "topics", "lessons", "questions", "flashcards")}
+            import db as dbmod
+            return {"ok": True, "version": "2.2",
+                    "database": "postgres" if dbmod.is_postgres() else "sqlite",
+                    "schema": dbmod.pg_schema() if dbmod.is_postgres() else None,
+                    "counts": counts, "ai": ai.status()["enabled"],
+                    "secret_ok": app.config["SECRET_FROM_ENV"]}
+        except Exception as exc:
+            app.logger.exception("Falha no health")
+            return jsonify({"ok": False, "version": "2.2",
+                            "error": type(exc).__name__}), 503
 
     @app.get("/api/config")
     def config():
