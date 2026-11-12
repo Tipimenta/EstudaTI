@@ -14,15 +14,16 @@ import ai
 from auth import ApiError, secret_key, check_password, clear_rate, current_user, hash_password, login_required, make_token, rate_limit
 from db import close_cached, now, tx
 from schema import migrate
+from version import APP_SECRET_MIN_LENGTH, VERSION, EDITORIAL_REVISION
 
 STATIC_DIR = os.getenv("STATIC_DIR", os.path.join(os.path.dirname(__file__), "..", "web", "dist"))
 
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder=None)
-    app.config["SECRET_FROM_ENV"] = len(os.getenv("APP_SECRET", "")) >= 40
+    app.config["SECRET_FROM_ENV"] = len(os.getenv("APP_SECRET", "")) >= APP_SECRET_MIN_LENGTH
     if not app.config["SECRET_FROM_ENV"]:
-        print("AVISO: defina APP_SECRET (32+ caracteres). Sem ela, todos saem da conta a cada reinício.", flush=True)
+        print(f"AVISO: defina APP_SECRET ({APP_SECRET_MIN_LENGTH}+ caracteres). Sem ela, todos saem da conta a cada reinício.", flush=True)
     secret_key()  # gera antes dos workers se APP_SECRET faltar, para todos usarem a mesma chave
     app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_UPLOAD_MB", "40")) * 1024 * 1024
 
@@ -36,6 +37,8 @@ def create_app() -> Flask:
         # o que falta. A transação é revertida por inteiro se ocorrer erro.
         seed_expansion_once()
         seed_extensive_once()
+    from conteudo.migracao_editorial import migrate_editorial_once
+    migrate_editorial_once()
     close_cached()  # com --preload, o processo principal não deve repassar a conexão aos workers
 
     from api_admin import bp as admin_bp
@@ -78,16 +81,25 @@ def create_app() -> Flask:
                 counts = {name: db.val(f"SELECT COUNT(*) FROM {name}", (), 0)
                           for name in ("users", "exams", "roles", "topics", "lessons", "questions", "flashcards")}
             import db as dbmod
-            from conteudo.aprofundamentos import REVISION, SUPPLEMENTS
-            return {"ok": True, "version": "2.2",
-                    "editorial": {"revision": REVISION, "supplements": len(SUPPLEMENTS)},
+            from conteudo.migracao_editorial import EDITORIAL_MIGRATION
+            with tx() as db:
+                migrated_count = db.val(
+                    "SELECT COUNT(*) FROM lessons WHERE body LIKE ?",
+                    ("%## Aprofundamento%",), 0)
+                migration_ok = bool(db.one(
+                    "SELECT version FROM schema_migrations WHERE version=?",
+                    (EDITORIAL_MIGRATION,)))
+            return {"ok": True, "version": VERSION,
+                    "editorial": {"revision": EDITORIAL_REVISION,
+                                  "supplements": migrated_count,
+                                  "storage": "database", "migration_applied": migration_ok},
                     "database": "postgres" if dbmod.is_postgres() else "sqlite",
                     "schema": dbmod.pg_schema() if dbmod.is_postgres() else None,
                     "counts": counts, "ai": ai.status()["enabled"],
                     "secret_ok": app.config["SECRET_FROM_ENV"]}
         except Exception as exc:
             app.logger.exception("Falha no health")
-            return jsonify({"ok": False, "version": "2.2",
+            return jsonify({"ok": False, "version": VERSION,
                             "error": type(exc).__name__}), 503
 
     @app.get("/api/config")
@@ -162,7 +174,7 @@ def create_app() -> Flask:
                 resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"
             return resp
         if not os.path.isfile(os.path.join(STATIC_DIR, "index.html")):
-            return ("Interface não compilada. Rode 'npm run build' em frontend/ ou use o Docker.", 503)
+            return ("Interface não compilada. Rode 'npm run build' em web/ ou use o Docker.", 503)
         resp = send_from_directory(STATIC_DIR, "index.html")
         resp.headers["Cache-Control"] = "no-cache"
         return resp
