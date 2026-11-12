@@ -66,7 +66,7 @@ export function AuthPage({ onLogin, config }: { onLogin: () => void; config: { h
 // ---------------------------------------------------------------------------
 // Escolher concurso e cargo
 // ---------------------------------------------------------------------------
-type Role = { id: number; name: string; level: string; exam_date: string | null; org: string; exam: string; banca: string; year: number | null; n_topics: number; n_lessons: number; subjects: string[]; description: string }
+type Role = { id: number; name: string; level: string; exam_date: string | null; org: string; exam: string; banca: string; year: number | null; n_topics: number; n_lessons: number; subjects: string[]; description: string; preparatory?: number }
 
 export function ChooseExam({ me, onDone }: { me: Me; onDone: () => void }) {
   const [q, setQ] = useState('')
@@ -96,6 +96,10 @@ export function ChooseExam({ me, onDone }: { me: Me; onDone: () => void }) {
         <button className="btn btn-ghost btn-sm" onClick={() => setPicked(null)}><Icon name="back" /> Trocar cargo</button>
         <div>
           <p className="muted">{picked.org}{picked.banca ? `, banca ${picked.banca}` : ''}</p>
+          {picked.preparatory ? <div className="notice" style={{ marginTop: 12 }}>
+            <strong>Trilha preparatória, não edital oficial.</strong> As matérias e pesos são uma referência inicial.
+            Confira o edital do concurso real quando publicado e ajuste sua trilha.
+          </div> : null}
           <h1 style={{ marginTop: 6 }}>{picked.name}</h1>
         </div>
         <div className="panel pad-lg stack-lg">
@@ -124,8 +128,12 @@ export function ChooseExam({ me, onDone }: { me: Me; onDone: () => void }) {
       <div className="page-head">
         <div>
           <h1>{me.enrollments.length ? 'Trocar de concurso' : 'Para qual concurso você estuda?'}</h1>
-          <p>Escolha o cargo e a plataforma monta a trilha com todas as matérias do edital.</p>
+          <p>Escolha um concurso já cadastrado ou use um modelo pré-edital. A busca abaixo consulta <strong>somente o catálogo interno</strong>.</p>
         </div>
+      </div>
+      <div className="row wrap" style={{ marginBottom: 16, gap: 10 }}>
+        <a className="btn btn-primary" href="#/descobrir"><Icon name="questoes" /> Buscar publicações na internet</a>
+        <span className="small muted">Ou escolha uma trilha disponível abaixo.</span>
       </div>
       <input className="input" placeholder="Busque por órgão, cargo ou banca" value={q} onChange={e => setQ(e.target.value)} aria-label="Buscar concurso" style={{ marginBottom: 16 }} />
       {error && <ErrorBox message={error} onRetry={reload} />}
@@ -138,6 +146,7 @@ export function ChooseExam({ me, onDone }: { me: Me; onDone: () => void }) {
               <button key={r.id} className="list-row" onClick={() => { setPicked(r); setDate(r.exam_date || mine?.exam_date || '') }}>
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <span className="muted small" style={{ display: 'block' }}>{r.org}{r.banca ? `, ${r.banca}` : ''}{r.year ? ` (${r.year})` : ''}</span>
+                  {r.preparatory ? <span className="chip mark">Modelo pré-edital · não é vaga aberta</span> : null}
                   <strong style={{ display: 'block', fontSize: '1.08rem' }}>{r.name}</strong>
                   <span className="tiny muted">{plural(r.subjects.length, 'matéria', 'matérias')}, {plural(r.n_topics, 'tópico', 'tópicos')}, {coverage >= .99 ? 'todas as aulas prontas' : `${pct(coverage)} das aulas prontas`}</span>
                 </span>
@@ -148,7 +157,10 @@ export function ChooseExam({ me, onDone }: { me: Me; onDone: () => void }) {
           }) : <Empty title="Nenhum concurso encontrado">{me.user.is_admin ? 'Cadastre um concurso importando o edital.' : 'Peça ao administrador para cadastrar o seu concurso.'}</Empty>}
         </div>
       )}
-      {me.user.is_admin && <p className="small" style={{ marginTop: 16 }}>Não achou? <a href="#/admin/edital">Importe o edital em PDF</a> e a IA monta a estrutura.</p>}
+      <p className="small" style={{ marginTop: 16 }}>
+        Não achou? <a href="#/descobrir">Pesquise publicações recentes na internet</a>.
+        {me.user.is_admin && <> Também é possível <a href="#/admin/edital">importar o edital</a> para montar um concurso real.</>}
+      </p>
     </div>
   )
 }
