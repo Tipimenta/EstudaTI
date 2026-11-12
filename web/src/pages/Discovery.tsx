@@ -33,6 +33,7 @@ export function DiscoveryPage({ me }: { me: Me }) {
   const [org, setOrg] = useState('')
   const [role, setRole] = useState('')
   const [copyFrom, setCopyFrom] = useState('')
+  const [pdfLink, setPdfLink] = useState('')
   const [saving, setSaving] = useState(false)
   const toast = useToast()
 
@@ -79,6 +80,26 @@ export function DiscoveryPage({ me }: { me: Me }) {
         <a href="#/concurso" className="btn"><Icon name="trilha" /> Trilhas para estudar</a>
       </div>
 
+      {me.user.is_admin && <section className="panel pad stack" style={{ marginBottom: 18 }}>
+        <strong>Encontrou o edital oficial em PDF?</strong>
+        <p className="small muted">
+          Cole o link direto para o PDF no site do órgão ou da banca. A leitura por IA prepara
+          matérias e tópicos para conferência; o concurso só é criado quando você aprovar.
+        </p>
+        <div className="row wrap" style={{ gap: 10 }}>
+          <input className="input" type="url" value={pdfLink}
+            onChange={e => setPdfLink(e.target.value)}
+            placeholder="https://www.orgao.gov.br/edital.pdf"
+            aria-label="Link HTTPS do PDF do edital"
+            style={{ flex: '1 1 300px' }} />
+          <button className="btn btn-primary" disabled={!pdfLink.trim().startsWith('https://')}
+            onClick={() => go('/admin/edital?pdf=' + encodeURIComponent(pdfLink.trim()) +
+                            '&role=' + encodeURIComponent(role || term))}>
+            Extrair e revisar matérias
+          </button>
+        </div>
+        <span className="tiny muted">Links privados ou locais são bloqueados. Até 8 MiB; PDF com texto selecionável.</span>
+      </section>}
       <form className="panel pad stack" onSubmit={search} style={{ marginBottom: 20 }}>
         <div className="row wrap" style={{ gap: 12 }}>
           <label className="field" style={{ flex: '3 1 220px' }}>
@@ -176,6 +197,11 @@ export function DiscoveryPage({ me }: { me: Me }) {
           a existência de edital, e as matérias copiadas de um modelo precisam ser confrontadas com o edital.
         </div>
         <p className="small muted"><strong>Notícia:</strong> {selected.title}</p>
+        <p className="small muted">
+          Se a notícia trouxer o edital em PDF, cole o endereço no campo acima e selecione
+          <strong> Extrair e revisar matérias</strong>. Esse caminho usa o edital real em vez de
+          apenas copiar a grade genérica.
+        </p>
         <form className="stack" onSubmit={saveDraft}>
           <label className="field"><span>Órgão oficial (confirme na fonte)</span>
             <input required className="input" value={org} onChange={e => setOrg(e.target.value)}
