@@ -576,6 +576,9 @@ def grade_card(fid: int):
     if grade not in (0, 1, 2, 3):
         raise ApiError(400, "Nota inválida.")
     with tx() as db:
+        existing = db.one("SELECT id FROM flashcards WHERE id=? AND status='publicada'", (fid,))
+        if not existing:
+            raise ApiError(404, "Flashcard publicado não encontrado.")
         res = srs.schedule(db, g.user["id"], "f", fid, grade)
         planner.log_activity(db, g.user["id"], 1, 1)
     return res
