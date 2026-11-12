@@ -15,22 +15,22 @@ SUPPLEMENTS: dict[tuple[str, str], str] = {
 
 ### O que os dois primeiros bits do primeiro octeto significam?
 
-Observe o MAC de exemplo \`02:1A:2B:3C:4D:5E\`. Cada par é um octeto hexadecimal: \`02\` corresponde ao binário \`00000010\`. Além da divisão clássica de 24 bits do identificador organizacional (MA-L) e 24 bits de extensão administrada pelo titular, **os dois bits menos significativos do primeiro octeto** têm um significado especial em endereços Ethernet de 48 bits.
+Observe o MAC de exemplo `02:1A:2B:3C:4D:5E`. Cada par é um octeto hexadecimal: `02` corresponde ao binário `00000010`. Além da divisão clássica de 24 bits do identificador organizacional (MA-L) e 24 bits de extensão administrada pelo titular, **os dois bits menos significativos do primeiro octeto** têm um significado especial em endereços Ethernet de 48 bits.
 
-- **Bit I/G**, o de menor valor (posição 0, máscara hexadecimal \`01\`): valor 0 representa endereço **individual/unicast**, destinado a uma interface; valor 1 representa endereço de **grupo**, como multicast ou broadcast.
-- **Bit U/L**, o segundo de menor valor (posição 1, máscara \`02\`): valor 0 indica endereço de administração **universal**; valor 1 indica administração **local**. Isso não prova qual fabricante produziu o equipamento.
+- **Bit I/G**, o de menor valor (posição 0, máscara hexadecimal `01`): valor 0 representa endereço **individual/unicast**, destinado a uma interface; valor 1 representa endereço de **grupo**, como multicast ou broadcast.
+- **Bit U/L**, o segundo de menor valor (posição 1, máscara `02`): valor 0 indica endereço de administração **universal**; valor 1 indica administração **local**. Isso não prova qual fabricante produziu o equipamento.
 
-Faça a conta: \`02\` hexadecimal = \`00000010\` binário. O último bit (à direita) é 0: individual. O penúltimo é 1: local. Compare \`00\` = \`00000000\` (individual, universal) e \`01\` = \`00000001\` (grupo). O broadcast Ethernet é \`FF:FF:FF:FF:FF:FF\`: todos os bits em 1. Ele é um tipo especial de endereço de grupo, usado para difundir um quadro no segmento apropriado.
+Faça a conta: `02` hexadecimal = `00000010` binário. O último bit (à direita) é 0: individual. O penúltimo é 1: local. Compare `00` = `00000000` (individual, universal) e `01` = `00000001` (grupo). O broadcast Ethernet é `FF:FF:FF:FF:FF:FF`: todos os bits em 1. Ele é um tipo especial de endereço de grupo, usado para difundir um quadro no segmento apropriado.
 
 ### Como saber qual é o MAC do destinatário?
 
-Considere computador \`192.168.10.20/24\` e servidor \`192.168.20.30/24\`. Os IPs estão em redes diferentes. O pacote IP continua endereçado ao servidor, mas o **primeiro quadro Ethernet** vai ao MAC do **gateway local**, não ao MAC remoto. No IPv4, a estação pode usar ARP para descobrir o MAC do gateway; o switch aprende a localização dos MACs observando o endereço **de origem** dos quadros recebidos. A tabela do switch associa MAC, porta e, conforme o equipamento, VLAN. Já a cache ARP da estação associa IPv4 e MAC: são tabelas diferentes.
+Considere computador `192.168.10.20/24` e servidor `192.168.20.30/24`. Os IPs estão em redes diferentes. O pacote IP continua endereçado ao servidor, mas o **primeiro quadro Ethernet** vai ao MAC do **gateway local**, não ao MAC remoto. No IPv4, a estação pode usar ARP para descobrir o MAC do gateway; o switch aprende a localização dos MACs observando o endereço **de origem** dos quadros recebidos. A tabela do switch associa MAC, porta e, conforme o equipamento, VLAN. Já a cache ARP da estação associa IPv4 e MAC: são tabelas diferentes.
 
 ### Exceção que cai em concurso
 
 A regra "três octetos do fabricante + três da placa" explica blocos MA-L, mas não todos os endereços. A IEEE também atribui MA-M (prefixo de 28 bits) e MA-S (36 bits). Além disso, celulares e notebooks podem usar endereços aleatórios/localmente administrados para privacidade. Não tente identificar fabricante ou pessoa pela metade inicial de qualquer MAC sem verificar o contexto.
 
-**Teste de compreensão:** Em \`02:11:22:33:44:55\`, o \`02\` sinaliza endereço individual ou de grupo? Universal ou local? Resposta: individual e local, pois seus bits menos significativos são 0 e 1, respectivamente. Dizer que \`11:22\` identifica obrigatoriamente o fabricante seria injustificado.
+**Teste de compreensão:** Em `02:11:22:33:44:55`, o `02` sinaliza endereço individual ou de grupo? Universal ou local? Resposta: individual e local, pois seus bits menos significativos são 0 e 1, respectivamente. Dizer que `11:22` identifica obrigatoriamente o fabricante seria injustificado.
 
 **Referências técnicas:** IEEE Registration Authority — *MAC Addresses*; RFC 9542, sobre uso de parâmetros IEEE.
 """,
@@ -59,7 +59,7 @@ Enunciado: "Após a atualização, 80% dos relatórios foram entregues no prazo"
     ("Raciocínio Lógico", "Proposições e implicação"): """
 ## Aprofundamento 2.2 — condicional, contrapositiva e tabela-verdade sem decorar
 
-Defina \`P\`: "o usuário tem permissão" e \`Q\`: "a aplicação libera o acesso". A frase "**Se P, então Q**" (\`P → Q\`) só é **falsa** quando P é verdadeira e Q é falsa: a promessa condicional foi descumprida. Se P for falsa, a frase não prometeu o que acontece, então o condicional material é considerado verdadeiro, mesmo que Q também seja falso. É uma regra de lógica proposicional, não uma previsão causal do mundo.
+Defina `P`: "o usuário tem permissão" e `Q`: "a aplicação libera o acesso". A frase "**Se P, então Q**" (`P → Q`) só é **falsa** quando P é verdadeira e Q é falsa: a promessa condicional foi descumprida. Se P for falsa, a frase não prometeu o que acontece, então o condicional material é considerado verdadeiro, mesmo que Q também seja falso. É uma regra de lógica proposicional, não uma previsão causal do mundo.
 
 | P | Q | P → Q |
 |---|---|---|
@@ -68,13 +68,13 @@ Defina \`P\`: "o usuário tem permissão" e \`Q\`: "a aplicação libera o acess
 | F | V | V |
 | F | F | V |
 
-A **contrapositiva** de \`P → Q\` é \`¬Q → ¬P\`: "se a aplicação não libera o acesso, então o usuário não tem permissão". As duas têm o mesmo valor lógico em todas as linhas da tabela. A **recíproca** \`Q → P\` ("se liberou, então tem permissão") não é equivalente: aplicações podem ter erro e liberar acesso indevido. A **inversa** \`¬P → ¬Q\` também não é equivalente em geral.
+A **contrapositiva** de `P → Q` é `¬Q → ¬P`: "se a aplicação não libera o acesso, então o usuário não tem permissão". As duas têm o mesmo valor lógico em todas as linhas da tabela. A **recíproca** `Q → P` ("se liberou, então tem permissão") não é equivalente: aplicações podem ter erro e liberar acesso indevido. A **inversa** `¬P → ¬Q` também não é equivalente em geral.
 
-**Negação correta:** negar \`P → Q\` é afirmar \`P ∧ ¬Q\`: "o usuário tem permissão **e** a aplicação não libera". Não é "se não P, então não Q".
+**Negação correta:** negar `P → Q` é afirmar `P ∧ ¬Q`: "o usuário tem permissão **e** a aplicação não libera". Não é "se não P, então não Q".
 
 **Exemplo de prova:** "Se o backup foi testado, então há relatório de restauração". Sabemos que **não há relatório**. Pela contrapositiva, podemos concluir **que o backup não foi testado**, desde que a condicional seja premissa verdadeira do problema. Não confunda essa conclusão lógica com verificação real de uma organização: na realidade um relatório pode existir em outro lugar ou ter sido perdido.
 
-**Confira sozinho:** Se \`P=F\` e \`Q=V\`, quanto vale \`P → Q\`? Verdadeiro. Qual é o único caso falso? \`P=V\` e \`Q=F\`.
+**Confira sozinho:** Se `P=F` e `Q=V`, quanto vale `P → Q`? Verdadeiro. Qual é o único caso falso? `P=V` e `Q=F`.
 """,
     ("Legislação e Governo Digital", "LGPD e administração pública"): """
 ## Aprofundamento 2.2 — identifique o agente e a finalidade antes da base legal
@@ -120,11 +120,11 @@ Um **programa** é código armazenado; **processo** é uma instância em execuç
 
 ### Teste de uma falha sem adivinhar
 
-Se uma aplicação não abre, separe: (1) rede alcança o host? (2) processo existe? (3) porta está escutando? (4) serviço responde ao protocolo esperado? (5) o usuário tem permissão? Em Linux, \`systemctl status nome\` mostra estado gerenciado; \`journalctl -u nome\` mostra registros pertinentes; \`ss -lntp\` ajuda a ver sockets TCP em escuta. Não use um comando como prova de todos os estágios. Log contém eventos registrados, mas sua ausência não prova que evento nunca ocorreu.
+Se uma aplicação não abre, separe: (1) rede alcança o host? (2) processo existe? (3) porta está escutando? (4) serviço responde ao protocolo esperado? (5) o usuário tem permissão? Em Linux, `systemctl status nome` mostra estado gerenciado; `journalctl -u nome` mostra registros pertinentes; `ss -lntp` ajuda a ver sockets TCP em escuta. Não use um comando como prova de todos os estágios. Log contém eventos registrados, mas sua ausência não prova que evento nunca ocorreu.
 
 ### Leia permissões sem decorar
 
-\`-rwxr-x---\` significa arquivo comum (primeiro caractere \`-\`); dono \`rwx\` = 4+2+1=7; grupo \`r-x\` = 4+0+1=5; outros \`---\`=0. Portanto modo \`750\`. Em diretório, \`x\` significa atravessar/acessar entradas, não "executar diretório" como programa. O acesso também pode depender de ACLs, políticas MAC de segurança (SELinux/AppArmor), montagem e identidade efetiva.
+`-rwxr-x---` significa arquivo comum (primeiro caractere `-`); dono `rwx` = 4+2+1=7; grupo `r-x` = 4+0+1=5; outros `---`=0. Portanto modo `750`. Em diretório, `x` significa atravessar/acessar entradas, não "executar diretório" como programa. O acesso também pode depender de ACLs, políticas MAC de segurança (SELinux/AppArmor), montagem e identidade efetiva.
 
 **Cuidado:** VM executa sistema operacional convidado e pode compartilhar hardware via hipervisor; contêiner Linux compartilha kernel do host e isola processos. Snapshot local não substitui backup testado.
 
@@ -152,21 +152,21 @@ Funcionário autenticado abre laudo de outro setor. A falha principal é de **au
     ("Banco de Dados e SQL", "Modelagem relacional e índices"): """
 ## Aprofundamento 2.2 — chave, cardinalidade e JOIN com contagem correta
 
-Considere duas tabelas: \`clientes(id, nome)\` e \`pedidos(id, cliente_id, total)\`. \`id\` de clientes é chave primária: identifica cada linha. \`cliente_id\` em pedidos é chave estrangeira: referencia o cliente. Um cliente pode ter zero, um ou vários pedidos; cada pedido neste modelo está associado a um cliente. Isso define relação **um para muitos (1:N)**.
+Considere duas tabelas: `clientes(id, nome)` e `pedidos(id, cliente_id, total)`. `id` de clientes é chave primária: identifica cada linha. `cliente_id` em pedidos é chave estrangeira: referencia o cliente. Um cliente pode ter zero, um ou vários pedidos; cada pedido neste modelo está associado a um cliente. Isso define relação **um para muitos (1:N)**.
 
 ### Construa dados mínimos
 
-Clientes: \`(1, Ana)\`, \`(2, Bruno)\`, \`(3, Carla)\`. Pedidos: \`(10, 1, 100)\`, \`(11, 1, 50)\`, \`(12, 2, 80)\`. Ana aparece duas vezes num \`INNER JOIN\`, Bruno uma, Carla nenhuma. Isso não é duplicação acidental: o resultado está na granularidade de **pedido**, não cliente.
+Clientes: `(1, Ana)`, `(2, Bruno)`, `(3, Carla)`. Pedidos: `(10, 1, 100)`, `(11, 1, 50)`, `(12, 2, 80)`. Ana aparece duas vezes num `INNER JOIN`, Bruno uma, Carla nenhuma. Isso não é duplicação acidental: o resultado está na granularidade de **pedido**, não cliente.
 
-\`SELECT c.nome, COUNT(p.id) FROM clientes c LEFT JOIN pedidos p ON p.cliente_id=c.id GROUP BY c.id,c.nome\` devolve 2, 1 e 0. **Por que \`COUNT(p.id)\` e não \`COUNT(*)\`?** Porque o LEFT JOIN preserva uma linha de Carla com campos de pedido \`NULL\`; \`COUNT(*)\` contaria essa linha como 1. \`COUNT(p.id)\` ignora o \`NULL\`.
+`SELECT c.nome, COUNT(p.id) FROM clientes c LEFT JOIN pedidos p ON p.cliente_id=c.id GROUP BY c.id,c.nome` devolve 2, 1 e 0. **Por que `COUNT(p.id)` e não `COUNT(*)`?** Porque o LEFT JOIN preserva uma linha de Carla com campos de pedido `NULL`; `COUNT(*)` contaria essa linha como 1. `COUNT(p.id)` ignora o `NULL`.
 
 ### Onde o índice ajuda?
 
-Um índice B-tree em \`pedidos(cliente_id)\` pode ajudar a localizar pedidos do cliente. Mas é estrutura adicional: ocupa espaço e impõe trabalho em inserções/atualizações. O otimizador pode escolher varredura completa se espera retornar muitas linhas. **Índice não corrige relacionamento errado** e não garante consulta mais rápida em todas as situações.
+Um índice B-tree em `pedidos(cliente_id)` pode ajudar a localizar pedidos do cliente. Mas é estrutura adicional: ocupa espaço e impõe trabalho em inserções/atualizações. O otimizador pode escolher varredura completa se espera retornar muitas linhas. **Índice não corrige relacionamento errado** e não garante consulta mais rápida em todas as situações.
 
 ### Anomalia de atualização
 
-Se você copiar o telefone da Ana em cada pedido, atualizar um pedido e esquecer outro cria dados contraditórios. Separar \`clientes\` e \`pedidos\` evita essa repetição. É parte da motivação da normalização.
+Se você copiar o telefone da Ana em cada pedido, atualizar um pedido e esquecer outro cria dados contraditórios. Separar `clientes` e `pedidos` evita essa repetição. É parte da motivação da normalização.
 
 **Teste:** quantas linhas retorna um INNER JOIN de três pedidos com clientes? Três. Quantos clientes diferentes aparecem? Dois. Sem distinguir essas perguntas, um relatório pode mostrar indicadores incorretos.
 """,
@@ -181,7 +181,7 @@ Para o fluxo de senha, teste: (1) opção válida gera senha única; (2) requisi
 
 ### Git e deploy são três momentos
 
-\`git add\` prepara conteúdo para o commit (staging); \`git commit\` grava snapshot no histórico local; \`git push\` envia commits ao repositório remoto. Nenhum desses comandos **garante** que o site foi publicado. O pipeline CI pode executar testes e build; o deploy precisa terminar; e a verificação pós-publicação deve confirmar versão, endpoints e comportamento no ambiente real. Um commit com testes aprovados pode falhar no banco de produção por configuração incorreta.
+`git add` prepara conteúdo para o commit (staging); `git commit` grava snapshot no histórico local; `git push` envia commits ao repositório remoto. Nenhum desses comandos **garante** que o site foi publicado. O pipeline CI pode executar testes e build; o deploy precisa terminar; e a verificação pós-publicação deve confirmar versão, endpoints e comportamento no ambiente real. Um commit com testes aprovados pode falhar no banco de produção por configuração incorreta.
 
 ### Exemplo de rastreabilidade
 
