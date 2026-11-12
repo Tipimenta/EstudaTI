@@ -450,10 +450,18 @@ def answer(qid: int):
     seconds = max(0, min(3600, int(b.get("seconds") or 0)))
     context = b.get("context") if b.get("context") in ("treino", "revisao") else "treino"
     with tx() as db:
-        q = db.one(f"{Q_SELECT} WHERE q.id=?", (qid,))
+        q = db.one(f"{Q_SELECT} WHERE q.id=? AND q.status='publicada'", (qid,))
         if not q:
-            raise ApiError(404, "Questão não encontrada.")
-        correct = 1 if chosen and chosen == q["answer"] else 0
+            raise ApiError(404, "Questão publicada não encontrada.")
+        if q["kind"] == "multipla":
+            valid = "ABCDE"[:len(loads(q["options"], []))]
+        elif q["kind"] == "certo_errado":
+            valid = "CE"
+        else:
+            raise ApiError(422, "Tipo de questão desconhecido.")
+        if chosen not in valid:
+            raise ApiError(400, "Escolha uma alternativa válida antes de responder.")
+        correct = 1 if chosen == q["answer"] else 0
         if q["answer"] == "X":  # anulada: qualquer resposta conta como certa
             correct = 1
         db.insert("answers", {"user_id": g.user["id"], "question_id": qid, "chosen": chosen or "-",
@@ -470,14 +478,17 @@ def answer(qid: int):
 def explain(qid: int):
     with tx() as db:
         q = db.one("SELECT * FROM questions WHERE id=? AND status='publicada'", (qid,))
-        already_answered = bool(db.val(
-            "SELECT COUNT(*) FROM answers WHERE user_id=? AND question_id=?",
-            (g.user["id"], qid), 0)) if q else False
+        latest = db.one(
+            "SELECT chosen FROM answers WHERE user_id=? AND question_id=? ORDER BY id DESC LIMIT 1",
+            (g.user["id"], qid),
+        ) if q else None
     if not q:
         raise ApiError(404, "Questão não encontrada.")
-    if not already_answered:
+    if not latest:
         raise ApiError(409, "Responda à questão antes de consultar a explicação.")
-    chosen = str(body().get("chosen", "")).strip().upper()[:1]
+    # Não aceite uma alternativa forjada no corpo da requisição:
+    # o feedback deve corresponder à resposta efetivamente registrada.
+    chosen = str(latest["chosen"] or "").strip().upper()[:1]
     if body().get("use_ai") is True:
         if not ai.status()["enabled"]:
             raise ApiError(503, "A IA não está configurada. A explicação autoral continua disponível.")
