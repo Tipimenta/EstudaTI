@@ -5,7 +5,7 @@ import { FlashcardSession, PracticeSession, QuestionCard, type Card, type Questi
 
 type TopicData = {
   id: number; name: string; subject: string; subject_id: number; done: boolean; notes: string; ai: boolean
-  lesson: { body: string; summary: string; minutes: number; origin: string } | null
+  lesson: { body: string; summary: string; minutes: number; origin: string; editorial_revision?: string } | null
   stats: { status: string; accuracy: number | null; answered: number }
   n_questions: number; n_cards: number
   nav: { prev: { id: number; name: string } | null; next: { id: number; name: string } | null; index?: number; total?: number }
@@ -44,8 +44,19 @@ export function TopicPage({ id }: { id: number }) {
         <span className={`chip ${data.stats.status === 'dominado' ? 'ok' : data.stats.status === 'reforco' ? 'bad' : data.stats.status === 'estudando' ? 'ink' : ''}`}>{STATUS_LABEL[data.stats.status]}</span>
         {data.stats.answered > 0 && <span className="chip">{pct(data.stats.accuracy)} de acerto em {data.stats.answered}</span>}
         {data.lesson?.origin === 'ia' && <span className="chip mark">Aula gerada por IA</span>}
+        {data.lesson?.editorial_revision && <span className="chip ok" title="Explicação específica acrescentada sem alterar seu progresso">Aprofundamento 2.2</span>}
         {data.ai && data.lesson && <button className="btn btn-sm" style={{ marginLeft: 'auto' }} onClick={() => setTutor(true)}><Icon name="chat" /> Tirar dúvida</button>}
       </div>
+      {data.stats.status === 'reforco' && (
+        <div className="notice bad" style={{ marginTop: 16, marginBottom: 12 }}>
+          <strong>Este assunto pede reforço.</strong> Seu histórico de questões indica dificuldade.
+          Releia o mecanismo passo a passo e depois refaça questões diferentes para comprovar compreensão.
+          <div className="row wrap" style={{ marginTop: 10 }}>
+            <button className="btn btn-sm" onClick={() => setTab('aula')}>Reestudar a aula</button>
+            <button className="btn btn-sm" onClick={() => setTab('questoes')}>Praticar novamente</button>
+          </div>
+        </div>
+      )}
       <div className="topic-tabs" role="tablist">
         {tabs.map(([k, l]) => <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>)}
       </div>
