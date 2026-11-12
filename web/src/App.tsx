@@ -62,7 +62,7 @@ function Root() {
   else if (path === '/conta') page = <Account me={me} onChange={loadMe} />
   else if (me.user.is_admin && path === '/admin') page = <AdminHome />
   else if (me.user.is_admin && path === '/admin/qualidade') page = <ContentQualityPage />
-  else if (me.user.is_admin && path === '/admin/edital') page = <AdminEdital />
+  else if (me.user.is_admin && path.split('?')[0] === '/admin/edital') page = <AdminEdital />
   else if (me.user.is_admin && path === '/admin/prova') page = <AdminProva />
   else if (me.user.is_admin && path.startsWith('/admin/questoes')) page = <AdminQuestions key={path} prova={queryParam('prova')} />
   else if (me.user.is_admin && (m = match('/admin/cargo/:id', path))) page = <AdminRole key={m.id} id={Number(m.id)} />
