@@ -105,6 +105,11 @@ class DB:
 _local = threading.local()
 
 
+def pg_schema() -> str:
+    """Isola tabelas do Estuda 2.2 no esquema dedicado do PostgreSQL."""
+    return re.sub(r"[^a-z0-9_]", "", os.getenv("PG_SCHEMA", "estuda").lower()) or "estuda"
+
+
 def _pg_conn():
     """Reaproveita uma conexão por thread: abrir conexão TLS a cada pedido é lento em banco na nuvem.
     Bancos como o Neon encerram conexões ociosas, então testamos antes de reutilizar."""
@@ -124,6 +129,8 @@ def _pg_conn():
             except Exception:
                 pass
     conn = psycopg.connect(database_url(), connect_timeout=15, prepare_threshold=None)  # compatível com pooler (PgBouncer)
+    conn.execute(f"CREATE SCHEMA IF NOT EXISTS {pg_schema()}")
+    conn.commit()
     # Tabelas num esquema próprio: convive com as tabelas antigas do EstudaTI no mesmo banco sem conflito.
     schema = re.sub(r"[^a-z0-9_]", "", os.getenv("PG_SCHEMA", "estuda").lower()) or "estuda"
     conn.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
@@ -159,6 +166,9 @@ def tx():
     """Uma transação por bloco: commit no fim, rollback em caso de erro."""
     db = _connect()
     try:
+        if db.pg:
+            # Definir o schema a cada transação: compatível com Neon pooler/PgBouncer.
+            db.x(f"SET LOCAL search_path TO {pg_schema()}")
         yield db
         db.commit()
     except Exception:
