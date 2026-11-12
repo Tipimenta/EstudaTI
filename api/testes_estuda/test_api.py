@@ -531,3 +531,54 @@ def test_estuda_noticia_cria_rascunho_restrito_ao_admin():
     # Não se publica automaticamente nem expõe o cargo no catálogo do aluno.
     visible = c.get("/api/catalog?q=Analista+de+TI+de+teste", headers=ALUNO).get_json()["roles"]
     assert all(x["id"] != result["role_id"] for x in visible)
+
+
+def test_estuda_curriculo_extensivo_tem_aulas_distintas_e_flashcards_uteis():
+    from conteudo.curso_extensivo import build_pack, stats
+    pack = build_pack()
+    info = stats()
+    assert info["subjects"] == 19
+    assert info["topics"] >= 160
+    assert info["flashcards"] >= 640
+    seen = set()
+    for subject in pack["subjects"]:
+        for topic in subject["topics"]:
+            key = (subject["name"], topic["name"])
+            assert key not in seen
+            seen.add(key)
+            lesson = topic["lesson"]["body"]
+            assert "## Como funciona" in lesson
+            assert "## Exemplo aplicado" in lesson
+            assert "## Limites" in lesson
+            assert len(lesson.split()) >= 160, key
+            assert len(topic["flashcards"]) == 4
+            assert len({card["front"] for card in topic["flashcards"]}) == 4
+            assert all(len(card["back"]) >= 75 for card in topic["flashcards"])
+            assert all(card["origin"] == "ia" for card in topic["flashcards"])
+
+
+def test_estuda_curriculo_extensivo_instalacao_independente_de_contas():
+    from conteudo.loader import EXTENSIVE_KEY, seed_extensive_once
+    from db import tx
+    with tx() as db:
+        stamp = db.val("SELECT COUNT(*) FROM schema_migrations WHERE version=?",
+                       (EXTENSIVE_KEY,), 0)
+        assert stamp == 1
+        before = {
+            "topics": db.val("SELECT COUNT(*) FROM topics", (), 0),
+            "cards": db.val("SELECT COUNT(*) FROM flashcards", (), 0),
+            "answers": db.val("SELECT COUNT(*) FROM answers", (), 0),
+        }
+        newer = db.val("SELECT COUNT(*) FROM topics WHERE name LIKE '% · %'", (), 0)
+        assert newer >= 160
+    assert seed_extensive_once()["installed"] is False
+    with tx() as db:
+        assert db.val("SELECT COUNT(*) FROM topics", (), 0) == before["topics"]
+        assert db.val("SELECT COUNT(*) FROM flashcards", (), 0) == before["cards"]
+        assert db.val("SELECT COUNT(*) FROM answers", (), 0) == before["answers"]
+        assert db.val("SELECT COUNT(*) FROM role_topics rt "
+                      "JOIN roles r ON r.id=rt.role_id JOIN exams e ON e.id=r.exam_id "
+                      "WHERE e.notes LIKE '%ESTUDA_TEMPLATE_V1%' "
+                      "AND rt.topic_id IN (SELECT id FROM topics WHERE name LIKE '% · %')",
+                      (), 0) >= 160
+
