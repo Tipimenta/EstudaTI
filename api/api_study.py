@@ -162,6 +162,51 @@ def get_trail():
         return planner.trail(db, g.user["id"], e["role_id"])
 
 
+@bp.get("/account/export")
+@login_required
+def export_my_study():
+    """Cópia portátil somente leitura do histórico da conta autenticada.
+
+    Não inclui senha, hash, tokens, segredos do banco, nem dados de outros usuários.
+    A exportação não modifica nenhuma linha do PostgreSQL.
+    """
+    uid = g.user["id"]
+    with tx() as db:
+        profile = db.one(
+            "SELECT id, email, name, created_at FROM users WHERE id=?", (uid,)
+        )
+        collections = {
+            "enrollments": db.q("SELECT * FROM enrollments WHERE user_id=? ORDER BY id", (uid,)),
+            "lesson_progress": db.q(
+                "SELECT topic_id, done_at, notes FROM lesson_progress WHERE user_id=? ORDER BY topic_id",
+                (uid,)
+            ),
+            "answers": db.q(
+                "SELECT question_id, chosen, correct, seconds, context, created_at "
+                "FROM answers WHERE user_id=? ORDER BY id", (uid,)
+            ),
+            "reviews": db.q(
+                "SELECT item_type, item_id, due, interval_days, ease, reps, lapses, last_at "
+                "FROM reviews WHERE user_id=? ORDER BY item_type, item_id", (uid,)
+            ),
+            "study_log": db.q(
+                "SELECT day, minutes, items FROM study_log WHERE user_id=? ORDER BY day", (uid,)
+            ),
+            "attempts": db.q(
+                "SELECT role_id, prior_exam_id, title, style, question_ids, responses, "
+                "duration_min, started_at, finished_at, result FROM attempts "
+                "WHERE user_id=? ORDER BY id", (uid,)
+            ),
+            "discursive_answers": db.q(
+                "SELECT discursive_id, text, feedback, score, created_at "
+                "FROM discursive_answers WHERE user_id=? ORDER BY id", (uid,)
+            ),
+        }
+    return {"format": "estuda-study-export-v1", "version": "2.2",
+            "exported_at": now(), "profile": profile, "data": collections,
+            "note": "Cópia individual; não é restauração automática. Guarde em local seguro."}
+
+
 @bp.get("/topics/<int:tid>")
 @login_required
 def topic(tid: int):
