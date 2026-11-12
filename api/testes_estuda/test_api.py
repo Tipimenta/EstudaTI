@@ -505,6 +505,7 @@ def test_estuda_busca_externa_sem_confundir_noticia_com_edital(monkeypatch):
 
 
 def test_estuda_noticia_cria_rascunho_restrito_ao_admin():
+    from db import tx
     body = {
         "org": "Órgão de teste",
         "role": "Analista de TI de teste",
