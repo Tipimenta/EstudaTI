@@ -299,19 +299,32 @@ def parse_answer_key(text: str) -> dict[int, str]:
 
 
 def explain_answer(question: dict, chosen: str) -> str:
+    """Explicação minuciosa por alternativa, somente quando o aluno solicita IA."""
     opts = "\n".join(f"{chr(65 + i)}) {o}" for i, o in enumerate(question.get("options") or []))
-    prompt = f"""Um aluno errou ou ficou em dúvida nesta questão de concurso.
+    rationales = question.get("rationales") or []
+    prompt = f"""O aluno já respondeu a uma questão e pediu uma explicação aprofundada.
 Enunciado: {question['statement']}
 {opts}
-Gabarito: {question['answer']}
-Resposta do aluno: {chosen or '(não respondeu)'}
-Explicação já cadastrada: {question.get('explanation') or '(nenhuma)'}
+Gabarito armazenado na plataforma: {question['answer']}
+Resposta do aluno: {chosen or '(não informada)'}
+Explicação cadastrada: {question.get('explanation') or '(não cadastrada)'}
+Justificativas cadastradas por alternativa: {json.dumps(rationales, ensure_ascii=False)}
 
-Explique como um professor paciente, em Markdown curto (até 250 palavras): por que o gabarito está certo,
-qual o provável raciocínio que levou o aluno ao erro, e uma dica para não errar mais. Se o gabarito parecer
-incorreto, diga isso com cuidado."""
-    return complete(prompt, 1500)
+Produza Markdown com estas partes:
+1. **Conhecimentos prévios**: defina os conceitos necessários, sem siglas soltas.
+2. **Resolução passo a passo**: mostre o mecanismo, cada conta ou regra aplicável e o raciocínio.
+3. **Alternativa por alternativa**: explique A, B, C, D, E conforme as opções que existirem,
+   dizendo a condição que torna cada uma correta ou incorreta. Evite repetição genérica.
+4. **Erro provável e correção**: explique o que a resposta do aluno confundiu, sem adivinhar
+   seu estado mental nem afirmar que ele escolheu algo que não escolheu.
+5. **Verificação**: proponha uma pergunta curta nova sem entregar de imediato a solução.
 
+Não invente fontes, gabaritos oficiais, artigos legais ou fatos que a questão não sustenta.
+Se o gabarito armazenado parecer errado ou ambíguo, sinalize e explique o conflito;
+não altere silenciosamente a resposta publicada. Não chame questões autorais de oficiais.
+Responda com profundidade útil e concisão (aprox. 450–700 palavras).
+"""
+    return complete(prompt, 3000)
 
 def tutor(subject: str, topic: str, lesson: str, question: str,
           mode: str = "passo_a_passo", history: list[dict] | None = None) -> str:
