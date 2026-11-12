@@ -129,12 +129,9 @@ def _pg_conn():
             except Exception:
                 pass
     conn = psycopg.connect(database_url(), connect_timeout=15, prepare_threshold=None)  # compatível com pooler (PgBouncer)
+    # Apenas criação de schema, sem SET search_path de SESSÃO.
+    # O search_path é definido exclusivamente via SET LOCAL em tx().
     conn.execute(f"CREATE SCHEMA IF NOT EXISTS {pg_schema()}")
-    conn.commit()
-    # Tabelas num esquema próprio: convive com as tabelas antigas do EstudaTI no mesmo banco sem conflito.
-    schema = re.sub(r"[^a-z0-9_]", "", os.getenv("PG_SCHEMA", "estuda").lower()) or "estuda"
-    conn.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
-    conn.execute(f"SET search_path TO {schema}")
     conn.commit()
     _local.pg = conn
     return conn
