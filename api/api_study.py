@@ -290,7 +290,7 @@ def topic_context(db, topic_id: int, user_id: int | None = None) -> dict:
         if r:
             role, banca, style = f"{r['name']} ({r['org']})", r["banca"], r["question_style"]
     lesson = db.one("SELECT body, origin FROM lessons WHERE topic_id=?", (topic_id,))
-    return {**t, "role": role, "banca": banca, "style": style, "lesson_body": (apply_supplement(t["subject"], t["name"], lesson) or {}).get("body", "")}
+    return {**t, "role": role, "banca": banca, "style": style, "lesson_body": (lesson or {}).get("body", "")}
 
 
 def generate_for_topic(topic_id: int, parts: list[str], user_id: int | None, n_questions: int = 8) -> dict:
