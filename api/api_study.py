@@ -507,6 +507,21 @@ def explain(qid: int):
     elif rationales and any(rationales):
         parts.extend(x for x in rationales if x)
     if parts:
+        # Todas as questões publicadas podem complementar a justificativa
+        # com trecho da aula correspondente. É recuperação textual, não IA.
+        if q.get("topic_id"):
+            with tx() as db:
+                context = topic_context(db, q["topic_id"])
+            lookup = q["statement"]
+            if q["kind"] == "multipla" and chosen in "ABCDE":
+                idx = ord(chosen) - ord("A")
+                if idx < len(options):
+                    lookup += " " + str(options[idx])
+            excerpt = answer_from_material(
+                context["name"], context["lesson_body"], lookup, "passo_a_passo"
+            )
+            if excerpt and not excerpt.startswith("Não encontrei"):
+                parts.append("### Reforce o conceito na aula\n\n" + excerpt)
         return {"explanation": "\n\n".join(parts), "source": "editorial", "ai_used": False}
     if not ai.status()["enabled"]:
         return {"explanation": "A questão ainda não possui justificativa detalhada cadastrada. Revise a explicação da aula e os conceitos do enunciado; não vamos inventar uma explicação.", "source": "pending", "ai_used": False}
