@@ -39,40 +39,88 @@ def role_structure(db: DB, role_id: int) -> list[dict]:
 
 
 def topic_stats(db: DB, user_id: int, topic_ids: list[int]) -> dict[int, dict]:
+    """Evidências de estudo e domínio; funciona também com 1–2 questões por tópico.
+
+    Não marca domínio só por reler ou repetir uma questão no mesmo dia.
+    Progresso existente, anotações e respostas permanecem intactos.
+    """
     if not topic_ids:
         return {}
     marks = ",".join("?" for _ in topic_ids)
-    stats = {tid: {"read": False, "answered": 0, "correct": 0} for tid in topic_ids}
-    for r in db.q(f"SELECT topic_id, done_at FROM lesson_progress WHERE user_id=? AND topic_id IN ({marks})", (user_id, *topic_ids)):
+    stats = {tid: {
+        "read": False, "answered": 0, "correct": 0, "attempts": 0,
+        "study_days": 0, "stable_cards": 0
+    } for tid in topic_ids}
+    for r in db.q(
+        f"SELECT topic_id, done_at FROM lesson_progress WHERE user_id=? "
+        f"AND topic_id IN ({marks})", (user_id, *topic_ids)
+    ):
         stats[r["topic_id"]]["read"] = bool(r["done_at"])
-    # Última resposta de cada questão (o que conta é o desempenho atual, não o histórico inteiro)
-    rows = db.q(
-        f"""SELECT q.topic_id, a.question_id, a.correct, a.id
+
+    # Mantém a última resposta por questão (domínio atual), mas exige
+    # evidências em mais de um dia para não inflar progresso por repetição.
+    last: dict[tuple[int, int], int] = {}
+    days: dict[int, set[str]] = {tid: set() for tid in topic_ids}
+    for r in db.q(
+        f"""SELECT q.topic_id, a.question_id, a.correct, a.created_at
             FROM answers a JOIN questions q ON q.id=a.question_id
             WHERE a.user_id=? AND q.topic_id IN ({marks})
-            ORDER BY a.id""",
-        (user_id, *topic_ids),
-    )
-    last: dict[int, tuple[int, int]] = {}
-    for r in rows:
-        last[r["question_id"]] = (r["topic_id"], r["correct"])
-    for _, (tid, ok) in last.items():
+            ORDER BY a.id""", (user_id, *topic_ids)
+    ):
+        tid = r["topic_id"]
+        stats[tid]["attempts"] += 1
+        if r["created_at"]:
+            days[tid].add(str(r["created_at"])[:10])
+        last[(tid, r["question_id"])] = int(r["correct"])
+
+    for (tid, _qid), ok in last.items():
         stats[tid]["answered"] += 1
         stats[tid]["correct"] += 1 if ok else 0
-    for s in stats.values():
-        n, c = s["answered"], s["correct"]
-        acc = c / n if n else None
-        s["accuracy"] = round(acc, 3) if acc is not None else None
-        if n >= 4 and acc is not None and acc < 0.5:
-            s["status"] = "reforco"
-        elif n >= 5 and acc is not None and acc >= 0.7 and (s["read"] or n >= 8):
-            s["status"] = "dominado"
-        elif s["read"] or n:
-            s["status"] = "estudando"
-        else:
-            s["status"] = "novo"
-    return stats
 
+    # Cartões estabilizados: pelo menos duas avaliações positivas
+    # registradas no algoritmo de repetição espaçada.
+    for r in db.q(
+        f"""SELECT f.topic_id, COUNT(*) AS stable
+            FROM reviews rv JOIN flashcards f
+              ON rv.item_type='f' AND rv.item_id=f.id
+            WHERE rv.user_id=? AND f.topic_id IN ({marks})
+              AND rv.reps>=2 AND rv.last_at IS NOT NULL
+            GROUP BY f.topic_id""", (user_id, *topic_ids)
+    ):
+        stats[r["topic_id"]]["stable_cards"] = int(r["stable"] or 0)
+
+    for tid, state in stats.items():
+        n, c = state["answered"], state["correct"]
+        acc = c / n if n else None
+        state["accuracy"] = round(acc, 3) if acc is not None else None
+        state["study_days"] = len(days[tid])
+        enough_practice = state["attempts"] >= 4 and state["study_days"] >= 2
+        mixed_evidence = n >= 2 or (n >= 1 and state["stable_cards"] >= 2)
+
+        if state["read"] and acc is not None and acc >= 0.75 and enough_practice and mixed_evidence:
+            state["status"] = "dominado"
+            state["next_step"] = "Mantenha a retenção com revisões espaçadas."
+        elif n >= 2 and acc is not None and acc < 0.5:
+            state["status"] = "reforco"
+            state["next_step"] = "Reestude o mecanismo e pratique o mesmo conceito com questões novas."
+        elif state["read"] or state["attempts"]:
+            state["status"] = "estudando"
+            if not state["read"]:
+                state["next_step"] = "Conclua a aula e retorne às questões."
+            elif not n:
+                state["next_step"] = "Resolva questões para verificar se compreendeu a aula."
+            elif acc is not None and acc < 0.75:
+                state["next_step"] = "Revise os erros e pratique para elevar o desempenho."
+            elif state["study_days"] < 2:
+                state["next_step"] = "Revise em outro dia: acerto imediato ainda não comprova retenção."
+            elif state["attempts"] < 4:
+                state["next_step"] = "Faça mais tentativas de recuperação, sem consultar o gabarito."
+            else:
+                state["next_step"] = "Revise dois flashcards ou pratique mais uma questão diferente."
+        else:
+            state["status"] = "novo"
+            state["next_step"] = "Comece pela aula: aprenda os termos antes das questões."
+    return stats
 
 def trail(db: DB, user_id: int, role_id: int) -> dict:
     subjects = role_structure(db, role_id)
