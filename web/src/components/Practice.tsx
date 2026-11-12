@@ -61,11 +61,11 @@ export function QuestionCard({ q, onAnswered, context = 'treino', aiEnabled }: {
   const [chosen, setChosen] = useState('')
   const [reveal, setReveal] = useState<Reveal | null>(null)
   const [busy, setBusy] = useState(false)
-  const [explain, setExplain] = useState<{ loading: boolean; text: string }>({ loading: false, text: '' })
+  const [explain, setExplain] = useState<{ loading: boolean; text: string; source: string }>({ loading: false, text: '', source: '' })
   const started = useRef(Date.now())
   const toast = useToast()
 
-  useEffect(() => { setChosen(''); setReveal(null); setExplain({ loading: false, text: '' }); started.current = Date.now() }, [q.id])
+  useEffect(() => { setChosen(''); setReveal(null); setExplain({ loading: false, text: '', source: '' }); started.current = Date.now() }, [q.id])
 
   async function submit() {
     if (!chosen || busy) return
@@ -77,12 +77,17 @@ export function QuestionCard({ q, onAnswered, context = 'treino', aiEnabled }: {
     } catch (e) { toast((e as Error).message, true) } finally { setBusy(false) }
   }
 
-  async function askWhy() {
-    setExplain({ loading: true, text: '' })
+  async function askWhy(useAI = false) {
+    setExplain({ loading: true, text: '', source: '' })
     try {
-      const r = await api<{ explanation: string }>(`/questions/${q.id}/explain`, { body: { chosen } })
-      setExplain({ loading: false, text: r.explanation })
-    } catch (e) { setExplain({ loading: false, text: '' }); toast((e as Error).message, true) }
+      const r = await api<{ explanation: string; source: string }>(`/questions/${q.id}/explain`, {
+        body: { chosen, use_ai: useAI },
+      })
+      setExplain({ loading: false, text: r.explanation, source: r.source })
+    } catch (e) {
+      setExplain({ loading: false, text: '', source: '' })
+      toast((e as Error).message, true)
+    }
   }
 
   // atalhos: letras para escolher, Enter para responder
@@ -117,11 +122,22 @@ export function QuestionCard({ q, onAnswered, context = 'treino', aiEnabled }: {
           {reveal.explanation && <Markdown text={reveal.explanation} className="small" />}
           {reveal.crowd?.answered && reveal.crowd.answered > 3 ? <p className="tiny muted" style={{ marginTop: 8 }}>{pct(reveal.crowd.accuracy)} de acerto entre {reveal.crowd.answered} respostas na plataforma.</p> : null}
           {!explain.text && (
-            <button className="btn btn-sm" style={{ marginTop: 12 }} onClick={askWhy} disabled={explain.loading}>
+            <button className="btn btn-sm" style={{ marginTop: 12 }} onClick={() => askWhy(false)} disabled={explain.loading}>
               {explain.loading ? <Spinner label="Explicando…" /> : <><Icon name="chat" /> Não entendi — explicar</>}
             </button>
           )}
-          {explain.text && <div className="panel pad" style={{ marginTop: 12 }}><Markdown text={explain.text} className="lesson small" /><p className="tiny muted" style={{ marginTop: 8 }}>Explicação do banco de questões; a IA é usada somente quando não há justificativa cadastrada e está configurada.</p></div>}
+          {explain.text && <div className="panel pad" style={{ marginTop: 12 }}>
+            <Markdown text={explain.text} className="lesson small" />
+            <p className="tiny muted" style={{ marginTop: 8 }}>
+              {explain.source === 'ai' ? 'Explicação por IA: confira informações sensíveis e fontes oficiais.' :
+                explain.source === 'editorial' ? 'Explicação autoral cadastrada — sem gastar créditos.' :
+                'Ainda não existe justificativa detalhada para esta questão.'}
+            </p>
+          </div>}
+          {aiEnabled && reveal && <button className="btn btn-sm btn-ghost"
+            style={{ marginTop: 10 }} disabled={explain.loading} onClick={() => askWhy(true)}>
+            <Icon name="spark" /> Explicar todas as alternativas com IA (usa créditos)
+          </button>}
         </div>
       )}
     </article>
