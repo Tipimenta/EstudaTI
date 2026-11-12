@@ -36,6 +36,34 @@ Para ligar a IA, copie `.env.example` para `.env` e preencha `AI_PROVIDER` e `AI
 
 Com Docker: `docker compose up -d --build` e acesse `http://localhost:8000`.
 
+
+## Currículo extensivo de concursos (módulos — novembro/2026)
+
+A expansão curricular acrescenta **163 aulas temáticas originais**, com teoria, mecanismo,
+exemplo aplicado, erros de prova e **652 flashcards** focados em conceitos distintos.
+Ela reutiliza as 19 disciplinas da versão 2.2 e mantém o conteúdo existente intacto.
+O catálogo principal passou de pelo menos 199 aulas para **362**, e de pelo menos
+664 flashcards para **1.316** (fora de pacotes adicionais já cadastrados).
+
+- Organização da trilha: **disciplina → módulo → aula**. Há busca por assunto,
+  filtros de pendências e reforço, e preservação de IDs e progresso.
+- Instalação idempotente: `content_estuda_curriculo_extensivo_v1`, transação única
+  no schema configurado (`estuda` no Neon), sem alterações no `public`.
+  Apenas trilhas preparatórias explicitamente identificadas recebem tópicos novos
+  automaticamente; concursos com edital real não têm a matriz modificada.
+- Revisão ativa: quatro cartões específicos por aula e perguntas de checagem
+  dentro da lição. **Não foram incluídas questões de banca sem origem verificada.**
+- Materiais comerciais de Qconcursos, Gran e Estratégia **não foram copiados**.
+  A arquitetura curricular usa apenas temas de ementas públicas, com texto novo.
+- Referências orientadoras (a incidência depende do edital): programas do
+  [AGEPAR 2026/Cebraspe](https://cdn.cebraspe.org.br/concursos/AGEPAR_PR_26/arquivos/C251C17ED42C0B63025B804A238C4360D2870C69CAF36F773EEA3F06E4D4D875.html)
+  e [TCU, concurso de auditoria TI, 2025](https://cdn.cebraspe.org.br/concursos/tcu_25_aufc/arquivos/E7654CC38F5A695DC0D66F524204FA152C4ECC9F05DF2F62E031A651E4735CEB.html).
+  Não significa que a plataforma reproduz o conteúdo completo de qualquer edital,
+  nem que uma trilha genérica corresponda a vagas abertas.
+- Os textos são autorais **produzidos com auxílio de IA** e exigem revisão editorial
+  adicional, principalmente referências legislativas e cálculos, antes de serem
+  considerados equivalentes em extensão/curadoria a um cursinho comercial.
+
 ## Qualidade editorial, privacidade e testes (2.2)
 
 - **169 de 169 tópicos** têm complementos específicos de explicação, exemplos e armadilhas, compostos em leitura pela API sem alteração de linhas do banco e sem alterar os IDs. A precisão das explicações continua sujeita a avaliação humana independente, especialmente em legislação e normas atualizáveis.
