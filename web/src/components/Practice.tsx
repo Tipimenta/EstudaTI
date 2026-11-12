@@ -116,12 +116,12 @@ export function QuestionCard({ q, onAnswered, context = 'treino', aiEnabled }: {
           <h3>{reveal.correct ? 'Você acertou.' : `Resposta certa: ${reveal.answer === 'X' ? 'questão anulada' : reveal.answer}`}</h3>
           {reveal.explanation && <Markdown text={reveal.explanation} className="small" />}
           {reveal.crowd?.answered && reveal.crowd.answered > 3 ? <p className="tiny muted" style={{ marginTop: 8 }}>{pct(reveal.crowd.accuracy)} de acerto entre {reveal.crowd.answered} respostas na plataforma.</p> : null}
-          {aiEnabled && !explain.text && (
+          {!explain.text && (
             <button className="btn btn-sm" style={{ marginTop: 12 }} onClick={askWhy} disabled={explain.loading}>
-              {explain.loading ? <Spinner label="Explicando…" /> : <><Icon name="chat" /> Não entendi, explica?</>}
+              {explain.loading ? <Spinner label="Explicando…" /> : <><Icon name="chat" /> Não entendi — explicar</>}
             </button>
           )}
-          {explain.text && <div className="panel pad" style={{ marginTop: 12 }}><Markdown text={explain.text} className="lesson small" /></div>}
+          {explain.text && <div className="panel pad" style={{ marginTop: 12 }}><Markdown text={explain.text} className="lesson small" /><p className="tiny muted" style={{ marginTop: 8 }}>Explicação do banco de questões; a IA é usada somente quando não há justificativa cadastrada e está configurada.</p></div>}
         </div>
       )}
     </article>
