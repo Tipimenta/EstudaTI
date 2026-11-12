@@ -134,7 +134,7 @@ export function md(text: string): string {
     }
     const h = line.match(/^(#{1,6})\s+(.*)$/)
     if (h) { const n = Math.min(4, Math.max(2, h[1].length)); out.push(`<h${n}>${inline(h[2].replace(/#+\s*$/, ''))}</h${n}>`); i++; continue }
-    if (/^\s*([-*_])\s*\1\s*\1[\s\1]*$/.test(line)) { out.push('<hr>'); i++; continue }
+    if (/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) { out.push('<hr>'); i++; continue }
     if (line.includes('|') && i + 1 < lines.length && isTableSep(lines[i + 1])) {
       const head = cells(line)
       i += 2
