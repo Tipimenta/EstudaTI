@@ -261,23 +261,47 @@ export function Trail() {
   const { data, error, loading, reload } = useApi<{ subjects: TrailSubject[]; progress: number; counts: Record<string, number> }>('/trail')
   const [open, setOpen] = useState<Record<number, boolean>>({})
   const [filter, setFilter] = useState<'todos' | 'pendentes' | 'reforco'>('todos')
+  const [search, setSearch] = useState('')
   const firstOpen = useMemo(() => data?.subjects.find(s => s.progress < 1)?.id, [data])
   if (loading && !data) return <PageLoading />
   if (error) return <div className="page"><ErrorBox message={error} onRetry={reload} /></div>
   if (!data) return null
-  const isOpen = (id: number) => open[id] ?? id === firstOpen
+  const keyword = search.trim().toLocaleLowerCase('pt-BR')
+  const isOpen = (id: number) => open[id] ?? (Boolean(keyword) || id === firstOpen)
+  let displayed = 0
   return (
     <div className="page">
       <div className="page-head">
-        <div><h1>Trilha</h1><p>Todas as matérias do edital, na ordem em que vale a pena estudar.</p></div>
+        <div><h1>Trilha de estudo</h1><p>Matéria → módulo → aula, com assuntos dirigidos às carreiras públicas.</p></div>
         <div className="seg" role="group" aria-label="Filtro">
           {([['todos', 'Tudo'], ['pendentes', 'A estudar'], ['reforco', 'Reforço']] as const).map(([v, l]) => <button key={v} aria-pressed={filter === v} onClick={() => setFilter(v)}>{l}</button>)}
         </div>
       </div>
+      <div className="panel pad" style={{ marginBottom: 14 }}>
+        <label className="field">
+          <span>Encontrar módulo ou aula no seu concurso</span>
+          <input className="input" type="search" value={search} onChange={e => setSearch(e.target.value)}
+            placeholder="Ex.: sub-redes, direito administrativo, SQL, LGPD" />
+        </label>
+        <p className="small muted" style={{ marginTop: 10 }}>
+          O currículo depende da trilha escolhida. Editais reais devem ser conferidos e
+          vinculados pelo administrador; trilhas pré-edital são preparatórias.
+        </p>
+      </div>
       <div className="panel" style={{ overflow: 'hidden' }}>
         {data.subjects.map(s => {
-          const topics = s.topics.filter(t => filter === 'todos' || (filter === 'pendentes' ? t.status !== 'dominado' : t.status === 'reforco'))
-          if (filter !== 'todos' && !topics.length) return null
+          const topics = s.topics.filter(t =>
+            (filter === 'todos' || (filter === 'pendentes' ? t.status !== 'dominado' : t.status === 'reforco')) &&
+            (!keyword || (s.name + ' ' + t.name).toLocaleLowerCase('pt-BR').includes(keyword))
+          )
+          if (!topics.length) return null
+          displayed += topics.length
+          const grouped = topics.reduce<Record<string, typeof topics>>((acc, t) => {
+            const sep = t.name.indexOf(' · ')
+            const module = sep > 0 ? t.name.slice(0, sep) : 'Aulas do currículo original'
+            ;(acc[module] ??= []).push(t)
+            return acc
+          }, {})
           return (
             <section key={s.id} className={`subject ${isOpen(s.id) ? 'open' : ''}`}>
               <button className="subject-head" onClick={() => setOpen({ ...open, [s.id]: !isOpen(s.id) })} aria-expanded={isOpen(s.id)}>
@@ -286,18 +310,33 @@ export function Trail() {
                 <span className="tiny muted nowrap">{s.mastered}/{s.topics.length}</span>
                 <span className="subject-meter"><Meter value={s.progress} /></span>
               </button>
-              {isOpen(s.id) && topics.map(t => (
-                <a key={t.id} className="topic-row" href={`#/topico/${t.id}`}>
-                  <span className={`sheet-dot ${t.status}`} aria-hidden="true" />
-                  <span className="name">{t.name}</span>
-                  {!t.has_lesson && <span className="chip mark">Aula a gerar</span>}
-                  {t.answered > 0 && <span className={`tiny nowrap ${t.status === 'reforco' ? '' : 'muted'}`} style={t.status === 'reforco' ? { color: 'var(--bad)' } : undefined}>{pct(t.accuracy)} em {t.answered}</span>}
-                  <span className="sr">{STATUS_LABEL[t.status]}</span>
-                </a>
+              {isOpen(s.id) && Object.entries(grouped).map(([module, rows]) => (
+                <div key={module}>
+                  <div className="small muted" style={{ padding: '12px 20px 6px 38px',
+                    fontWeight: 700, background: 'var(--surface, transparent)' }}>
+                    {module} · {rows.length} {rows.length === 1 ? 'aula' : 'aulas'}
+                  </div>
+                  {rows.map(t => (
+                    <a key={t.id} className="topic-row" href={`#/topico/${t.id}`}>
+                      <span className={`sheet-dot ${t.status}`} aria-hidden="true" />
+                      <span className="name">{t.name.includes(' · ') ? t.name.split(' · ').slice(1).join(' · ') : t.name}</span>
+                      {!t.has_lesson && <span className="chip mark">Aula a gerar</span>}
+                      {t.answered > 0 && <span className={`tiny nowrap ${t.status === 'reforco' ? '' : 'muted'}`}
+                        style={t.status === 'reforco' ? { color: 'var(--bad)' } : undefined}>
+                        {pct(t.accuracy)} em {t.answered}
+                      </span>}
+                      <span className="sr">{STATUS_LABEL[t.status]}</span>
+                    </a>
+                  ))}
+                </div>
               ))}
             </section>
           )
         })}
+        {!displayed && <div className="pad muted">
+          Nenhuma aula encontrada com esses filtros. Tente outro termo, escolha “Tudo”
+          ou confira se esta matéria está incluída na sua trilha.
+        </div>}
       </div>
     </div>
   )
