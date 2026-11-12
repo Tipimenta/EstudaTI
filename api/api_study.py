@@ -299,10 +299,20 @@ def tutor():
     question = str(b.get("question", "")).strip()[:1500]
     if not question:
         raise ApiError(400, "Escreva sua dúvida.")
+    mode = str(b.get("mode") or "passo_a_passo")
+    if mode not in ("do_zero", "passo_a_passo", "exemplo", "comparar", "exercicio"):
+        raise ApiError(400, "Modo de explicação inválido.")
+    history = b.get("history")
+    if not isinstance(history, list):
+        history = []
     with tx() as db:
-        c = topic_context(db, int(b.get("topic_id") or 0))
+        c = topic_context(db, int(b.get("topic_id") or 0), g.user["id"])
+    if not ai.status()["enabled"]:
+        raise ApiError(503, "Professor por IA indisponível; as aulas e revisões continuam gratuitas.")
     use_ai_quota(g.user)
-    return {"answer": ai.tutor(c["subject"], c["name"], c["lesson_body"], question)}
+    return {"answer": ai.tutor(c["subject"], c["name"], c["lesson_body"],
+                               question, mode=mode, history=history[:10]),
+            "mode": mode}
 
 
 # ---------------------------------------------------------------------------
