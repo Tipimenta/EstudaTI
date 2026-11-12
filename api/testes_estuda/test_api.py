@@ -437,8 +437,11 @@ def test_aprofundamento_pedagogico_preserva_dados_do_aluno():
     lesson = response["lesson"]
     assert "Aprofundamento 2.2" in lesson["body"]
     assert "Bit I/G" in lesson["body"] and "Bit U/L" in lesson["body"]
-    from conteudo.aprofundamentos import REVISION
-    assert lesson["editorial_revision"] == REVISION
+    # O texto integral está persistido no banco, não em metadata transitória.
+    from db import tx
+    with tx() as db:
+        saved = db.one("SELECT body FROM lessons WHERE topic_id=?", (t["id"],))
+    assert saved["body"] == lesson["body"]
     assert response["done"] is False
 
 
