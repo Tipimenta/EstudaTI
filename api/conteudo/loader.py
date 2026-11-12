@@ -55,7 +55,7 @@ def load_pack(db, pack: dict) -> dict:
                                   q.get("explanation", ""), dumps(q.get("rationales", [])), q.get("origin", "autoral"), "publicada",
                                   q.get("banca", ""), q.get("year"), q.get("source", ""), fp, ts))
             for c in t.get("flashcards", []):
-                cards.append((tid, c["front"], c["back"], "autoral", "publicada", ts))
+                cards.append((tid, c["front"], c["back"], c.get("origin", "autoral"), "publicada", ts))
         db.many("""INSERT INTO lessons(topic_id, body, summary, minutes, origin, status, updated_at) VALUES (?,?,?,?,?,?,?)""", lessons)
         db.many("""INSERT INTO questions(subject_id, topic_id, kind, statement, options, answer, explanation, rationales, origin,
                    status, banca, year, source, fingerprint, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", questions)
@@ -101,3 +101,27 @@ def seed_if_empty():
             path = PACKS / f"{name}.json"
             if path.exists():
                 load_pack(db, json.loads(path.read_text(encoding="utf-8")))
+
+
+EXPANSION_KEY = "content_estuda_expansao_2026_v1"
+
+
+def seed_expansion_once() -> dict:
+    """Expansão aditiva, atômica e idempotente para bancos já em uso.
+
+    Reutiliza disciplinas antigas e cria SOMENTE tópicos, conteúdo e trilhas
+    que ainda não existiam. Preserva respostas, aulas editadas e matrículas.
+    O registro de controle fica no schema atual da aplicação, nunca no public.
+    """
+    with tx() as db:
+        if db.one("SELECT version FROM schema_migrations WHERE version=?", (EXPANSION_KEY,)):
+            return {"installed": False, "reason": "already_installed"}
+        file = PACKS / "estuda_expansao_2026.json"
+        pack = json.loads(file.read_text(encoding="utf-8"))
+        # Este pacote contém modelos de estudo, nunca editais confirmados.
+        assert all("pré-edital" in role["name"].lower()
+                   for x in pack["exams"] for role in x["roles"])
+        stats = load_pack(db, pack)
+        db.x("INSERT INTO schema_migrations(version, applied_at) VALUES (?,?)",
+             (EXPANSION_KEY, now()))
+        return {"installed": True, **stats}
