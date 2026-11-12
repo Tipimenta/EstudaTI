@@ -10,6 +10,7 @@ from api_study import Q_SELECT, generate_for_topic, q_reveal
 from auth import ApiError, admin_required
 from db import dumps, fingerprint, loads, now, slugify, tx
 from importers import extract_exam_local, parse_questions_file, read_upload_text
+from conteudo.aprofundamentos import SUPPLEMENTS, apply_supplement
 
 bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 
@@ -51,6 +52,67 @@ def link_subject(db, role_id: int, subject_id: int, weight: float = 1, questions
 def link_topic(db, role_id: int, topic_id: int):
     db.x("INSERT INTO role_topics(role_id, topic_id) VALUES (?,?) ON CONFLICT(role_id, topic_id) DO NOTHING", (role_id, topic_id))
 
+
+
+@bp.get("/content-quality")
+@admin_required
+def content_quality():
+    """Diagnóstico editorial somente leitura — não interpreta tamanho como qualidade."""
+    with tx() as db:
+        rows = db.q("""SELECT t.id, t.name AS topic, s.name AS subject,
+                              l.body, l.origin, l.status AS lesson_status
+                       FROM topics t JOIN subjects s ON s.id=t.subject_id
+                       LEFT JOIN lessons l ON l.topic_id=t.id
+                       ORDER BY s.name, t.position, t.id""")
+        qdata = {r["topic_id"]: r for r in db.q(
+            """SELECT topic_id, COUNT(*) AS total,
+                      SUM(CASE WHEN rationales IS NOT NULL
+                                AND rationales <> '[]' AND rationales <> ''
+                               THEN 1 ELSE 0 END) AS reasoned
+               FROM questions WHERE status='publicada' AND topic_id IS NOT NULL
+               GROUP BY topic_id"""
+        )}
+        fdata = {r["topic_id"]: r["total"] for r in db.q(
+            "SELECT topic_id, COUNT(*) AS total FROM flashcards WHERE status='publicada' GROUP BY topic_id"
+        )}
+    topics = []
+    for row in rows:
+        key = (row["subject"], row["topic"])
+        base = {"body": row["body"], "origin": row["origin"]} if row["body"] else None
+        expanded = apply_supplement(*key, base)
+        words = len((expanded or {}).get("body", "").split())
+        qs = qdata.get(row["id"], {})
+        n_q = int(qs.get("total") or 0)
+        n_rat = int(qs.get("reasoned") or 0)
+        problems = []
+        if not row["body"] or row["lesson_status"] != "publicado":
+            problems.append("Aula ausente ou não publicada")
+        elif words < 800:
+            problems.append("Aula abaixo de 800 palavras (sinal de revisão)")
+        if n_q < 3:
+            problems.append("Menos de 3 questões")
+        if n_q and n_rat < n_q:
+            problems.append("Alternativas sem justificativas completas")
+        if key not in SUPPLEMENTS and row["body"]:
+            problems.append("Sem aprofundamento editorial adicional")
+        topics.append({
+            "id": row["id"], "subject": row["subject"], "topic": row["topic"],
+            "words": words, "questions": n_q, "with_rationales": n_rat,
+            "flashcards": int(fdata.get(row["id"], 0)),
+            "deepened": key in SUPPLEMENTS and bool(row["body"]),
+            "issues": problems, "pending": bool(problems),
+        })
+    topics.sort(key=lambda x: (-len(x["issues"]), x["subject"], x["topic"]))
+    return {
+        "total": len(topics),
+        "with_lesson": sum(bool(row["body"]) for row in rows),
+        "deepened": sum(t["deepened"] for t in topics),
+        "question_total": sum(t["questions"] for t in topics),
+        "rationale_total": sum(t["with_rationales"] for t in topics),
+        "pending": sum(t["pending"] for t in topics),
+        "topics": topics,
+        "disclaimer": "Indicadores de triagem, não certificação pedagógica nem garantia de exatidão.",
+    }
 
 # ---------------------------------------------------------------------------
 # Visão geral
