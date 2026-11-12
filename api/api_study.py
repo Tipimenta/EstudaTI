@@ -14,6 +14,7 @@ import srs
 from auth import ApiError, login_required
 from db import dumps, fingerprint, loads, now, today, tx
 from conteudo.aprofundamentos import apply_supplement
+from conteudo.consulta_guiada import answer_from_material
 
 bp = Blueprint("study", __name__, url_prefix="/api")
 _ai_usage: dict[tuple[int, str], int] = {}
@@ -352,12 +353,23 @@ def tutor():
         history = []
     with tx() as db:
         c = topic_context(db, int(b.get("topic_id") or 0), g.user["id"])
+        cards = db.q(
+            "SELECT front FROM flashcards WHERE topic_id=? AND status='publicada' ORDER BY id LIMIT 12",
+            (c["id"],)
+        )
+    if b.get("use_ai") is not True:
+        return {
+            "answer": answer_from_material(c["name"], c["lesson_body"], question, mode, cards),
+            "mode": mode, "source": "material", "ai_used": False,
+        }
     if not ai.status()["enabled"]:
-        raise ApiError(503, "Professor por IA indisponível; as aulas e revisões continuam gratuitas.")
+        raise ApiError(503, "A IA não está configurada. Use a consulta gratuita ao material.")
     use_ai_quota(g.user)
-    return {"answer": ai.tutor(c["subject"], c["name"], c["lesson_body"],
-                               question, mode=mode, history=history[:10]),
-            "mode": mode}
+    return {
+        "answer": ai.tutor(c["subject"], c["name"], c["lesson_body"],
+                           question, mode=mode, history=history[:10]),
+        "mode": mode, "source": "ai", "ai_used": True,
+    }
 
 
 # ---------------------------------------------------------------------------
